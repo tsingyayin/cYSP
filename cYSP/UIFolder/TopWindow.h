@@ -1,6 +1,7 @@
 #pragma once
 #include "..\langcontrol.h"
 #include "..\global_value.h"
+#include "..\loadsettings.h"
 #include "..\Aaspcommand\aaspcommand.h"
 #include "SPOLDev.h"
 #include <math.h>
@@ -19,6 +20,8 @@ static QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
 class hGCPDialog :public QWidget
 {
     Q_OBJECT
+    signals:
+        void chooseEnd(void);
     public:
         QPushButton* YesButton;
         QPushButton* NoButton;
@@ -27,7 +30,6 @@ class hGCPDialog :public QWidget
         QFrame* frame;
         QHBoxLayout* hl;
         QGraphicsDropShadowEffect* SelfEffect;
-
         hGCPDialog(int X, int Y, QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
             this->setGeometry(QRect(500, 400, 900, 300));
@@ -117,13 +119,24 @@ class hGCPDialog :public QWidget
                     font-size:32px;\
                     font-family:'Microsoft YaHei';\
                     }");
-            connect(YesButton, SIGNAL(clicked()), this, SLOT(close()));
+            connect(YesButton, SIGNAL(clicked()), this, SLOT(yesclose()));
+            connect(NoButton, SIGNAL(clicked()), this, SLOT(noclose()));
         }
         void mousePressEvent(QMouseEvent * event) {
                 QWidget* pWindow = this->window();
                 ReleaseCapture();
                 SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
                 event->ignore();
+        }
+    public slots:
+        void yesclose(void) {     
+            writesettings("GCPMode", "True");
+            emit chooseEnd();
+            close();
+        }
+        void noclose(void) {
+            emit chooseEnd();
+            close();
         }
 };
 
@@ -135,7 +148,7 @@ class hUpdateDialog :public QWidget
         QHBoxLayout* hl;
         QGraphicsDropShadowEffect* SelfEffect;
         int gX, gY;
-        hUpdateDialog(int X, int Y, QWidget* parent = Q_NULLPTR) {
+        hUpdateDialog(int X, int Y, QString VersionName,QString DialogLink,QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
             this->setGeometry(QRect(500, 400, 900, 300));
             this->setWindowFlags(Qt::FramelessWindowHint);
@@ -387,7 +400,11 @@ class hSettingsPage :public QWidget
                     }");
             GCPButton = new QPushButton(this);
             GCPButton->setGeometry(QRect(390, 350, 260, 50));
-            GCPButton->setText(msg("Ui_Msg_GCPMode"));
+            if (Program_Settings("GCPMode") == "True") {
+                GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+            }else {
+                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+            }
             GCPButton->setStyleSheet("\
                 QPushButton{\
                     color:#333333;\
@@ -413,8 +430,24 @@ class hSettingsPage :public QWidget
         }
     public slots:
         void showGCPDialog(void) {
-            GCPDialog = new hGCPDialog(gX, gY);
-            GCPDialog->show();
+            if (Program_Settings("GCPMode") == "True") {
+                writesettings("GCPMode", "False");
+                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+            }
+            else {
+                GCPDialog = new hGCPDialog(gX, gY);
+                GCPDialog->show();
+                connect(GCPDialog, SIGNAL(chooseEnd()), this, SLOT(repaintMsg()));
+            }
+        }
+        void repaintMsg(void){
+            if (Program_Settings("GCPMode") == "True") {
+                GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+            }
+            else {
+                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+            }
+            
         }
 };
 
@@ -869,6 +902,7 @@ class TopDef :public QWidget
         QGraphicsOpacityEffect* OPAboutPage;
         QPushButton* BackButton;
         QGraphicsDropShadowEffect* SABackButton;
+        hUpdateDialog* UpdateDialog;
         
         QLabel* Titlelabel;
         QLabel* Iconlabel;
@@ -1031,7 +1065,7 @@ class TopWindow :public TopDef
 		}
 		void Expand() {
 			double a;
-			for (int i = 0; i <= 101; i += 1) {
+			for (int i = 0; i <= 101; i += 2) {
 				a = 0.5 * (1 - cos(i * 0.0314159));
 				this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
@@ -1049,14 +1083,14 @@ class TopWindow :public TopDef
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
                 this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
 				this->repaint();
-				Sleep(2);
+				Sleep(1);
 			}
 		}
 		void enterEvent(QEvent*) {
 			if (FirstEnter == 0) {
 				Expand();
 				FirstEnter = 1;
-				Service->ui_CheckUpdate();
+                checkUpdate();
 			}
 		}
         void mousePressEvent(QMouseEvent* event) {
@@ -1068,6 +1102,12 @@ class TopWindow :public TopDef
             }
         }
     public slots:
+        void checkUpdate() {
+            QStringList UpdateInfo = Service->ui_CheckUpdate();
+            if (UpdateInfo[0] != "NODIALOG") {
+                UpdateDialog = new hUpdateDialog(X, Y, UpdateInfo[0], UpdateInfo[1]);
+            }
+        }
         void chooseLangFile(void) {
             QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), "./Language", "Story Player Language(*.splang)");
             QString LangFileName = LangFileDialog.section("/",-1,-1).section(".",0,0);
@@ -1087,8 +1127,11 @@ class TopWindow :public TopDef
 
             SettingsPage->AboutButton->setText(msg("Ui_Msg_About_"));
             SettingsPage->LangButton->setText(msg("Ui_Msg_Choose_Lang"));
-            SettingsPage->GCPButton->setText(msg("Ui_Msg_GCPMode"));
-                
+            if (Program_Settings("GCPMode") == "True") {
+                SettingsPage->GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+            }else {
+                SettingsPage->GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+            }   
             AboutPage->AboutLabel_FullVer->setText(Program_Info("Edition"));
             AboutPage->AboutLabel_MainVer->setText(msg("About_Info_Main_Ver") + Program_Info("Main"));
             AboutPage->AboutLabel_SubVer->setText(msg("About_Info_Sub_Ver") + Program_Info("Sub"));

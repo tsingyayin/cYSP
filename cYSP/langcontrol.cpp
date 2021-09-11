@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <ctime>
 #include "langcontrol.h"
+#include "loadsettings.h"
 #include <exception>
 using namespace std;
 static QMap<QString, QString> msglist;
@@ -19,16 +20,12 @@ int langset(QString langname) {
     timeStart = clock();
     QString langnameraw = langname;
     if (langnameraw == "0") {
-        QFile spLangSettingsFile;
-        spLangSettingsFile.setFileName(".\\Language\\base.ini");
-        spLangSettingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
-        if (!spLangSettingsFile.isOpen()) {
+        QString regLangName = readreg("Language");
+        if (regLangName=="ERROR") {
             langname = "zh_SC";
+            writereg("Language", "zh_SC");
         }else {
-            QTextStream spLangSettingsText(&spLangSettingsFile);
-            spLangSettingsText.setCodec("UTF-8");
-            langname = spLangSettingsText.readLine();
-            spLangSettingsFile.close();
+            langname = regLangName;
         }
         if (langname == "") { langname = "zh_SC"; }
     }
@@ -39,13 +36,7 @@ int langset(QString langname) {
         qDebug().noquote() << "sysinfo¡ú" + msg("Lang_Not_In_Support").arg(langname);
         return 0; 
     }else {
-        QFile spLangSettingsFile;
-        spLangSettingsFile.setFileName(".\\Language\\base.ini");
-        spLangSettingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
-        if (!spLangSettingsFile.isOpen()) { return 0; }
-        spLangSettingsFile.write(langname.toStdString().data());
-        spLangSettingsFile.close();
-
+        writereg("Language", langname);
     }
     QTextStream spLanguageText(&spLanguageFile);
     spLanguageText.setCodec("UTF-8");
@@ -70,6 +61,6 @@ QString msg(QString Usript) {
         }
     }
     catch (...) {
-        return "UNKNOWNMSG:" + Usript;
+        return Usript;
     }
 }

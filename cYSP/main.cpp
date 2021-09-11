@@ -1,5 +1,8 @@
 #pragma execution_character_set("utf-8")
 #include "UIFolder/TopWindow.h"
+#include "UIFolder/ArtificialUI.h"
+#include "global_value.h"
+#include "loadsettings.h"
 #include "Aaspcommand/aaspcommand.h"
 #include <QApplication>
 #include <QtWidgets>
@@ -16,14 +19,14 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    qDebug()<<QDir::currentPath();
-    qDebug() << QString(argv[0]).section("\\", 0, -2);
+    sDebug("DebugInfo→Start path : "+QDir::currentPath());
+    sDebug("DebugInfo→Program path : "+QString(argv[0]).section("\\", 0, -2));
     QDir::setCurrent(QString(argv[0]).section("\\", 0, -2));
     int DirectOpen = 0;
     string Usript;
-    qDebug() << argc;
-    qDebug() << argv[0];
-    qDebug() << argv[1];
+    sDebug("DebugInfo→Number of parameters : "+QString::number(argc));
+    sDebug("DebugInfo→Parameters 1 : " + QString::fromUtf8(argv[0]));
+    sDebug("DebugInfo→Parameters 2 : " + QString::fromUtf8(argv[1]));
     if (argv[1] != "") {
         DirectOpen = 1;
         Usript = "ui";
@@ -36,12 +39,22 @@ int main(int argc, char *argv[])
 
     langset("0");
 
+    loadsettings();
+
     DeleteCache(0);
 
-    qDebug().noquote() << "sysinfo→" + msg("System_Info") + QSysInfo::kernelVersion();
-    qDebug().noquote() << "sysinfo→" + msg("About_Info_Version") +Program_Info("Edition");
+    //initreg();
+
+    sDebug("DebugInfo→" + msg("System_Info") + QSysInfo::kernelVersion());
+    sDebug("DebugInfo→" + msg("About_Info_Version") +Program_Info("Edition"));
+
+    if (readreg("Language") == "zh_SC") {
+        qDebug().noquote() << "##############################";
+        qDebug().noquote() << "#抵制不良游戏，拒绝盗版游戏。#\n#注意自我保护，谨防受骗上当。#\n#适度游戏益脑，沉迷游戏伤身。#\n#合理安排时间，享受健康生活。#";
+        qDebug().noquote() << "##############################";
+    }
+
     qDebug().noquote() <<"sysinfo→"+msg("First_Print");
-    //DirectOpen = 0;
 
     bool programme_run = TRUE;
     while (programme_run) {
@@ -65,8 +78,19 @@ int main(int argc, char *argv[])
         }elif(Usript == "clrall") {
             DeleteCache(1);
         }elif (Usript == "ui") {
+            QApplication app(argc, argv);
+            PlayerWindow UIWindow(argc, argv);
+            if (Program_Settings("Window_DisplayMode") == "Full") {
+                UIWindow.gshowFullScreen();
+            }elif(Program_Settings("Window_DisplayMode") == "Window") {
+                UIWindow.gshow();
+            }else {
+                UIWindow.gshowFullScreen();
+            }
+            int a = app.exec();
             qDebug().noquote() << "UI";
-            DirectOpen = 0;
+            Usript = "window";
+            DirectOpen = 1;
         }elif (Usript == "window") {
             QApplication app(argc, argv);
             TopWindow MainWindow;
@@ -91,20 +115,5 @@ int main(int argc, char *argv[])
             qDebug().noquote() << "sysinfo→" + msg("Command_Error").arg(QString::fromStdString(Usript));
         }
     }
- 
-    
-    /*
-    cout << "请输入内部索引" << endl;
-    string usript;
-    QString temp;
-    QString sysopt;
-    for (;;) {
-        cin >> usript;
-        temp = usript.c_str();
-        sysopt = msg(temp);
-        qDebug() << sysopt;
-    }
-    return 0;
-    */
 }
 

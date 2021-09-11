@@ -17,7 +17,7 @@ void checkupdate(int argc, char* argv[]) {
 	QApplication app(argc, argv);
 	uCheckUpdate Check;
 	QList<QStringList> VerList = Check.getUpdate();
-	QStringList VerNew;
+	QList<QStringList> VerNew;
 	app.exit();
 	if (VerList[0][0] == "UNKNOWNNETERROR") {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Net_Error");
@@ -28,28 +28,30 @@ void checkupdate(int argc, char* argv[]) {
 	for (int i = 0; i < VerList.length(); i++) {
 		if (VerList[i][2]=="Pre" && Program_Info("Sub").contains("Pre")) {
 			qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Pre");
-			VerNew.append((VerList[i][0], VerList[i][1]));
+			VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] });
 			break;
 		}else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
 			qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Pub");
-			VerNew.append((VerList[i][0], VerList[i][1]));
+			VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] });
 			break;
 		}else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
 			qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Branch");
-			VerNew.append((VerList[i][0], VerList[i][1]));
+			VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] });
 			break;
 		}
 	}
+
 	if (VerNew.isEmpty()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Ver_Error");
-	}else if (VerNew[0].toInt() > Program_Info("Day").toInt()) {
-		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Latest").arg(VerNew[0]).arg(VerNew[1]);
-	}else if (VerNew[0].toInt() == Program_Info("Day").toInt()) {
+	}else if (VerNew[0][2].toFloat() > Program_Info("Build").toFloat()) {
+		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
+	}else if (VerNew[0][2].toFloat() == Program_Info("Build").toFloat()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_New");
-	}else if (VerNew[0].toInt() < Program_Info("Day").toInt()) {
+	}else if (VerNew[0][2].toFloat() < Program_Info("Build").toFloat()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Insider");
 	}
 }
+
 void langinput(void) {
 	string Usript;
 	qDebug().noquote() << "sysinfo→" + msg("Lang_Input_Msg");
@@ -66,6 +68,7 @@ void langinput(void) {
 		}
 	}
 }
+
 void about(void) {
 	qDebug().noquote() << msg("About_Info_Main_Ver") + Program_Info("Main");
 	qDebug().noquote() << msg("About_Info_Sub_Ver") + Program_Info("Sub");
@@ -78,6 +81,7 @@ void about(void) {
 	qDebug().noquote() << msg("About_Info_Help").arg(urlGithub);
 	qDebug().noquote() << msg("About_Info_Donate").arg(urlAFD);
 }
+
 void aasphelp(void) {
 	qDebug().noquote()<<"about\t" + msg("Help_In_Main_Page_about_");
 	qDebug().noquote()<<"clear\t" + msg("Help_In_Main_Page_clear");
@@ -89,6 +93,7 @@ void aasphelp(void) {
 	qDebug().noquote()<<"ui\t" + msg("Help_In_Main_Page_ui");
 	qDebug().noquote()<<"window\t" + msg("Help_In_Main_Page_window");
 }
+
 //文件清理函数
 //整合了Python版本的DeleteEmptyMap和DeleteAllCache两个函数。区分为初始值int 0 和 1（其实可以写成bool）
 void DeleteCache(int num) {

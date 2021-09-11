@@ -11,5 +11,7 @@
 
 QString Program_Info(QString SearchParameter = "None");
 
+void sDebug(QString DebugInfo);
+
 int randint(int min, int max);
 

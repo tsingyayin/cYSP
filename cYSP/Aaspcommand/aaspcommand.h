@@ -39,50 +39,52 @@ public:
 	void ui_aasphelp(void) {
 		aasphelp();
 	}
-	int ui_CheckUpdate(void) {
+	QStringList ui_CheckUpdate(void) {
 		uCheckUpdate Check;
 		QList<QStringList> VerList = Check.getUpdate();
-		QStringList VerNew;
+		QList<QStringList> VerNew;
 		if (VerList[0][0] == "UNKNOWNNETERROR") {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Net_Error");
 		}
 		else if (VerList[0][0] == "UNKNOWNBLOG") {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
 		}
+		
 		for (int i = 0; i < VerList.length(); i++) {
 			if (VerList[i][2] == "Pre" && Program_Info("Sub").contains("Pre")) {
 				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
-				VerNew.append((VerList[i][0], VerList[i][1]));
+				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
 				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
-				VerNew.append((VerList[i][0], VerList[i][1]));
+				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
 				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
-				VerNew.append((VerList[i][0], VerList[i][1]));
+				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 		}
+
 		if (VerNew.isEmpty()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
 			emit Anyinfo(2, msg("Check_Update_Info_Ver_Error"));
 		}
-		else if (VerNew[0].toInt() > Program_Info("Day").toInt()) {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Latest").arg(VerNew[0]).arg(VerNew[1]);
-			return 1;
+		else if (VerNew[0][2].toFloat() > Program_Info("Build").toFloat()) {
+			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
+			return {VerNew[0][1],VerNew[0][3]};
 		}
-		else if (VerNew[0].toInt() == Program_Info("Day").toInt()) {
+		else if (VerNew[0][2].toFloat() == Program_Info("Build").toFloat()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_New");
 			emit Anyinfo(1, msg("Check_Update_Info_New"));
 		}
-		else if (VerNew[0].toInt() < Program_Info("Day").toInt()) {
+		else if (VerNew[0][2].toFloat() < Program_Info("Build").toFloat()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Insider");
 			emit Anyinfo(1, msg("Check_Update_Info_Insider"));
 		}
-		return 0;
+		return {"NODIALOG","NODIALOG"};
 	}
 	void ui_Tospol(QString fileNameIpt) {
 		//bool func = HLtoSPOL(fileNameIpt);
