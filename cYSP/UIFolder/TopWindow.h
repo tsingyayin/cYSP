@@ -16,7 +16,7 @@ using namespace std;
 static QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 static QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
 
-//GCP对话框定义
+//GCP对话框
 class hGCPDialog :public QWidget
 {
     Q_OBJECT
@@ -140,6 +140,7 @@ class hGCPDialog :public QWidget
         }
 };
 
+//更新页面对话框
 class hUpdateDialog :public QWidget
 {
     Q_OBJECT
@@ -147,8 +148,18 @@ class hUpdateDialog :public QWidget
         QFrame* frame;
         QHBoxLayout* hl;
         QGraphicsDropShadowEffect* SelfEffect;
+        QLabel* OopsLabel;
+        QLabel* NewVersionLabel;
+        QLabel* UpdateInfoLabel;
+        QPushButton* BackButton;
+        QString Preurl="https://pan.baidu.com/s/1P2HXW0Y5G4piA7XUKXWWzg";
+        QString Puburl="https://pan.baidu.com/s/1Zo_lZzEjpIaEsM4LdCohYQ";
+        QString gVersionName;
+        QString gDialogLink;
         int gX, gY;
         hUpdateDialog(int X, int Y, QString VersionName,QString DialogLink,QWidget* parent = Q_NULLPTR) {
+            gVersionName = VersionName;
+            gDialogLink = DialogLink;
             this->setParent(parent);
             this->setGeometry(QRect(500, 400, 900, 300));
             this->setWindowFlags(Qt::FramelessWindowHint);
@@ -165,6 +176,112 @@ class hUpdateDialog :public QWidget
             hl->addWidget(frame);
             this->setLayout(hl);
 
+            this->setStyleSheet(
+                "QWidget{"
+                "background-color:rgba(230,230,230,230);"
+                "border:1px solid rgb(15,77,240);"
+                "border-radius:10px;"
+                "}");
+
+            OopsLabel = new QLabel(this);
+            OopsLabel->setText(msg("Ui_Msg_Can_Update")+"UYXA");
+            OopsLabel->setGeometry(QRect(50, 50, 800, 40));
+            OopsLabel->setAlignment(Qt::AlignCenter);
+            OopsLabel->setStyleSheet("\
+                QLabel{\
+                background-color:rgba(255, 255, 255, 0);\
+                border:none;\
+                border-radius:0px;\
+                color:#4488FF;\
+                font-family:'Microsoft YaHei';\
+                font-size:30px;\
+                }");
+            
+            NewVersionLabel = new QLabel(this);
+            if (VersionName.contains("Pre")) {
+                NewVersionLabel->setText("<A href='" + Preurl + "'>" + VersionName + "</a>");
+            }
+            else {
+                NewVersionLabel->setText("<A href='" + Puburl + "'>" + VersionName + "</a>");
+            }
+            NewVersionLabel->setOpenExternalLinks(TRUE);
+            NewVersionLabel->setGeometry(QRect(50, 120, 800, 40));
+            NewVersionLabel->setAlignment(Qt::AlignCenter);
+            NewVersionLabel->setStyleSheet("\
+                QLabel{\
+                background-color:rgba(255, 255, 255, 0);\
+                border:none;\
+                border-radius:0px;\
+                color:#000000;\
+                font-family:'Microsoft YaHei';\
+                font-size:20px;\
+                }");
+
+            BackButton = new QPushButton(this);
+            BackButton->setGeometry(QRect(50, 180, 800, 50));
+            BackButton->setText(msg("Ui_Msg_Back"));
+            BackButton->setStyleSheet("\
+                QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,220,220,210);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:hover{\
+                    color:#FFFFFF;\
+                    background-color:rgba(255,230,230,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:Pressed{\
+                    color:#FF0000;\
+                    background-color:rgba(240,200,200,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }");
+            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(close()));
+
+            UpdateInfoLabel = new QLabel(this);
+            UpdateInfoLabel->setGeometry(QRect(50, 250, 800, 30));
+            UpdateInfoLabel->setAlignment(Qt::AlignCenter);
+            UpdateInfoLabel->setStyleSheet("\
+                QLabel{\
+                background-color:rgba(255, 255, 255, 0);\
+                border:none;\
+                border-radius:0px;\
+                color:#CC2211;\
+                font-family:'Microsoft YaHei';\
+                font-size:20px;\
+                }");
+            if (DialogLink != "NONELINK") {
+                UpdateInfoLabel->setOpenExternalLinks(TRUE);
+                UpdateInfoLabel->setText("<A href='" + DialogLink + "'>" + msg("Ui_Msg_Update_Log") + "</a>");
+            }
+            else {
+                UpdateInfoLabel->setOpenExternalLinks(FALSE);
+                UpdateInfoLabel->setText(msg("Ui_Msg_Update_Log_N"));
+            }
+        }
+        void UpdateLang(void) {
+            OopsLabel->setText(msg("Ui_Msg_Can_Update") + "UYXA");
+            if (gVersionName.contains("Pre")) {
+                NewVersionLabel->setText("<A href='" + Preurl + "'>" + gVersionName + "</a>");
+            }
+            else {
+                NewVersionLabel->setText("<A href='" + Puburl + "'>" + gVersionName + "</a>");
+            }
+            BackButton->setText(msg("Ui_Msg_Back"));
+            if (gDialogLink != "NONELINK") {
+                UpdateInfoLabel->setOpenExternalLinks(TRUE);
+                UpdateInfoLabel->setText("<A href='" + gDialogLink + "'>" + msg("Ui_Msg_Update_Log") + "</a>");
+            }
+            else {
+                UpdateInfoLabel->setOpenExternalLinks(FALSE);
+                UpdateInfoLabel->setText(msg("Ui_Msg_Update_Log_N"));
+            }
         }
 };
 
@@ -1106,6 +1223,7 @@ class TopWindow :public TopDef
             QStringList UpdateInfo = Service->ui_CheckUpdate();
             if (UpdateInfo[0] != "NODIALOG") {
                 UpdateDialog = new hUpdateDialog(X, Y, UpdateInfo[0], UpdateInfo[1]);
+                UpdateDialog->show();
             }
         }
         void chooseLangFile(void) {
@@ -1147,6 +1265,8 @@ class TopWindow :public TopDef
             CreatePage->OpenButton_Source->setText(msg("Ui_Msg_Open_Source"));
             CreatePage->OpenButton_Story->setText(msg("Ui_Msg_Open_Story"));
             CreatePage->OpenButton_Official->setText(msg("Ui_Msg_Open_Official"));
+
+            UpdateDialog->UpdateLang();
         }
         void openAnyFolder(void) {
             QObject* OAFsourceButton=this->sender();

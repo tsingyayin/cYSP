@@ -98,7 +98,7 @@ class uTitlePage :public QWidget
 {
     Q_OBJECT
     public:
-        int gX, gY;
+        float gX, gY;
         QLabel* TitleBackgroundLabel;
         QGraphicsOpacityEffect* OPTitleBackgroundLabel;
         QGraphicsBlurEffect* BLTitleBackgroundLabel;
@@ -137,13 +137,13 @@ class uTitlePage :public QWidget
             gSplashList = SplashList;
             this->setParent(parent);
 
-            QString Fontsize90 = QString::number(Y * 0.083333) + "px";
-            QString Fontsize60 = QString::number(Y * 0.055555) + "px";
-            QString Fontsize45 = QString::number(Y * 0.041666) + "px";
-            QString Fontsize30 = QString::number(Y * 0.027777) + "px";
+            QString Fontsize90 = QString::number((int)(gY * 0.083333)) + "px";
+            QString Fontsize60 = QString::number((int)(gY * 0.055555)) + "px";
+            QString Fontsize45 = QString::number((int)(gY * 0.041666)) + "px";
+            QString Fontsize30 = QString::number((int)(gY * 0.027777)) + "px";
 
             TitleBackgroundLabel = new QLabel(this);
-            TitleBackgroundLabel->setGeometry(QRect(0, 0, X, Y));
+            TitleBackgroundLabel->setGeometry(QRect(0, 0, gX, gY));
             OPTitleBackgroundLabel = new QGraphicsOpacityEffect();
             OPTitleBackgroundLabel->setOpacity(0);
             TitleBackgroundLabel->setGraphicsEffect(OPTitleBackgroundLabel);
@@ -151,8 +151,8 @@ class uTitlePage :public QWidget
             BGRaw = QImage();
 
             BlackHideLabel = new QLabel(this);
-            BlackHideLabel->setGeometry(QRect(0, 0, X, Y));
-            BlackHide = QImage(X, Y, QImage::Format_ARGB32);
+            BlackHideLabel->setGeometry(QRect(0, 0, gX, gY));
+            BlackHide = QImage(gX, gY, QImage::Format_ARGB32);
             BlackHide.fill(QColor(0, 0, 0, 255));
             BlackHideLabel->setPixmap(QPixmap::fromImage(BlackHide));
             OPBlackHideLabel = new QGraphicsOpacityEffect();
@@ -160,13 +160,13 @@ class uTitlePage :public QWidget
             BlackHideLabel->setGraphicsEffect(OPBlackHideLabel);
 
             LogoLabel = new QLabel(this);
-            LogoLabel->setGeometry(QRect(X * 0.3671875, Y * 0.222222, Y * 0.4722222, Y * 0.4722222));
+            LogoLabel->setGeometry(QRect(gX * 0.3671875, gY * 0.222222, gY * 0.4722222, gY * 0.4722222));
 
             LogoRaw = QImage();
 
             TopTitle = new QLabel(this);
             TopTitle->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize45 + ";font-family:'Microsoft YaHei'}");
-            TopTitle->setGeometry(QRect(X * 0.333333, Y * 0.30, X * 0.333333, Y * 0.1666666));
+            TopTitle->setGeometry(QRect(gX * 0.333333, gY * 0.30, gX * 0.333333, gY * 0.1666666));
             TopTitle->setAlignment(Qt::AlignCenter);
             TopTitle->setText("SPOL STORY");
             OPTopTitle = new QGraphicsOpacityEffect();
@@ -175,7 +175,7 @@ class uTitlePage :public QWidget
 
             MainTitle = new QLabel(this);
             MainTitle->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize90 + ";font-family:'Microsoft YaHei'}");
-            MainTitle->setGeometry(QRect(X * 0.333333, Y * 0.40, X * 0.333333, Y * 0.1666666));
+            MainTitle->setGeometry(QRect(gX * 0.333333, gY * 0.40, gX * 0.333333, gY * 0.1666666));
             MainTitle->setAlignment(Qt::AlignCenter);
             OPMainTitle = new QGraphicsOpacityEffect();
             OPMainTitle->setOpacity(0);
@@ -183,7 +183,7 @@ class uTitlePage :public QWidget
 
             SubTitle = new QLabel(this);
             SubTitle->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize60 + ";font-family:'Microsoft YaHei'}");
-            SubTitle->setGeometry(QRect(X * 0.333333, Y * 0.5, X * 0.333333, Y * 0.1666666));
+            SubTitle->setGeometry(QRect(gX * 0.333333, gY * 0.5, gX * 0.333333, gY * 0.1666666));
             SubTitle->setAlignment(Qt::AlignCenter);
             OPSubTitle = new QGraphicsOpacityEffect();
             OPSubTitle->setOpacity(0);
@@ -192,7 +192,7 @@ class uTitlePage :public QWidget
             Splashes_Label = new QLabel(this);
             Splashes_Label->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize30 + ";font-family:'SimHei';font-weight:bold}");
             Splashes_Label->setAlignment(Qt::AlignCenter);
-            Splashes_Label->setGeometry(QRect(0, Y * 0.85, X, Y * 0.02777));
+            Splashes_Label->setGeometry(QRect(0, gY * 0.85, gX, gY * 0.02777));
             OPSplashes_Label = new QGraphicsOpacityEffect();
             OPSplashes_Label->setOpacity(0);
             Splashes_Label->setGraphicsEffect(OPSplashes_Label);
@@ -394,14 +394,14 @@ class uPlayerPage :public QWidget
 {
     Q_OBJECT
     signals:
-        void UserSpeedSet(QString);
+        void UserSpeedSet(float);
         void UserChooseWhich(QString);
         void NowInBranch(void);
         void NeedWakeUp(void);
         void NowInLog(void);
 
     public:
-        int gX, gY;
+        float gX, gY;
         bool gUseLogPage;
         QLabel* BG2;
         QLabel* BG1;
@@ -456,13 +456,13 @@ class uPlayerPage :public QWidget
             gY = Y;
             gUseLogPage = UseLogPage;
 
-            QString Fontsize90 = QString::number(Y * 0.083333) + "px";
-            QString Fontsize80 = QString::number(Y * 0.074074) + "px";
-            QString Fontsize60 = QString::number(Y * 0.055555) + "px";
-            QString Fontsize45 = QString::number(Y * 0.041666) + "px";
-            QString Fontsize40 = QString::number(Y * 0.037037) + "px";
-            QString Fontsize35 = QString::number(Y * 0.032407) + "px";
-            QString Fontsize30 = QString::number(Y * 0.027777) + "px";
+            QString Fontsize90 = QString::number((int)(gY * 0.083333)) + "px";
+            QString Fontsize80 = QString::number((int)(gY * 0.074074)) + "px";
+            QString Fontsize60 = QString::number((int)(gY * 0.055555)) + "px";
+            QString Fontsize45 = QString::number((int)(gY * 0.041666)) + "px";
+            QString Fontsize40 = QString::number((int)(gY * 0.037037)) + "px";
+            QString Fontsize35 = QString::number((int)(gY * 0.032407)) + "px";
+            QString Fontsize30 = QString::number((int)(gY * 0.027777)) + "px";
            
             BG2 = new QLabel(this);
             BG1 = new QLabel(this);
@@ -487,9 +487,9 @@ class uPlayerPage :public QWidget
             AVG_M = new QLabel(this);
             AVG_R = new QLabel(this);
 
-            AVG_L->setGeometry(QRect(X * -0.068229, Y * 0.12, X * 0.74635, X * 0.75635));
-            AVG_M->setGeometry(QRect(X * 0.127083, Y * 0.12, X * 0.74635, X * 0.75635));
-            AVG_R->setGeometry(QRect(X * 0.321354, Y * 0.12, X * 0.74635, X * 0.75635));
+            AVG_L->setGeometry(QRect(gX * -0.068229, gY * 0.12, gX * 0.74635, gX * 0.75635));
+            AVG_M->setGeometry(QRect(gX * 0.127083, gY * 0.12, gX * 0.74635, gX * 0.75635));
+            AVG_R->setGeometry(QRect(gX * 0.321354, gY * 0.12, gX * 0.74635, gX * 0.75635));
 
             Frame = new QLabel(this);
             Frame->setGeometry(QRect(0, 0, X, Y));
@@ -504,10 +504,10 @@ class uPlayerPage :public QWidget
             WordLabel = new QLabel(this);
             NameLabel->setStyleSheet("QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-family:'SimHei';font-weight:bold}");
             NameLabel->setAlignment(Qt::AlignRight);
-            NameLabel->setGeometry(QRect(0, Y * 0.86944, X * 0.2078125, Y * 0.042));
+            NameLabel->setGeometry(QRect(0, gY * 0.86944, gX * 0.2078125, gY * 0.042));
             WordLabel->setStyleSheet("QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-family:'SimHei';font-weight:bold}");
             WordLabel->setAlignment(Qt::AlignLeft);
-            WordLabel->setGeometry(QRect(X * 0.2609375, Y * 0.87685, X * 0.6875, Y * 0.105));
+            WordLabel->setGeometry(QRect(gX * 0.2609375, gY * 0.87685, gX * 0.6875, gY * 0.105));
 
             //如果必要，这是一层用于盖住除了自由文本和按钮之外其他所有部件的灰色层
             BlackCover = new QLabel(this);
@@ -521,7 +521,7 @@ class uPlayerPage :public QWidget
             FreeLabel = new QLabel(this);
             FreeLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-family:'SimHei';font-weight:bold}");
             FreeLabel->setAlignment(Qt::AlignCenter);
-            FreeLabel->setGeometry(QRect(-X * 0.76, -Y * 0.033, X * 0.75, Y * 0.0324074));
+            FreeLabel->setGeometry(QRect(-gX * 0.76, -gY * 0.033, gX * 0.75, gY * 0.0324074));
             OPFreeLabel = new QGraphicsOpacityEffect();
             OPFreeLabel->setOpacity(0);
             FreeLabel->setGraphicsEffect(OPFreeLabel);
@@ -575,20 +575,20 @@ class uPlayerPage :public QWidget
 
             AutoButton = new QPushButton(this);
             AutoButton->setObjectName("AutoButton");
-            AutoButton->setGeometry(QRect(-X * 0.80729, -Y * 0.038, X * 0.098125, Y * 0.046296));
+            AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
             AutoButton->setText(msg("Ui_AutoButton_Auto"));
             AutoButtonTick = 0;
             connect(AutoButton, SIGNAL(clicked()), this, SLOT(_AutoChange()));
 
             NextButton = new QPushButton(this);
             NextButton->setObjectName("NextButton");
-            NextButton->setGeometry(QRect(-X * 0.902604, Y * 0.8981, X * 0.078125, Y * 0.046296));
+            NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
             NextButton->setText(msg("Ui_NextButton"));
             connect(NextButton, SIGNAL(clicked()), this, SLOT(_ToNext()));
 
             SpeedButton = new QPushButton(this);
             SpeedButton->setObjectName("SpeedButton");
-            SpeedButton->setGeometry(QRect(-X * 0.902604, -Y * 0.038, X * 0.078125, Y * 0.046296));
+            SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
             SpeedButton->setText("1.0x");
             connect(SpeedButton, SIGNAL(clicked()), this, SLOT(_SpeedChange()));
 
@@ -622,13 +622,14 @@ class uPlayerPage :public QWidget
 
             LogButton = new QPushButton(this);
             LogButtonPixRaw = QPixmap("./Visual/source/BaseUI/Button/LogButton_N.png");
-            LogButtonPixRaw = LogButtonPixRaw.scaled(Y * 0.055, Y * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             LogButton->setIcon(QIcon(LogButtonPixRaw));
-            LogButton->setIconSize(QSize(Y * 0.055, Y * 0.055));
-            LogButton->setGeometry(QRect(-X * 0.030416, Y * 0.033, Y * 0.055, Y * 0.055));
+            LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
+            LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
             LogButton->setStyleSheet("QPushButton{background-color:rgba(0,0,0,0);}");
             connect(LogButton, SIGNAL(clicked()), this, SLOT(showLogPage()));
         }
+    public slots:
         void initObject(void) {
             changeBG = 1;
             SpeedNow = 0;
@@ -638,7 +639,7 @@ class uPlayerPage :public QWidget
             Auto = TRUE;
             AutoButtonTick = 0;
             effectuse = 0;
-            emit UserSpeedSet("1");
+            emit UserSpeedSet(1);
             SpeedButton->setText("1.0x");
 
             if (gUseLogPage) { LogPage->initObject(); }
@@ -880,7 +881,6 @@ class uPlayerPage :public QWidget
                 LogPage->StoryScroll->setValue(LogPage->StoryScroll->value() - (int)(event->angleDelta().y() / 120));
             }
         }
-    public slots:
         void _ShakeRect(int sX, int sY, int end) {
             if (changeBG == 2) {
                 BG1->setGeometry(QRect((int)(gY / 1080) * sX, (int)(gY / 1080) * sY, gX, gY));
@@ -944,19 +944,19 @@ class uPlayerPage :public QWidget
         void _SpeedChange(void) {
             SpeedNow += 1;
             if (SpeedNow % 4 == 1) {
-                emit UserSpeedSet("0.666");
+                emit UserSpeedSet(0.666);
                 SpeedButton->setText("1.5x");
                 SpeedFloat = 0.666;
             }else if (SpeedNow % 4 == 2) {
-                emit UserSpeedSet("0.5");
+                emit UserSpeedSet(0.5);
                 SpeedButton->setText("2.0x");
                 SpeedFloat = 0.5;
             }else if (SpeedNow % 4 == 3) {
-                emit UserSpeedSet("2");
+                emit UserSpeedSet(2);
                 SpeedButton->setText("0.5x");
                 SpeedFloat = 2;
             }else if (SpeedNow % 4 == 4) {
-                emit UserSpeedSet("1");
+                emit UserSpeedSet(1);
                 SpeedButton->setText("1.0x");
                 SpeedFloat = 0.666;
                 SpeedNow = 0;

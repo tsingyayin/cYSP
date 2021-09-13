@@ -28,7 +28,6 @@ int loadsettings(void) {
     SettingsList["Filter_Level"] = "Full";
     SettingsList["Forced_Debugging_Info"] = "False";
     SettingsList["GCPMode"] = "False";
-    SettingsList["Play_Speed"] = "1";
     SettingsList["Update_Channel"] = "Auto";
     SettingsList["Window_DisplayMode"] = "Full";
     SettingsList["Window_Geometry"] = "1920_1080";

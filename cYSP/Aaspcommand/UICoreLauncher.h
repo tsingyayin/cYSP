@@ -5,11 +5,9 @@
 #include "../langcontrol.h"
 #include <exception>
 
-class SPAWN :public QThread
+class SPAWN :public mQThread
 {
 	public:
-		QMutex* mutex;
-		QWaitCondition* cond;
 		QString gFilename;
 		InterpreterSignals* signalName = new InterpreterSignals();
 		SPAWN(QString Filename) {
@@ -18,21 +16,7 @@ class SPAWN :public QThread
 			mutex->lock();
 			cond = new QWaitCondition();
 		}
-
-		void pause(void) {
-			cond->wait(mutex);
-		}
-		void wake(void) {
-			cond->wakeAll();
-		}
 		void run(void) {
-			QList<QStringList> warnline;
-			QList<QStringList> texterrorline;
-			QList<QStringList> numseterrorline;
-			QList<QStringList> formatwarnline;
-			QList<QStringList> nameerrorline;
-			QList<QStringList> playnext;
-			QList<QList<QStringList>> interpreterinfo;
 			
 			QFile StoryFile;
 			bool firstOpen=false;
@@ -58,7 +42,6 @@ class SPAWN :public QThread
 					StoryFileTextSingleLine = StoryFileText.readLine();
 					if (StoryFileTextSingleLine[-1] != "\n") {
 						StoryFileTextSingleLine.append("\n");
-						formatwarnline.append({ QString::number(Linecount),gFilename,StoryFileTextSingleLine });
 					}
 					int LineLength = StoryFileTextSingleLine.length();
 					if (StoryFileTextSingleLine[0] == "/") {
@@ -70,15 +53,13 @@ class SPAWN :public QThread
 					}
 					else if (StoryFileTextSingleLine[0] == ":" && ensureSPOLVer) {
 						if (StoryFileTextSingleLine.count(":") != 4) {
-							texterrorline.append({ QString::number(Linecount),gFilename,StoryFileTextSingleLine });
 							break;
 						}
 						try {
-							Titlesetlist = StoryFileTextSingleLine.mid(1, LineLength - 1).split(":");
+							Titlesetlist = StoryFileTextSingleLine.mid(1, LineLength - 2).split(":");
 							if (Titlesetlist.length() != 4) { throw 0; }
 						}
 						catch (...) {
-							texterrorline.append({ QString::number(Linecount),gFilename,StoryFileTextSingleLine });
 							break;
 						}
 						qDebug().noquote() << "-->Get Title Line<--";
@@ -92,7 +73,7 @@ class SPAWN :public QThread
 				}
 				StoryFile.close();
 				if (firstOpen) {
-					Interpreter(gFilename, InterpreterMode::presource, signalName);
+					Interpreter(gFilename, signalName, this);
 				}
 				
 			}
@@ -101,6 +82,7 @@ class SPAWN :public QThread
 			}
 			mutex->tryLock();
 			mutex->unlock();
+			emit signalName->can_reprint_hello(1);
 			this->exit();
 		}
 };

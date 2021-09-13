@@ -8,6 +8,18 @@
 
 using namespace std;
 
+class mQThread :public QThread {
+public:
+	QMutex* mutex;
+	QWaitCondition* cond;
+	void pause(void) {
+		cond->wait(mutex);
+	}
+	void wake(void) {
+		cond->wakeAll();
+	}
+};
+
 class InterpreterSignals :public QObject {
 	Q_OBJECT
 	signals:
@@ -52,8 +64,8 @@ public:
 
 enum InterpreterMode {
 	presource = 0,
-	spawn = 1,
-	line = 2,
+	run = 1,
+	debug = 2,
 };
 
 class ReciveUserControl :public QObject
@@ -64,7 +76,12 @@ public:
 public slots:
 	void LineNumNow(int Num); 
 	void SpeedNow(float Num);
+	void ChooseWhichBranch(QString Branchname);
+	void ExitNow(void);
 };
 
-void Interpreter(QString storyFilename, InterpreterMode whichMode,InterpreterSignals *signalsName);
 
+
+void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThread* parent);
+
+QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent = Q_NULLPTR);

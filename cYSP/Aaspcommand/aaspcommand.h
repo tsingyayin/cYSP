@@ -8,7 +8,7 @@
 #include <QtWidgets>
 #include "../langcontrol.h"
 #include "checkupdate.h"
-
+#include "../loadsettings.h"
 #define elif else if
 #define Debug qDebug().noquote()
 
@@ -51,23 +51,42 @@ public:
 		}
 		
 		for (int i = 0; i < VerList.length(); i++) {
-			if (VerList[i][2] == "Pre" && Program_Info("Sub").contains("Pre")) {
+			if (Program_Settings("Update_Channel") == "Pre" && VerList[i][2] == "Pre") {
 				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
-			else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
+			else if (Program_Settings("Update_Channel") == "Pub" && VerList[i][2] == "Pub") {
 				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
-			else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
-				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
-				break;
+			else if (Program_Settings("Update_Channel") == "Auto") {
+				if (VerList[i][2] == "Pre" && Program_Info("Sub").contains("Pre")) {
+					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
+					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
+					break;
+				}
+				else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
+					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
+					break;
+				}
+				else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
+					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
+					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
+					break;
+				}
+			}
+			else {
+				if (VerList[i][2] == "Pub") {
+					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
+					break;
+				}
 			}
 		}
-
+		qDebug().noquote() << VerNew;
 		if (VerNew.isEmpty()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
 			emit Anyinfo(2, msg("Check_Update_Info_Ver_Error"));
