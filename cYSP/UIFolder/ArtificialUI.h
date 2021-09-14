@@ -126,6 +126,12 @@ class PlayerWindow :public PlayerDef
 			connect(Interpreter->signalName, SIGNAL(can_update_bg(QStringList)), this->PlayerPage, SLOT(setCurrentBGP(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(update_num_bg(float, QStringList)), this->PlayerPage, SLOT(updateCurrentBGP(float, QStringList)));
 
+			connect(Interpreter->signalName, SIGNAL(willstop()), this->changeWAKE, SLOT(willStop()));
+			connect(Interpreter->signalName, SIGNAL(inrunning()), this->changeWAKE, SLOT(lastContinue()));
+
+			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
+			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
+			connect(Interpreter->signalName, SIGNAL(now_which_line()), this->PlayerPage->LogPage, SLOT(UpdateLineNum()));
 			StoryShow = TRUE;
 			PlayerPage->initObject();
 			Interpreter->start();
@@ -151,7 +157,9 @@ class PlayerWindow :public PlayerDef
 			FirstPage->raise();
 			if (num == 1) {
 				try {
-					PlayMusic->fadeMedia();
+					if (OneBGMIsPlaying) {
+						PlayMusic->fadeMedia();
+					}
 				}
 				catch (...) {}
 				Interpreter->wait();
@@ -201,9 +209,9 @@ class PlayerWindow :public PlayerDef
 
 		//½âÊÍÆ÷»½ĞÑº¯Êı
 		void Wakeup(void) {
-			while (TRUE) {
-				if (changeWAKE->STOPUNLOCK == FALSE) {
-					Interpreter->wake();
+			while (TRUE) {			
+				if (changeWAKE->STOPUNLOCK == FALSE) {	
+					Interpreter->wake();		
 					break;
 				}
 			}

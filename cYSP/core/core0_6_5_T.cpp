@@ -50,30 +50,31 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 
 		emit signalsName->clr_line_list();
 
-		qDebug().noquote() << "-->Attempt to execute the resource completion module<--- ";
+		qDebug().noquote() << "-->尝试启动预解释和资源补齐模块<--- ";
 		bool InNotes = FALSE;
 		TransThreadCount = 0;
 		TransPictureName.clear();
 		MeaningfulLine.clear();
 		for (int i = 1;;i++) {
 			QString CurrentLine = CurrentSPOLText.readLine();
-			qDebug() << CurrentLine;
 			if (CurrentLine.mid(0, 3) == "###") {
 				InNotes = !InNotes;
 				continue;
 			}
 			if (InNotes == TRUE) { continue; }
-			if (CurrentLine[0] != "#" || CurrentLine[0]!="\n") {
+			if (CurrentLine[0] != "#" && CurrentLine!="" && CurrentLine[0]!= ":" && CurrentLine[0]!="/") {
 				SingleLine(i, CurrentLine, InterpreterMode::presource, signalsName, parent);
 			}
 			if (CurrentSPOLText.atEnd()) { break; }
 		}
-		qDebug() << MeaningfulLine;
-		emit signalsName->can_hide_title();
 
+		Sleep(5000);
+		emit signalsName->can_hide_title();
+		Sleep(1000);
 		while (TransThreadCount!=0) {
 			Sleep(500);
 		}
+		qDebug().noquote() << "InterpreterInfo→成功预剔除注释行";
 
 		emit signalsName->set_scroll_info();
 		emit signalsName->can_prepare_play();
@@ -81,7 +82,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		LineNum = -1;
 		justJump = FALSE;
 		QStringList LineResult;
-		qDebug().noquote() << "-->Attempt to execute the dynamic interpretation module<--- ";
+		qDebug().noquote() << "-->尝试启动实时解释模块<--- ";
 		bool InBranch=FALSE;
 		bool FindBranch = FALSE;
 		exitNow = FALSE;
@@ -188,6 +189,7 @@ public:
 		QString NewPictureName = "./Visual/cache/" + gFilefamily + "/" + gFilename + gAddname + ".png";
 		if (!TransPictureName.contains(NewPictureName)) {
 			TransPictureName.append(NewPictureName);
+			qDebug().noquote() << "InterpreterInfo→需要建立 :" + NewPictureName;
 			QImage SourcePicture = QImage(SourceName);
 			int X = SourcePicture.width();
 			int Y = SourcePicture.height();
@@ -206,6 +208,7 @@ public:
 				}
 			}
 			NewImage.save(NewPictureName);
+			qDebug().noquote() << "InterpreterInfo→成功建立 :" + NewPictureName;
 		}
 		TransThreadCount--;
 		this->deleteLater();
@@ -217,7 +220,7 @@ QList<cTransform*> TransThreadList;
 QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
 	if (whichMode == InterpreterMode::presource) {
 		MeaningfulLine.append(Line);
-		if (Line[0] != "|") {
+		if (Line[0] != "|" || Line.mid(0,3)=="|||" ) {
 			emit signalsName->save_line_list({ QString::number(MeaningfulLine.length() - 1),Line });
 		}
 	}
@@ -226,11 +229,10 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		QStringList RAW = Line.mid(1, Line.length() - 2).split(",");
 		QStringList BGSetList = RAW;
 		for (int i = 0; i < 4 - RAW.length(); i++) { BGSetList.append(""); }
-		if (BGSetList[0] == "") { BGSetList[0] == "黑场"; }
-		if (BGSetList[1] == "") { BGSetList[1] == "0"; }
-		if (BGSetList[2] == "") { BGSetList[2] == "0"; }
-		if (BGSetList[3] == "") { BGSetList[3] == "500"; }
-		qDebug() << BGSetList;
+		if (BGSetList[0] == "") { BGSetList[0] = "黑场"; }
+		if (BGSetList[1] == "") { BGSetList[1] = "0"; }
+		if (BGSetList[2] == "") { BGSetList[2] = "0"; }
+		if (BGSetList[3] == "") { BGSetList[3] = "0.5"; }	
 		try {
 			if (0 > BGSetList[1].toInt() || BGSetList[1].toInt() > 5) { throw "Exception"; }
 			if (0 > BGSetList[2].toInt() || BGSetList[2].toInt() > 3) { throw "Exception"; }
@@ -255,18 +257,22 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 
 		if (whichMode == InterpreterMode::run) {
+			qDebug() << BGSetList;
+
 			emit signalsName->can_update_bg(BGSetList);
 			if (BGSetList[3].toFloat() != 0) {
 				emit signalsName->willstop();
-				for (float OpFloat; OpFloat <= 1; OpFloat += (1 / (BGSetList[3].toFloat() * 30))) {
-					emit signalsName->update_num_bg(OpFloat, BGSetList);
-					Sleep(33);
+				for (float OpFloat = 0; OpFloat < 1; OpFloat += (1 / (BGSetList[3].toFloat() * 60))) {
+					emit signalsName->update_num_bg(OpFloat, BGSetList);		
+					Sleep(15);
 				}
+				emit signalsName->update_num_bg(1, BGSetList);
 				parent->pause();
 				emit signalsName->inrunning();
 			}
 			else {
 				emit signalsName->willstop();
+				Sleep(1);
 				emit signalsName->update_num_bg(0, BGSetList);
 				emit signalsName->update_num_bg(1, BGSetList);
 				parent->pause();

@@ -23,6 +23,7 @@ class ShakeFunc :public QThread
 				Sleep(20 * gSpeed);
 			}
 			emit shakeXY(0, 0, 1);
+			this->deleteLater();
 			this->quit();
 		}
 };
@@ -45,6 +46,7 @@ class FlashFuncFast :public QThread
 				Sleep(20 * gSpeed);
 			}
 			emit FlashOPint(0, 2);
+			this->deleteLater();
 			this->quit();
 		}
 };
@@ -67,6 +69,7 @@ public:
 			Sleep(20 * gSpeed);
 		}
 		emit FlashOPint(0, 2);
+		this->deleteLater();
 		this->quit();
 	}
 };

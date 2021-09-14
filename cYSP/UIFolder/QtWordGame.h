@@ -226,8 +226,9 @@ class uTitlePage :public QWidget
             Splashes_Label->repaint();
             Splashes_Label->setText("");
             for (int i = 0; i <= 21; i++) {
-                OPBlackHideLabel->setOpacity(i / 20);
+                OPBlackHideLabel->setOpacity((float)i / 20);
                 BlackHideLabel->repaint();
+                Sleep(4);
             }
             TitleBackgroundLabel->setPixmap(QPixmap(""));
             BlackHideLabel->setPixmap(QPixmap(""));
@@ -263,13 +264,14 @@ public:
     QString QSSStoryScroll;
     QList<QList<QString>> SaveLineList;
     QString LineListForDisplay;
-    int gX, gY;
+    float gX, gY;
     uScrollPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
         gX = X;
         gY = Y;
-        QString Fontsize60 = QString::number(Y * 0.055555) + "px";
-        QString Fontsize40 = QString::number(Y * 0.037037) + "px";
-        QString Fontsize30 = QString::number(Y * 0.027777) + "px";
+        QString Fontsize60 = QString::number((int)(Y * 0.055555)) + "px";
+        QString Fontsize40 = QString::number((int)(Y * 0.037037)) + "px";
+        QString Fontsize30 = QString::number((int)(Y * 0.027777)) + "px";
+        this->setParent(parent);
 
         BlackCover = new QLabel(this);
         BlackCoverPixmap = QImage(X, Y, QImage::Format_ARGB32);
@@ -352,27 +354,28 @@ public:
         SaveLineList = {};
         LineListForDisplay = "";
     }
+public slots:
     void initObject(void) {
         SaveLineList = {};
         LineListForDisplay = "";
     }
     void setLineList(QStringList StoryLine) {
         SaveLineList.append(StoryLine);
+        qDebug() << StoryLine;
     }
     void setScroll(void) {
         StoryScroll->setMinimum(0);
         StoryScroll->setMaximum(SaveLineList.length() - 1);
         StoryScroll->setSingleStep(1);
-
         QString LineListForDisplay = "";
         for (int i = 0; i < SaveLineList.length(); i++) {
             LineListForDisplay.append(QString::number(i) + "\t" + SaveLineList[i][1] + "\n\n");
         }
         StoryBigPad->setText(LineListForDisplay);
         StoryBigPad->setGeometry(QRect(gX * 0.12, gY * 0.675, gX * 0.8, (int)(SaveLineList.length() * gY * 0.06111111)));
-        connect(StoryBigPad, SIGNAL(valueChanged()), this, SLOT(MoveBigPad()));
+        connect(StoryScroll, SIGNAL(valueChanged(int)), this, SLOT(MoveBigPad(int)));
     }
-public slots:
+
     void UpdateLineNum(QString LineInfo) {
         for (int i = 0; i < SaveLineList.length(); i++) {
             if (LineInfo == SaveLineList[i][0]) {
@@ -381,7 +384,7 @@ public slots:
             }
         }
     }
-    void MoveBigPad(void) {
+    void MoveBigPad(int num) {
         StoryBigPad->setGeometry(QRect(gX * 0.12, (int)(gY * 0.675 - StoryScroll->value() * gY * 0.06111111), gX * 0.8, (int)(SaveLineList.length() * gY * 0.06111111)));
         ToLineNum->setText(msg("Ui_To_Which_Line") + "\n" + QString::number(StoryScroll->value()));
     }
@@ -521,7 +524,7 @@ class uPlayerPage :public QWidget
             FreeLabel = new QLabel(this);
             FreeLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-family:'SimHei';font-weight:bold}");
             FreeLabel->setAlignment(Qt::AlignCenter);
-            FreeLabel->setGeometry(QRect(-gX * 0.76, -gY * 0.033, gX * 0.75, gY * 0.0324074));
+            FreeLabel->setGeometry(QRect(gX * 2, -gY * 0.033, gX * 0.75, gY * 0.0324074));
             OPFreeLabel = new QGraphicsOpacityEffect();
             OPFreeLabel->setOpacity(0);
             FreeLabel->setGraphicsEffect(OPFreeLabel);
@@ -613,10 +616,10 @@ class uPlayerPage :public QWidget
                     color:#FFFFFF;\
                     }";
             SpeedButton->setStyleSheet(QSSSpeedButton);
-
+            
             if (UseLogPage) {
                 LogPage = new uScrollPage(X, Y, this);
-                LogPage->setGeometry(QRect(-X, Y, X, Y));
+                LogPage->setGeometry(QRect(X, Y, X, Y));
                 connect(LogPage->JumpEmitButton, SIGNAL(clicked()), this, SLOT(showLogPage()));
             }
 
@@ -687,6 +690,7 @@ class uPlayerPage :public QWidget
             AutoButton->setGeometry(QRect(gX * 0.80729, gY * 0.038, gX * 0.098125, gY * 0.046296));
             SpeedButton->setGeometry(QRect(gX * 0.902604, gY * 0.038, gX * 0.078125, gY * 0.046296));
             if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+
         }
         void setCurrentAvg(QList<QStringList> CharaPicList, int Charanum, bool BGBlack) {
             if (BGBlack) {
@@ -780,19 +784,19 @@ class uPlayerPage :public QWidget
                     BGR.load("./Visual/source/BGP/" + BGPSetList[0] + ".png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "1"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "-Dark.png");
+                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "2"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "-Fade.png");
+                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_3.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "3"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "-Fade-Dark.png");
+                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_3_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "4"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "-BAW.png");
+                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_4.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "5") {
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "-BAW-Dark.png");
+                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_4_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }
             }
@@ -819,23 +823,28 @@ class uPlayerPage :public QWidget
                     changeBG = 1;
                 }
             }
-
-            if (BGSetList[2] == "1") {
-                ShakeFUNC = new ShakeFunc(SpeedFloat);
-                connect(ShakeFUNC, SIGNAL(shakeXY(int, int, int)), this, SLOT(_ShakeRect(int, int, int)));
-                ShakeFUNC->start();
-            }else if (BGSetList[2] == "2") {
-                effectuse = 2;
-                FlashFUNCFast = new FlashFuncFast(SpeedFloat);
-                connect(FlashFUNCFast, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
-                FlashFUNCFast->start();
-            }else if (BGSetList[2] == "3") {
-                effectuse = 3;
-                FlashFUNCSlow = new FlashFuncSlow(SpeedFloat);
-                connect(FlashFUNCSlow, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
-                FlashFUNCSlow->start();
-            }else{
-                showNext();
+            if (Opacity_Float >= 1) {
+                if (BGSetList[2] == "1") {
+                    ShakeFUNC = new ShakeFunc(SpeedFloat);
+                    connect(ShakeFUNC, SIGNAL(shakeXY(int, int, int)), this, SLOT(_ShakeRect(int, int, int)));
+                    ShakeFUNC->start();
+                }
+                else if (BGSetList[2] == "2") {
+                    effectuse = 2;
+                    FlashFUNCFast = new FlashFuncFast(SpeedFloat);
+                    connect(FlashFUNCFast, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
+                    FlashFUNCFast->start();
+                }
+                else if (BGSetList[2] == "3") {
+                    effectuse = 3;
+                    FlashFUNCSlow = new FlashFuncSlow(SpeedFloat);
+                    connect(FlashFUNCSlow, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
+                    FlashFUNCSlow->start();
+                }
+                else {
+                    Sleep(5);
+                    showNext();
+                }
             }
         }
         void setCurrentFree(QStringList textsetlst, QStringList wordset) {
@@ -890,7 +899,7 @@ class uPlayerPage :public QWidget
                 BG2->repaint();
             }
             if (end == 1) {
-                delete ShakeFUNC;
+                Sleep(5);
                 showNext();
             }
         }
@@ -904,13 +913,13 @@ class uPlayerPage :public QWidget
                 OPWhiteFlash->setOpacity(0);
                 if (effectuse == 2) {
                     FlashFUNCFast->wait();
-                    delete FlashFUNCFast;
                     effectuse = 0;
                 }else if (effectuse == 3) {
                     FlashFUNCSlow->wait();
-                    delete FlashFUNCSlow;
                     effectuse = 0;
                 }
+                Sleep(5);
+                showNext();
             }
         }
         void _AutoChange(void) {
@@ -993,18 +1002,19 @@ class uPlayerPage :public QWidget
             NextButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.8981, gX * 0.078125, gY * 0.046296));
         }
         void showLogPage(void) {
-            if (!InLogPage) {
+            if (InLogPage==FALSE) {
                 emit NowInLog();
                 if (Auto) {
                     _AutoChange();
                     }
                 LogPage->setGeometry(QRect(0, 0, gX, gY));
+                qDebug() << LogPage->geometry();
                 InLogPage = TRUE;
-            }else {
-                if (!Auto) {
+            }else if (InLogPage == TRUE ){
+                if (Auto==FALSE) {
                     _AutoChange();
                 }
-                if (NextButton->geometry() == QRect(-gX, -gY, gX, gY)) {
+                if (NextButton->geometry() == QRect(gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296)) {
                     _ToNext();
                 }
                 LogPage->setGeometry(QRect(-gX, -gY, gX, gY));
