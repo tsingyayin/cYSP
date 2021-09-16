@@ -16,7 +16,7 @@ class ShakeFunc :public QThread
 			gSpeed = SpeedNow;
 		}
 		void run(void) {
-			for (int i; i < 10; i++) {
+			for (int i = 0; i < 10; i++) {
 				int a = randint(-10, 10);
 				int b = randint(-10, 10);
 				emit shakeXY(a, b, 0);

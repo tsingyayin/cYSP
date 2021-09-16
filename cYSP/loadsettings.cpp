@@ -5,7 +5,7 @@
 #include <QtCore>
 static QMap<QString, QString> SettingsList;
 QString Initial_prompt_statement = "#这个文档是程序设置的记录文档。\n#如需快速初始化程序设定，可以直接删除本文档。但这（可能）会影响程序在删除本文档后的首次启动速度。\n\n";
-int writesettings(QString SettingsKey, QString SettingsValue)
+void writesettings(QString SettingsKey, QString SettingsValue)
 {
     if (SettingsKey != "" && SettingsValue != "") {
         SettingsList[SettingsKey] = SettingsValue; 

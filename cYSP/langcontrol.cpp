@@ -16,7 +16,7 @@ using namespace std;
 static QMap<QString, QString> msglist;
 clock_t timeStart, timeEnd;
 
-int langset(QString langname) {
+int langset(QString langname){
     timeStart = clock();
     QString langnameraw = langname;
     if (langnameraw == "0") {

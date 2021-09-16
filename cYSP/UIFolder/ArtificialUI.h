@@ -119,6 +119,9 @@ class PlayerWindow :public PlayerDef
 			connect(Interpreter->signalName, SIGNAL(can_hide_hello(int)), this, SLOT(hideHello(int)));
 			connect(Interpreter->signalName, SIGNAL(can_reprint_hello(int)), this, SLOT(reprintHello(int)));
 			
+			connect(Interpreter->signalName, SIGNAL(need_to_choose(QStringList)), this->PlayerPage, SLOT(setBranchButton(QStringList)));
+			connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
+
 			connect(Interpreter->signalName, SIGNAL(can_show_title(QStringList)), this, SLOT(showTitle(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(can_hide_title(void)), this, SLOT(hideTitle(void)));
 			connect(Interpreter->signalName, SIGNAL(can_prepare_play(void)), this, SLOT(hideTitleLast(void)));
@@ -131,7 +134,7 @@ class PlayerWindow :public PlayerDef
 
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
-			connect(Interpreter->signalName, SIGNAL(now_which_line()), this->PlayerPage->LogPage, SLOT(UpdateLineNum()));
+			connect(Interpreter->signalName, SIGNAL(now_which_line(QString)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(QString)));
 			StoryShow = TRUE;
 			PlayerPage->initObject();
 			Interpreter->start();

@@ -113,12 +113,13 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 			if (CurrentLine.mid(0, 3) == "|||" ) {
 				if (InBranch == FALSE) {
 					QStringList SmallJumpSetList;
-					SmallJumpSetList = CurrentLine.mid(3, CurrentLine.length() - 5).split("|||");
+					SmallJumpSetList = CurrentLine.mid(3, CurrentLine.length() - 4).split("|||");
 					if (SmallJumpSetList.length() > 4) { continue; }
 					QList<QStringList> SmallJumpNoteList;
 					for (int i = 0; i < SmallJumpSetList.length(); i++) {
 						SmallJumpNoteList.append(SmallJumpSetList[i].split(":"));
 					}
+					qDebug() << SmallJumpSetList;
 					InBranch = TRUE;
 					emit signalsName->need_to_choose(SmallJumpSetList);
 					emit signalsName->willstop();
@@ -132,7 +133,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				}
 			}
 			if (CurrentLine.mid(0, 2) == "||" && CurrentLine.mid(0, 3) != "|||" && InBranch) {
-				if (CurrentLine.mid(2, CurrentLine.length() - 3).split(":")[1] != UserChooseBranch) {
+				if (CurrentLine.mid(2, CurrentLine.length() - 3) != UserChooseBranch) {
 					FindBranch = FALSE;
 					continue;
 				}
@@ -220,11 +221,13 @@ QList<cTransform*> TransThreadList;
 QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
 	if (whichMode == InterpreterMode::presource) {
 		MeaningfulLine.append(Line);
-		if (Line[0] != "|" || Line.mid(0,3)=="|||" ) {
+		if (Line[0] != "|" || Line.mid(0,3)=="|||") {
 			emit signalsName->save_line_list({ QString::number(MeaningfulLine.length() - 1),Line });
 		}
 	}
-
+	if (whichMode == InterpreterMode::run) {
+		emit signalsName->now_which_line(Line);
+	}
 	if (Line[0] == "[") {
 		QStringList RAW = Line.mid(1, Line.length() - 2).split(",");
 		QStringList BGSetList = RAW;
@@ -264,7 +267,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				emit signalsName->willstop();
 				for (float OpFloat = 0; OpFloat < 1; OpFloat += (1 / (BGSetList[3].toFloat() * 60))) {
 					emit signalsName->update_num_bg(OpFloat, BGSetList);		
-					Sleep(15);
+					Sleep((float)15*SpeedFloat);
 				}
 				emit signalsName->update_num_bg(1, BGSetList);
 				parent->pause();

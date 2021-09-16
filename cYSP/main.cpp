@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
         DirectOpen = 1;
         Usript = "window";
     }
-    Usript = "window";
+    Usript = "ui";
     ensuredirs(0);
 
     langset("0");

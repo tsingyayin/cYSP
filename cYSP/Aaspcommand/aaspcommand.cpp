@@ -115,8 +115,6 @@ void aasphelp(void) {
 	qDebug().noquote()<<"window\t" + msg("Help_In_Main_Page_window");
 }
 
-//文件清理函数
-//整合了Python版本的DeleteEmptyMap和DeleteAllCache两个函数。区分为初始值int 0 和 1（其实可以写成bool）
 void DeleteCache(int num) {
 	if (num == 0) {
 		qDebug().noquote() << "sysinfo→" + msg("File_Searching_Wrong");
@@ -148,7 +146,6 @@ void DeleteCache(int num) {
 	qDebug().noquote() << "sysinfo→" + msg("File_Searching_Wrong_End");
 }
 
-//文件系统保全函数
 void ensuredirs(int num) {
 	qDebug().noquote() << "sysinfo→Checking the files in the directory";
 	QStringList dirlst;

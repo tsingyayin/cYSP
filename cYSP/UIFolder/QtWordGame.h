@@ -378,7 +378,7 @@ public slots:
 
     void UpdateLineNum(QString LineInfo) {
         for (int i = 0; i < SaveLineList.length(); i++) {
-            if (LineInfo == SaveLineList[i][0]) {
+            if (LineInfo == SaveLineList[i][1]) {
                 StoryLineNum->setText(msg("Ui_Current_Line") + "\n" + QString::number(i + 1));
                 StoryScroll->setValue(i + 1);
             }
@@ -663,22 +663,22 @@ class uPlayerPage :public QWidget
             if (converlstlen > 0) {
                 BranchButton_1->setText(BranchList[0].section(":", -1, -1));
             }if (converlstlen > 1) {
-                BranchButton_1->setText(BranchList[1].section(":", -1, -1));
+                BranchButton_2->setText(BranchList[1].section(":", -1, -1));
             }if (converlstlen > 2) {
-                BranchButton_1->setText(BranchList[2].section(":", -1, -1));
+                BranchButton_3->setText(BranchList[2].section(":", -1, -1));
             }if (converlstlen > 3) {
-                BranchButton_1->setText(BranchList[3].section(":", -1, -1));
+                BranchButton_4->setText(BranchList[3].section(":", -1, -1));
             }
             if (converlstlen == 1) {
                 BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.402777, 635, 70));
             }if (converlstlen == 2) {
                 BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.337962963, 635, 70));
                 BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.435185, 635, 70));
-            }if (converlstlen == 2) {
+            }if (converlstlen == 3) {
                 BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.273148, 635, 70));
                 BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.37037037, 635, 70));
                 BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.46759, 635, 70));
-            }if (converlstlen == 2) {
+            }if (converlstlen == 4) {
                 BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.2574074, 635, 70));
                 BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.3546296, 635, 70));
                 BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.45185185, 635, 70));
@@ -964,7 +964,7 @@ class uPlayerPage :public QWidget
                 emit UserSpeedSet(2);
                 SpeedButton->setText("0.5x");
                 SpeedFloat = 2;
-            }else if (SpeedNow % 4 == 4) {
+            }else if (SpeedNow % 4 == 0) {
                 emit UserSpeedSet(1);
                 SpeedButton->setText("1.0x");
                 SpeedFloat = 0.666;
