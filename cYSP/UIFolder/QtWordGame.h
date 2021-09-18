@@ -714,10 +714,17 @@ class uPlayerPage :public QWidget
                     }else {
                         AVG_L->setPixmap(QPixmap(""));
                         AVG_R->setPixmap(QPixmap(""));
+                        QString Addname;
+                        if (i[3] == "0") { Addname = ""; }
+                        if (i[3] == "1") { Addname += "_1"; }
+                        if (i[3] == "2") { Addname += "_3"; }
+                        if (i[3] == "3") { Addname += "_1_3"; }
+                        if (i[3] == "4") { Addname += "_4"; }
+                        if (i[3] == "5") { Addname += "_1_4"; }
                         if (i[6] == "(暗，沉默)") {
-                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + "_" + i[3] + "-Dark.png");
+                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + Addname +"_6" + ".png");
                         }else if (i[3] != "0") {
-                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + "_" + i[3] + ".png");
+                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + Addname + ".png");
                         }else {
                             AVG_M_R.load("./Visual/source/Chara/" + i[0] + "_" + i[1] + ".png");
                         }
@@ -732,10 +739,17 @@ class uPlayerPage :public QWidget
             else if (Charanum == 2) {
                 AVG_M->setPixmap(QPixmap(""));
                 if (CharaPicList[0][0] != "") {
+                    QString Addname;
+                    if (CharaPicList[0][3] == "0") { Addname = ""; }
+                    if (CharaPicList[0][3] == "1") { Addname += "_1"; }
+                    if (CharaPicList[0][3] == "2") { Addname += "_3"; }
+                    if (CharaPicList[0][3] == "3") { Addname += "_1_3"; }
+                    if (CharaPicList[0][3] == "4") { Addname += "_4"; }
+                    if (CharaPicList[0][3] == "5") { Addname += "_1_4"; }
                     if (CharaPicList[0][6] == "(暗，沉默)") {
-                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + "_" + CharaPicList[0][3] + "-Dark.png");
+                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + "_6" + ".png");
                     }else if (CharaPicList[0][3] != "0") {
-                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + "_" + CharaPicList[0][3] + ".png");
+                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + ".png");
                     }else {
                         AVG_L_R.load("./Visual/source/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + ".png");
                     }
@@ -746,10 +760,17 @@ class uPlayerPage :public QWidget
                     }
                 }
                 if (CharaPicList[1][0] != "") {
+                    QString Addname;
+                    if (CharaPicList[1][3] == "0") { Addname = ""; }
+                    if (CharaPicList[1][3] == "1") { Addname += "_1"; }
+                    if (CharaPicList[1][3] == "2") { Addname += "_3"; }
+                    if (CharaPicList[1][3] == "3") { Addname += "_1_3"; }
+                    if (CharaPicList[1][3] == "4") { Addname += "_4"; }
+                    if (CharaPicList[1][3] == "5") { Addname += "_1_4"; }
                     if (CharaPicList[1][6] == "(暗，沉默)") {
-                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + "_" + CharaPicList[1][3] + "-Dark.png");
+                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + "_6" + ".png");
                     }else if (CharaPicList[1][3] != "0") {
-                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + "_" + CharaPicList[1][3] + ".png");
+                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + ".png");
                     }else {
                         AVG_R_R.load("./Visual/source/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + ".png");
                     }

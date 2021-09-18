@@ -224,10 +224,12 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		if (Line[0] != "|" || Line.mid(0,3)=="|||") {
 			emit signalsName->save_line_list({ QString::number(MeaningfulLine.length() - 1),Line });
 		}
+		if (Line[0] == "|") { Line = Line.mid(1, Line.length() - 1); }
 	}
 	if (whichMode == InterpreterMode::run) {
 		emit signalsName->now_which_line(Line);
 	}
+	//背景控制器
 	if (Line[0] == "[") {
 		QStringList RAW = Line.mid(1, Line.length() - 2).split(",");
 		QStringList BGSetList = RAW;
@@ -284,6 +286,155 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
+	//讲述控制器
+	else if (Line.mid(0, 3) == ">>>") {
+		//首先提取行进驻留控制器（若有）
+		QStringList PlaySetList;
+		if (Line[Line.length() - 1] == ")") {
+			QStringList cachePlaySetList = Line.mid(Line.lastIndexOf("(") + 1, Line.length() - Line.lastIndexOf("(") - 2).split(",");
+			PlaySetList = cachePlaySetList;
+			for (int j = 0; j < 2 - cachePlaySetList.length(); j++) { PlaySetList.append(""); }
+			Line = Line.mid(0, Line.lastIndexOf("("));
+		}else {
+			PlaySetList.append("");
+			PlaySetList.append("");
+		}
+		if (PlaySetList[0] == "") { PlaySetList[0] = "0.066"; }
+		if (PlaySetList[1] == "") { PlaySetList[1] = "1.5"; }
+		qDebug() << PlaySetList;
+
+		//提取讲述控制器全体
+		QStringList RAW = Line.mid(3, Line.length() - 3).split(">>>");
+		QList<QStringList> CharaSetList;
+		for (int i = 0; i < RAW.length(); i++) {
+			CharaSetList.append({ RAW[i].split(":") });
+		}
+		//从讲述控制器全体提取立绘设置
+		QList<QStringList> AvgSetList;
+		for (int i = 0; i < CharaSetList.length(); i++) {
+			AvgSetList.append({ CharaSetList[i][0].split("/") });
+			for (int j = 0; j < 6 - CharaSetList[i][0].split("/").length(); j++) { AvgSetList[i].append(""); }
+			if (AvgSetList[i][0] == "") { AvgSetList[i][0] = ""; }
+			if (AvgSetList[i][1] == "") { AvgSetList[i][1] = ""; }
+			if (AvgSetList[i][2] == "") { AvgSetList[i][2] = "0"; }
+			if (AvgSetList[i][3] == "") { AvgSetList[i][3] = "0"; }
+			if (AvgSetList[i][4] == "") { AvgSetList[i][4] = "0.5"; }
+			if (AvgSetList[i][5] == "") { AvgSetList[i][5] = "0.5"; }
+		}
+		//从讲述控制器全体提取文本设置
+		QList<QStringList> WordSetList;
+		for (int i = 0; i < CharaSetList.length(); i++) {
+			if (CharaSetList[i].length() == 2) {
+				WordSetList.append({ AvgSetList[i][0],CharaSetList[i][1] });
+			}
+			else if (CharaSetList[i].length() == 3) {
+				WordSetList.append({ CharaSetList[i][1],CharaSetList[i][2] });
+			}
+		}
+		
+
+		int Charanum = WordSetList.length();
+		bool BGBlack = TRUE;
+		
+		if (Charanum == 1) {
+			if (WordSetList[0][1] == "") { AvgSetList[0].append("(亮，沉默)"); }
+			else if (WordSetList[0][1] != "") { AvgSetList[0].append("(亮，讲述)"); }
+		}
+		else if (Charanum == 2) {
+			if (WordSetList[0][1] == "" && WordSetList[1][1] == "") {
+				AvgSetList[0].append("(亮，沉默)");
+				AvgSetList[1].append("(亮，沉默)");
+				if (WordSetList[0][0] == "" && WordSetList[1][0] == "") { BGBlack = FALSE; }
+			}
+			else if (WordSetList[0][1] != "" && WordSetList[1][1] == "") {
+				AvgSetList[0].append("(亮，讲述)");
+				AvgSetList[1].append("(暗，沉默)");
+			}
+			else if (WordSetList[0][1] == "" && WordSetList[1][1] != "") {
+				AvgSetList[0].append("(亮，沉默)");
+				AvgSetList[1].append("(亮，讲述)");
+			}
+		}
+
+		if (whichMode == InterpreterMode::debug) {
+			if (Charanum > 2) {
+				qDebug().noquote() << "检查行" + QString::number(LineNum) + "中存在的控制器数量超限";
+			}
+		}
+		if (whichMode == InterpreterMode::presource) {
+			QList<Filter> FilterList;
+			for (int i = 0; i < AvgSetList.length(); i++) {
+				
+				if (AvgSetList[i][3] == "1") { FilterList.append(Filter::gradientMask); }
+				if (AvgSetList[i][3] == "2") { FilterList.append(Filter::fade); }
+				if (AvgSetList[i][3] == "3") { FilterList.append(Filter::fade); FilterList.append(Filter::gradientMask); }
+				if (AvgSetList[i][3] == "4") { FilterList.append(Filter::onlyBW); }
+				if (AvgSetList[i][3] == "5") { FilterList.append(Filter::onlyBW); FilterList.append(Filter::gradientMask); }
+				if (AvgSetList[i][6] == "(暗，沉默)") { FilterList.append(Filter::turnDark); }
+				TransThreadList.append(new cTransform(AvgSetList[i][0]+"_" + AvgSetList[i][1], "Chara", FilterList));
+				TransThreadList[TransThreadList.length() - 1]->start();
+				TransThreadCount++;
+			}
+		}
+		if (whichMode == InterpreterMode::run) {
+			emit signalsName->can_update_chara(AvgSetList, Charanum, BGBlack);
+
+			QString WordsAll = "";
+			for (int i = 0; i < WordSetList.length(); i++) {
+				if (WordSetList[i][1] == "" && Charanum == 1) {
+					emit signalsName->update_chara_num(WordSetList[i], WordsAll, Charanum, PlaySetList);
+					break;
+				}
+				else if ((WordSetList[i][0] == "" && Charanum == 1) || (WordSetList[i][0] != "" && WordSetList[i][1] != "")) {
+					int AlphaCount = 0;
+					if (WordSetList[i][1] == "") {
+						emit signalsName->update_chara_num(WordSetList[i], WordsAll, Charanum, PlaySetList);
+					}
+					else if (WordSetList[i][1] != "") {
+						if (PlaySetList[0].toFloat() != 0) {
+							for (int j = 0; j < WordSetList[i][1].length(); j++) {
+								Sleep((float)1000 * PlaySetList[0].toFloat());
+								if ("\u4e00" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u9fff" ||
+									"\u3040" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u309f" ||
+									"\u30a0" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u30ff"  ) {
+									AlphaCount += 2;
+								}else { AlphaCount += 1; }
+								if (AlphaCount > 60) {
+									WordsAll += "\n";
+									AlphaCount = 1;
+								}
+								WordsAll += WordSetList[i][1][j];
+								emit signalsName->update_chara_num(WordSetList[i], WordsAll, Charanum, PlaySetList);
+							}
+						}
+						else if (PlaySetList[0].toFloat() != 0) {
+							for (int j = 0; j < WordSetList[i][1].length(); j++) {
+								if ("\u4e00" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u9fff" ||
+									"\u3040" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u309f" ||
+									"\u30a0" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u30ff") {
+									AlphaCount += 2;
+								}
+								else { AlphaCount += 1; }
+								if (AlphaCount > 60) {
+									WordsAll += "\n";
+									AlphaCount = 1;
+								}
+								WordsAll += WordSetList[i][1][j];
+								emit signalsName->update_chara_num(WordSetList[i], WordsAll, Charanum, PlaySetList);
+							}
+						}
+						
+					}
+					break;
+				}			
+			}
+			emit signalsName->willstop();
+			Sleep((float)1000 * PlaySetList[1].toFloat());
+			emit signalsName->show_next();
+			parent->pause();
+			emit signalsName->inrunning();
+		}
+	}
 	return { "TEST","TEST" };
 };
 

@@ -15,7 +15,7 @@ O======O
 Edition查询全版本号、Main查询主版本号
 Sub查询更新号、Build查询构建号
 SPOL查询SPOL版本、SPEnv查询解释器环境类型
-Day查询发行日期
+Day查询发行日期、Developer查询开发者
 O======O
 默认值“UNKNOWN_PROGRAM_INFO”*/
 QString Program_Info(QString SearchParameter = "None");

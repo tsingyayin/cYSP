@@ -23,11 +23,11 @@ class SPAWN :public mQThread
 			bool continueOpen = false;
 			StoryFile.setFileName(gFilename);
 			StoryFile.open(QIODevice::ReadOnly | QIODevice::Text);
+			emit signalName->can_hide_hello(1);
 
 			if (StoryFile.isOpen()) {
 				qDebug().noquote() << "======Start early filtering process======";
-				emit signalName->can_hide_hello(1);
-
+				
 				QString Version;
 				int Linecount = 0;
 				QStringList VerList;

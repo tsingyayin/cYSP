@@ -25,7 +25,7 @@ class InterpreterSignals :public QObject {
 	Q_OBJECT
 	signals:
 	//递送讲述控制器人物立绘
-	void can_update_chara(QList<QStringList>, int, int);
+	void can_update_chara(QList<QStringList>, int, bool);
 	//递送讲述控制器文本
 	void update_chara_num(QStringList, QString, int, QStringList);
 	//递送背景控制器图像
@@ -48,7 +48,7 @@ class InterpreterSignals :public QObject {
 	void can_prepare_play(void);
 	//递送大小分支控制器通用的分支设置
 	void need_to_choose(QStringList);
-	//未知函数
+	//文本更新结束后翻页函数
 	void show_next(void);
 	//告知UI线程，解释器已经在运行
 	void inrunning(void);
@@ -60,8 +60,6 @@ class InterpreterSignals :public QObject {
 	void update_num_freedom(QString);
 	//清理自由文本控制器
 	void can_clear_freedom(int);
-	//未知函数
-	void send_file_info(void);
 	//清理跳转列表
 	void clr_line_list(void);
 	//保存跳转信息
@@ -72,7 +70,7 @@ class InterpreterSignals :public QObject {
 	void now_which_line(QString);
 public:
 	InterpreterSignals() {
-		
+		qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
 	}
 };
 

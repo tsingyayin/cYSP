@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void GradientMask(int y, int Y, int* r, int* g, int* b) {
+void GradientMask(float y, float Y, int* r, int* g, int* b) {
 	if (0 < y && y < Y / 3) {
 		*r = 0;
 		*g = 0;

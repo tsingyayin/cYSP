@@ -129,9 +129,21 @@ class PlayerWindow :public PlayerDef
 			connect(Interpreter->signalName, SIGNAL(can_update_bg(QStringList)), this->PlayerPage, SLOT(setCurrentBGP(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(update_num_bg(float, QStringList)), this->PlayerPage, SLOT(updateCurrentBGP(float, QStringList)));
 
+			connect(Interpreter->signalName, SIGNAL(can_update_chara(QList<QStringList>, int, bool)) , this->PlayerPage, SLOT(setCurrentAvg(QList<QStringList>, int, bool)));
+			connect(Interpreter->signalName, SIGNAL(update_chara_num(QStringList, QString, int, QStringList)), this->PlayerPage, SLOT(updateCurrentWords(QStringList, QString, int, QStringList)));
+
+			connect(Interpreter->signalName, SIGNAL(can_update_freedom(QStringList, QStringList)), this->PlayerPage, SLOT(setCurrentFree(QStringList, QStringList)));
+			connect(Interpreter->signalName, SIGNAL(update_num_freedom(QString)), this->PlayerPage, SLOT(updateCurrentFree(QString)));
+			connect(Interpreter->signalName, SIGNAL(can_clear_freedom(int)), this->PlayerPage, SLOT(clearCurrentFree(int)));
+
+			connect(Interpreter->signalName, SIGNAL(can_update_bgm(QString, int)), this, SLOT(playBGM(QString, int)));
+			connect(Interpreter->signalName, SIGNAL(can_update_sound(QString, int)), this, SLOT(playSound(QString, int)));
+
+			connect(Interpreter->signalName, SIGNAL(show_next()), this->PlayerPage, SLOT(showNext()));
 			connect(Interpreter->signalName, SIGNAL(willstop()), this->changeWAKE, SLOT(willStop()));
 			connect(Interpreter->signalName, SIGNAL(inrunning()), this->changeWAKE, SLOT(lastContinue()));
 
+			connect(Interpreter->signalName, SIGNAL(clr_line_list()), this->PlayerPage->LogPage, SLOT(initObject()));
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
 			connect(Interpreter->signalName, SIGNAL(now_which_line(QString)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(QString)));

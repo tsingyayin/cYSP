@@ -5,7 +5,7 @@
 
 QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
-QString Edition("Ver0.8.0_Pre1_PT2(Build110.0010)_SPOL0.6.5;C++_Qt");
+QString Edition("Ver0.8.0_Pre1_PT3(Build110.3000)_SPOL0.6.5;C++_Qt");
 QString ReleaseDay("20210801");
 QString InsiderMainVer = Edition.mid(Edition.indexOf("Ver") + 3, Edition.indexOf("_P") - Edition.indexOf("Ver") - 3);
 QString InsiderSubVer = Edition.mid(Edition.indexOf("_P") + 1, Edition.indexOf("(Build") - Edition.indexOf("_P") -1);
@@ -34,6 +34,9 @@ QString Program_Info(QString SearchParameter) {
 	}
 	else if (SearchParameter == "Day") {
 		return ReleaseDay;
+	}
+	else if (SearchParameter == "Developer") {
+		return "«‡—≈“Ù°¢Ayano_Aishi°¢v0v_tempest";
 	}
 	else {
 		return "UNKNOWN_PROGRAME_INFO";

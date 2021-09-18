@@ -928,7 +928,7 @@ class hAboutPage :public QWidget
                     }");
 
             AboutLabel_Developers= new QLabel(this);
-            AboutLabel_Developers->setText(msg("About_Info_Developers") + "青雅音 , Ayano_Aishi");
+            AboutLabel_Developers->setText(msg("About_Info_Developers") + Program_Info("Developer"));
             AboutLabel_Developers->setGeometry(QRect(60,440,600,30));
             AboutLabel_Developers->setAlignment(Qt::AlignLeft);
             AboutLabel_Developers->setStyleSheet("\
@@ -1256,7 +1256,7 @@ class TopWindow :public TopDef
             AboutPage->AboutLabel_BuildVer->setText(msg("About_Info_Build_Ver") + Program_Info("Build"));
             AboutPage->AboutLabel_SpolVer->setText(msg("About_Info_Spol_Ver") + Program_Info("SPOL"));
             AboutPage->AboutLabel_SpolEnvVer->setText(msg("About_Info_Spol_Env_Ver") + Program_Info("SPEnv"));
-            AboutPage->AboutLabel_Developers->setText(msg("About_Info_Developers") + "青雅音 , Ayano_Aishi");
+            AboutPage->AboutLabel_Developers->setText(msg("About_Info_Developers") + Program_Info("Developer"));
             AboutPage->AboutLabel_Support->setText(msg("About_Info_Support") + "亿绪联合协会UYXA");
             AboutPage->AboutLabel_Donate->setText(msg("About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
             AboutPage->CheckUpdateButton->setText(msg("Ui_Msg_Check_Update"));
