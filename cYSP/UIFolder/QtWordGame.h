@@ -264,7 +264,7 @@ public:
     QString QSSStoryScroll;
     QList<QList<QString>> SaveLineList;
     QString LineListForDisplay;
-    float gX, gY;
+    double gX, gY;
     uScrollPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
         gX = X;
         gY = Y;
@@ -351,6 +351,7 @@ public:
                     subcontrol-position:top;\
                     }";
         StoryScroll->setStyleSheet(QSSStoryScroll);
+        connect(StoryScroll, SIGNAL(valueChanged(int)), this, SLOT(MoveBigPad(int)));
         SaveLineList = {};
         LineListForDisplay = "";
     }
@@ -372,24 +373,25 @@ public slots:
             LineListForDisplay.append(QString::number(i) + "\t" + SaveLineList[i][1] + "\n\n");
         }
         StoryBigPad->setText(LineListForDisplay);
-        StoryBigPad->setGeometry(QRect(gX * 0.12, gY * 0.675, gX * 0.8, (int)(SaveLineList.length() * gY * 0.06111111)));
-        connect(StoryScroll, SIGNAL(valueChanged(int)), this, SLOT(MoveBigPad(int)));
+        StoryBigPad->setGeometry(QRect(gX * 0.12, gY * 0.675, gX * 0.8, (double)SaveLineList.length() * gY * 0.0612));
+        StoryBigPad->adjustSize();
+        
     }
 
-    void UpdateLineNum(QString LineInfo) {
+    void UpdateLineNum(int LineInfo) {
         for (int i = 0; i < SaveLineList.length(); i++) {
-            if (LineInfo == SaveLineList[i][1]) {
+            if (LineInfo == SaveLineList[i][0].toInt()) {
                 StoryLineNum->setText(msg("Ui_Current_Line") + "\n" + QString::number(i + 1));
                 StoryScroll->setValue(i + 1);
             }
         }
     }
     void MoveBigPad(int num) {
-        StoryBigPad->setGeometry(QRect(gX * 0.12, (int)(gY * 0.675 - StoryScroll->value() * gY * 0.06111111), gX * 0.8, (int)(SaveLineList.length() * gY * 0.06111111)));
+        StoryBigPad->setGeometry(QRect(gX * 0.12, (gY * 0.675 - (float)StoryScroll->value() * (float)StoryBigPad->geometry().height() / ((float)SaveLineList.length())), gX * 0.8, StoryBigPad->geometry().height()));
         ToLineNum->setText(msg("Ui_To_Which_Line") + "\n" + QString::number(StoryScroll->value()));
     }
     void EmitLineNum(void) {
-        emit EmitJumpLine(SaveLineList[StoryScroll->value()][0].toInt() - 2);
+        emit EmitJumpLine(SaveLineList[StoryScroll->value()][0].toInt() - 1);
     }
 };
 

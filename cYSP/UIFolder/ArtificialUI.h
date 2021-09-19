@@ -146,7 +146,7 @@ class PlayerWindow :public PlayerDef
 			connect(Interpreter->signalName, SIGNAL(clr_line_list()), this->PlayerPage->LogPage, SLOT(initObject()));
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
-			connect(Interpreter->signalName, SIGNAL(now_which_line(QString)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(QString)));
+			connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
 			StoryShow = TRUE;
 			PlayerPage->initObject();
 			Interpreter->start();

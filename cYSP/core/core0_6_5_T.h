@@ -67,7 +67,7 @@ class InterpreterSignals :public QObject {
 	//合成跳转列表
 	void set_scroll_info(void);
 	//告知UI刷新当前行
-	void now_which_line(QString);
+	void now_which_line(int);
 public:
 	InterpreterSignals() {
 		qRegisterMetaType<QList<QStringList>>("QList<QStringList>");

@@ -68,12 +68,15 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 			if (CurrentSPOLText.atEnd()) { break; }
 		}
 
-		Sleep(5000);
+		Sleep(4000);
 		emit signalsName->can_hide_title();
 		Sleep(1000);
-		while (TransThreadCount!=0) {
+		for (int i = 0; i > 10; i++) {
 			Sleep(500);
+			if (TransThreadCount <= 0) { break; }
 		}
+		BGPList.append({ "5120","[ºÚ³¡]" });
+		BGMList.append({ "5120","{}" });
 		qDebug().noquote() << "InterpreterInfo¡ú³É¹¦Ô¤ÌÞ³ý×¢ÊÍÐÐ";
 
 		emit signalsName->set_scroll_info();
@@ -82,6 +85,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		LineNum = -1;
 		justJump = FALSE;
 		QStringList LineResult;
+		QString Note = "UNKOWN_NOTE";
 		qDebug().noquote() << "-->³¢ÊÔÆô¶¯ÊµÊ±½âÊÍÄ£¿é<--- ";
 		bool InBranch=FALSE;
 		bool FindBranch = FALSE;
@@ -95,21 +99,24 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 			}
 			if (justJump == TRUE) {
 				InBranch = FALSE;
-				for (int i = 1; i < BGPList.length();  i++) {
-					if (BGPList[BGPList.length() - i][0] < LineNum) {
-						SingleLine(BGPList[BGPList.length() - i][0].toInt() ,BGPList[BGPList.length()-i][1],InterpreterMode::run,signalsName, parent);
+				qDebug() << LineNum;
+				qDebug() << BGPList;
+				for (int i = 0; i < BGPList.length() - 2; i++) {
+					if (BGPList[i][0].toInt() <= LineNum && LineNum<= BGPList[i+1][0].toInt()) {
+						SingleLine(BGPList[i][0].toInt() ,BGPList[i][1],InterpreterMode::run,signalsName, parent);
 						break;
 					}
 				}
-				for (int i = 1; i < BGMList.length(); i++) {
-					if (BGMList[BGMList.length() - i][0] < LineNum) {
-						SingleLine(BGMList[BGMList.length() - i][0].toInt() ,BGMList[BGMList.length() - i][1], InterpreterMode::run, signalsName, parent);
+				for (int i = 0; i < BGMList.length() - 2; i++) {
+					if (BGMList[i][0].toInt() >= LineNum) {
+						SingleLine(BGMList[i][0].toInt() ,BGMList[i][1], InterpreterMode::run, signalsName, parent);
 						break;
 					}
-				}
+				}	
 				justJump = FALSE;
 			}
 			QString CurrentLine = MeaningfulLine[LineNum];
+			
 			if (CurrentLine.mid(0, 3) == "|||" ) {
 				if (InBranch == FALSE) {
 					QStringList SmallJumpSetList;
@@ -120,11 +127,18 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 						SmallJumpNoteList.append(SmallJumpSetList[i].split(":"));
 					}
 					qDebug() << SmallJumpSetList;
+					qDebug() << SmallJumpNoteList;
 					InBranch = TRUE;
 					emit signalsName->need_to_choose(SmallJumpSetList);
 					emit signalsName->willstop();
 					parent->pause();
 					emit signalsName->inrunning();
+					
+					for (int i = 0; i < SmallJumpNoteList.length(); i++) {
+						if (UserChooseBranch == SmallJumpNoteList[i][1]) {
+							Note = SmallJumpNoteList[i][0];
+						}
+					}
 					continue;
 				}
 				else {
@@ -133,7 +147,8 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				}
 			}
 			if (CurrentLine.mid(0, 2) == "||" && CurrentLine.mid(0, 3) != "|||" && InBranch) {
-				if (CurrentLine.mid(2, CurrentLine.length() - 3) != UserChooseBranch) {
+				qDebug() << Note;
+				if (CurrentLine.mid(2, CurrentLine.length() - 2) != Note) {
 					FindBranch = FALSE;
 					continue;
 				}
@@ -227,8 +242,10 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		if (Line[0] == "|") { Line = Line.mid(1, Line.length() - 1); }
 	}
 	if (whichMode == InterpreterMode::run) {
-		emit signalsName->now_which_line(Line);
+		emit signalsName->now_which_line(LineNum);
 	}
+	//sDebug(Line);
+
 	//±³¾°¿ØÖÆÆ÷
 	if (Line[0] == "[") {
 		QStringList RAW = Line.mid(1, Line.length() - 2).split(",");
@@ -250,6 +267,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 
 		if (whichMode == InterpreterMode::presource) {
+			BGPList.append({ QString::number(MeaningfulLine.length() - 1),Line });
 			QList<Filter> FilterList;
 			if (BGSetList[1] == "1") { FilterList.append(Filter::turnDark); }
 			if (BGSetList[1] == "2") { FilterList.append(Filter::fade); }
@@ -301,7 +319,6 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 		if (PlaySetList[0] == "") { PlaySetList[0] = "0.066"; }
 		if (PlaySetList[1] == "") { PlaySetList[1] = "1.5"; }
-		qDebug() << PlaySetList;
 
 		//ÌáÈ¡½²Êö¿ØÖÆÆ÷È«Ìå
 		QStringList RAW = Line.mid(3, Line.length() - 3).split(">>>");
@@ -335,7 +352,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 
 		int Charanum = WordSetList.length();
 		bool BGBlack = TRUE;
-		
+
 		if (Charanum == 1) {
 			if (WordSetList[0][1] == "") { AvgSetList[0].append("(ÁÁ£¬³ÁÄ¬)"); }
 			else if (WordSetList[0][1] != "") { AvgSetList[0].append("(ÁÁ£¬½²Êö)"); }
@@ -353,9 +370,11 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			else if (WordSetList[0][1] == "" && WordSetList[1][1] != "") {
 				AvgSetList[0].append("(ÁÁ£¬³ÁÄ¬)");
 				AvgSetList[1].append("(ÁÁ£¬½²Êö)");
+			}else {
+				AvgSetList[0].append("(ÁÁ£¬½²Êö)");
+				AvgSetList[1].append("(ÁÁ£¬½²Êö)");
 			}
 		}
-
 		if (whichMode == InterpreterMode::debug) {
 			if (Charanum > 2) {
 				qDebug().noquote() << "¼ì²éÐÐ" + QString::number(LineNum) + "ÖÐ´æÔÚµÄ¿ØÖÆÆ÷ÊýÁ¿³¬ÏÞ";
@@ -364,7 +383,6 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		if (whichMode == InterpreterMode::presource) {
 			QList<Filter> FilterList;
 			for (int i = 0; i < AvgSetList.length(); i++) {
-				
 				if (AvgSetList[i][3] == "1") { FilterList.append(Filter::gradientMask); }
 				if (AvgSetList[i][3] == "2") { FilterList.append(Filter::fade); }
 				if (AvgSetList[i][3] == "3") { FilterList.append(Filter::fade); FilterList.append(Filter::gradientMask); }
@@ -393,10 +411,11 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 					else if (WordSetList[i][1] != "") {
 						if (PlaySetList[0].toFloat() != 0) {
 							for (int j = 0; j < WordSetList[i][1].length(); j++) {
-								Sleep((float)1000 * PlaySetList[0].toFloat());
-								if ("\u4e00" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u9fff" ||
-									"\u3040" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u309f" ||
-									"\u30a0" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u30ff"  ) {
+								Sleep((float)1000 * PlaySetList[0].toFloat() * SpeedFloat);
+								ushort chara = WordSetList[i][1][j].unicode();
+								if (0x4E00 <= chara && chara <= 0x9FFF ||
+									0x3040 <= chara && chara <= 0x309F ||
+									0x30A0 <= chara && chara <= 0x30FF  ) {
 									AlphaCount += 2;
 								}else { AlphaCount += 1; }
 								if (AlphaCount > 60) {
@@ -407,11 +426,12 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 								emit signalsName->update_chara_num(WordSetList[i], WordsAll, Charanum, PlaySetList);
 							}
 						}
-						else if (PlaySetList[0].toFloat() != 0) {
+						else if (PlaySetList[0].toFloat() == 0) {
 							for (int j = 0; j < WordSetList[i][1].length(); j++) {
-								if ("\u4e00" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u9fff" ||
-									"\u3040" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u309f" ||
-									"\u30a0" <= WordSetList[i][1][j] && WordSetList[i][1][j] <= "\u30ff") {
+								ushort chara = WordSetList[i][1][j].unicode();
+								if (0x4E00 <= chara && chara <= 0x9FFF ||
+									0x3040 <= chara && chara <= 0x309F ||
+									0x30A0 <= chara && chara <= 0x30FF) {
 									AlphaCount += 2;
 								}
 								else { AlphaCount += 1; }
@@ -429,12 +449,13 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				}			
 			}
 			emit signalsName->willstop();
-			Sleep((float)1000 * PlaySetList[1].toFloat());
+			Sleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
 			emit signalsName->show_next();
 			parent->pause();
 			emit signalsName->inrunning();
 		}
 	}
+
 	return { "TEST","TEST" };
 };
 
