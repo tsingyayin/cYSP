@@ -1,0 +1,161 @@
+About_Info_Version:Current：
+About_Info_Main_Ver:Main：
+About_Info_Sub_Ver:Update：
+About_Info_Build_Ver:Build：
+About_Info_Spol_Ver:SPOL：
+About_Info_Spol_Env_Ver:SPOL Environment：
+About_Info_Developers:Developer：
+About_Info_Environment:IDE：
+About_Info_Support:Support：
+About_Info_Help:Help:Go to the website%1for support
+About_Info_Donate:Donate：%1
+
+Avg_Effect_Mode_Normal:Normal
+Avg_Effect_Mode_Cover:Cover
+Avg_Effect_Mode_Fade:Fade
+Avg_Effect_Mode_FadeCover:Fade & Cover
+Avg_Effect_Mode_BAW:BW
+Avg_Effect_Mode_BAWCover:BW & Cover
+
+Bgm_Setting_Info:Current BGM is %1,The volume is %2
+
+Bgp_Display_Mode_Normal:Normal
+Bgp_Display_Mode_Dark:Dark
+Bgp_Display_Mode_Fade:Fade
+Bgp_Display_Mode_FadeDark:Fade then Dark
+Bgp_Display_Mode_B&W:B&W
+Bgp_Display_Mode_B&WDark:B&W then Dark
+
+Bgp_Display_Mode_Normal:Normal
+Bgp_Display_Mode_Fade:Fade
+Bgp_Display_Mode_B&W:Black&White
+Bgp_Effect_Mode_Normal:None of FX
+Bgp_Effect_Mode_Shake:Shake
+Bgp_Effect_Mode_W1:Flash Fast
+Bgp_Effect_Mode_W2:Flash Slow
+Bgp_Setting_Info:Current background is %1,Display mode is %2,FX is %3,Fading-in-time is %4
+
+Branch_Info_Msg:Branch“%1”（The file is %2）
+Branch_Info_Input:Please input your option
+
+Chara_Pic_Setting_Info:%1 illustration %2(fade in %3Sec & fade out %4Sec)
+Chara_Pic_Setting_Info_R:%1 Reverse illustration %2(fade in %3Sec & fade out %4Sec )
+
+Check_Update_Info_Latest:The latest version is the version %1 released on %2, which can be upgraded
+Check_Update_Info_New:Your version is up to date
+Check_Update_Info_Insider:You are using the development version, please do not pass it on
+Check_Update_Info_Ver_Error:Unable to verify the version number at the moment, please try again later
+Check_Update_Info_Net_Error:We have encountered some problems and can't check the update for the time being
+Check_Update_Info_Pre:Retrieve preview version update line
+Check_Update_Info_Pubs:Retrieving public version update lines
+Check_Update_Info_Branch:Retrieve branch version update line
+
+Command_Error:Cannot identify your text“%1”as any current command.
+Choose_File:Open the story file
+
+Effect_Build_Success:Successfully build
+Effect_Build_Error:Cannot build
+Effect_Info_Searching:Now Searching for resources need to be build
+Effect_Info_Found:line %1 in file  %2 need %3
+Effect_Info_Folder_Error:Cannot build file in folder,maybe it has been missed
+Effect_Info_Searched: %1 Searched
+
+First_Print_Load_Lang_End:Language loaded , using %1 ms
+First_Print:AASP Command-like mode,enter help to consult current command.
+
+File_Searching_Wrong:Now Checking for whether there are corrupt files in cache folder
+File_Searching_Wrong_End:Checked
+File_Info_Deleted:Deleted corrupt file 
+File_Delete_Cache:Deleting all the cache file
+File_Cache_Deleted:Deleted cache file
+
+Freedom_Text_Mode_L:Left align
+Freedom_Text_Mode_M:Mid align
+Freedom_Text_Mode_R:Right align
+Freedom_Text_Setting_Info:（The location is (%1,%2).Apply%3）
+
+Help_In_Main_Page_about_:Show infomation about the programme
+Help_In_Main_Page_help:To consult the command list supported
+Help_In_Main_Page_clear:Delete destoryed picture cache
+Help_In_Main_Page_exit:Exit the programme,or any level of the programme
+Help_In_Main_Page_lang:Change the language of the programme
+Help_In_Main_Page_ui:Launch the UI page
+Help_In_Main_Page_tospol:Translate official language to SPOL
+Help_In_Main_Page_clearall:Delete all the cache files
+Help_In_Main_Page_window:Show UI window for users
+
+Lang_Input_Msg:Please enter the name of the language file you reqiure.
+Lang_Set_Success:Successfully set %1 as your language
+Lang_Not_In_Support:Cannot find the pointed language "%1"，maybe not supported temporarily.
+
+Main_Display_Size:Main display resolution %1x%2
+
+Screen_Too_Small:Your main display resolution %1 x %2 is less than the minimum allowable resolution 1366x768, UI cannot be started
+
+Second:Sec
+
+Single_Mode_Syntax_Error:Syntax Error
+Single_Mode_Num_Error:Parameter Error
+Single_Mode_Interpreter_Error:Cannot identify“%1” as any controller
+Single_Mode_Input_Version:Input the Version you want to use.Type "help" for help
+Single_Mode_Version_List:Current supported versions are as followed：
+Single_Mode_Version_Error:Cannot identify “%1” as any avaliable version or command
+
+Sound_Setting_Info:Current sound is %1,The volume is %2
+
+Spawn_Mode_Name_Of_File:Input the name of the story, or exit
+Spawn_Mode_Not_Found:Can not find the file “%1”，please check if input correctly or if the file do exist.Notice that the file names is case-intensitive. 
+Spawn_Mode_Get_Version:The version of the story is :
+Spawn_Mode_Get_Title:The title of the story is:
+Spawn_Mode_Get_Subtitle:The subtitle of the story is:
+Spawn_Mode_Version_Error:Can not find the version %1,please check the spelling or confirm if the current program version supports this version. 
+Spawn_Mode_End:Interpreted,press Enter to return to the home page
+
+System_Info:Your System is: 
+System_Not_Win10:The version of windows %1  you are running has stopped supporting. Please migrate to windows10
+System_Win10_Too_Old:The windows 10 system you are using (build %1) has stopped supporting, which is lower than the autumn 2017 update of windows 10 (build 16299). Please upgrade your Windows 10 to the latest version.
+
+
+
+Ui_Mode_End:Played
+
+Warning_Warn_Count:%1 warning in the process：
+Warning_Warn_Info:Cannot interprete line %1 in the file %2:“%3”，please add character "#" if it is a comment
+Warning_Texterror_Count:%1 errors in the process：
+Warning_Texterror_Info:Cannot interprete line %1 in the file %2 :“%3”,does not correspond with the definition of the interpreter.
+Warning_Formatwarn_Count:%1 format warning in the process：
+Warning_Formatwarn_Info:line %1 in the file %2 :“%3”,dose not end with "Enter"
+Warning_Numseterror_Count:%1 parameter errors in the process：
+Warning_Numseterror_Info:line %1 in the file %2 :“%3”meets wrong parameters :fall outside or exceed the maximum of the number of parameter.
+Warning_Nameerror_Count:%1 Label(Name) errors in the process：
+Warning_Nameerror_Info:line %1 in the file %2 :“%3”meets Label(Name) different from related controllers
+
+Ui_AutoButton_Auto:Auto
+Ui_AutoButton_Auto_Off:Auto OFF
+Ui_NextButton:Next Page
+Ui_Thread_Core_Wake:An attempt has been made to wake up the interpreter thread. The Enter key is only used to wake up when the interpreter is stuck, not to turn the page.
+Ui_Current_Line:Line
+Ui_To_Which_Line:Jump
+Ui_Msg_Yes:OK
+Ui_Msg_Back:Back
+Ui_Msg_About_:About
+Ui_Msg_Choose_Lang:Language
+Ui_Msg_Create:Create
+Ui_Msg_Settings:Settings
+Ui_Msg_Tools:Tools
+Ui_Msg_LaunchUI:Launch UI Page
+Ui_Msg_GCPMode:Enable GCP
+Ui_Msg_Open_Cache:Cache Folder
+Ui_Msg_Open_Source:Source Folder
+Ui_Msg_Open_Story:Story Folder
+Ui_Msg_Open_Official:Official Story
+UI_Msg_Current_Mode:Yayin Story Player
+Ui_Msg_Title:Story Player
+Ui_Msg_Exit:Exit
+Ui_Msg_Check_Update:Check Update
+Ui_Msg_To_Spol:To SPOL
+Ui_Msg_Clear_Wrong:Clear Wrong
+Ui_Msg_Clear_All:Clear All Cache
+Ui_Msg_Can_Update:New Version Available!WebPage Password:
+Ui_To_Spol_End:Interpreted
+Ui_To_Spol_End_Error:Failed to complete!
