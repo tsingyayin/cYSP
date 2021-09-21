@@ -235,9 +235,10 @@ class PlayerWindow :public PlayerDef
 			StoryShow = FALSE;
 			QApplication::instance()->quit();	
 		}
-		void closeEvent(void) {
+		void closeEvent(QCloseEvent *event) {
 			StoryShow = FALSE;
+			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
 			emit stopNow();
-			PlayMusic->fadeMedia();
+			
 		}
 };

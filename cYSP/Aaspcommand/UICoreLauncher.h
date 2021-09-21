@@ -26,7 +26,7 @@ class SPAWN :public mQThread
 			emit signalName->can_hide_hello(1);
 
 			if (StoryFile.isOpen()) {
-				qDebug().noquote() << "======Start early filtering process======";
+				qDebug().noquote() << "======正在进行版本筛选======";
 				
 				QString Version;
 				int Linecount = 0;
@@ -62,7 +62,7 @@ class SPAWN :public mQThread
 						catch (...) {
 							break;
 						}
-						qDebug().noquote() << "-->Get Title Line<--";
+						qDebug().noquote() << "-->获得标题<--";
 						if (VerList[0] == "SPOL0.6.5" || VerList[1] == "FollowNew") {
 							emit signalName->can_show_title(Titlesetlist);
 							firstOpen = true;
@@ -73,6 +73,7 @@ class SPAWN :public mQThread
 				}
 				StoryFile.close();
 				if (firstOpen) {
+					qDebug().noquote() << "======启动解释器核心======";
 					Interpreter(gFilename, signalName, this);
 				}
 				
@@ -83,6 +84,7 @@ class SPAWN :public mQThread
 			mutex->tryLock();
 			mutex->unlock();
 			emit signalName->can_reprint_hello(1);
+			this->deleteLater();
 			this->exit();
 		}
 };

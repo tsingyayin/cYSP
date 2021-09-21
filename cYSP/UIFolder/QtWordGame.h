@@ -362,7 +362,6 @@ public slots:
     }
     void setLineList(QStringList StoryLine) {
         SaveLineList.append(StoryLine);
-        qDebug() << StoryLine;
     }
     void setScroll(void) {
         StoryScroll->setMinimum(0);
@@ -646,7 +645,9 @@ class uPlayerPage :public QWidget
             effectuse = 0;
             emit UserSpeedSet(1);
             SpeedButton->setText("1.0x");
-
+            AVG_L->setPixmap(QPixmap(""));
+            AVG_M->setPixmap(QPixmap(""));
+            AVG_R->setPixmap(QPixmap(""));
             if (gUseLogPage) { LogPage->initObject(); }
         }
 
@@ -1068,7 +1069,6 @@ class uSoundService :public QObject
                 Sleep(10);
             }
             MediaPlayer->stop();
-            this->deleteLater();
         }
        
 };

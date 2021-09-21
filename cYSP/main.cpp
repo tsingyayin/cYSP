@@ -10,8 +10,6 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <exception>
-#include <codecvt>
-#include <locale>
 #include <QSysInfo>
 #include "langcontrol.h"
 
@@ -34,7 +32,7 @@ int main(int argc, char *argv[])
         DirectOpen = 1;
         Usript = "window";
     }
-    Usript = "ui";
+    Usript = "window";
     ensuredirs(0);
 
     langset("0");

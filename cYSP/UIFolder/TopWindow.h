@@ -144,6 +144,8 @@ class hGCPDialog :public QWidget
 class hUpdateDialog :public QWidget
 {
     Q_OBJECT
+    signals:
+        void windowIsClosed(void);
     public:
         QFrame* frame;
         QHBoxLayout* hl;
@@ -283,11 +285,15 @@ class hUpdateDialog :public QWidget
                 UpdateInfoLabel->setText(msg("Ui_Msg_Update_Log_N"));
             }
         }
+        void closeEvent(QCloseEvent* event) {
+            emit windowIsClosed();
+        }
 };
 
 //首页定义（不含图标和大标题）
 class hFirstPage :public QWidget
 {
+
 	Q_OBJECT
 	public:
         
@@ -1170,6 +1176,8 @@ class TopWindow :public TopDef
 	public:
 		int FirstEnter = 0;
         hServiceFramework* Service;
+        bool UpdateDialogWindowIsShow = FALSE;
+        bool GCPDialogWindowIsShow = FALSE;
 		TopWindow(QWidget* parent = Q_NULLPTR){
             this->setParent(parent);
             this->setWindowTitle("YSP "+Program_Info("Main"));
@@ -1221,10 +1229,15 @@ class TopWindow :public TopDef
     public slots:
         void checkUpdate() {
             QStringList UpdateInfo = Service->ui_CheckUpdate();
-            if (UpdateInfo[0] != "NODIALOG") {
+            if (UpdateInfo[0] != "NODIALOG" && !UpdateDialogWindowIsShow) {
                 UpdateDialog = new hUpdateDialog(X, Y, UpdateInfo[0], UpdateInfo[1]);
                 UpdateDialog->show();
+                UpdateDialogWindowIsShow = TRUE;
+                connect(this->UpdateDialog, SIGNAL(windowIsClosed()), this, SLOT(updateDialogClosed()));
             }
+        }
+        void updateDialogClosed(void) {
+            UpdateDialogWindowIsShow = FALSE;
         }
         void chooseLangFile(void) {
             QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), "./Language", "Story Player Language(*.splang)");
@@ -1266,7 +1279,7 @@ class TopWindow :public TopDef
             CreatePage->OpenButton_Story->setText(msg("Ui_Msg_Open_Story"));
             CreatePage->OpenButton_Official->setText(msg("Ui_Msg_Open_Official"));
 
-            UpdateDialog->UpdateLang();
+            if (UpdateDialogWindowIsShow) { UpdateDialog->UpdateLang(); };
         }
         void openAnyFolder(void) {
             QObject* OAFsourceButton=this->sender();
