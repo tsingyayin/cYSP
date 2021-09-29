@@ -14,7 +14,6 @@ using namespace std;
 QString setColor(QString TextInfo) {
 	TextInfo = TextInfo.replace(" ", "&nbsp;");
 	TextInfo = TextInfo.replace("<", "&lt;");
-	//TextInfo = TextInfo.replace(">", "&gt;");
 	QStringList LineList = TextInfo.split("\n");
 	QString CurrentLine;
 	QString CurrentLineR;
@@ -107,6 +106,5 @@ QString setColor(QString TextInfo) {
 
 		LineList[i] = CurrentLineN + CurrentLine;
 	}
-	//LineList.append("<A href='./story'>Try</a>");
 	return LineList.join("<br>");
 }

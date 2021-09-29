@@ -29,3 +29,14 @@ O======O
 >>>Ayano Aishi完成此函数*/
 int randint(int min, int max);
 
+/*上限函数limitmax
+num,max
+O======O
+传入数值num，若小于up则返回num，若大于up则返回up*/
+int limitmax(int num, int max);
+
+/*下限函数limitmin
+num,min
+O======O
+传入数值num，若大于min则返回num，若小于min则返回min*/
+int limitmin(int num, int min);

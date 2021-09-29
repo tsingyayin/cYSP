@@ -2,6 +2,7 @@
 #include "..\langcontrol.h"
 #include "..\global_value.h"
 #include "..\loadsettings.h"
+#include "ProgramSettings.h"
 #include "..\Aaspcommand\aaspcommand.h"
 #include "SPOLDev.h"
 #include <math.h>
@@ -181,7 +182,7 @@ class hUpdateDialog :public QWidget
             this->setStyleSheet(
                 "QWidget{"
                 "background-color:rgba(230,230,230,230);"
-                "border:1px solid rgb(15,77,240);"
+                "border:1px solid rgb(100,100,100);"
                 "border-radius:10px;"
                 "}");
 
@@ -455,6 +456,23 @@ class hFirstPage :public QWidget
         //}
 };
 
+//程序播放设定
+class hPlayerSettings :public QWidget
+{
+    Q_OBJECT
+    public:
+        int gX, gY;
+        QLabel Text_SetGeometry;
+        QComboBox Edit_SetGeometry;
+        QPushButton* Choose_Full_Or_Not;
+        hPlayerSettings(int X, int Y, QWidget* parent = Q_NULLPTR) {
+            this->setParent(parent);
+            this->setGeometry(QRect(0, 0, 700, 650));
+            gX = X;
+            gY = Y;
+        }
+};
+
 //设定页定义
 class hSettingsPage :public QWidget
 {
@@ -462,8 +480,11 @@ class hSettingsPage :public QWidget
     public:
         QPushButton* AboutButton;
         QPushButton* LangButton;
+        QPushButton* DevButton;
+        QPushButton* PlayerButton;
         QPushButton* GCPButton;
         hGCPDialog* GCPDialog;
+        hDevSettings* DevPage;
         int gX=0, gY=0;
         hSettingsPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
@@ -521,8 +542,61 @@ class hSettingsPage :public QWidget
                     font-size:32px;\
                     font-family:'Microsoft YaHei';\
                     }");
+
+            PlayerButton = new QPushButton(this);
+            PlayerButton->setText("播放设置");
+            PlayerButton->setGeometry(QRect(50,350,260,50));
+            PlayerButton->setStyleSheet("\
+                QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,255,255,210);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:hover{\
+                    color:#888888;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:Pressed{\
+                    color:#66ccff;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                    }");
+
+            DevButton = new QPushButton(this);
+            DevButton->setText("高级设定");
+            DevButton->setGeometry(QRect(390, 350, 260, 50));
+            DevButton->setStyleSheet("\
+                QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,255,255,210);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:hover{\
+                    color:#888888;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:Pressed{\
+                    color:#66ccff;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                    }");
+
             GCPButton = new QPushButton(this);
-            GCPButton->setGeometry(QRect(390, 350, 260, 50));
+            GCPButton->setGeometry(QRect(50, 490, 260, 50));
             if (Program_Settings("GCPMode") == "True") {
                 GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
             }else {
@@ -562,6 +636,10 @@ class hSettingsPage :public QWidget
                 GCPDialog->show();
                 connect(GCPDialog, SIGNAL(chooseEnd()), this, SLOT(repaintMsg()));
             }
+        }
+        void showDevSetPage(void) {
+            DevPage = new hDevSettings(gX, gY);
+            DevPage->show(); 
         }
         void repaintMsg(void){
             if (Program_Settings("GCPMode") == "True") {
@@ -842,7 +920,9 @@ class hAboutPage :public QWidget
         QLabel* AboutLabel_Developers;
         QLabel* AboutLabel_Support;
         QLabel* AboutLabel_Donate;
+        QPushButton* MoreAboutInfo;
         QPushButton* CheckUpdateButton;
+        hMoreInfo* MoreInfoPage;
         int gX, gY;
         hAboutPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
@@ -919,6 +999,8 @@ class hAboutPage :public QWidget
                     font-size:22px;\
                     }");
 
+            
+            /*
             AboutLabel_SpolEnvVer= new QLabel(this);
             AboutLabel_SpolEnvVer->setText(msg("About_Info_Spol_Env_Ver") + Program_Info("SPEnv"));
             AboutLabel_SpolEnvVer->setGeometry(QRect(60,400,650,30));
@@ -946,10 +1028,11 @@ class hAboutPage :public QWidget
                     font-family:'Microsoft YaHei';\
                     font-size:22px;\
                     }");
+            */
 
             AboutLabel_Support= new QLabel(this);
             AboutLabel_Support->setText(msg("About_Info_Support") + "亿绪联合协会UYXA");
-            AboutLabel_Support->setGeometry(QRect(60,480,600,30));
+            AboutLabel_Support->setGeometry(QRect(60, 400, 600, 30));
             AboutLabel_Support->setAlignment(Qt::AlignLeft);
             AboutLabel_Support->setStyleSheet("\
             QLabel{\
@@ -964,7 +1047,7 @@ class hAboutPage :public QWidget
             AboutLabel_Donate= new QLabel(this);
             AboutLabel_Donate->setText(msg("About_Info_Donate").arg("<A href='"+urlAFD+"'>"+urlAFD+"</a>"));
             AboutLabel_Donate->setOpenExternalLinks(FALSE);
-            AboutLabel_Donate->setGeometry(QRect(60,520,600,30));
+            AboutLabel_Donate->setGeometry(QRect(60, 440, 600, 30));
             AboutLabel_Donate->setAlignment(Qt::AlignLeft);
             AboutLabel_Donate->setStyleSheet("\
             QLabel{\
@@ -974,6 +1057,32 @@ class hAboutPage :public QWidget
                     color:#000000;\
                     font-family:'Microsoft YaHei';\
                     font-size:22px;\
+                    }");
+
+            MoreAboutInfo = new QPushButton(this);
+            MoreAboutInfo->setText(msg("About_Info_More"));
+            MoreAboutInfo->setGeometry(QRect(50, 490, 600, 50));
+            MoreAboutInfo->setStyleSheet("\
+                QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,255,255,210);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:hover{\
+                    color:#888888;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:Pressed{\
+                    color:#66ccff;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
                     }");
 
             CheckUpdateButton= new QPushButton(this);
@@ -1002,6 +1111,11 @@ class hAboutPage :public QWidget
                     font-family:'Microsoft YaHei';\
                     }");
         }
+        public slots:
+            void showMoreInfoPage(void) {
+                MoreInfoPage = new hMoreInfo(gX, gY);
+                MoreInfoPage->show();
+            }
 };
 
 //交互窗口控件总定义
@@ -1023,8 +1137,11 @@ class TopDef :public QWidget
         QGraphicsOpacityEffect* OPSettingsPage;
         hAboutPage* AboutPage;
         QGraphicsOpacityEffect* OPAboutPage;
+        hDevSettings* DevSetPage;
+        QGraphicsOpacityEffect* OPDevSetPage;
         QPushButton* BackButton;
         QGraphicsDropShadowEffect* SABackButton;
+        
         hUpdateDialog* UpdateDialog;
         
         QLabel* Titlelabel;
@@ -1062,7 +1179,7 @@ class TopDef :public QWidget
             this->setStyleSheet(
 				"QWidget{"
 					"background-color:rgba(230,230,230,230);"
-					"border:1px solid rgb(15,77,240);"
+					"border:1px solid rgb(100,100,100);"
 					"border-radius:10px;"
 					"}");
                
@@ -1216,6 +1333,7 @@ class TopWindow :public TopDef
 				Expand();
 				FirstEnter = 1;
                 checkUpdate();
+                this->BackButton->show();
 			}
 		}
         void mousePressEvent(QMouseEvent* event) {
@@ -1268,8 +1386,8 @@ class TopWindow :public TopDef
             AboutPage->AboutLabel_SubVer->setText(msg("About_Info_Sub_Ver") + Program_Info("Sub"));
             AboutPage->AboutLabel_BuildVer->setText(msg("About_Info_Build_Ver") + Program_Info("Build"));
             AboutPage->AboutLabel_SpolVer->setText(msg("About_Info_Spol_Ver") + Program_Info("SPOL"));
-            AboutPage->AboutLabel_SpolEnvVer->setText(msg("About_Info_Spol_Env_Ver") + Program_Info("SPEnv"));
-            AboutPage->AboutLabel_Developers->setText(msg("About_Info_Developers") + Program_Info("Developer"));
+            //AboutPage->AboutLabel_SpolEnvVer->setText(msg("About_Info_Spol_Env_Ver") + Program_Info("SPEnv"));
+            //AboutPage->AboutLabel_Developers->setText(msg("About_Info_Developers") + Program_Info("Developer"));
             AboutPage->AboutLabel_Support->setText(msg("About_Info_Support") + "亿绪联合协会UYXA");
             AboutPage->AboutLabel_Donate->setText(msg("About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
             AboutPage->CheckUpdateButton->setText(msg("Ui_Msg_Check_Update"));
@@ -1357,6 +1475,16 @@ class TopWindow :public TopDef
                 Sleep(3);
             }
         }
+        void showDevSetPage(void) {
+            SettingsPage->showDevSetPage();
+            this->hide();
+            connect(this->SettingsPage->DevPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
+        }
+        void showMoreInfoPage(void) {
+            AboutPage->showMoreInfoPage();
+            this->hide();
+            connect(this->AboutPage->MoreInfoPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
+        }
         void showFirstPage(void) {
             OPFirstPage->setOpacity(1);
             FirstPage->raise();
@@ -1431,6 +1559,7 @@ class TopWindow :public TopDef
             SettingsPage->raise();
             Iconlabel->raise();
             BackButton->raise();
+            connect(this->SettingsPage->DevButton, SIGNAL(clicked()), this, SLOT(showDevSetPage()));
             connect(this->SettingsPage->GCPButton, SIGNAL(clicked()), this->SettingsPage, SLOT(showGCPDialog()));
             connect(this->SettingsPage->LangButton, SIGNAL(clicked()), this, SLOT(chooseLangFile()));
             connect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(showAboutPage()));
@@ -1441,6 +1570,7 @@ class TopWindow :public TopDef
         }
         void hideSettingsPage(void) {
             OPSettingsPage->setOpacity(0);
+            disconnect(this->SettingsPage->DevButton, SIGNAL(clicked()), this, SLOT(showDevSetPage()));
             disconnect(this->SettingsPage->GCPButton, SIGNAL(clicked()), this->SettingsPage, SLOT(showGCPDialog()));
             disconnect(this->SettingsPage->LangButton, SIGNAL(clicked()), this, SLOT(chooseLangFile()));
             disconnect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(showAboutPage()));
@@ -1454,12 +1584,16 @@ class TopWindow :public TopDef
             Iconlabel->raise();
             BackButton->raise();
             this->AboutPage->AboutLabel_Donate->setOpenExternalLinks(TRUE);
+            connect(this->AboutPage->CheckUpdateButton, SIGNAL(clicked()), this, SLOT(checkUpdate()));
+            connect(this->AboutPage->MoreAboutInfo, SIGNAL(clicked()), this, SLOT(showMoreInfoPage()));
             connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
             connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
         }
         void hideAboutPage(void) {
             OPAboutPage->setOpacity(0);
             this->AboutPage->AboutLabel_Donate->setOpenExternalLinks(FALSE);
+            disconnect(this->AboutPage->CheckUpdateButton, SIGNAL(clicked()), this, SLOT(checkUpdate()));
+            disconnect(this->AboutPage->MoreAboutInfo, SIGNAL(clicked()), this, SLOT(showMoreInfoPage()));
             disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
             disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
         }

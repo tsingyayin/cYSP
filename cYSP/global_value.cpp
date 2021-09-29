@@ -5,13 +5,13 @@
 
 QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
-QString Edition("Ver0.8.0_Pre1.1(Build111.0)_SPOL0.6.5;C++_Qt");
+QString Edition("Ver0.8.0_Pre2(Build115.0)_SPOL0.6.5;C++_Qt");
 QString ReleaseDay("20210801");
 QString InsiderMainVer = Edition.mid(Edition.indexOf("Ver") + 3, Edition.indexOf("_P") - Edition.indexOf("Ver") - 3);
 QString InsiderSubVer = Edition.mid(Edition.indexOf("_P") + 1, Edition.indexOf("(Build") - Edition.indexOf("_P") -1);
 QString InsiderBuildVer = Edition.mid(Edition.indexOf("(Build") + 6, Edition.indexOf(")") - Edition.indexOf("(Build") - 6);
 QString InsiderSPOLVer = Edition.mid(Edition.indexOf("SPOL") + 4, Edition.indexOf(";C++_Qt") - Edition.indexOf("SPOL") - 4);
-QString InsiderSPOLEnvVer = "C++_Qt";
+QString InsiderSPOLEnvVer = "AASPCMD.9X(K9UT0)";
 
 QString Program_Info(QString SearchParameter) {
 	if (SearchParameter == "Edition") {
@@ -53,4 +53,22 @@ int randint(int min, int max)
 {
 	srand((unsigned)time(NULL));
 	return rand() % (max - min + 1) + min;
+}
+
+int limitmax(int num, int max) {
+	if (num < max) {
+		return num;
+	}
+	else {
+		return max;
+	}
+}
+
+int limitmin(int num, int min) {
+	if (num > min) {
+		return num;
+	}
+	else {
+		return min;
+	}
 }

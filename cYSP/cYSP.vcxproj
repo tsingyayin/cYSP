@@ -106,6 +106,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="global_value.cpp" />
     <ClInclude Include="loadsettings.h" />
+    <QtMoc Include="UIFolder\ProgramSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Aaspcommand\checkupdate.h" />

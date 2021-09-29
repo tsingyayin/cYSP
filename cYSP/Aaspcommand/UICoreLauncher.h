@@ -49,7 +49,8 @@ class SPAWN :public mQThread
 						VerList = Version.split("-");
 						if (VerList.length() != 2) { VerList << "DONOTFOLLOW"; }
 						ensureSPOLVer = TRUE;
-						qDebug().noquote() << "-->"+msg("Spawn_Mode_Get_Version") + Version + "<--";
+						qDebug().noquote() << "-->文档声明版本" + Version + "<--";
+						qDebug().noquote() << "-->程序SPOL版本：SPOL" + Program_Info("SPOL") + "<--";
 					}
 					else if (StoryFileTextSingleLine[0] == ":" && ensureSPOLVer) {
 						if (StoryFileTextSingleLine.count(":") != 4) {
@@ -63,7 +64,7 @@ class SPAWN :public mQThread
 							break;
 						}
 						qDebug().noquote() << "-->获得标题<--";
-						if (VerList[0] == "SPOL0.6.5" || VerList[1] == "FollowNew") {
+						if (VerList[0] == "SPOL"+Program_Info("SPOL") || VerList[1] == "FollowNew") {
 							emit signalName->can_show_title(Titlesetlist);
 							firstOpen = true;
 							break;
