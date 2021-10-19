@@ -5,6 +5,7 @@
 #include <QtCore>
 #include <iostream>
 #include <algorithm>
+#include "..\langcontrol.h"
 
 using namespace std;
 
@@ -97,3 +98,5 @@ public slots:
 void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThread* parent);
 
 QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent = Q_NULLPTR);
+
+

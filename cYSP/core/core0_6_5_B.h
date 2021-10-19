@@ -4,7 +4,7 @@
 #include <QtCore>
 #include <iostream>
 #include <algorithm>
-
+#include "..\langcontrol.h"
 using namespace std;
 
 void GradientMask(float y, float Y, int* r, int* g, int* b) {
@@ -27,9 +27,9 @@ void BlackSilhouette(int* r, int* g, int* b) {
 }
 
 void Fade(int* r, int* g, int* b) {
-	int Max = max(max(*r, *g), *b);
-	int Min = min(min(*r, *g), *b);
-	float ir = *r, ig = *g, ib = *b;
+	double Max = max(max(*r, *g), *b);
+	double Min = min(min(*r, *g), *b);
+	double ir = *r, ig = *g, ib = *b;
 	double delta = (Max - Min) / 255;
 	double value = (Max + Min) / 255;
 	double L = value / 2;
@@ -106,5 +106,4 @@ void transformation(Filter whichFilter = Filter::unknownFilter, int* r = NULL, i
 		break;
 	}
 }
-
 

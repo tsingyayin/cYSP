@@ -30,7 +30,7 @@ int loadsettings(void) {
     SettingsList["GCPMode"] = "False";
     SettingsList["Update_Channel"] = "Auto";
     SettingsList["Window_DisplayMode"] = "Full";
-    SettingsList["Window_Geometry"] = "1920_1080";
+    SettingsList["Window_Geometry"] = "1366_768";
     SettingsList["Window_Monitor"] = "0";
     QFile settingsFile;
     settingsFile.setFileName("./options.txt");

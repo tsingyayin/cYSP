@@ -26,6 +26,33 @@ public slots:
 	}
 };
 
+class TickThread :public QThread
+{
+	Q_OBJECT
+signals:
+	void timeout(void);
+public:
+	int gTime;
+	bool Active = FALSE;
+	TickThread() {		
+	}
+	void setInterval(int time) {
+		gTime = time;
+	}
+	void run() {
+		Active = TRUE;
+		while (TRUE) {
+			Sleep(gTime);
+			if (!Active) { break; }
+			emit timeout();
+		}
+		this->deleteLater();
+	}
+	void stop() {
+		Active = FALSE;
+	}
+};
+
 class PlayerDef :public QWidget
 {
 	Q_OBJECT
@@ -75,6 +102,7 @@ class PlayerWindow :public PlayerDef
 		QDesktopWidget* desktop;
 		QList<uSoundService*> musicThreadList;
 		SPAWN* Interpreter;
+		TickThread* Ticker;
 		PlayerWindow(int argc, char* argv[], QWidget* parent = Q_NULLPTR) {
 			//初始化时确认目标大小
 			if (Program_Settings("Window_DisplayMode") == "Full") {
@@ -101,7 +129,7 @@ class PlayerWindow :public PlayerDef
 
 			this->setupUI(gX, gY, 100, 100);
 			this->setWindowIcon(QIcon(".\\Visual\\source\\WinICO\\Story.ico"));
-			this->setWindowTitle("YSP UI Mode");
+			this->setWindowTitle("Yayin Story Player");
 			
 		}
 	public slots:
@@ -114,8 +142,11 @@ class PlayerWindow :public PlayerDef
 		}
 		//核心启动函数
 		void RUNCORE(void) {
-			QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Choose_File"), "./story", "Story File(*.spol)");
+			QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Player_ChooseFilePage_Text_Title"), "./story", "Story File(*.spol)");
 			Interpreter = new SPAWN(ChooseStory);
+			Ticker = new TickThread();
+			Ticker->setInterval(750);
+
 			connect(Interpreter->signalName, SIGNAL(can_hide_hello(int)), this, SLOT(hideHello(int)));
 			connect(Interpreter->signalName, SIGNAL(can_reprint_hello(int)), this, SLOT(reprintHello(int)));
 			
@@ -147,13 +178,18 @@ class PlayerWindow :public PlayerDef
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
 			connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
-			StoryShow = TRUE;
+
+			connect(this, SIGNAL(stopNow()), this->userControl, SLOT(ExitNow()));
+			connect(this->Ticker, SIGNAL(timeout()), this->PlayerPage, SLOT(repaintAutoButton()));
+			
 			PlayerPage->initObject();
+			Ticker->start();
 			Interpreter->start();
 		}
 
 		//主页面隐藏
 		void hideHello(int num) {
+			StoryShow = TRUE;
 			if (num == 1) {
 				for (int i = 1; i < 100; i++) {
 					FirstPage->setGOpacity(1 - (float)i / 100);
@@ -170,6 +206,7 @@ class PlayerWindow :public PlayerDef
 			StoryShow = FALSE;
 			PlayerPage->clearAll();
 			FirstPage->raise();
+			Ticker->stop();
 			if (num == 1) {
 				try {
 					if (OneBGMIsPlaying) {
@@ -188,6 +225,7 @@ class PlayerWindow :public PlayerDef
 				connect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
 			}
 		}
+
 		//标题展示函数-前半段
 		void showTitle(QStringList titlesetList) {
 			TitlePage->setTitleInfo(titlesetList[0], titlesetList[1], titlesetList[2], titlesetList[3]);
@@ -222,6 +260,52 @@ class PlayerWindow :public PlayerDef
 			musicThreadList[musicThreadList.length() - 1]->playMedia();
 		}
 
+		//快捷键函数
+		void keyPressEvent(QKeyEvent *event) {
+			if (event->key() == Qt::Key_Escape) {
+				if (StoryShow == FALSE) {
+					exitProgram();
+				}
+				else {
+					if (PlayerPage->searchParameter("InLogPage") == 0) {
+						StoryShow = FALSE;
+						Ticker->stop();
+						emit stopNow();
+					}else if (PlayerPage->searchParameter("InLogPage") == 1) {
+						PlayerPage->showLogPage();
+					}
+				}
+			}
+			else if (event->key() == Qt::Key_Q && StoryShow) {
+				if (PlayerPage->gUseLogPage == TRUE && PlayerPage->searchParameter("Inbranch") == 0) {
+					PlayerPage->showLogPage();
+				}	
+			}
+			else if (event->key() == Qt::Key_Return) {
+				if (StoryShow) {
+					if (PlayerPage->searchParameter("InLogPage") == 0) {
+						if (PlayerPage->searchParameter("Inbranch") == 0) {
+							PlayerPage->_ToNext();
+						}						
+					}
+					else if (PlayerPage->searchParameter("InLogPage") == 1) {
+						PlayerPage->LogPage->EmitLineNum();
+						PlayerPage->showLogPage();
+					}
+				}
+			}
+			else if (event->key() == Qt::Key_W && StoryShow) {
+				if (PlayerPage->searchParameter("InLogPage") == 0) {
+					PlayerPage->_SpeedChange();
+				}
+			}
+			else if (event->key() == Qt::Key_A && StoryShow) {
+				if (PlayerPage->searchParameter("InLogPage") == 0) {
+					PlayerPage->_AutoChange();
+				}
+			}
+		}
+
 		//解释器唤醒函数
 		void Wakeup(void) {
 			while (TRUE) {			
@@ -231,14 +315,23 @@ class PlayerWindow :public PlayerDef
 				}
 			}
 		}
+
+		//下面两个函数拿来退出程序
+		//但是吧，这俩函数的互相辅助关系是啥、以及面对的是哪种退出情况，我搞不清了
+		//反正别动它就对了
 		void exitProgram(void) {
 			StoryShow = FALSE;
 			QApplication::instance()->quit();	
 		}
+
 		void closeEvent(QCloseEvent *event) {
-			StoryShow = FALSE;
+			if (StoryShow) { 
+				Ticker->stop(); 
+			}
 			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+			
 			emit stopNow();
 			
 		}
+
 };

@@ -13,12 +13,15 @@
 #include <QSysInfo>
 #include "langcontrol.h"
 #include <stdexcept>
+#include <windows.h>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     try {
+        qDebug().noquote() << Program_Info("SPEnv");
+        qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
         sDebug("DebugInfo→Start path : " + QDir::currentPath());
         sDebug("DebugInfo→Program path : " + QString(argv[0]).section("\\", 0, -2));
         QDir::setCurrent(QString(argv[0]).section("\\", 0, -2));
@@ -27,6 +30,7 @@ int main(int argc, char *argv[])
         sDebug("DebugInfo→Number of parameters : " + QString::number(argc));
         sDebug("DebugInfo→Parameters 1 : " + QString::fromUtf8(argv[0]));
         sDebug("DebugInfo→Parameters 2 : " + QString::fromUtf8(argv[1]));
+        sDebug("DebugInfo→Your system version : " + QSysInfo::kernelVersion());
         if (argv[1] != "") {
             DirectOpen = 1;
             Usript = "ui";
@@ -36,6 +40,8 @@ int main(int argc, char *argv[])
             Usript = "window";
         }
         Usript = "window";
+        qDebug().noquote() << "======Execute program initialization======";
+        
         ensuredirs(0);
 
         langset("0");
@@ -45,17 +51,15 @@ int main(int argc, char *argv[])
         DeleteCache(0);
 
         //initreg();
-
-        sDebug("DebugInfo→" + msg("System_Info") + QSysInfo::kernelVersion());
-        sDebug("DebugInfo→" + msg("About_Info_Version") + Program_Info("Edition"));
-
-        if (readreg("Language") == "zh_SC") {
+        
+        /*if (readreg("Language") == "zh_SC") {
             qDebug().noquote() << "##############################";
             qDebug().noquote() << "#抵制不良游戏，拒绝盗版游戏。#\n#注意自我保护，谨防受骗上当。#\n#适度游戏益脑，沉迷游戏伤身。#\n#合理安排时间，享受健康生活。#";
             qDebug().noquote() << "##############################";
-        }
-
-        qDebug().noquote() << "sysinfo→" + msg("First_Print");
+        }*/
+        
+        qDebug().noquote() << "sysinfo→" + msg("Kernal_Text_IFL_Version").arg("IFL_20211009");
+        qDebug().noquote() << "sysinfo→" + msg("Kernal_Text_First_Print").arg(Program_Info("SPEnv"));
 
         bool programme_run = TRUE;
         while (programme_run) {
@@ -78,6 +82,8 @@ int main(int argc, char *argv[])
                 DeleteCache(0);
             }elif(Usript == "clrall") {
                 DeleteCache(1);
+            }elif(Usript=="exception") {
+                throw overflow_error(0);
             }elif(Usript == "ui") {
                 QApplication app(argc, argv);
                 PlayerWindow UIWindow(argc, argv);
@@ -95,9 +101,12 @@ int main(int argc, char *argv[])
                 DirectOpen = 1;
             }elif(Usript == "window") {
                 QApplication app(argc, argv);
-                TopWindow MainWindow;
-                MainWindow.show();
+                TopWindow *MainWindow = new TopWindow();
+                MainWindow->show();
                 int a = app.exec();
+                delete MainWindow;
+                
+                
                 DirectOpen = 1;
                 if (a == 1) {
                     Usript = "ui";
@@ -116,16 +125,18 @@ int main(int argc, char *argv[])
             }
 
             else {
-                qDebug().noquote() << "sysinfo→" + msg("Command_Error").arg(QString::fromStdString(Usript));
+                qDebug().noquote() << "sysinfo→" + msg("Kernel_Text_Command_Error").arg(QString::fromStdString(Usript));
             }
         }
     }
     catch (exception& e) {
         cout << e.what() << endl;
         getchar();
+        getchar();
     }
     catch (...) {
-        cout << "UNKNOWN_ERROR" << endl;
+        cout << "UNKNOWN_EXCEPTION" << endl;
+        getchar();
         getchar();
     }
 }

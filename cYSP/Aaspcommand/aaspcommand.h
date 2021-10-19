@@ -88,13 +88,14 @@ public:
 		uCheckUpdate Check;
 		QList<QStringList> VerList = Check.getUpdate();
 		QList<QStringList> VerNew;
-		if (VerList[0][0] == "UNKNOWNNETERROR") {
-			qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Net_Error");
+		if (!VerList.isEmpty()) {
+			if (VerList[0][0] == "UNKNOWNNETERROR") {
+				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Net_Error");
+			}
+			else if (VerList[0][0] == "UNKNOWNBLOG") {
+				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Ver_Error");
+			}
 		}
-		else if (VerList[0][0] == "UNKNOWNBLOG") {
-			qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Ver_Error");
-		}
-		
 		for (int i = 0; i < VerList.length(); i++) {
 			if (Program_Settings("Update_Channel") == "Pre" && VerList[i][2] == "Pre") {
 				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Pre");
@@ -164,19 +165,19 @@ public:
 	//损坏图像清理函数
 	void ui_DeleteEmptyMap(void) {
 		DeleteCache(0);
-		emit Anyinfo(1, msg("File_Searching_Wrong_End"));
+		emit Anyinfo(1, msg("Function_Filecheck_Run_End"));
 	}
 
 	//缓存图像全清函数
 	void ui_DeleteAllCache(void) {
 		DeleteCache(1);
-		emit Anyinfo(1, msg("File_Cache_Deleted"));
+		emit Anyinfo(1, msg("Function_Filecheck_Cache_Clean"));
 	}
 
 	//UI下设置语言函数——注意filename是文件（语言）名而非路径
 	void ui_langset(QString filename) {
 		langset(filename);
-		emit Anyinfo(1, msg("Lang_Set_Success").arg(filename));
+		emit Anyinfo(1, msg("Function_Language_Loading_Success"));
 	}
 
 	/*文件夹打开函数

@@ -5,8 +5,8 @@
 
 QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
-QString Edition("Ver0.8.0_Pre2(Build115.0)_SPOL0.6.5;C++_Qt");
-QString ReleaseDay("20210801");
+QString Edition("Ver0.8.0_Pub(Build120.1000)_SPOL0.6.5;C++_Qt");
+QString ReleaseDay("20211006");
 QString InsiderMainVer = Edition.mid(Edition.indexOf("Ver") + 3, Edition.indexOf("_P") - Edition.indexOf("Ver") - 3);
 QString InsiderSubVer = Edition.mid(Edition.indexOf("_P") + 1, Edition.indexOf("(Build") - Edition.indexOf("_P") -1);
 QString InsiderBuildVer = Edition.mid(Edition.indexOf("(Build") + 6, Edition.indexOf(")") - Edition.indexOf("(Build") - 6);

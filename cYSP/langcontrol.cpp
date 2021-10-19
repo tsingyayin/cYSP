@@ -30,7 +30,7 @@ int langset(QString langname){
     spLanguageFile.setFileName(".\\Language\\"+langname+".splang");
     spLanguageFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!spLanguageFile.isOpen()) { 
-        qDebug().noquote() << "sysinfo¡ú" + msg("Lang_Not_In_Support").arg(langname);
+        qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_File_NotFound").arg(langname);
         return 0; 
     }else {
         writereg("Language", langname);
@@ -45,7 +45,7 @@ int langset(QString langname){
         if (spLanguageText.atEnd()) { break; }
     }
     timeEnd = clock();
-    qDebug().noquote()<< "sysinfo¡ú" + msg("First_Print_Load_Lang_End").arg(timeEnd-timeStart);
+    qDebug().noquote()<< "sysinfo¡ú" + msg("Function_Language_Loading_End").arg(timeEnd-timeStart);
     return 1;
 }
 

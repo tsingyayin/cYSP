@@ -40,12 +40,9 @@ class SPAWN :public mQThread
 				for (;;) {
 					Linecount += 1;
 					StoryFileTextSingleLine = StoryFileText.readLine();
-					if (StoryFileTextSingleLine[-1] != "\n") {
-						StoryFileTextSingleLine.append("\n");
-					}
 					int LineLength = StoryFileTextSingleLine.length();
 					if (StoryFileTextSingleLine[0] == "/") {
-						Version = StoryFileTextSingleLine.mid(1, LineLength - 2);
+						Version = StoryFileTextSingleLine.mid(1, LineLength - 1);
 						VerList = Version.split("-");
 						if (VerList.length() != 2) { VerList << "DONOTFOLLOW"; }
 						ensureSPOLVer = TRUE;
@@ -57,7 +54,7 @@ class SPAWN :public mQThread
 							break;
 						}
 						try {
-							Titlesetlist = StoryFileTextSingleLine.mid(1, LineLength - 2).split(":");
+							Titlesetlist = StoryFileTextSingleLine.mid(1, LineLength - 1).split(":");
 							if (Titlesetlist.length() != 4) { throw 0; }
 						}
 						catch (...) {

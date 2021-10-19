@@ -76,7 +76,7 @@ void checkupdate(int argc, char* argv[]) {
 
 void langinput(void) {
 	string Usript;
-	qDebug().noquote() << "sysinfo→" + msg("Lang_Input_Msg");
+	qDebug().noquote() << "sysinfo→" + msg("Function_Language_Filename_Input");
 	while (TRUE) {
 		cout << "Userinput\\lang\u2192";
 		cin >> Usript;
@@ -85,42 +85,40 @@ void langinput(void) {
 		else { 
 			int a=langset(QString::fromStdString(Usript)); 
 			if (a) {
-				qDebug().noquote() << "sysinfo→" + msg("Lang_Set_Success").arg(QString::fromStdString(Usript));
+				qDebug().noquote() << "sysinfo→" + msg("Function_Language_Loading_Success");
 			}
 		}
 	}
 }
 
 void about(void) {
-	qDebug().noquote() << msg("About_Info_Main_Ver") + Program_Info("Main");
-	qDebug().noquote() << msg("About_Info_Sub_Ver") + Program_Info("Sub");
-	qDebug().noquote() << msg("About_Info_Build_Ver") + Program_Info("Build");
-	qDebug().noquote() << msg("About_Info_Spol_Ver") + Program_Info("SPOL");
-	qDebug().noquote() << msg("About_Info_Spol_Env_Ver") + Program_Info("SPEnv");
-	qDebug().noquote() << msg("About_Info_Developers") + "青雅音 Tsing Yayin";
-	qDebug().noquote() << msg("About_Info_Environment") + "Visual Studio 2019";
-	qDebug().noquote() << msg("About_Info_Support") + "亿绪联合协会 UYXA";
-	qDebug().noquote() << msg("About_Info_Help").arg(urlGithub);
-	qDebug().noquote() << msg("About_Info_Donate").arg(urlAFD);
+	qDebug().noquote() << msg("KAU_About_Info_MainVer") + Program_Info("Main");
+	qDebug().noquote() << msg("KAU_About_Info_SubVer") + Program_Info("Sub");
+	qDebug().noquote() << msg("KAU_About_Info_BuildVer") + Program_Info("Build");
+	qDebug().noquote() << msg("KAU_About_Info_SpolVer") + Program_Info("SPOL");
+	qDebug().noquote() << msg("KAU_About_Info_Developers") + "青雅音 Tsing Yayin";
+	qDebug().noquote() << msg("KAU_About_Info_Environment") + "Visual Studio 2019";
+	qDebug().noquote() << msg("KAU_About_Info_Support") + "亿绪联合协会 UYXA";
+	qDebug().noquote() << msg("KAU_About_Info_Help").arg(urlGithub);
+	qDebug().noquote() << msg("KAU_About_Info_Donate").arg(urlAFD);
 }
 
 void aasphelp(void) {
-	qDebug().noquote()<<"about\t" + msg("Help_In_Main_Page_about_");
-	qDebug().noquote()<<"clear\t" + msg("Help_In_Main_Page_clear");
-	qDebug().noquote()<<"clrall\t" + msg("Help_In_Main_Page_clearall");
-	qDebug().noquote()<<"exit\t" + msg("Help_In_Main_Page_exit");
-	qDebug().noquote()<<"help\t" + msg("Help_In_Main_Page_help");
-	qDebug().noquote()<<"lang\t" + msg("Help_In_Main_Page_lang");
-	qDebug().noquote()<<"tospol\t" + msg("Help_In_Main_Page_tospol");
-	qDebug().noquote()<<"ui\t" + msg("Help_In_Main_Page_ui");
-	qDebug().noquote()<<"window\t" + msg("Help_In_Main_Page_window");
+	qDebug().noquote()<<"about\t" + msg("Function_Help_Info_about_");
+	qDebug().noquote()<<"clear\t" + msg("Function_Help_Info_clear");
+	qDebug().noquote()<<"clrall\t" + msg("Function_Help_Info_clrall");
+	qDebug().noquote()<<"exit\t" + msg("Function_Help_Info_exit");
+	qDebug().noquote()<<"help\t" + msg("Function_Help_Info_help");
+	qDebug().noquote()<<"lang\t" + msg("Function_Help_Info_lang");
+	qDebug().noquote()<<"ui\t" + msg("Function_Help_Info_ui");
+	qDebug().noquote()<<"window\t" + msg("Function_Help_Info_window");
 }
 
 void DeleteCache(int num) {
 	if (num == 0) {
-		qDebug().noquote() << "sysinfo→" + msg("File_Searching_Wrong");
+		qDebug().noquote() << "sysinfo→" + msg("Function_Filecheck_Searching_Wrong");
 	}else if (num == 1) {
-		qDebug().noquote() << "sysinfo→" + msg("File_Delete_Cache");
+		qDebug().noquote() << "sysinfo→" + msg("Function_Filecheck_Delete_Cache");
 	}
 	QDir visualCacheCharaDir("./Visual/cache/Chara/");
 	visualCacheCharaDir.setFilter(QDir::Files | QDir::NoSymLinks); 
@@ -130,7 +128,7 @@ void DeleteCache(int num) {
 		QFile cacheFile("./Visual/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num==0) { 
 			cacheFile.remove(); 
-			qDebug().noquote() << msg("File_Info_Deleted") << visualCacheCharaDir.entryList()[i];
+			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheCharaDir.entryList()[i];
 		}else if(num==1){
 			cacheFile.remove();
 		}
@@ -139,12 +137,12 @@ void DeleteCache(int num) {
 		QFile cacheFile("./Visual/cache/BGP/" + visualCacheBGPDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num == 0) {
 			cacheFile.remove();
-			qDebug().noquote() << msg("File_Info_Deleted") << visualCacheBGPDir.entryList()[i];
+			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheBGPDir.entryList()[i];
 		}else if (num == 1) {
 			cacheFile.remove();
 		}
 	}
-	qDebug().noquote() << "sysinfo→" + msg("File_Searching_Wrong_End");
+	qDebug().noquote() << "sysinfo→" + msg("Function_Filecheck_Run_End");
 }
 
 void ensuredirs(int num) {

@@ -25,16 +25,13 @@ void ReciveUserControl::LineNumNow(int Num) {
 	LineNum = Num;
 	justJump = TRUE;
 }
-
 void ReciveUserControl::SpeedNow(float Num) {
 	SpeedFloat = Num;
 
 }
-
 void ReciveUserControl::ChooseWhichBranch(QString BranchName){
 	UserChooseBranch = BranchName;
 }
-
 void ReciveUserControl::ExitNow(void) {
 	exitNow = TRUE;
 }
@@ -49,8 +46,9 @@ cYSP½âÊÍÆ÷Âß¼­²»Í¬ÓÚPython°æ±¾¡£Ê×ÏÈ£¬cYSP½«Ô­À´µÄÔ¤´¦ÀíºËĞÄ£¨PºËĞÄ£©¡¢½âÊÍÆ÷ºËĞ
 Óë´ËÍ¬Ê±£¬ÔÚPython°æÖĞ£¬´ó·ÖÖ§¿ØÖÆÆ÷µÄÌø×ª½»»¹UICoreLauncher½øĞĞ´¦Àí£¬²¢ÔÚ´¦ÀíÖ®ºóÖØĞÂÆô¶¯½âÊÍÆ÷º¯Êı¡£
 µ«ÊÇÏÖÔÚÍ³Ò»ÓÃ½âÊÍÆ÷º¯ÊıµÄÍ¨ÓÃÎÄµµÑ­»·½â¾öÕâ¸öÎÊÌâ¡£È·±£ÁËUICoreLauncherÖ»ÊÇÒ»¸öºËĞÄÆô¶¯Æ÷£¬Ò»ÇĞSPOL½âÊÍ¶¼ÓÉ½âÊÍÆ÷±¾ÉíÍê³É¡£
 ¶ÔÓÚ¶àÏß³Ì´¦ÀíÍ¼Ïñ£¬ÓÉÓÚC++ÔËĞĞËÙ¶ÈÉõÓÚPython£¬Òò´Ë²»»áÕ¼ÓÃÌ«³¤Ê±¼ä£¬ÏàÓ¦µÄ£¬ÔÚcYSPÖĞ£¬ÎÒÃÇ¼õÉÙÁË»ù´¡µÈ´ıÊ±¼ä¡£
-²¢ÇÒÓÉÓÚËÙ¶È¹ı¿ì£¬Ïß³Ì¼ÆÊıÖµºÜÓĞ¿ÉÄÜÒòÎªÏß³Ì³åÍ»¶øµ¼ÖÂ×îºóµÄ¼ÆÊı²»¹éÁã£¬ÕâÔÚPython°æÖĞ¼¸ºõ²»´æÔÚ£¬µ«ÔÚC++°æ±¾ÖĞ³£¼û¡£
+²¢ÇÒÓÉÓÚËÙ¶È¹ı¿ì£¬Ïß³Ì¼ÆÊıÖµºÜÓĞ¿ÉÄÜÒòÎªÏß³Ì³åÍ»£¨²¢·¢£©¶øµ¼ÖÂ×îºóµÄ¼ÆÊı²»¹éÁã£¬ÕâÔÚPython°æÖĞ¼¸ºõ²»´æÔÚ£¬µ«ÔÚC++°æ±¾ÖĞ³£¼û¡£
 ÎªÁË±ÜÃâÓÉ´Ë¿¨ËÀ£¬ÎÒÃÇ¸ø¼ÆÊı¹éÁã¸øÓèÁË5ÃëµÄµÈ´ıÉÏÏŞ¡£Èô5ÃëºóÈÔ²»¹éÁã£¬Ôò¼ÌĞøÖ´ĞĞ½ÓÏÂÀ´µÄ½âÊÍÓï¾ä¡£
+¾­¹ı²âËã£¬5ÃëµÄµÈ´ıÊ±¼äÔ¼µÈÓÚ´ó²¿·ÖÏÖÓĞ¼ÆËã»úÔÚ1080P²¥·ÅÊ±Ô¤ÏÈ´¦Àí50ÓàÍ¼ÏñËùĞèÒªµÄÆ½¾ùËÙ¶È¡£
 */
 
 //½âÊÍÆ÷º¯Êı
@@ -87,7 +85,8 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 			}
 			if (CurrentSPOLText.atEnd()) { break; }
 		}
-		qDebug().noquote() << "InterpreterInfo¡ú³É¹¦Ô¤ÌŞ³ı×¢ÊÍĞĞ";
+		if (MeaningfulLine.isEmpty()) { MeaningfulLine.append(">>>:"); }
+		
 		//×°ÔØÌø×ªÁĞ±í
 		emit signalsName->set_scroll_info();
 		//ÖÆÔì±êÌâ½×¶Î¶¯»­
@@ -104,7 +103,8 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		//×·¼Ó³¤Ê±¿ØÖÆÆ÷ÁĞ±í
 		BGPList.append({ "51200","[ºÚ³¡]" });
 		BGMList.append({ "51200","{}" });
-		
+		qDebug().noquote() << "InterpreterInfo¡ú³É¹¦Ô¤ÌŞ³ı×¢ÊÍĞĞ";
+
 		//Ìæ»»¶¥¿Ø¼ş
 		if (FirstEnter) { emit signalsName->can_prepare_play(); }
 
@@ -132,8 +132,6 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 			//¶ÔÓÚ¸Õ¸ÕÍê³ÉÌø×ªµÄÇé¿ö»ØËİÉÏÒ»³¤Ê±¿ØÖÆÆ÷
 			if (justJump == TRUE) {
 				InBranch = FALSE;
-				qDebug() << LineNum;
-				qDebug() << BGPList;
 				for (int i = 0; i < BGPList.length() - 2; i++) {
 					if (BGPList[i][0].toInt() <= LineNum && LineNum<= BGPList[i+1][0].toInt()) {
 						SingleLine(BGPList[i][0].toInt() ,BGPList[i][1],InterpreterMode::run,signalsName, parent);
@@ -184,7 +182,6 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 
 			//Ô¤´¦ÀíĞ¡·ÖÖ§¿ØÖÆÆ÷¡ª¡ª¼ì²â±êÇ©ÊÇ·ñÆ¥Åä
 			if (CurrentLine.mid(0, 2) == "||" && CurrentLine.mid(0, 3) != "|||" && InBranch) {
-				qDebug() << Note;
 				if (CurrentLine.mid(2, CurrentLine.length() - 2) != Note) {
 					FindBranch = FALSE;
 					continue;
@@ -244,6 +241,7 @@ public:
 		if (filterList.contains(Filter::reverseColor)) { gAddname += "_5"; }
 		if (filterList.contains(Filter::turnDark)) { gAddname += "_6"; }
 	}
+
 	void run(void) {
 		QString SourceName = "./Visual/source/" + gFilefamily + "/" + gFilename + ".png";
 		QString NewPictureName = "./Visual/cache/" + gFilefamily + "/" + gFilename + gAddname + ".png";
@@ -280,7 +278,7 @@ QList<cTransform*> TransThreadList;
 QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
 	if (whichMode == InterpreterMode::presource) {
 		MeaningfulLine.append(Line);
-		if (Line[0] != "|" || Line.mid(0,3)=="|||") {
+		if (Line[0] != "|" || Line.mid(0,3)=="|||" && Line!="|||" ) {
 			emit signalsName->save_line_list({ QString::number(MeaningfulLine.length() - 1),Line });
 		}
 		if (Line[0] == "|") { Line = Line.mid(1, Line.length() - 1); }
@@ -423,25 +421,25 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		bool BGBlack = TRUE;
 
 		if (Charanum == 1) {
-			if (WordSetList[0][1] == "") { AvgSetList[0].append("(ÁÁ£¬³ÁÄ¬)"); }
-			else if (WordSetList[0][1] != "") { AvgSetList[0].append("(ÁÁ£¬½²Êö)"); }
+			if (WordSetList[0][1] == "") { AvgSetList[0][6]=("(ÁÁ£¬³ÁÄ¬)"); }
+			else if (WordSetList[0][1] != "") { AvgSetList[0][6]=("(ÁÁ£¬½²Êö)"); }
 		}
 		else if (Charanum == 2) {
 			if (WordSetList[0][1] == "" && WordSetList[1][1] == "") {
-				AvgSetList[0].append("(ÁÁ£¬³ÁÄ¬)");
-				AvgSetList[1].append("(ÁÁ£¬³ÁÄ¬)");
+				AvgSetList[0][6]=("(ÁÁ£¬³ÁÄ¬)");
+				AvgSetList[1][6] = ("(ÁÁ£¬³ÁÄ¬)");
 				if (WordSetList[0][0] == "" && WordSetList[1][0] == "") { BGBlack = FALSE; }
 			}
 			else if (WordSetList[0][1] != "" && WordSetList[1][1] == "") {
-				AvgSetList[0].append("(ÁÁ£¬½²Êö)");
-				AvgSetList[1].append("(°µ£¬³ÁÄ¬)");
+				AvgSetList[0][6] = ("(ÁÁ£¬½²Êö)");
+				AvgSetList[1][6] = ("(°µ£¬³ÁÄ¬)");
 			}
 			else if (WordSetList[0][1] == "" && WordSetList[1][1] != "") {
-				AvgSetList[0].append("(ÁÁ£¬³ÁÄ¬)");
-				AvgSetList[1].append("(ÁÁ£¬½²Êö)");
+				AvgSetList[0][6] = ("(°µ£¬³ÁÄ¬)");
+				AvgSetList[1][6] = ("(ÁÁ£¬½²Êö)");
 			}else {
-				AvgSetList[0].append("(ÁÁ£¬½²Êö)");
-				AvgSetList[1].append("(ÁÁ£¬½²Êö)");
+				AvgSetList[0][6] = ("(ÁÁ£¬½²Êö)");
+				AvgSetList[1][6] = ("(ÁÁ£¬½²Êö)");
 			}
 		}
 		if (whichMode == InterpreterMode::debug) {
@@ -552,7 +550,8 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 
 		if (whichMode == InterpreterMode::debug) {
 			if (FreeSetList.length() > 2 || FreePoList.length() > 3) {
-				qDebug() << "¼ì²éĞĞ" + QString::number(LineNum) + "´æÔÚµÄ×ÔÓÉÎÄ±¾¿ØÖÆÆ÷²ÎÊı¸öÊı³¬ÏŞ";			}
+				qDebug() << "¼ì²éĞĞ" + QString::number(LineNum) + "´æÔÚµÄ×ÔÓÉÎÄ±¾¿ØÖÆÆ÷²ÎÊı¸öÊı³¬ÏŞ";
+			}
 		}
 
 		if (whichMode == InterpreterMode::run) {
@@ -634,6 +633,6 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			qDebug() << "¼ì²éĞĞ" + QString::number(LineNum) + "ÖĞµÄ·Ç·¨ÎÄ±¾";
 		}
 	}
+
 	return { "NORMAL","NORMAL" };
 };
-

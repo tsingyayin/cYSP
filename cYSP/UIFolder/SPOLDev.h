@@ -542,7 +542,7 @@ public:
 		return 0;
 	}
 	void setDefaultText(void) {
-		SPOLEdit->setHtml(setColor("#YSP自带着色开发环境SPOLEnv(Beta测试版)，版本0.1，兼容着色SPOL0.6+\n#使用SPOL创建您自己的剧情。\n\n/SPOL0.6.5-FollowNew\n"));
+		SPOLEdit->setHtml(setColor("#YSP自带着色开发环境SPOLDev(Beta测试版)，版本0.1，兼容着色SPOL0.6+\n#使用SPOL创建您自己的剧情。\n\n/SPOL0.6.5-FollowNew\n"));
 	}
 public slots:
 	void repaintWhileFree(void) {
