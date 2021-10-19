@@ -1,15 +1,8 @@
-About_Info_Version:当前版本是：
-About_Info_Main_Ver:主版本编号：
-About_Info_Sub_Ver:更新编号：
-About_Info_Build_Ver:构建编号：
-About_Info_Spol_Ver:SPOL版本：
-About_Info_Spol_Env_Ver:SPOL解释器环境类型：
-About_Info_Developers:开发者：
-About_Info_Environment:开发环境：
-About_Info_Support:开发支持：
-About_Info_Help:帮助：前往网址%1寻求支持
-About_Info_Donate:赞助链接：%1
+#简体中文语言文件
+#适用于0.8版本及以上的YSP
+#需要指出的是，部分文本是富文本，使用了部分HTML标签，在翻译时请保留这些富文本标签。
 
+#检查更新文本
 Check_Update_Info_Latest:最新版本是于%1日发布的版本%2，可以考虑升级
 Check_Update_Info_New:您的版本是最新版本
 Check_Update_Info_Insider:您正在使用开发版本，请勿外传
@@ -19,100 +12,142 @@ Check_Update_Info_Pre:检索预览版本更新线
 Check_Update_Info_Pub:检索公开版本更新线
 Check_Update_Info_Branch:检索分支版本更新线
 
-Command_Error:不能将文本“%1”识别为任何现有指令。
-Choose_File:打开剧情文件
+#内核功能文本
+Function_Filecheck_Searching_Wrong:正在检查缓存文件错误
+Function_Filecheck_Run_End:执行完毕
+Function_Filecheck_Delete_Wrong:已经移除损坏的缓存文件
+Function_Filecheck_Delete_Cache:正在移除全部缓存文件
+Function_Filecheck_Cache_Clean:缓存文件清理完毕
 
-Effect_Build_Success:成功建立文件
-Effect_Build_Error:未能建立文件
-Effect_Info_Searching:正在查找需要处理的资源
-Effect_Info_Found:行 %1 在文件 %2 中需要建立 %3
-Effect_Info_Folder_Error:文件目录可能缺失，无法在正确位置创建文件
-Effect_Info_Searched:查找文件 %1 结束
+Function_Language_Loading_End:语言文件加载结束，耗时%1毫秒
+Function_Language_Filename_Input:请键入目标语言的文件名
+Function_Language_Loading_Success:设置语言成功
+Function_Language_File_NotFound:未能找到指定的文件%1
 
-First_Print_Load_Lang_End:语言文件加载结束，耗时%1毫秒
-First_Print:AASP命令提示符(伪)模式,用help查询现有命令。
+Function_Help_Info_about_:展示关于信息
+Function_Help_Info_clear:清理损坏的缓存图像
+Function_Help_Info_clrall:清理全部缓存
+Function_Help_Info_help:列出本列表
+Function_Help_Info_exit:退出程序（或命令的任意一层）
+Function_Help_Info_lang:更改程序语言
+Function_Help_Info_ui:启动播放页面
+Function_Help_Info_window:启动交互页面
 
-File_Searching_Wrong:正在检查缓存文件夹是否有损坏的文件
-File_Searching_Wrong_End:检查完毕
-File_Info_Deleted:已经删除了损坏的文件
-File_Delete_Cache:正在清除缓存文件夹
-File_Cache_Deleted:缓存文件夹清理完毕
+#内核和UI共用About信息
+KAU_About_Info_MainVer:主版本编号：
+KAU_About_Info_SubVer:更新编号：
+KAU_About_Info_BuildVer:构建编号：
+KAU_About_Info_SpolVer:SPOL版本：
+KAU_About_Info_SPOLEnv:内核版本：
+KAU_About_Info_Developers:开发者：
+KAU_About_Info_Environment:开发环境：
+KAU_About_Info_More:更多信息
+KAU_About_Info_Support:开发支持：
+KAU_About_Info_Help:帮助：前往网址%1寻求支持
+KAU_About_Info_Donate:赞助链接：%1
 
-Freedom_Text_Mode_L:左对齐
-Freedom_Text_Mode_M:中对齐
-Freedom_Text_Mode_R:右对齐
-Freedom_Text_Setting_Info:（坐标是(%1,%2)。采用%3）
+KAU_Text_Common_Hour:时
+KAU_Text_Common_Minute:分
+KAU_Text_Common_Second:秒
 
-Help_In_Main_Page_about_:展示有关信息
-Help_In_Main_Page_clear:清理损坏图像缓存
-Help_In_Main_Page_help:用来查询支持的指令列表
-Help_In_Main_Page_exit:退出程序（或程序的任意一级）
-Help_In_Main_Page_lang:调整程序语言
-Help_In_Main_Page_ui:启动UI页面
-Help_In_Main_Page_tospol:将官方文档转换为SPOL
-Help_In_Main_Page_clearall:清理全部缓存
-Help_In_Main_Page_window:展示用户UI页面
+#内核命令提示文本
+Kernel_Text_Command_Error:不能将文本“%1”识别为任何现有指令。
+Kernal_Text_First_Print:%1 内核，用help查询现有命令。
+Kernal_Text_IFL_Version:本版解释器遵循 %1 规定
 
-Lang_Input_Msg:请键入您需要的语言的文件名
-Lang_Set_Success:设置语言%1成功
-Lang_Not_In_Support:没有找到您希望的语言%1，可能暂未支持。
+#IFL定义的标准异常
+EIFL_Exception_Notice_Template:行 %1 在文件 %2 中 拥有异常：%3，详细信息：
+EIFL_SPOL_Version_Exception:SPOL版本不匹配
+EIFL_SPOL_Version_Notice:文件指定的SPOL版本不匹配当前解释器的版本
+EIFL_Title_Controller_Exception:标题控制器设置异常
+EIFL_Title_Controller_Notice:标题控制器不符合语法规定
+EIFL_Controller_Settings_Exception:控制器设置异常
+EIFL_Controller_Settings_Notice:控制器设置不符合语法规定，检查字段个数与分隔符使用情况
+EIFL_Controller_Parameters_Exception:控制器数值异常
+EIFL_Controller_Parameters_Notice:控制器数值异常，检查是否在数字位上键入了文本、在序号上使用了小数，或者指定了负数的时间
+EIFL_Line_Text_Exception:非法的行内容
+EIFL_Line_Text_Notice:未能识别该行的内容。如果是注释请添加注释字符，如果是GPOL控制器请启用GCP模式。
+EIFL_File_Open_Exception:无效的目标文件
+EIFL_File_Open_Notice:未能打开指定的文件。检查目标文件是否存在，路径是否正确，或者目标文件是否正在被其他程序占用。
+EIFL_File_Line_Exception:过多的行数
+EIFL_File_Line_Notice:单文件行数超过了上限51200行。若您使用SPOLDev构建文档，建议单文件行数不要超过1024行。
+EIFL_Interpreter_Program_Exception:解释器运行异常
+EIFL_Interpreter_Program_Notice:解释器发生未定义的异常。无法提供更多跟进信息。
+EIFL_Unknown_Running_Exception:未知的运行异常
+EIFL_Unknown_Running_Notice:程序发生未定义的异常。无法提供更多跟进信息。
 
-Main_Display_Size:主屏幕的分辨率大小为%1x%2
+#播放页文本
+Player_MainPage_Text_Title:Yayin Story Player
+Player_ChooseFilePage_Text_Title:选择剧情文件
+Player_Playing_Text_Auto:自动
+Player_Playing_Text_Next:下一页
+Player_Playing_Current_Line:当前
+Player_Playing_Jump_Line:跳转
+Player_Kernal_Interpret_End:当前文档（序列）已经解释完毕
+Player_Kernal_Wakeup_Success:成功唤醒解释器线程
 
-Screen_Too_Small:您的主显示器分辨率%1x%2小于最低容许分辨率1366x768，UI无法启动
+#UI通用要素文本
+Ui_Text_Common_Yes:确定
+Ui_Text_Common_Cancel:取消
+Ui_Text_Common_Back:返回
+Ui_Text_Common_Exit:退出
+Ui_Text_Common_Enable:启用
+Ui_Text_Common_Disable:禁用
+Ui_Text_Common_Open:打开
+Ui_Text_Common_Close:关闭
+Ui_Text_Common_New:新建
+Ui_Text_Common_Save:保存
+Ui_Text_Common_Undo:撤销
+Ui_Text_Common_Redo:重做
+Ui_Text_Common_Rename:重命名
+Ui_Text_Common_SaveAs:另存为
+Ui_Text_Common_File:文件
+Ui_Text_Common_Folder:文件夹
+Ui_Text_Common_Direction:路径
+Ui_Text_Common_Cache:缓存
+Ui_Text_Common_Story:剧情
+Ui_Text_Common_Source:资源
+Ui_Text_Common_About_:关于
+Ui_Text_Common_Auto:自动
+Ui_Text_Common_Pre:内部预览
+Ui_Text_Common_Pub:公开发布
 
-Second:秒
+#UI页面文本
+Ui_AllPage_Text_Title:YSP 播放器
+Ui_MainPage_Launch_UI:启动播放页
+Ui_MainPage_Open_Creation:创作
+Ui_MainPage_Open_Settings:设置
+Ui_MainPage_Open_Tools:工具
 
-System_Info:您的操作系统是：
-System_Not_Win10:已经对您所运行的Windows版本%1停止支持，请迁移到Windows10
-System_Win10_Too_Old:已经停止支持您使用的Windows10系统(内部版本%1)，它低于Windows10的2017年秋季更新(内部版本16299)。请将您的Windows10升级到最新版本。
+Ui_CreationPage_Folder_Cache:缓存文件夹
+Ui_CreationPage_Folder_Source:资源文件夹
+Ui_CreationPage_Folder_Story:剧情文件夹
+Ui_CreationPage_Folder_Official:官方剧情
+Ui_CreationPage_Open_SPOLDev:SPOL编辑器
 
-To_Spol_End:转换完毕
+Ui_SettingsPage_Choose_Language:选择语言
+Ui_SettingsPage_Normal_Settings:一般设置
+Ui_SettingsPage_Dev_Settings:高级设置
+Ui_SettingsPage_Reset_Parameters:重设为默认值
+Ui_SettingsPage_Apply_Parameters:应用上述设置
 
-Ui_Mode_End:UI已经播放完当前剧情
+Ui_Settings_Common_FullScreen:全屏
+Ui_Settings_Common_Window:窗口化
+Ui_Settings_ChooseChannel_Label:选择更新通道
+Ui_Settings_ChooseChannel_Text:更改此项设置可以改变当前接收更新消息提醒的通道。自动模式会遵循您使用的软件版本自行匹配，使用其他选项强制指定对应通道。<br><font color = #FF1111><b>如果您是公开版本用户，请您在切换到内部测试之前慎重考虑，因为内部测试版本会有更多Bug，甚至可能破坏您现有的SPOL文档。</b></font>
+Ui_Settings_GCPMode_Label:GCP模式
+Ui_Settings_GCPMode_Text:更改此项设置允许程序启用内置的GCP解释模块，从而正常识别GPOL文件。<br>GPOL文件是本程序的galgame平台模式的脚本文件。
+Ui_Settings_ForcedDebugging_Label:强制调试
+Ui_Settings_ForcedDebugging_Text:内部预览版本的程序会在控制台上显示更多调试信息，但公开发布版本并不会。<br>启用此项目，允许程序忽略自身版本，显示更多的调试信息。
+Ui_Settings_WindowDisplayMode_Label:窗口模式
+Ui_Settings_WindowDisplayMode_Text:调整播放窗口为全屏或者窗口化。
+Ui_Settings_WindowGeometry_Label:窗口化时大小
+Ui_Settings_WindowGeometry_Text:调整窗口化时窗口的大小
+Ui_AboutPage_Check_Update:检查更新
 
-Warning_Warn_Count:读取过程共出现了%1个警告：
-Warning_Warn_Info:未能识别行%1在文件%2中的内容:“%3”，如果是注释请添加字符#
-Warning_Texterror_Count:读取过程共出现了%1个错误：
-Warning_Texterror_Info:行%1在文件%1中的内容:“%2”不符合解释器定义
-Warning_Formatwarn_Count:读取过程共出现了%1个格式警告：
-Warning_Formatwarn_Info:行%1在文件%2中的内容:“%3”没有以回车（换行符）结尾
-Warning_Numseterror_Count:读取过程共发现了%1个参数设置错误：
-Warning_Numseterror_Info:行%1在文件%2中的控制器“%3”遇到了参数错误：超出范围或超出参数个数上限
-Warning_Nameerror_Count:读取过程中共发现了%1个标签（名称）设置错误：
-Warning_Nameerror_Info:行%1在文件%2中的控制器“%3”遇到了标签（名称）设置错误：该标签（名称）与相关设置不匹配
+Ui_ToolsPage_Delete_Wrong:清理损坏图像
+Ui_ToolsPage_Delete_Cache:清除全部缓存
 
-Ui_AutoButton_Auto:自动
-Ui_AutoButton_Auto_Off:自动OFF
-Ui_NextButton:下一页
-Ui_Thread_Core_Wake:已经尝试唤醒解释器线程，回车键仅用于解释器卡死时唤醒用，不要用作翻页的按键。
-Ui_Current_Line:当前
-Ui_To_Which_Line:跳转
-Ui_Msg_Yes:确定
-Ui_Msg_Back:返回
-Ui_Msg_About_:关于
-Ui_Msg_Choose_Lang:选择语言
-Ui_Msg_Create:创作
-Ui_Msg_Settings:设置
-Ui_Msg_SPOLDev:SPOL编辑器
-Ui_Msg_Tools:工具
-Ui_Msg_LaunchUI:启动播放页
-Ui_Msg_OpenGCPMode:启用GCP模式
-Ui_Msg_CloseGCPMode:关闭GCP模式
-Ui_Msg_EnsureGCPMode:您确定启用GCP模式么？GCP相关功能仍在开发，可能十分不稳定。
-Ui_Msg_Open_Cache:缓存文件夹
-Ui_Msg_Open_Source:资源文件夹
-Ui_Msg_Open_Story:故事文件夹
-Ui_Msg_Open_Official:官方剧情
-UI_Msg_Current_Mode:Yayin Story Player
-Ui_Msg_Title:YSP 播放器
-Ui_Msg_Exit:退出
-Ui_Msg_Check_Update:检查更新
-Ui_Msg_To_Spol:转换至SPOL
-Ui_Msg_Clear_Wrong:清除损坏图像
-Ui_Msg_Clear_All:清除所有缓存
-Ui_Msg_Can_Update:可以更新！提取码是：
-Ui_Msg_Update_Log:点击查看更新日志
-Ui_Msg_Update_Log_N:无更新日志
-Ui_To_Spol_End:转换完毕
-Ui_To_Spol_End_Error:未能完成转换！
+Ui_Update_Update_Available:可以更新！提取码是：
+Ui_Update_With_Log:点击查看更新日志
+Ui_Update_Without_Log:无更新日志
