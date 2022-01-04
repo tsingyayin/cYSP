@@ -1,6 +1,5 @@
 #include "aaspcommand.h"
 #include "../UIFolder/TopWindow.h"
-#include "../global_value.h"
 #include "checkupdate.h"
 #include <QDebug>
 #include <QCoreApplication>
@@ -120,12 +119,12 @@ void DeleteCache(int num) {
 	}else if (num == 1) {
 		qDebug().noquote() << "sysinfo¡ú" + msg("Function_Filecheck_Delete_Cache");
 	}
-	QDir visualCacheCharaDir("./Visual/cache/Chara/");
+	QDir visualCacheCharaDir(PROPATH(1)+"/cache/Chara/");
 	visualCacheCharaDir.setFilter(QDir::Files | QDir::NoSymLinks); 
-	QDir visualCacheBGPDir("./Visual/cache/BGP/");
+	QDir visualCacheBGPDir(PROPATH(1) + "/cache/BGP/");
 	visualCacheBGPDir.setFilter(QDir::Files | QDir::NoSymLinks);
 	for (int i = 0; i < visualCacheCharaDir.count(); i++) {
-		QFile cacheFile("./Visual/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
+		QFile cacheFile(PROPATH(1) + "/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num==0) { 
 			cacheFile.remove(); 
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheCharaDir.entryList()[i];
@@ -134,7 +133,7 @@ void DeleteCache(int num) {
 		}
 	}
 	for (int i = 0; i < visualCacheBGPDir.count(); i++) {
-		QFile cacheFile("./Visual/cache/BGP/" + visualCacheBGPDir.entryList()[i]);
+		QFile cacheFile(PROPATH(1) + "/cache/BGP/" + visualCacheBGPDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num == 0) {
 			cacheFile.remove();
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheBGPDir.entryList()[i];
@@ -148,7 +147,7 @@ void DeleteCache(int num) {
 void ensuredirs(int num) {
 	qDebug().noquote() << "sysinfo¡úChecking the files in the directory";
 	QStringList dirlst;
-	dirlst << "./CrashReport" << "./Visual/cache/BGP" << "./Visual/cache/Chara" << "./arknights/story";
+	dirlst << PROPATH(1) + "/cache/BGP" << PROPATH(1) + "/cache/Chara";
 	int count = 0;
 	QDir singleDir;
 	for (int i = 0; i < dirlst.length(); i++) {
@@ -168,13 +167,33 @@ void ensuredirs(int num) {
 void OpenFolder(int num) {
 	QString Path = "";
 	if (num == 1) {
-		Path = ".\\Visual\\cache";
+		Path = PROPATH(1) + "\\cache";
 	}elif(num == 2) {
-		Path = ".\\Visual\\source";
+		Path = PROPATH(1) + "\\source";
 	}elif(num == 3) {
-		Path = ".\\arknights\\story";
+		Path = PROPATH(1) + "\\arknights\\story";
 	}elif(num == 4) {
-		Path = ".\\story";
+		Path = PROPATH(1) + "\\story";
 	}
 	system(("start " + Path).toStdString().data());
+	qDebug().noquote() << ("start " + Path).toStdString().data();
 }
+
+QList<QStringList> spolEscapeList({ {"&lt", "<"},{"&gt", ">"},{"&cl", "{"},{"&cr", "}"},
+	{"&sl", "["},{"&sr", "]"},{"&bl", "("},{"&br", ")"},{"&cl", ":"},{"&co", ","},{"&sa", "/"},
+	{"&pl", "+"},{"&mi", "-"},{"&wa", "~"},{"&aa", "&"} });
+
+QString spolEscape(QString RawString) {
+	if (RawString.contains("&")) {
+		for (int i = 0; i < spolEscapeList.length(); i++) {
+			if (RawString.contains("&")) {
+				RawString.replace(spolEscapeList[i][0], spolEscapeList[i][1]);
+			}
+			else {
+				break;
+			}
+		}
+	}
+	return RawString;
+}
+

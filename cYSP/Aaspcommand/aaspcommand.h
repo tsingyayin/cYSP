@@ -9,6 +9,7 @@
 #include "../langcontrol.h"
 #include "checkupdate.h"
 #include "../loadsettings.h"
+#include "../global_value.h"
 #define elif else if
 #define Debug qDebug().noquote()
 
@@ -64,6 +65,12 @@ O======O
 数值3打开官方剧情文件夹，数值4打开用户剧情文件夹
 “赞美cmd.exe”*/
 void OpenFolder(int num);
+
+/*SPOL转义系统
+RawString
+O======O
+传入含有转义字符的原始字符串，传回转义后的字符串*/
+QString spolEscape(QString RawString);
 
 /*主页功能实现框架hServiceFramework
 构造函数无参数
