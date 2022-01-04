@@ -1,0 +1,151 @@
+#English (United States) Language File
+#For YSP programs over version 0.8
+#It should be noted that some of the text is rich text and some HTML tags are used. Please keep these rich text tags when translating.
+
+#Check Update Text
+Check_Update_Info_Latest:The latest version is version %2 released on %1. Consider upgrading
+Check_Update_Info_New:Your version is up to date
+Check_Update_Info_Insider:You are using the development version.Do not pass it on to others
+Check_Update_Info_Ver_Error:Version number cannot be verified at this time, please try again later
+Check_Update_Info_Net_Error:Some problems were encountered and the update could not be checked
+Check_Update_Info_Pre:Retrieve Preview Version Update Channel
+Check_Update_Info_Pub:Retrieve Public Version Update Channel
+Check_Update_Info_Branch:Retrieve Branch Version Update Channel
+
+#Kernel Function Text
+Function_Filecheck_Searching_Wrong:Checking for cache file errors
+Function_Filecheck_Run_End:Check execution completed
+Function_Filecheck_Delete_Wrong:The corrupted cache file has been removed
+Function_Filecheck_Delete_Cache:Removing all cached files
+Function_Filecheck_Cache_Clean:Cache file cleanup completed
+
+Function_Language_Loading_End:Language file loading ended, taking %1 milliseconds
+Function_Language_Filename_Input:Type the file name of the target language
+Function_Language_Loading_Success:Set language successfully
+Function_Language_File_NotFound:The specified file %1 could not be found
+
+Function_Help_Info_about_:Show information about the program
+Function_Help_Info_clear:Clean up corrupted cached images
+Function_Help_Info_clrall:Clean up all caches
+Function_Help_Info_help:List this list
+Function_Help_Info_exit:Exit the program (or any layer of the command)
+Function_Help_Info_lang:Change program language
+Function_Help_Info_ui:Start Player page
+Function_Help_Info_window:Launch Interactive(Main) page
+
+#About info that can be shared by the kernel and UI
+KAU_About_Info_MainVer:Major:
+KAU_About_Info_SubVer:Update:
+KAU_About_Info_BuildVer:Build:
+KAU_About_Info_SpolVer:SPOL:
+KAU_About_Info_SPOLEnv:Kernel:
+KAU_About_Info_More:More Info
+KAU_About_Info_Support:Support:
+KAU_About_Info_Help:Help:Go to website %1 for support
+KAU_About_Info_Donate:Sponsor us: %1
+
+KAU_Text_Common_Hour:Hour
+KAU_Text_Common_Minute:Minute
+KAU_Text_Common_Second:Second
+
+#Kernel command prompt text
+Kernel_Text_Command_Error:The text '%1' cannot be recognized as any existing command.
+Kernal_Text_First_Print:%1 kernel, query the existing commands with 'help'.
+Kernal_Text_IFL_Version:This version of the interpreter meets the requirements of %1.
+
+#Standard exceptions defined by IFL
+EIFL_Exception_Notice_Template:Line %1 has exception: %3 (in file %2), details:
+EIFL_SPOL_Version_Exception:SPOL version Exception
+EIFL_SPOL_Version_Notice:The SPOL version specified in the file does not match the version of the current interpreter
+EIFL_Title_Controller_Exception:Title controller setting Exception
+EIFL_Title_Controller_Notice:The title controller does not conform to the syntax
+EIFL_Controller_Settings_Exception:Controller setting Exception
+EIFL_Controller_Settings_Notice:The controller setting does not comply with the syntax. Check the number of fields and the use of separators
+EIFL_Controller_Parameters_Exception:Controller value Exception
+EIFL_Controller_Parameters_Notice:The controller value is abnormal. Check that you typed text in numeric digits, used decimals in the sequence number, or specified a negative time
+EIFL_Line_Text_Exception:Line content Exception
+EIFL_Line_Text_Notice:The contents of the line were not recognized. If it is a comment, add a comment character. If it is a GPOL controller, enable GCP mode.
+EIFL_File_Open_Exception:Destination file Exception
+EIFL_File_Open_Notice:The specified file could not be opened. Check whether the target file exists, whether the path is correct, or whether the target file is being occupied by other programs
+EIFL_File_Line_Exception:Too many rows Exception
+EIFL_File_Line_Notice:The number of lines in a single file exceeds the maximum of 51200 lines. If you use SPOLDev to build documents, it is recommended that the number of lines in a single file should not exceed 1024.
+EIFL_Interpreter_Program_Exception:Interpreter running Exception
+EIFL_Interpreter_Program_Notice:An undefined exception occurred in the interpreter. Unable to provide further follow-up information
+EIFL_Unknown_Running_Exception:Unknown running exception
+EIFL_Unknown_Running_Notice:An undefined exception occurred in the program. Unable to provide further follow-up information
+
+#Player page text
+Player_MainPage_Text_Title:Yayin Story Player
+Player_ChooseFilePage_Text_Title:Select story file
+Player_Playing_Text_Auto:Auto
+Player_Playing_Text_Next:Next
+Player_Playing_Current_Line:Current
+Player_Playing_Jump_Line:Target
+Player_Kernal_Interpret_End:The current document (sequence) has been interpreted
+Player_Kernal_Wakeup_Success:Successfully awakened the interpreter thread
+
+#UI common text
+Ui_Text_Common_Yes:Yes
+Ui_Text_Common_Cancel:Cancel
+Ui_Text_Common_Back:Back
+Ui_Text_Common_Exit:Exit
+Ui_Text_Common_Enable:Enable
+Ui_Text_Common_Disable:Disable
+Ui_Text_Common_Open:Open
+Ui_Text_Common_Close:Close
+Ui_Text_Common_New:New
+Ui_Text_Common_Save:Save
+Ui_Text_Common_Undo:Undo
+Ui_Text_Common_Redo:Redo
+Ui_Text_Common_Rename:Rename
+Ui_Text_Common_SaveAs:Save as
+Ui_Text_Common_File:File
+Ui_Text_Common_Folder:Folder
+Ui_Text_Common_Direction:Direction
+Ui_Text_Common_Cache:Cache
+Ui_Text_Common_Story:Story
+Ui_Text_Common_Source:Source
+Ui_Text_Common_About_:About
+Ui_Text_Common_Auto:Auto
+Ui_Text_Common_Pre:PreRelease
+Ui_Text_Common_Pub:Public
+
+#UI页面文本
+Ui_AllPage_Text_Title:Story Player
+Ui_MainPage_Launch_UI:Launch Player
+Ui_MainPage_Open_Creation:Creation
+Ui_MainPage_Open_Settings:Settings
+Ui_MainPage_Open_Tools:Tools
+
+Ui_CreationPage_Folder_Cache:Cache
+Ui_CreationPage_Folder_Source:Source
+Ui_CreationPage_Folder_Story:Story
+Ui_CreationPage_Folder_Official:Official
+Ui_CreationPage_Open_SPOLDev:SPOLDev
+
+Ui_SettingsPage_Choose_Language:Language
+Ui_SettingsPage_Normal_Settings:General
+Ui_SettingsPage_Dev_Settings:Advanced
+Ui_SettingsPage_Reset_Parameters:Reset
+Ui_SettingsPage_Apply_Parameters:Apply
+
+Ui_Settings_Common_FullScreen:Full Screen
+Ui_Settings_Common_Window:Window
+Ui_Settings_ChooseChannel_Label:Choose Update channel
+Ui_Settings_ChooseChannel_Text:Changing this setting can change the current channel receiving update message reminders. Automatic mode will match itself according to the software version you use, and use other options to force the corresponding channel to be specified<br><font color=#FF1111><b>If you are a public version user, please consider carefully before switching to the Preview Channel, because the preview version will have more bugs and may even destroy your existing SPOL documents</b></font>
+Ui_Settings_GCPMode_Label:GCP Mode
+Ui_Settings_GCPMode_Text:Changing this setting allows the program to enable the built-in GCP interpretation module to recognize GPOL files normally<Br>The GPOL file is the script file of the galgame platform mode of this program.
+Ui_Settings_ForcedDebugging_Label:Forced debugging
+Ui_Settings_ForcedDebugging_Text:The internal preview version of the program will display more debugging information on the console, but the public release version will not<Br>Enabling this item allows the program to ignore its own version and display more debugging information.
+Ui_Settings_WindowDisplayMode_Label:Display status
+Ui_Settings_WindowDisplayMode_Text:Adjust the player window to full screen or windowed.
+Ui_Settings_WindowGeometry_Label:Window size
+Ui_Settings_WindowGeometry_Text:Resize the window when windowed
+Ui_AboutPage_Check_Update:Check Update
+
+Ui_ToolsPage_Delete_Wrong:Clear Damage
+Ui_ToolsPage_Delete_Cache:Clear All
+
+Ui_Update_Update_Available:Can be updated! The web page password is:
+Ui_Update_With_Log:Click to view the update log(Only Chinese)
+Ui_Update_Without_Log:No update log
