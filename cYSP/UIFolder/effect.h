@@ -16,11 +16,11 @@ class ShakeFunc :public QThread
 			gSpeed = SpeedNow;
 		}
 		void run(void) {
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 20; i++) {
 				int a = randint(-10, 10);
 				int b = randint(-10, 10);
 				emit shakeXY(a, b, 0);
-				Sleep(20 * gSpeed);
+				Sleep(10 * gSpeed);
 			}
 			emit shakeXY(0, 0, 1);
 			this->deleteLater();

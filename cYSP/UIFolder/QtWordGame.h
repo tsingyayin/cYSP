@@ -9,9 +9,234 @@
 #include "effect.h"
 #include "../langcontrol.h"
 #include "../global_value.h"
+#include "../core/core_T.h"
+#include <cmath>
 using namespace std;
+#define tick int
 
-class uFirstPage :public QWidget
+class SingleInfo :public QFrame
+{
+    Q_OBJECT
+signals:
+    void needEnter();
+    void willExit();
+    void gTicker();
+    void disConnect();
+public:
+    QWidget* parent;
+    QLabel* InfoLabel;
+    QLabel* IconLabel;
+    QHBoxLayout* CurrentLayout;
+    QImage Image;
+    float FrameIn = 0.0;
+    float FrameOut = 0.0;
+    int gStep = 0;
+    float FrameTo = 0.7;
+    float FrameFlash = 0.0;
+    tick AliveTick = 0;
+    tick waitTick = 0;
+    enum class Status {
+        wait = 0,
+        moveIn = 1,
+        moveTo = 2,
+        moveOut = 3,
+    };
+    Status CurrentStatus;
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    SingleInfo(QString Title, QString SubTitle = "", QString RawInfo = "", EIFL E_IFL = EIFL::URE, QWidget* gparent = Q_NULLPTR) :parent(gparent) {
+        switch (E_IFL) {
+        case EIFL::SSE:
+            r = 235; g = 113; b = 33;
+            break;
+        case EIFL::PRE:
+            r = 153; g = 17; b = 0;
+            break;
+        case EIFL::GFE:
+            r = 217; g = 2; b = 111;
+            break;
+        case EIFL::URE:
+            r = 128; g = 128; b = 128;
+            break;
+        case EIFL::SRI:
+            r = 0; r = 147; b = 219;
+            break;
+        case EIFL::PRI:
+            r = 0; g = 219; b = 14;
+            break;
+        case EIFL::GRI:
+            r = 3; g = 219; b = 174;
+            break;
+        case EIFL::NWI:
+            r = 217; g = 219; b = 0;
+            break;
+        }
+        this->setStyleSheet("QFrame#SingleInfo{border:4px solid rgb(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) +
+            ");border-radius:10px;background-color:rgb(" +
+            QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + ")}");
+        this->setObjectName("SingleInfo");
+        this->setParent(parent);
+        InfoLabel = new QLabel(this);
+        InfoLabel->setText("<style>fontset{font-family:'Microsoft YaHei';color:#FFFFFF;}</style><fontset><font size='6'>" + Title + "</font><br><font size='3'>" + SubTitle + "<br>" + RawInfo + "</font></fontset>");
+        Image = QImage(PROPATH(1)+"/source/BaseUI/Button/LogButton_N.png");
+        Image = Image.scaled(QSize(50, 50), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        IconLabel = new QLabel(this);
+        IconLabel->setPixmap(QPixmap::fromImage(Image));
+        IconLabel->setMaximumWidth(60);
+
+        CurrentLayout = new QHBoxLayout(this);
+        CurrentLayout->addWidget(IconLabel);
+        CurrentLayout->addWidget(InfoLabel);
+
+        connect(this, SIGNAL(gTicker()), this, SLOT(tickslot()));
+
+        this->setGeometry(QRect(parent->width(), 0.8 * parent->height(), parent->width(), parent->height() * 0.12));
+        CurrentStatus = Status::moveIn;
+    }
+public slots:
+    void tickslot() {
+        AliveTick++;
+        //ProtectTick++;
+        if (AliveTick >= 400) { moveOut(); }
+        if (waitTick > 0) {
+            waitTick++;
+            if (waitTick > (gStep + 1) * 5 + 50) {
+                waitTick = 0;
+                if (CurrentStatus == Status::wait) { moveTo(); }
+            }
+        }
+        flashThis();
+        switch (CurrentStatus) {
+        case Status::wait:
+            break;
+        case Status::moveIn:
+            moveIn();
+            break;
+        case Status::moveTo:
+            _moveTo();
+            break;
+        case Status::moveOut:
+            _moveOut();
+            break;
+        }
+    }
+    void flashThis() {
+        this->setStyleSheet("QFrame#SingleInfo{border:4px solid rgb(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) +
+            ");border-radius:10px;background-color:rgb(" +
+            QString::number(abs(cos(FrameFlash)) * r) + "," +
+            QString::number(abs(cos(FrameFlash)) * g) + "," +
+            QString::number(abs(cos(FrameFlash)) * b) + ")}");
+        FrameFlash += 0.02;
+        if (FrameFlash >= 6.28) {
+            FrameFlash = 0.0;
+        }
+    }
+    void moveIn() {
+        if (FrameIn < 0.5) {
+            this->move((1.05 - sin(FrameIn * 1.5708)) * parent->width(), 0.8 * parent->height());
+        }
+        else {
+            this->move((1.05 - sin(FrameIn * 1.5708)) * parent->width(), (0.8 - (FrameIn - 0.5) * 0.2) * parent->height());
+        }
+        if (FrameIn >= 1.0) {
+            CurrentStatus = Status::wait;
+            emit needEnter();
+        }
+        FrameIn += 0.01;
+    }
+    void moveTo(int Step) {
+        gStep = Step;
+        CurrentStatus = Status::moveTo;
+    }
+    void moveTo() {
+        CurrentStatus = Status::moveTo;
+    }
+    void _moveTo() {
+        double transY = cos((double)(1.0 - FrameTo * 1.4286) * 1.5708) * 0.7;
+        this->move(this->pos().x(), transY * parent->height());
+        if (transY <= (0.15 * gStep + 0.05)) {
+            CurrentStatus = Status::wait;
+        }
+        FrameTo -= 0.01;
+    }
+    void waitForward(int Step) {
+        gStep = Step;
+        waitTick = 1;
+    }
+    void moveOut() {
+        emit willExit();
+        CurrentStatus = Status::moveOut;
+    }
+    void exitNow() {
+        emit willExit();
+        CurrentStatus = Status::moveOut;
+    }
+    void _moveOut() {
+        this->move((1.05 - sin(FrameOut * 1.5708 + 1.5708)) * parent->width(), this->pos().y());
+        if (FrameOut >= 1.05) {
+            emit disConnect();
+            this->hide();
+            this->deleteLater();
+        }
+        FrameOut += 0.01;
+    }
+};
+
+class uInfoWidget :public QWidget
+{
+    Q_OBJECT
+signals:
+    void timeout();
+public:
+    QTimer* Ticker;
+    QQueue<SingleInfo*> InfoList;
+    uInfoWidget( int X, int Y, QWidget* parent = Q_NULLPTR) {
+        this->setParent(parent);
+        connect(this, SIGNAL(timeout()), this, SLOT(tickslot()));
+    }
+public slots:
+    void tickslot() {
+
+    }
+    void addNewInfo(QString Title, QString Subtitle, QString RawInfo, EIFL E_IFL) {
+        SingleInfo* NewInfo = new SingleInfo(Title, Subtitle, RawInfo, E_IFL, this);
+        connect(this, SIGNAL(timeout()), NewInfo, SIGNAL(gTicker()));
+        connect(NewInfo, SIGNAL(needEnter()), this, SLOT(tellStep()));
+        connect(NewInfo, SIGNAL(willExit()), this, SLOT(moveForward()));
+        connect(NewInfo, SIGNAL(disConnect()), this, SLOT(disConnectSignals()));
+        NewInfo->show();
+        while (InfoList.length() >= 4) {
+            InfoList[0]->moveOut();
+        }
+    }
+    void disConnectSignals() {
+        SingleInfo* RawObject = static_cast<SingleInfo*>(this->sender());
+        disconnect(this, SIGNAL(timeout()), RawObject, SIGNAL(gTicker()));
+    }
+    void tellStep() {
+        SingleInfo* RawObject = static_cast<SingleInfo*>(this->sender());
+        InfoList.append(RawObject);
+        RawObject->moveTo(InfoList.length() - 1);
+
+    }
+    void moveForward() {
+        if (InfoList.length() >= 2) {
+            for (int i = 1; i < InfoList.length(); i++) {
+                //InfoList[i]->moveTo(i - 1);
+                InfoList[i]->waitForward(i - 1);
+            }
+        }
+        if (!InfoList.isEmpty()) {
+            disconnect(InfoList[0], SIGNAL(needEnter()), this, SLOT(tellStep()));
+            disconnect(InfoList[0], SIGNAL(willExit()), this, SLOT(moveForward()));
+            disconnect(InfoList[0], SIGNAL(disConnect()), this, SLOT(disConnectSignals()));
+            InfoList.removeFirst();
+        }
+    }
+};
+
+class uFirstPage :public QFrame
 {
     Q_OBJECT
     signals:
@@ -25,15 +250,36 @@ class uFirstPage :public QWidget
         QGraphicsOpacityEffect* OPChooseFileButton;
         QPushButton* ExitButton;
         QGraphicsOpacityEffect* OPExitButton;
+        QTextBrowser* LoadingInfo;
+        QGraphicsOpacityEffect* OPLoadingInfo;
         int gX, gY;
         uFirstPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
             gX = X;
             gY = Y;
-            BackC = QPalette();
-            BackC.setColor(BackC.Background, QColor(0, 0, 0));
-            this->setAutoFillBackground(TRUE);
-            this->setPalette(BackC);
+            //BackC = QPalette();
+            //BackC.setColor(BackC.Background, QColor(0, 0, 0));
+            //this->setAutoFillBackground(TRUE);
+            //this->setPalette(BackC);
+            this->setObjectName("FirstPage");
+            this->setStyleSheet("QFrame#FirstPage{background-color:#000000;}");
+            QString Fontsize30 = QString::number((int)(Y * 0.027777)) + "px";
+
+            LoadingInfo = new QTextBrowser(this);
+            LoadingInfo->setGeometry(QRect(X * 0.1, Y * 0.1, X * 0.8, Y * 0.8));
+            OPLoadingInfo = new QGraphicsOpacityEffect();
+            OPLoadingInfo->setOpacity(0);
+            LoadingInfo->setGraphicsEffect(OPLoadingInfo);
+
+            LoadingInfo->setStyleSheet("\
+                QTextBrowser{\
+                    color:#FFFFFF;\
+                    background-color:#000000;\
+                    font-family:'Microsoft YaHei';\
+                    border:5px solid white;\
+                    border-radius:10px;\
+                    font-size:"+ Fontsize30 +"}");
+
             UIModeTextLabel = new QLabel(this);
             UIModeTextLabel->setGeometry(QRect(X * 0.5208, Y * 0.44, Y * 0.648148, Y * 0.10185185));
             UIModeTextLabel->setAlignment(Qt::AlignCenter);
@@ -49,15 +295,15 @@ class uFirstPage :public QWidget
             ChooseFileButton->setStyleSheet("\
                 #ChooseFileButton{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/StartButton_N.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_N.png');\
                 }\
                 #ChooseFileButton:hover{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/StartButton_P.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_P.png');\
                 }\
                 #ChooseFileButton:pressed{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/StartButton_C.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_C.png');\
                     }");
             OPChooseFileButton = new QGraphicsOpacityEffect();
             OPChooseFileButton->setOpacity(0);
@@ -69,22 +315,24 @@ class uFirstPage :public QWidget
             ExitButton->setStyleSheet("\
                 #ExitButton{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/ExitButton_N.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_N.png');\
                 }\
                 #ExitButton:hover{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/ExitButton_P.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_P.png');\
                 }\
                 #ExitButton:pressed{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/ExitButton_C.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_C.png');\
                     }");
             OPExitButton = new QGraphicsOpacityEffect();
             OPExitButton->setOpacity(1);
             ExitButton->setGraphicsEffect(OPExitButton);
 
+            
             connect(this->ChooseFileButton, SIGNAL(clicked()), this, SIGNAL(chooseFileClicked()));
             connect(this->ExitButton, SIGNAL(clicked()), this, SIGNAL(exitProgramClicked()));
+
         }
 
         void setGOpacity(float Opacity_Float) {
@@ -92,11 +340,20 @@ class uFirstPage :public QWidget
             OPUIModeTextLabel->setOpacity(Opacity_Float);
             OPExitButton->setOpacity(Opacity_Float);
         }
+
+public slots:
+    void getLoadingInfo(QString Info) {
+        LoadingInfo->setHtml(LoadingInfo->toHtml() + "\n" + Info);
+        LoadingInfo->moveCursor(QTextCursor::End);
+        qDebug().noquote() << Info.toHtmlEscaped();
+    }
 };
 
 class uTitlePage :public QWidget
 {
     Q_OBJECT
+signals:
+    void timeout();
     public:
         float gX, gY;
         QLabel* TitleBackgroundLabel;
@@ -118,13 +375,13 @@ class uTitlePage :public QWidget
         QLabel* Splashes_Label;
         QGraphicsOpacityEffect* OPSplashes_Label;
         QStringList gSplashList;
-
+        tick AnimationTick = 0;
         uTitlePage(int X, int Y, QWidget* parent = Q_NULLPTR) {
             gX = X;
             gY = Y;
             QFile SplashFile;
             QStringList SplashList;
-            SplashFile.setFileName("./text/splashes.txt");
+            SplashFile.setFileName(PROPATH(1)+"/text/splashes.txt");
             SplashFile.open(QIODevice::ReadOnly | QIODevice::Text);
             if (SplashFile.isOpen()) {
                 QTextStream SplashFileText(&SplashFile);
@@ -204,10 +461,10 @@ class uTitlePage :public QWidget
         void setTitleInfo(QString Main_Title, QString Sub_Title, QString Background, QString Logo) {
             MainTitle->setText(Main_Title);
             SubTitle->setText(Sub_Title);
-            BGRaw.load("./Visual/source/BGP/" + Background + ".png");
+            BGRaw.load(PROPATH(1) + "/source/BGP/" + Background + ".png");
             BGRaw = BGRaw.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             TitleBackgroundLabel->setPixmap(QPixmap::fromImage(BGRaw));
-            LogoRaw.load("./Visual/source/Logo/" + Logo + ".png");
+            LogoRaw.load(PROPATH(1) + "/source/Logo/" + Logo + ".png");
             LogoRaw = LogoRaw.scaled(int(gY * 0.4722222), int(gY * 0.4722222), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             LogoLabel->setPixmap(QPixmap::fromImage(LogoRaw));
             int Splashlenth = gSplashList.length();
@@ -231,13 +488,17 @@ class uTitlePage :public QWidget
             OPSplashes_Label->setOpacity(0);
             Splashes_Label->repaint();
             Splashes_Label->setText("");
-            for (int i = 0; i <= 21; i++) {
-                OPBlackHideLabel->setOpacity((float)i / 20);
-                BlackHideLabel->repaint();
-                Sleep(4);
+            AnimationTick = 0;
+            connect(this, SIGNAL(timeout()), this, SLOT(_playAnimation()));
+        }
+        void _playAnimation(void) {
+            if (AnimationTick > 39) {
+                disconnect(this, SIGNAL(timeout()), this, SLOT(_playAnimation()));
+                TitleBackgroundLabel->setPixmap(QPixmap(""));
+                BlackHideLabel->setPixmap(QPixmap(""));
             }
-            TitleBackgroundLabel->setPixmap(QPixmap(""));
-            BlackHideLabel->setPixmap(QPixmap(""));
+            OPBlackHideLabel->setOpacity((float)AnimationTick / 40);
+            AnimationTick++;
         }
 
         void hidePage(void) {
@@ -288,7 +549,7 @@ public:
         StoryBigPad = new QLabel(this);
         StoryBigPad->setText("");
         StoryBigPad->setAlignment(Qt::AlignLeft);
-        StoryBigPad->setGeometry(QRect(X * 0.05, Y * 0, X * 0.9, Y * 1));
+        StoryBigPad->setGeometry(QRect(X * 0.12, Y * 0, X * 0.8, Y * 1));
         StoryBigPad->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize30 + ";font-family:'SimHei';}");
 
         StoryLineNum = new QLabel(this);
@@ -328,7 +589,7 @@ public:
         connect(JumpEmitButton, SIGNAL(clicked()), this, SLOT(EmitLineNum()));
 
         StoryScroll = new QScrollBar(Qt::Vertical, this);
-        StoryScroll->setGeometry(QRect(X * 0.983, Y * 0, X * 0.015, Y));
+        StoryScroll->setGeometry(QRect(X * 0.1, Y * 0, X * 0.015, Y));
         QSSStoryScroll = "\
                 QScrollBar:vertical{\
                     background-color:rgba(0,0,0,0);\
@@ -428,6 +689,9 @@ class uPlayerPage :public QWidget
         QLabel* AVG_L;
         QLabel* AVG_M;
         QLabel* AVG_R;
+        QGraphicsOpacityEffect* OPAVG_L;
+        QGraphicsOpacityEffect* OPAVG_M;
+        QGraphicsOpacityEffect* OPAVG_R;
         QImage BGR;
         QImage AVG_L_R;
         QImage AVG_M_R;
@@ -466,6 +730,8 @@ class uPlayerPage :public QWidget
         ShakeFunc* ShakeFUNC;
         FlashFuncFast* FlashFUNCFast;
         FlashFuncSlow* FlashFUNCSlow;
+        tick AutoTick = 0;
+        bool Working = FALSE;
         uPlayerPage(int X, int Y, QWidget* parent = Q_NULLPTR, bool UseLogPage = 1) {
             this->setParent(parent);
             gX = X;
@@ -507,9 +773,21 @@ class uPlayerPage :public QWidget
             AVG_M->setGeometry(QRect(gX * 0.127083, gY * 0.12, gX * 0.74635, gX * 0.75635));
             AVG_R->setGeometry(QRect(gX * 0.321354, gY * 0.12, gX * 0.74635, gX * 0.75635));
 
+            OPAVG_L = new QGraphicsOpacityEffect();
+            OPAVG_M = new QGraphicsOpacityEffect();
+            OPAVG_R = new QGraphicsOpacityEffect();
+
+            OPAVG_L->setOpacity(0);
+            OPAVG_M->setOpacity(0);
+            OPAVG_R->setOpacity(0);
+
+            AVG_L->setGraphicsEffect(OPAVG_L);
+            AVG_M->setGraphicsEffect(OPAVG_M);
+            AVG_R->setGraphicsEffect(OPAVG_R);
+
             Frame = new QLabel(this);
             Frame->setGeometry(QRect(0, 0, X, Y));
-            Frame_R.load("./Visual/source/BaseUI/Frame/frame.png");
+            Frame_R.load(PROPATH(1) + "/source/BaseUI/Frame/frame.png");
             Frame_R = Frame_R.scaled(X, Y, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             Frame->setPixmap(QPixmap::fromImage(Frame_R));
             OPFrame = new QGraphicsOpacityEffect();
@@ -558,21 +836,21 @@ class uPlayerPage :public QWidget
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/BranchButton_N.png');\
+                    background-image:url('"+ PROPATH(1) +"/source/BaseUI/Button/BranchButton_N.png');\
                 }\
                 #BranchButton:hover{\
                     color:#FFFFFF;\
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/BranchButton_P.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/BranchButton_P.png');\
                 }\
                 #BranchButton:Pressed{\
                     color:#FFFFFF;\
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('./Visual/source/BaseUI/Button/BranchButton_C.png');\
+                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/BranchButton_C.png');\
                     }";
             BranchButton_1->setStyleSheet(QSSBranchButton);
             BranchButton_2->setStyleSheet(QSSBranchButton);
@@ -637,7 +915,7 @@ class uPlayerPage :public QWidget
             }
 
             LogButton = new QPushButton(this);
-            LogButtonPixRaw = QPixmap("./Visual/source/BaseUI/Button/LogButton_N.png");
+            LogButtonPixRaw = QPixmap(PROPATH(1) + "/source/BaseUI/Button/LogButton_N.png");
             LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             LogButton->setIcon(QIcon(LogButtonPixRaw));
             LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
@@ -655,12 +933,17 @@ class uPlayerPage :public QWidget
             InLogPage = FALSE;
             Auto = TRUE;
             AutoButtonTick = 0;
+            AutoTick = 0;
             effectuse = 0;
             emit UserSpeedSet(1);
             SpeedButton->setText("1.0x");
             AVG_L->setPixmap(QPixmap());
             AVG_M->setPixmap(QPixmap());
             AVG_R->setPixmap(QPixmap());
+            OPAVG_L->setOpacity(0);
+            OPAVG_M->setOpacity(0);
+            OPAVG_R->setOpacity(0);
+            OPFrame->setOpacity(0);
             if (gUseLogPage) { LogPage->initObject(); }
         }
 
@@ -710,17 +993,23 @@ class uPlayerPage :public QWidget
             if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
         }
 
-        void setCurrentAvg(QList<QStringList> CharaPicList, int Charanum, bool BGBlack) {
-            if (BGBlack) {
+        void setCurrentFrame(bool FrameOpacity) {
+            qDebug() << FrameOpacity;
+            if (FrameOpacity) {
                 OPFrame->setOpacity(1);
-            }else {
-                OPFrame->setOpacity(0);
-                NameLabel->setText("");
-                WordLabel->setText("");
-                AVG_L->setPixmap(QPixmap());
-                AVG_M->setPixmap(QPixmap());
-                AVG_R->setPixmap(QPixmap());
             }
+            else {
+                OPFrame->setOpacity(0);
+            }
+        }
+
+        void setCurrentAvg(QList<QStringList> CharaPicList, int Charanum) {
+
+            NameLabel->setText("");
+            WordLabel->setText("");
+            AVG_L->setPixmap(QPixmap());
+            AVG_M->setPixmap(QPixmap());
+            AVG_R->setPixmap(QPixmap());
 
             if (Charanum == 1) {
                 for (int a = 0; a < CharaPicList.length(); a++) {
@@ -732,19 +1021,24 @@ class uPlayerPage :public QWidget
                     }else {
                         AVG_L->setPixmap(QPixmap());
                         AVG_R->setPixmap(QPixmap());
-                        QString Addname;
-                        if (i[3] == "0") { Addname = ""; }
-                        if (i[3] == "1") { Addname += "_1"; }
-                        if (i[3] == "2") { Addname += "_3"; }
-                        if (i[3] == "3") { Addname += "_1_3"; }
-                        if (i[3] == "4") { Addname += "_4"; }
-                        if (i[3] == "5") { Addname += "_1_4"; }
-                        if (i[6] == "(暗，沉默)") {
-                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + Addname +"_6" + ".png");
-                        }else if (i[3] != "0") {
-                            AVG_M_R.load("./Visual/cache/Chara/" + i[0] + "_" + i[1] + Addname + ".png");
+                        QString Addname = "";
+                        if (i[3] == "0") { Addname = ""; }     
+                        else { Addname += "_" + i[3]; }
+                        if (i[6] == "(暗，沉默)") { Addname += "_6"; }
+                        if (Addname != "") {
+                            if (i[1] == "") {
+                                AVG_M_R.load(PROPATH(1) + "/cache/Chara/" + i[0] + Addname + ".png");
+                            }
+                            else {
+                                AVG_M_R.load(PROPATH(1) + "/cache/Chara/" + i[0] + "_" + i[1] + Addname + ".png");
+                            }
                         }else {
-                            AVG_M_R.load("./Visual/source/Chara/" + i[0] + "_" + i[1] + ".png");
+                            if (i[1] == "") {
+                                AVG_M_R.load(PROPATH(1) + "/source/Chara/" + i[0] + ".png");
+                            }
+                            else {
+                                AVG_M_R.load(PROPATH(1) + "/source/Chara/" + i[0] + "_" + i[1] + ".png");
+                            }
                         }
                         if (!AVG_M_R.isNull()) {
                             AVG_M_R = AVG_M_R.scaled(gX * 0.74635, gX * 0.74635, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -759,19 +1053,24 @@ class uPlayerPage :public QWidget
             else if (Charanum == 2) {
                 AVG_M->setPixmap(QPixmap());
                 if (CharaPicList[0][0] != "") {
-                    QString Addname;
+                    QString Addname = "";
                     if (CharaPicList[0][3] == "0") { Addname = ""; }
-                    if (CharaPicList[0][3] == "1") { Addname += "_1"; }
-                    if (CharaPicList[0][3] == "2") { Addname += "_3"; }
-                    if (CharaPicList[0][3] == "3") { Addname += "_1_3"; }
-                    if (CharaPicList[0][3] == "4") { Addname += "_4"; }
-                    if (CharaPicList[0][3] == "5") { Addname += "_1_4"; }
-                    if (CharaPicList[0][6] == "(暗，沉默)") {
-                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + "_6" + ".png");
-                    }else if (CharaPicList[0][3] != "0") {
-                        AVG_L_R.load("./Visual/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + ".png");
+                    else { Addname += "_" + CharaPicList[0][3]; }
+                    if (CharaPicList[0][6] == "(暗，沉默)") { Addname += "_6"; }
+                    if (Addname != "") {
+                        if (CharaPicList[0][1] == "") {
+                            AVG_L_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[0][0] + Addname + ".png");
+                        }
+                        else {
+                            AVG_L_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + ".png");
+                        }
                     }else {
-                        AVG_L_R.load("./Visual/source/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + ".png");
+                        if (CharaPicList[0][1] == "") {
+                            AVG_L_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[0][0] + ".png");
+                        }
+                        else {
+                            AVG_L_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + ".png");
+                        }
                     }
                     if (!AVG_L_R.isNull()) {
                         AVG_L_R = AVG_L_R.scaled(gX * 0.74635, gX * 0.74635, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -782,19 +1081,24 @@ class uPlayerPage :public QWidget
                     }
                 }
                 if (CharaPicList[1][0] != "") {
-                    QString Addname;
+                    QString Addname = "";
                     if (CharaPicList[1][3] == "0") { Addname = ""; }
-                    if (CharaPicList[1][3] == "1") { Addname += "_1"; }
-                    if (CharaPicList[1][3] == "2") { Addname += "_3"; }
-                    if (CharaPicList[1][3] == "3") { Addname += "_1_3"; }
-                    if (CharaPicList[1][3] == "4") { Addname += "_4"; }
-                    if (CharaPicList[1][3] == "5") { Addname += "_1_4"; }
-                    if (CharaPicList[1][6] == "(暗，沉默)") {
-                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + "_6" + ".png");
-                    }else if (CharaPicList[1][3] != "0") {
-                        AVG_R_R.load("./Visual/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + ".png");
+                    else { Addname += "_" + CharaPicList[1][3]; }
+                    if (CharaPicList[1][6] == "(暗，沉默)") { Addname += "_6"; }
+                    if (Addname != "") {
+                        if (CharaPicList[1][1] == "") {
+                            AVG_R_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[1][0] + Addname + ".png");
+                        }
+                        else {
+                            AVG_R_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + ".png");
+                        }
                     }else {
-                        AVG_R_R.load("./Visual/source/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + ".png");
+                        if (CharaPicList[1][1] == "") {
+                            AVG_R_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[1][0] + ".png");
+                        }
+                        else {
+                            AVG_R_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + ".png");
+                        }
                     }
                     if (!AVG_R_R.isNull()) {
                         AVG_R_R = AVG_R_R.scaled(gX * 0.74635, gX * 0.74635, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -807,17 +1111,23 @@ class uPlayerPage :public QWidget
             }
         }
 
-        void updateCurrentWords(QStringList i_List, QString WordsCurrent, int Charanum, QStringList Wordset) {
-            if (i_List[0] == "" && Charanum == 1) {
-                NameLabel->setText("");
-                WordLabel->setText(WordsCurrent);
-            }else if (i_List[1] == "" && Charanum == 1) {
-                NameLabel->setText(i_List[0]);
-                WordLabel->setText("");
-            }else if ((i_List[0] != "" && i_List[1] != "") || (i_List[0] != "" && Charanum == 1)) {
-                if (NameLabel->text() != i_List[0]) {
-                    NameLabel->setText(i_List[0]);
-                }
+        void updateCurrentAvg(QString whichAvg, float OpFloat){
+            if (whichAvg.contains("M")) {
+                OPAVG_M->setOpacity(OpFloat);
+            }
+            if (whichAvg.contains("L")) {
+                OPAVG_L->setOpacity(OpFloat);
+            }
+            if (whichAvg.contains("R")) {
+                OPAVG_R->setOpacity(OpFloat);
+            }
+        }
+
+        void updateCurrentWords(QString Name, QString WordsCurrent, bool FirstSet) {
+            if (FirstSet) {
+                if (Name != NameLabel->text()) { NameLabel->setText(Name); }
+            }
+            else {
                 WordLabel->setText(WordsCurrent);
             }
         }
@@ -828,22 +1138,22 @@ class uPlayerPage :public QWidget
                 BGR.fill(QColor(0, 0, 0, 255));
             }else{
                 if (BGPSetList[1] == "0") {
-                    BGR.load("./Visual/source/BGP/" + BGPSetList[0] + ".png");
+                    BGR.load(PROPATH(1) + "/source/BGP/" + BGPSetList[0] + ".png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "1"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_6.png");
+                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "2"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_3.png");
+                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_3.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "3"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_3_6.png");
+                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_3_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "4"){
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_4.png");
+                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_4.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "5") {
-                    BGR.load("./Visual/cache/BGP/" + BGPSetList[0] + "_4_6.png");
+                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_4_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }
             }
@@ -920,6 +1230,7 @@ class uPlayerPage :public QWidget
         }
 
         void clearAll(void) {
+            Working = FALSE;
             NameLabel->setText("");
             WordLabel->setText("");
             FreeLabel->setText("");
@@ -945,10 +1256,10 @@ class uPlayerPage :public QWidget
 
         void _ShakeRect(int sX, int sY, int end) {
             if (changeBG == 2) {
-                BG1->setGeometry(QRect((int)(gY / 1080) * sX, (int)(gY / 1080) * sY, gX, gY));
+                BG1->setGeometry(QRect(gY / 1080 * sX, gY / 1080 * sY, gX, gY));
                 BG1->repaint();
             }else if (changeBG == 1) {
-                BG2->setGeometry(QRect((int)(gY / 1080) * sX, (int)(gY / 1080) * sY, gX, gY));
+                BG2->setGeometry(QRect(gY / 1080 * sX, gY / 1080 * sY, gX, gY));
                 BG2->repaint();
             }
             if (end == 1) {
@@ -988,14 +1299,19 @@ class uPlayerPage :public QWidget
         }
 
         void repaintAutoButton(void) {
-            if (Auto) {
-                if (AutoButtonTick == 0) { 
-                    AutoButton->setText(msg("Player_Playing_Text_Auto")); 
-                    AutoButtonTick += 1;
-                } else {
-                    AutoButton->setText(AutoButton->text() + "▶");
-                    if (AutoButtonTick == 3) { AutoButtonTick = 0; }
-                    else { AutoButtonTick += 1; }
+            AutoTick++;
+            if (AutoTick > SpeedFloat * 50) {
+                AutoTick = 0;
+                if (Auto) {
+                    if (AutoButtonTick == 0) {
+                        AutoButton->setText(msg("Player_Playing_Text_Auto"));
+                        AutoButtonTick += 1;
+                    }
+                    else {
+                        AutoButton->setText(AutoButton->text() + "▶");
+                        if (AutoButtonTick == 3) { AutoButtonTick = 0; }
+                        else { AutoButtonTick += 1; }
+                    }
                 }
             }
         }
@@ -1045,7 +1361,7 @@ class uPlayerPage :public QWidget
             if (Auto) {
                 emit NeedWakeUp();
             }else {
-                NextButton->setGeometry(QRect(gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+                NextButton->setGeometry(QRect(gX * 0.868, gY * 0.925, gX * 0.078125, gY * 0.046296));
             }
         }
 
@@ -1066,7 +1382,7 @@ class uPlayerPage :public QWidget
                 if (!Auto) {
                     _AutoChange();
                 }
-                if (NextButton->geometry() == QRect(gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296)) {
+                if (NextButton->geometry() == QRect(gX * 0.868, gY * 0.925, gX * 0.078125, gY * 0.046296)) {
                     _ToNext();
                 }
                 LogPage->setGeometry(QRect(-gX, -gY, gX, gY));
@@ -1081,15 +1397,20 @@ class uSoundService :public QObject
     Q_OBJECT
     public:
         QMediaPlayer* MediaPlayer;
+        QMediaPlaylist* PlayList;
         uSoundService() {   
         }
-        void loadFile(QString Filename, int Volume) {
+        void loadFile(QString Filename, int Volume ,bool Loop) {
             MediaPlayer = new QMediaPlayer();
-            MediaPlayer->setMedia(QMediaContent(QUrl::fromLocalFile(Filename)));
+            PlayList = new QMediaPlaylist();
+            PlayList->addMedia(QUrl::fromLocalFile(Filename));
+            if (Loop) { PlayList->setPlaybackMode(QMediaPlaylist::Loop); }
+            //MediaPlayer->setMedia(QMediaContent(QUrl::fromLocalFile(Filename)));
             MediaPlayer->setVolume(Volume);
         }
 
         void playMedia(void) {
+            MediaPlayer->setPlaylist(PlayList);
             MediaPlayer->play();
         }
 

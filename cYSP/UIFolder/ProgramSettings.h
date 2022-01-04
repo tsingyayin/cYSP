@@ -13,6 +13,74 @@
 #include <exception>
 using namespace std;
 
+//统一的Style文本
+class CurrentStyle :public QObject
+{
+	Q_OBJECT
+public:
+	CurrentStyle(QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+	}
+	QString Button1 = "\
+                QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,255,255,150);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                    QPushButton:hover{\
+                    color:#888888;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                    QPushButton:pressed{\
+                    color:#66ccff;\
+                    background-color:rgba(255,255,255,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                    }";
+	QString Button2 = "QPushButton{\
+                    color:#333333;\
+                    background-color:rgba(255,160,170,150);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:hover{\
+                    color:#FFFFFF;\
+                    background-color:rgba(255,230,230,255);\
+                    text-align:center;\
+                    font-size:36px;\
+                    font-family:'Microsoft YaHei';\
+                }\
+                QPushButton:Pressed{\
+                    color:#FF0000;\
+                    background-color:rgba(240,200,200,255);\
+                    text-align:center;\
+                    font-size:32px;\
+                    font-family:'Microsoft YaHei';\
+                    }";
+
+	QString Label1 = "\
+            QLabel{\
+                    background-color:rgba(255,255,255,0);\
+                    border:none;\
+                    border-radius:0px;\
+                    color:#000000;\
+                    font-family:'Microsoft YaHei';\
+                    font-size:22px;\
+                    }";
+	QString Widget1 = "QWidget{\
+				background-color:rgba(100,100,100,250);\
+                border:1px solid rgb(100,100,100);\
+                border-radius:10px;\
+                }";
+};
+
 //程序通用设置
 class hProgramSettings :public QWidget
 {
@@ -320,10 +388,8 @@ class hMoreInfo :public QWidget
 \n该解释器只有命令行状态，其后的拥有UI的Python版YSP程序在此命令行程序之上构建。\
 \nC++版YSP程序亦使用了优化重构后的AASP内核。重构过程受到了来自Ayano_Aishi的支持。\
 \n\
-\n当前K9UT0内核为.9X设计，但是其顶层表现与.6X的内核K6U2(应用于YSP版本0.7)一致。\
-\nK9UT0在K6U2基础上改进了相关的算法，从而实现了更高效的滤镜运算速度、更低的\
-\n的动态解释延迟与更合理的按行识别逻辑。与此同时，新的滤镜逻辑为新版本SPOL\
-\n打下了坚实的基础，可以在日后进行快速更新迭代。\
+\n当前K9U1内核为正式的.9X设计，解除了在K9UT0版本中为了与K6U2内核保持一致而设下的种种限制。\
+\nK9U1在K9UT0基础上完全释放了.9X的预想特性，为SPOL.9X提供坚实的环境支撑\
 \n\
 \n本程序内含有相当数量的来自手游的素材。这些素材版权归其制作方所有。\
 \n本程序仅取这些素材用于程序UI表现，以为用户提供快速二创的功能。\

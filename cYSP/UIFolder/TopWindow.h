@@ -4,8 +4,8 @@
 #include "..\loadsettings.h"
 #include "ProgramSettings.h"
 #include "..\Aaspcommand\aaspcommand.h"
-#include "SPOLDev.h"
 #include <math.h>
+#include "WindowEffect.h"
 #pragma comment(lib, "user32.lib")
 #include <qt_windows.h>
 #include <QtWidgets>
@@ -13,82 +13,12 @@
 #include <QtGui>
 #include <ctype.h>
 #include <exception>
+
 using namespace std;
 
 static QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 static QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
 
-
-//统一的Style文本
-class CurrentStyle :public QObject
-{
-    Q_OBJECT
-public:
-    CurrentStyle(QWidget* parent = Q_NULLPTR) {
-        this->setParent(parent);
-    }
-    QString Button1 = "\
-                QPushButton{\
-                    color:#333333;\
-                    background-color:rgba(255,255,255,200);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                }\
-                    QPushButton:hover{\
-                    color:#888888;\
-                    background-color:rgba(255,255,255,255);\
-                    text-align:center;\
-                    font-size:36px;\
-                    font-family:'Microsoft YaHei';\
-                }\
-                    QPushButton:pressed{\
-                    color:#66ccff;\
-                    background-color:rgba(255,255,255,255);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                    }";
-    QString Button2 = "QPushButton{\
-                    color:#333333;\
-                    background-color:rgba(255,220,220,210);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                    border:1px solid rgb(228,39,44); \
-                }\
-                QPushButton:hover{\
-                    color:#FFFFFF;\
-                    background-color:rgba(255,230,230,255);\
-                    text-align:center;\
-                    font-size:36px;\
-                    font-family:'Microsoft YaHei';\
-                    border:1px solid rgb(228,39,44); \
-                }\
-                QPushButton:Pressed{\
-                    color:#FF0000;\
-                    background-color:rgba(240,200,200,255);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                    border:1px solid rgb(228,39,44); \
-                    }";
-
-    QString Label1 = "\
-            QLabel{\
-                    background-color:rgba(255,255,255,0);\
-                    border:none;\
-                    border-radius:0px;\
-                    color:#000000;\
-                    font-family:'Microsoft YaHei';\
-                    font-size:22px;\
-                    }";
-    QString Widget1 = "QWidget{\
-                background-color:rgba(100,100,100,250);\
-                border:1px solid rgb(100,100,100);\
-                border-radius:10px;\
-                }";
-};
 
 //GCP对话框
 class hGCPDialog :public QWidget
@@ -545,7 +475,6 @@ class hCreatePage :public QWidget
         QPushButton* OpenButton_Story;
         QPushButton* OpenButton_Official;
         QPushButton* SPOLDevButton;
-        SPOLDevWindow* DevWindow;
         CurrentStyle* Style;
         hCreatePage(int X, int Y, QWidget* parent = Q_NULLPTR) {
             this->setParent(parent);
@@ -589,8 +518,10 @@ class hCreatePage :public QWidget
         }
     public slots:
         void showSPOLDevWindow(void) {
-            DevWindow = new SPOLDevWindow();
-            DevWindow->show();
+            QString SPOLDevPath = "start " + QDir::currentPath() + "/SPOLDev.exe";
+            system(SPOLDevPath.toStdString().c_str());
+            //DevWindow = new SPOLDevWindow();
+            //DevWindow->show();
         }
 };
 
@@ -599,6 +530,7 @@ class hAboutPage :public QWidget
 {
     Q_OBJECT
     public:
+        QWidget* BackgroundWidget;
         QLabel* AboutLabel_FullVer;
         QLabel* AboutLabel_MainVer;
         QLabel* AboutLabel_SubVer;
@@ -618,6 +550,10 @@ class hAboutPage :public QWidget
 
             gX = X;
             gY = Y;
+            BackgroundWidget = new QWidget(this);
+            BackgroundWidget->setGeometry(QRect(30, 275, 640, 200));
+            BackgroundWidget->setStyleSheet("QWidget{background-color:rgba(255,255,255,150);}");
+
             AboutLabel_FullVer = new QLabel(this);          
             AboutLabel_FullVer->setGeometry(QRect(25,280,650,30));
             AboutLabel_FullVer->setAlignment(Qt::AlignCenter);
@@ -670,7 +606,7 @@ class hAboutPage :public QWidget
             AboutLabel_SubVer->setText(msg("KAU_About_Info_SubVer") + Program_Info("Sub"));
             AboutLabel_BuildVer->setText(msg("KAU_About_Info_BuildVer") + Program_Info("Build"));
             AboutLabel_SpolVer->setText(msg("KAU_About_Info_SpolVer") + Program_Info("SPOL"));
-            AboutLabel_Support->setText(msg("KAU_About_Info_Support") + "亿绪联合协会UYXA");
+            AboutLabel_Support->setText(msg("KAU_About_Info_Support") + "紫靛工作室");
             AboutLabel_Donate->setText(msg("KAU_About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
             MoreAboutInfo->setText(msg("KAU_About_Info_More"));
             CheckUpdateButton->setText(msg("Ui_AboutPage_Check_Update"));
@@ -721,9 +657,9 @@ class TopDef :public QWidget
             Style = new CurrentStyle(this);
             //基本圆角框架和半透明效果实现
             this->setGeometry(QRect(600, 400, 700, 300));
-			this->setWindowFlags(Qt::FramelessWindowHint);
-			this->setAttribute(Qt::WA_TranslucentBackground);
-
+			
+			this->setAttribute(Qt::WA_TranslucentBackground);           
+            this->setWindowFlags(Qt::FramelessWindowHint);
 			frame = new QFrame();
 			hl = new QHBoxLayout();
 			hl->setContentsMargins(10, 10, 10, 10);
@@ -734,9 +670,15 @@ class TopDef :public QWidget
             frame->setGraphicsEffect(SelfEffect);
             hl->addWidget(frame);
             this->setLayout(hl);
-
+            this->setFixedSize(this->size());
             this->setStyleSheet(Style->Widget1);
-               
+
+            //this->setWindowFlags(Qt::CustomizeWindowHint);
+            /*HWND hWnd = HWND(this->winId());
+            DWORD Color = DWORD(0x20333333);
+            DWORD SYSTEMCOLOR = GetWindowsThemeColor();
+            setBlur(hWnd, 0x00 * 0x1000000 +SYSTEMCOLOR);*/
+
             AnyInfolabel = new QLabel(this);
             AnyInfolabel->setText("Default Text");
             AnyInfolabel->setStyleSheet("\
@@ -789,7 +731,7 @@ class TopDef :public QWidget
 
             Iconlabel = new QLabel(this);
             Iconlabel->setGeometry(QRect(50, 15, 270, 270));
-            LogoRaw.load("./Visual/source/BaseUI/Image/Videotape_Win11.png");
+            LogoRaw.load(PROPATH(1) + "/source/BaseUI/Image/Videotape_Win11.png");
             LogoRaw = LogoRaw.scaled(270, 270, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             Iconlabel->setPixmap(QPixmap::fromImage(LogoRaw));
             Iconlabel->setStyleSheet("QLabel{background-color:rgba(255,255,255,0);border:none;border-radius:0px;}");
@@ -820,7 +762,7 @@ class TopWindow :public TopDef
 		TopWindow(QWidget* parent = Q_NULLPTR){
             this->setParent(parent);
             this->setWindowTitle("YSP "+Program_Info("Main"));
-            this->setWindowIcon(QIcon("./Visual/source/WinICO/Videotape_Win11.ico"));
+            this->setWindowIcon(QIcon(PROPATH(1) + "/source/WinICO/Videotape_Win11.ico"));
 			setupUI();
             showFirstPage();
             connectAll();
@@ -866,7 +808,9 @@ class TopWindow :public TopDef
 			double a;
 			for (int i = 0; i <= 101; i += 2) {
 				a = 0.5 * (1 - cos(i * 0.0314159));
-				this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
+				//this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
+                this->move(600, (int)(400 - a * 200));
+                this->setFixedSize(700, (int)(300 + a * 350));
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
                 this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
 				this->repaint();
@@ -880,7 +824,9 @@ class TopWindow :public TopDef
             QRect Rect = this->geometry();
 			for (int i = 100; i >= -1; i -= 1) {
 				a = 0.5 * (1 - cos(i * 0.0314159));
-				this->setGeometry(QRect(Rect.left(), (int)(Rect.top() + 200 - a * 200), 700, (int)(300 + a * 350)));
+				//this->setGeometry(QRect(Rect.left(), (int)(Rect.top() + 200 - a * 200), 700, (int)(300 + a * 350)));
+                this->move(Rect.left(), (int)(Rect.top() + 200 - a * 200));
+                this->setFixedSize(700, (int)(300 + a * 350));
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
                 this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
 				this->repaint();
@@ -927,7 +873,7 @@ class TopWindow :public TopDef
 
         //语言刷新函数
         void chooseLangFile(void) {
-            QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), "./Language", "Story Player Language(*.splang)");
+            QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), PROPATH(1)+"/Language", "Story Player Language(*.splang)");
             QString LangFileName = LangFileDialog.section("/",-1,-1).section(".",0,0);
             Service->ui_langset(LangFileName);
 
@@ -977,7 +923,8 @@ class TopWindow :public TopDef
             QRect Rect = this->geometry();
             for (int i = 0; i <= 101; i += 4) {
                 a = 0.5 * (1 - cos(i * 0.0314159));
-                this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+                //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+                this->setFixedSize(700, (int)(650 + a * 50));
                 this->repaint();
                 Sleep(3);
             }
@@ -1025,10 +972,24 @@ class TopWindow :public TopDef
             a = 0;
             for (int i = 101; i >= 2; i -= 4) {
                 a = 0.5 * (1 - cos(i * 0.0314159));
-                this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+                //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+                this->setFixedSize(700, (int)(650 + a * 50));
                 this->repaint();
                 Sleep(3);
             }
+        }
+
+        bool nativeEvent(const QByteArray& eventType, void* message, long* result) {
+            MSG* msg = static_cast<MSG*>(message);
+            switch (msg->message) {
+            case WM_DWMCOLORIZATIONCOLORCHANGED:
+                HWND hWnd = HWND(this->winId());
+                DWORD Color = DWORD(0x20333333);
+                DWORD SYSTEMCOLOR = GetWindowsThemeColor();
+                setBlur(hWnd, 0x70 * 0x1000000 + SYSTEMCOLOR);
+                return TRUE;
+            }
+            return FALSE;
         }
 
         //展示一般设置
