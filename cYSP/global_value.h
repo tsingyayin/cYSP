@@ -5,6 +5,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 
+void setCurrentPath(QString CurrentPath, QString User_Path = "", bool FromLauncher = FALSE);
+
+QString PROPATH(int num);
 /*程序信息函数Program_Info
 SearchParameter
 O======O
@@ -40,3 +43,14 @@ num,min
 O======O
 传入数值num，若大于min则返回num，若小于min则返回min*/
 int limitmin(int num, int min);
+
+enum class EIFL {
+    URE = 0,
+    SSE = 1,
+    PRE = 2,
+    GFE = 3,
+    SRI = 4,
+    PRI = 5,
+    GRI = 6,
+    NWI = 7,
+};

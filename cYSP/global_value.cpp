@@ -3,15 +3,40 @@
 #include <QCoreApplication>
 #include <QDebug>
 
+QString Program_Path;
+QString Users_Path;
+void setCurrentPath(QString CurrentPath, QString User_Path, bool FromLauncher) {
+	if (!FromLauncher) {
+		Program_Path = CurrentPath;
+		Users_Path = CurrentPath.replace("\\", "/").section("/", 0, -2) + "/Users_Data";
+	}
+	else {
+		Program_Path = CurrentPath;
+		Users_Path = User_Path;
+		qDebug().noquote() << "Get Users_Path:" + Users_Path;
+		LoadLibrary(LPCWSTR((QDir::currentPath() + "/libcrypto-1_1-x64.dll").toStdString().c_str()));
+		LoadLibrary(LPCWSTR((QDir::currentPath() + "/libssl-1_1-x64.dll").toStdString().c_str()));
+	}
+};
+
+QString PROPATH(int num) {
+	if (num == 0) {
+		return Program_Path;
+	}
+	else if (num == 1) {
+		return Users_Path;
+	}
+}
+
 QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
-QString Edition("Ver0.8.0_Pub(Build120.1000)_SPOL0.6.5;C++_Qt");
-QString ReleaseDay("20211006");
+QString Edition("Ver0.9.0_Pre3(Build136.0)_SPOL0.9.0;C++_Qt");
+QString ReleaseDay("20211206");
 QString InsiderMainVer = Edition.mid(Edition.indexOf("Ver") + 3, Edition.indexOf("_P") - Edition.indexOf("Ver") - 3);
 QString InsiderSubVer = Edition.mid(Edition.indexOf("_P") + 1, Edition.indexOf("(Build") - Edition.indexOf("_P") -1);
 QString InsiderBuildVer = Edition.mid(Edition.indexOf("(Build") + 6, Edition.indexOf(")") - Edition.indexOf("(Build") - 6);
 QString InsiderSPOLVer = Edition.mid(Edition.indexOf("SPOL") + 4, Edition.indexOf(";C++_Qt") - Edition.indexOf("SPOL") - 4);
-QString InsiderSPOLEnvVer = "AASPCMD.9X(K9UT0)";
+QString InsiderSPOLEnvVer = "AASPCMD.9X(K9U1)";
 
 QString Program_Info(QString SearchParameter) {
 	if (SearchParameter == "Edition") {

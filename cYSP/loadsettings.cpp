@@ -5,6 +5,7 @@
 #include <QtCore>
 static QMap<QString, QString> SettingsList;
 QString Initial_prompt_statement = "#这个文档是程序设置的记录文档。\n#如需快速初始化程序设定，可以直接删除本文档。但这（可能）会影响程序在删除本文档后的首次启动速度。\n\n";
+
 void writesettings(QString SettingsKey, QString SettingsValue)
 {
     if (SettingsKey != "" && SettingsValue != "") {
@@ -18,7 +19,7 @@ void writesettings(QString SettingsKey, QString SettingsValue)
     }
 
     QFile SettingsFile;
-    SettingsFile.setFileName("./options.txt");
+    SettingsFile.setFileName(PROPATH(1)+"/options.txt");
     SettingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
     SettingsFile.write(SettingsText.toStdString().data());
     SettingsFile.close();
@@ -26,6 +27,7 @@ void writesettings(QString SettingsKey, QString SettingsValue)
 
 int loadsettings(void) {
     SettingsList["Filter_Level"] = "Full";
+    SettingsList["First_Start"] = "True";
     SettingsList["Forced_Debugging_Info"] = "False";
     SettingsList["GCPMode"] = "False";
     SettingsList["Update_Channel"] = "Auto";
@@ -33,7 +35,7 @@ int loadsettings(void) {
     SettingsList["Window_Geometry"] = "1366_768";
     SettingsList["Window_Monitor"] = "0";
     QFile settingsFile;
-    settingsFile.setFileName("./options.txt");
+    settingsFile.setFileName(PROPATH(1) + "/options.txt");
     settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!settingsFile.isOpen()) {
         qDebug().noquote() << "CAN NOT FIND INIT SETTINGS!";

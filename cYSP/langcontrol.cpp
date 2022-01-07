@@ -8,6 +8,7 @@
 #include <ctime>
 #include "langcontrol.h"
 #include "loadsettings.h"
+#include "global_value.h"
 #include <exception>
 using namespace std;
 static QMap<QString, QString> msglist;
@@ -27,7 +28,7 @@ int langset(QString langname){
         if (langname == "") { langname = "zh_SC"; }
     }
     QFile spLanguageFile;
-    spLanguageFile.setFileName(".\\Language\\"+langname+".splang");
+    spLanguageFile.setFileName(PROPATH(1) + "/Language/"+langname+".splang");
     spLanguageFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!spLanguageFile.isOpen()) { 
         qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_File_NotFound").arg(langname);
