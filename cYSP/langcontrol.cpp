@@ -28,7 +28,7 @@ int langset(QString langname){
         if (langname == "") { langname = "zh_SC"; }
     }
     QFile spLanguageFile;
-    spLanguageFile.setFileName(PROPATH(1) + "/Language/"+langname+".splang");
+    spLanguageFile.setFileName(PROPATH::Users + "/Language/"+langname+".splang");
     spLanguageFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!spLanguageFile.isOpen()) { 
         qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_File_NotFound").arg(langname);

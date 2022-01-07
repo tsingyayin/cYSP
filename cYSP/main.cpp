@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     try {
         qRegisterMetaType<EIFL>("EIFL");
         srand((unsigned)time(NULL));
-        qDebug().noquote() << Program_Info("SPEnv") + "\t" + Program_Info("Edition");
+        qDebug().noquote() << PROINFO::Kernal + "\t" + PROINFO::Total;
         qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
         sDebug("DebugInfo¡úStart path : " + QDir::currentPath());
         cout << argv[0] << endl;
@@ -105,7 +105,7 @@ This program has poor compatibility with Windows Systems released in and before 
         }*/
 
         qDebug().noquote() << "sysinfo¡ú" + msg("Kernal_Text_IFL_Version").arg("IFL_20211227");
-        qDebug().noquote() << "sysinfo¡ú" + msg("Kernal_Text_First_Print").arg(Program_Info("SPEnv"));
+        qDebug().noquote() << "sysinfo¡ú" + msg("Kernal_Text_First_Print").arg("AASPCMD_"+PROINFO::Kernal);
         Sleep(1000);
         bool programme_run = TRUE;
         while (programme_run) {

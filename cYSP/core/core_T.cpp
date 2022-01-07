@@ -284,8 +284,8 @@ public:
 	}
 
 	void run(void) {
-		QString SourceName = PROPATH(1) + "/source/" + gFilefamily + "/" + gFilename + ".png";
-		QString NewPictureName = PROPATH(1) + "/cache/" + gFilefamily + "/" + gFilename + gAddname + ".png";
+		QString SourceName = PROPATH::Users + "/source/" + gFilefamily + "/" + gFilename + ".png";
+		QString NewPictureName = PROPATH::Users + "/cache/" + gFilefamily + "/" + gFilename + gAddname + ".png";
 		if (!TransPictureName.contains(NewPictureName) && gAddname!="") {
 			TransPictureName.append(NewPictureName);
 			//qDebug().noquote() << "InterpreterInfo→需要建立 :" + NewPictureName;

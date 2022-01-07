@@ -32,9 +32,6 @@
     <QtMoc Include="UIFolder\QtWordGame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="UIFolder\SPOLDev.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="UIFolder\effect.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -44,10 +41,13 @@
     <QtMoc Include="UIFolder\ArtificialUI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="core\core0_6_5_T.h">
+    <QtMoc Include="core\core_T.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="UIFolder\ProgramSettings.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\WindowsWarn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -64,30 +64,24 @@
     <ClCompile Include="Aaspcommand\aaspcommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Aaspcommand\SPOLDevFunc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="loadsettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\core0_6_5_T.cpp">
+    <ClCompile Include="core\core_T.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFolder\WindowEffect.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="global_value.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="langcontrol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Aaspcommand\toSpol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Aaspcommand\SPOLDevFunc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="core\core0_6_5_B.h">
+    <ClInclude Include="core\core_B.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Aaspcommand\UICoreLauncher.h">
@@ -96,9 +90,19 @@
     <ClInclude Include="loadsettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UIFolder\WindowEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="global_value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Language\zh_CN.splang" />
+    <None Include="logo.aps" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="text\splashes.txt" />

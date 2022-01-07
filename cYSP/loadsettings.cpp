@@ -19,7 +19,7 @@ void writesettings(QString SettingsKey, QString SettingsValue)
     }
 
     QFile SettingsFile;
-    SettingsFile.setFileName(PROPATH(1)+"/options.txt");
+    SettingsFile.setFileName(PROPATH::Users+"/options.txt");
     SettingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
     SettingsFile.write(SettingsText.toStdString().data());
     SettingsFile.close();
@@ -35,7 +35,7 @@ int loadsettings(void) {
     SettingsList["Window_Geometry"] = "1366_768";
     SettingsList["Window_Monitor"] = "0";
     QFile settingsFile;
-    settingsFile.setFileName(PROPATH(1) + "/options.txt");
+    settingsFile.setFileName(PROPATH::Users + "/options.txt");
     settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!settingsFile.isOpen()) {
         qDebug().noquote() << "CAN NOT FIND INIT SETTINGS!";
@@ -88,6 +88,6 @@ QString readreg(QString RegKeyName) {
 void initreg(void) {
     QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP",QSettings::NativeFormat);
     if (ProgramSettings.value("Adult", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Adult", "UNKOWN"); }
-    if (ProgramSettings.value("Version", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Version", Program_Info("Edition")); }
+    if (ProgramSettings.value("Version", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Version", PROINFO::Total); }
     if (ProgramSettings.value("Language", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Language","zh_SC"); }
 }

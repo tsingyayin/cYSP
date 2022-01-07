@@ -378,7 +378,7 @@ class hMoreInfo :public QWidget
 			this->setLayout(CurrentLayout);
 
 			Kernal_Version = new QLabel(this);
-			Kernal_Version->setText(msg("KAU_About_Info_SPOLEnv") +"\n"+ Program_Info("SPEnv"));
+			Kernal_Version->setText(msg("KAU_About_Info_SPOLEnv") +"\n"+ PROINFO::Kernal);
 			Kernal_Version->setStyleSheet("QLabel{font-size:30px;font-family:'Microsoft YaHei'}");
 			Kernal_Version->setAlignment(Qt::AlignCenter);
 			CurrentLayout->addWidget(Kernal_Version, 0, 0, 1, 1);

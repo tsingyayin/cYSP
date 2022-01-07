@@ -79,7 +79,7 @@ public:
         this->setParent(parent);
         InfoLabel = new QLabel(this);
         InfoLabel->setText("<style>fontset{font-family:'Microsoft YaHei';color:#FFFFFF;}</style><fontset><font size='6'>" + Title + "</font><br><font size='3'>" + SubTitle + "<br>" + RawInfo + "</font></fontset>");
-        Image = QImage(PROPATH(1)+"/source/BaseUI/Button/LogButton_N.png");
+        Image = QImage(PROPATH::Users+"/source/BaseUI/Button/LogButton_N.png");
         Image = Image.scaled(QSize(50, 50), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         IconLabel = new QLabel(this);
         IconLabel->setPixmap(QPixmap::fromImage(Image));
@@ -295,15 +295,15 @@ class uFirstPage :public QFrame
             ChooseFileButton->setStyleSheet("\
                 #ChooseFileButton{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_N.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/StartButton_N.png');\
                 }\
                 #ChooseFileButton:hover{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_P.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/StartButton_P.png');\
                 }\
                 #ChooseFileButton:pressed{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/StartButton_C.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/StartButton_C.png');\
                     }");
             OPChooseFileButton = new QGraphicsOpacityEffect();
             OPChooseFileButton->setOpacity(0);
@@ -315,15 +315,15 @@ class uFirstPage :public QFrame
             ExitButton->setStyleSheet("\
                 #ExitButton{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_N.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/ExitButton_N.png');\
                 }\
                 #ExitButton:hover{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_P.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/ExitButton_P.png');\
                 }\
                 #ExitButton:pressed{\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/ExitButton_C.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/ExitButton_C.png');\
                     }");
             OPExitButton = new QGraphicsOpacityEffect();
             OPExitButton->setOpacity(1);
@@ -381,7 +381,7 @@ signals:
             gY = Y;
             QFile SplashFile;
             QStringList SplashList;
-            SplashFile.setFileName(PROPATH(1)+"/text/splashes.txt");
+            SplashFile.setFileName(PROPATH::Users+"/text/splashes.txt");
             SplashFile.open(QIODevice::ReadOnly | QIODevice::Text);
             if (SplashFile.isOpen()) {
                 QTextStream SplashFileText(&SplashFile);
@@ -461,10 +461,10 @@ signals:
         void setTitleInfo(QString Main_Title, QString Sub_Title, QString Background, QString Logo) {
             MainTitle->setText(Main_Title);
             SubTitle->setText(Sub_Title);
-            BGRaw.load(PROPATH(1) + "/source/BGP/" + Background + ".png");
+            BGRaw.load(PROPATH::Users + "/source/BGP/" + Background + ".png");
             BGRaw = BGRaw.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             TitleBackgroundLabel->setPixmap(QPixmap::fromImage(BGRaw));
-            LogoRaw.load(PROPATH(1) + "/source/Logo/" + Logo + ".png");
+            LogoRaw.load(PROPATH::Users + "/source/Logo/" + Logo + ".png");
             LogoRaw = LogoRaw.scaled(int(gY * 0.4722222), int(gY * 0.4722222), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             LogoLabel->setPixmap(QPixmap::fromImage(LogoRaw));
             int Splashlenth = gSplashList.length();
@@ -787,7 +787,7 @@ class uPlayerPage :public QWidget
 
             Frame = new QLabel(this);
             Frame->setGeometry(QRect(0, 0, X, Y));
-            Frame_R.load(PROPATH(1) + "/source/BaseUI/Frame/frame.png");
+            Frame_R.load(PROPATH::Users + "/source/BaseUI/Frame/frame.png");
             Frame_R = Frame_R.scaled(X, Y, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             Frame->setPixmap(QPixmap::fromImage(Frame_R));
             OPFrame = new QGraphicsOpacityEffect();
@@ -836,21 +836,21 @@ class uPlayerPage :public QWidget
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('"+ PROPATH(1) +"/source/BaseUI/Button/BranchButton_N.png');\
+                    background-image:url('"+ PROPATH::Users +"/source/BaseUI/Button/BranchButton_N.png');\
                 }\
                 #BranchButton:hover{\
                     color:#FFFFFF;\
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/BranchButton_P.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_P.png');\
                 }\
                 #BranchButton:Pressed{\
                     color:#FFFFFF;\
                     font-size:25px;\
                     font-family:'SimHei';\
                     background-color:rgba(0,0,0,0);\
-                    background-image:url('" + PROPATH(1) + "/source/BaseUI/Button/BranchButton_C.png');\
+                    background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_C.png');\
                     }";
             BranchButton_1->setStyleSheet(QSSBranchButton);
             BranchButton_2->setStyleSheet(QSSBranchButton);
@@ -915,7 +915,7 @@ class uPlayerPage :public QWidget
             }
 
             LogButton = new QPushButton(this);
-            LogButtonPixRaw = QPixmap(PROPATH(1) + "/source/BaseUI/Button/LogButton_N.png");
+            LogButtonPixRaw = QPixmap(PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png");
             LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             LogButton->setIcon(QIcon(LogButtonPixRaw));
             LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
@@ -1027,17 +1027,17 @@ class uPlayerPage :public QWidget
                         if (i[6] == "(暗，沉默)") { Addname += "_6"; }
                         if (Addname != "") {
                             if (i[1] == "") {
-                                AVG_M_R.load(PROPATH(1) + "/cache/Chara/" + i[0] + Addname + ".png");
+                                AVG_M_R.load(PROPATH::Users + "/cache/Chara/" + i[0] + Addname + ".png");
                             }
                             else {
-                                AVG_M_R.load(PROPATH(1) + "/cache/Chara/" + i[0] + "_" + i[1] + Addname + ".png");
+                                AVG_M_R.load(PROPATH::Users + "/cache/Chara/" + i[0] + "_" + i[1] + Addname + ".png");
                             }
                         }else {
                             if (i[1] == "") {
-                                AVG_M_R.load(PROPATH(1) + "/source/Chara/" + i[0] + ".png");
+                                AVG_M_R.load(PROPATH::Users + "/source/Chara/" + i[0] + ".png");
                             }
                             else {
-                                AVG_M_R.load(PROPATH(1) + "/source/Chara/" + i[0] + "_" + i[1] + ".png");
+                                AVG_M_R.load(PROPATH::Users + "/source/Chara/" + i[0] + "_" + i[1] + ".png");
                             }
                         }
                         if (!AVG_M_R.isNull()) {
@@ -1059,17 +1059,17 @@ class uPlayerPage :public QWidget
                     if (CharaPicList[0][6] == "(暗，沉默)") { Addname += "_6"; }
                     if (Addname != "") {
                         if (CharaPicList[0][1] == "") {
-                            AVG_L_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[0][0] + Addname + ".png");
+                            AVG_L_R.load(PROPATH::Users + "/cache/Chara/" + CharaPicList[0][0] + Addname + ".png");
                         }
                         else {
-                            AVG_L_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + ".png");
+                            AVG_L_R.load(PROPATH::Users + "/cache/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + Addname + ".png");
                         }
                     }else {
                         if (CharaPicList[0][1] == "") {
-                            AVG_L_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[0][0] + ".png");
+                            AVG_L_R.load(PROPATH::Users + "/source/Chara/" + CharaPicList[0][0] + ".png");
                         }
                         else {
-                            AVG_L_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + ".png");
+                            AVG_L_R.load(PROPATH::Users + "/source/Chara/" + CharaPicList[0][0] + "_" + CharaPicList[0][1] + ".png");
                         }
                     }
                     if (!AVG_L_R.isNull()) {
@@ -1087,17 +1087,17 @@ class uPlayerPage :public QWidget
                     if (CharaPicList[1][6] == "(暗，沉默)") { Addname += "_6"; }
                     if (Addname != "") {
                         if (CharaPicList[1][1] == "") {
-                            AVG_R_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[1][0] + Addname + ".png");
+                            AVG_R_R.load(PROPATH::Users + "/cache/Chara/" + CharaPicList[1][0] + Addname + ".png");
                         }
                         else {
-                            AVG_R_R.load(PROPATH(1) + "/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + ".png");
+                            AVG_R_R.load(PROPATH::Users + "/cache/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + Addname + ".png");
                         }
                     }else {
                         if (CharaPicList[1][1] == "") {
-                            AVG_R_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[1][0] + ".png");
+                            AVG_R_R.load(PROPATH::Users + "/source/Chara/" + CharaPicList[1][0] + ".png");
                         }
                         else {
-                            AVG_R_R.load(PROPATH(1) + "/source/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + ".png");
+                            AVG_R_R.load(PROPATH::Users + "/source/Chara/" + CharaPicList[1][0] + "_" + CharaPicList[1][1] + ".png");
                         }
                     }
                     if (!AVG_R_R.isNull()) {
@@ -1138,22 +1138,22 @@ class uPlayerPage :public QWidget
                 BGR.fill(QColor(0, 0, 0, 255));
             }else{
                 if (BGPSetList[1] == "0") {
-                    BGR.load(PROPATH(1) + "/source/BGP/" + BGPSetList[0] + ".png");
+                    BGR.load(PROPATH::Users + "/source/BGP/" + BGPSetList[0] + ".png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "1"){
-                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_6.png");
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "2"){
-                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_3.png");
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_3.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "3"){
-                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_3_6.png");
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_3_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "4"){
-                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_4.png");
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_4.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }else if (BGPSetList[1] == "5") {
-                    BGR.load(PROPATH(1) + "/cache/BGP/" + BGPSetList[0] + "_4_6.png");
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_4_6.png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }
             }

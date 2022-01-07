@@ -5,7 +5,6 @@
 #include <QtNetwork>
 #include "..\langcontrol.h"
 #include "..\global_value.h"
-#include "checkupdate.h"
 #include <exception>
 
 using namespace std;
@@ -59,7 +58,7 @@ public slots:
 					dayinfo = SingleLine.mid(dayindex - 8, 8);
 				}
 				else if (SingleLine.contains("宣布更新YSP程序内部版本到Ver") || SingleLine.contains("宣布更新YSP程序公开版本到Ver")) {
-					if (dayinfo.toInt() > Program_Info("Day").toInt()) {
+					if (dayinfo.toInt() > PROINFO::Day.toInt()) {
 						verindex_s = SingleLine.indexOf("Ver");
 						verindex_e = SingleLine.indexOf("。");
 						verinfo = SingleLine.mid(verindex_s, verindex_e - verindex_s);

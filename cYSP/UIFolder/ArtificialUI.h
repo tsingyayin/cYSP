@@ -132,7 +132,7 @@ class PlayerWindow :public PlayerDef
 			//装载UI
 
 			this->setupUI(gX, gY, 100, 100);
-			this->setWindowIcon(QIcon(PROPATH(1)+"source/WinICO/Story.ico"));
+			this->setWindowIcon(QIcon(PROPATH::Users+"source/WinICO/Story.ico"));
 			this->setWindowTitle("Yayin Story Player");
 			this->setParent(parent);
 			InfoWidget->raise();
@@ -153,7 +153,7 @@ class PlayerWindow :public PlayerDef
 		}
 		//核心启动函数
 		void RUNCORE(void) {
-			QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Player_ChooseFilePage_Text_Title"), PROPATH(1) + "/story", "Story File(*.spol)");
+			QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Player_ChooseFilePage_Text_Title"), PROPATH::Users + "/story", "Story File(*.spol)");
 			//qDebug().noquote() << "StoryName" + ChooseStory;
 			if (ChooseStory != "") {
 				InfoWidget->addNewInfo("准备启动解释器", "启动预处理模块", "目标文件"+ChooseStory.section("/",-1,-1), EIFL::SRI);
@@ -272,7 +272,7 @@ class PlayerWindow :public PlayerDef
 		//音乐控制器-音频启动函数
 		void playBGM(QString filename, int volume) {
 			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			PlayMusic->loadFile(PROPATH(1)+"/source/BGM/" + filename + ".mp3", volume ,TRUE);
+			PlayMusic->loadFile(PROPATH::Users+"/source/BGM/" + filename + ".mp3", volume ,TRUE);
 			PlayMusic->playMedia();
 			OneBGMIsPlaying = TRUE;
 		}
@@ -280,7 +280,7 @@ class PlayerWindow :public PlayerDef
 		//音效控制器-音效启动函数
 		void playSound(QString filename, int volume) {
 			musicThreadList.append(new uSoundService());
-			musicThreadList[musicThreadList.length() - 1]->loadFile(PROPATH(1)+"/source/Sound/" + filename + ".mp3", volume ,FALSE);
+			musicThreadList[musicThreadList.length() - 1]->loadFile(PROPATH::Users+"/source/Sound/" + filename + ".mp3", volume ,FALSE);
 			musicThreadList[musicThreadList.length() - 1]->playMedia();
 		}
 

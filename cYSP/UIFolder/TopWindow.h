@@ -601,11 +601,11 @@ class hAboutPage :public QWidget
             setChildText();
         }
         void setChildText(void){
-            AboutLabel_FullVer->setText(Program_Info("Edition"));
-            AboutLabel_MainVer->setText(msg("KAU_About_Info_MainVer") + Program_Info("Main"));
-            AboutLabel_SubVer->setText(msg("KAU_About_Info_SubVer") + Program_Info("Sub"));
-            AboutLabel_BuildVer->setText(msg("KAU_About_Info_BuildVer") + Program_Info("Build"));
-            AboutLabel_SpolVer->setText(msg("KAU_About_Info_SpolVer") + Program_Info("SPOL"));
+            AboutLabel_FullVer->setText(PROINFO::Total);
+            AboutLabel_MainVer->setText(msg("KAU_About_Info_MainVer") + PROINFO::Main);
+            AboutLabel_SubVer->setText(msg("KAU_About_Info_SubVer") + PROINFO::Sub);
+            AboutLabel_BuildVer->setText(msg("KAU_About_Info_BuildVer") + PROINFO::Build);
+            AboutLabel_SpolVer->setText(msg("KAU_About_Info_SpolVer") + PROINFO::SPOL);
             AboutLabel_Support->setText(msg("KAU_About_Info_Support") + "×Ïµå¹¤×÷ÊÒ");
             AboutLabel_Donate->setText(msg("KAU_About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
             MoreAboutInfo->setText(msg("KAU_About_Info_More"));
@@ -731,7 +731,7 @@ class TopDef :public QWidget
 
             Iconlabel = new QLabel(this);
             Iconlabel->setGeometry(QRect(50, 15, 270, 270));
-            LogoRaw.load(PROPATH(1) + "/source/BaseUI/Image/Videotape_Win11.png");
+            LogoRaw.load(PROPATH::Users + "/source/BaseUI/Image/Videotape_Win11.png");
             LogoRaw = LogoRaw.scaled(270, 270, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             Iconlabel->setPixmap(QPixmap::fromImage(LogoRaw));
             Iconlabel->setStyleSheet("QLabel{background-color:rgba(255,255,255,0);border:none;border-radius:0px;}");
@@ -761,8 +761,8 @@ class TopWindow :public TopDef
         bool GCPDialogWindowIsShow = FALSE;
 		TopWindow(QWidget* parent = Q_NULLPTR){
             this->setParent(parent);
-            this->setWindowTitle("YSP "+Program_Info("Main"));
-            this->setWindowIcon(QIcon(PROPATH(1) + "/source/WinICO/Videotape_Win11.ico"));
+            this->setWindowTitle("YSP "+PROINFO::Main);
+            this->setWindowIcon(QIcon(PROPATH::Users + "/source/WinICO/Videotape_Win11.ico"));
 			setupUI();
             showFirstPage();
             connectAll();
@@ -873,7 +873,7 @@ class TopWindow :public TopDef
 
         //ÓïÑÔË¢ÐÂº¯Êý
         void chooseLangFile(void) {
-            QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), PROPATH(1)+"/Language", "Story Player Language(*.splang)");
+            QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), PROPATH::Users+"/Language", "Story Player Language(*.splang)");
             QString LangFileName = LangFileDialog.section("/",-1,-1).section(".",0,0);
             Service->ui_langset(LangFileName);
 

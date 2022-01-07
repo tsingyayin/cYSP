@@ -37,17 +37,17 @@ void checkupdate(int argc, char* argv[]) {
 			break;	
 		}
 		else if (Program_Settings("Update_Channel") == "Auto") {
-			if (VerList[i][2] == "Pre" && Program_Info("Sub").contains("Pre")) {
+			if (VerList[i][2] == "Pre" && PROINFO::Channel == "Pre") {
 				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Pre");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
-			else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
+			else if (VerList[i][2] == "Pub" && PROINFO::Channel == "Pub") {
 				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Pub");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
-			else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
+			else if (VerList[i][2] == "Branch" && (PROINFO::Channel != "Pre" || PROINFO::Channel != "Pub")) {
 				qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Branch");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
@@ -64,11 +64,11 @@ void checkupdate(int argc, char* argv[]) {
 
 	if (VerNew.isEmpty()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Ver_Error");
-	}else if (VerNew[0][2].toFloat() > Program_Info("Build").toFloat()) {
+	}else if (VerNew[0][2].toFloat() > PROINFO::Build.toFloat()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
-	}else if (VerNew[0][2].toFloat() == Program_Info("Build").toFloat()) {
+	}else if (VerNew[0][2].toFloat() == PROINFO::Build.toFloat()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_New");
-	}else if (VerNew[0][2].toFloat() < Program_Info("Build").toFloat()) {
+	}else if (VerNew[0][2].toFloat() < PROINFO::Build.toFloat()) {
 		qDebug().noquote() << "sysinfo→" + msg("Check_Update_Info_Insider");
 	}
 }
@@ -91,10 +91,10 @@ void langinput(void) {
 }
 
 void about(void) {
-	qDebug().noquote() << msg("KAU_About_Info_MainVer") + Program_Info("Main");
-	qDebug().noquote() << msg("KAU_About_Info_SubVer") + Program_Info("Sub");
-	qDebug().noquote() << msg("KAU_About_Info_BuildVer") + Program_Info("Build");
-	qDebug().noquote() << msg("KAU_About_Info_SpolVer") + Program_Info("SPOL");
+	qDebug().noquote() << msg("KAU_About_Info_MainVer") + PROINFO::Main;
+	qDebug().noquote() << msg("KAU_About_Info_SubVer") + PROINFO::Sub;
+	qDebug().noquote() << msg("KAU_About_Info_BuildVer") + PROINFO::Build;
+	qDebug().noquote() << msg("KAU_About_Info_SpolVer") + PROINFO::SPOL;
 	qDebug().noquote() << msg("KAU_About_Info_Developers") + "青雅音 Tsing Yayin";
 	qDebug().noquote() << msg("KAU_About_Info_Environment") + "Visual Studio 2019";
 	qDebug().noquote() << msg("KAU_About_Info_Support") + "亿绪联合协会 UYXA";
@@ -119,12 +119,12 @@ void DeleteCache(int num) {
 	}else if (num == 1) {
 		qDebug().noquote() << "sysinfo→" + msg("Function_Filecheck_Delete_Cache");
 	}
-	QDir visualCacheCharaDir(PROPATH(1)+"/cache/Chara/");
+	QDir visualCacheCharaDir(PROPATH::Users+"/cache/Chara/");
 	visualCacheCharaDir.setFilter(QDir::Files | QDir::NoSymLinks); 
-	QDir visualCacheBGPDir(PROPATH(1) + "/cache/BGP/");
+	QDir visualCacheBGPDir(PROPATH::Users + "/cache/BGP/");
 	visualCacheBGPDir.setFilter(QDir::Files | QDir::NoSymLinks);
 	for (int i = 0; i < visualCacheCharaDir.count(); i++) {
-		QFile cacheFile(PROPATH(1) + "/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
+		QFile cacheFile(PROPATH::Users + "/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num==0) { 
 			cacheFile.remove(); 
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheCharaDir.entryList()[i];
@@ -133,7 +133,7 @@ void DeleteCache(int num) {
 		}
 	}
 	for (int i = 0; i < visualCacheBGPDir.count(); i++) {
-		QFile cacheFile(PROPATH(1) + "/cache/BGP/" + visualCacheBGPDir.entryList()[i]);
+		QFile cacheFile(PROPATH::Users + "/cache/BGP/" + visualCacheBGPDir.entryList()[i]);
 		if (cacheFile.size() == 0 && num == 0) {
 			cacheFile.remove();
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheBGPDir.entryList()[i];
@@ -147,7 +147,7 @@ void DeleteCache(int num) {
 void ensuredirs(int num) {
 	qDebug().noquote() << "sysinfo→Checking the files in the directory";
 	QStringList dirlst;
-	dirlst << PROPATH(1) + "/cache/BGP" << PROPATH(1) + "/cache/Chara";
+	dirlst << PROPATH::Users + "/cache/BGP" << PROPATH::Users + "/cache/Chara";
 	int count = 0;
 	QDir singleDir;
 	for (int i = 0; i < dirlst.length(); i++) {
@@ -167,13 +167,13 @@ void ensuredirs(int num) {
 void OpenFolder(int num) {
 	QString Path = "";
 	if (num == 1) {
-		Path = PROPATH(1) + "\\cache";
+		Path = PROPATH::Users + "\\cache";
 	}elif(num == 2) {
-		Path = PROPATH(1) + "\\source";
+		Path = PROPATH::Users + "\\source";
 	}elif(num == 3) {
-		Path = PROPATH(1) + "\\arknights\\story";
+		Path = PROPATH::Users + "\\arknights\\story";
 	}elif(num == 4) {
-		Path = PROPATH(1) + "\\story";
+		Path = PROPATH::Users + "\\story";
 	}
 	system(("start " + Path).toStdString().data());
 	qDebug().noquote() << ("start " + Path).toStdString().data();

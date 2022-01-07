@@ -115,17 +115,17 @@ public:
 				break;
 			}
 			else if (Program_Settings("Update_Channel") == "Auto") {
-				if (VerList[i][2] == "Pre" && Program_Info("Sub").contains("Pre")) {
+				if (VerList[i][2] == "Pre" && PROINFO::Channel == "Pre") {
 					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
-				else if (VerList[i][2] == "Pub" && Program_Info("Sub").contains("Pub")) {
+				else if (VerList[i][2] == "Pub" && PROINFO::Channel == "Pub") {
 					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
-				else if (VerList[i][2] == "Branch" && (!Program_Info("Sub").contains("Pre") || !Program_Info("Sub").contains("Pub"))) {
+				else if (VerList[i][2] == "Branch" && (PROINFO::Channel != "Pre" || PROINFO::Channel != "Pub")) {
 					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
@@ -143,15 +143,15 @@ public:
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
 			emit Anyinfo(2, msg("Check_Update_Info_Ver_Error"));
 		}
-		else if (VerNew[0][2].toFloat() > Program_Info("Build").toFloat()) {
+		else if (VerNew[0][2].toFloat() > PROINFO::Build.toFloat()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
 			return {VerNew[0][1],VerNew[0][3]};
 		}
-		else if (VerNew[0][2].toFloat() == Program_Info("Build").toFloat()) {
+		else if (VerNew[0][2].toFloat() == PROINFO::Build.toFloat()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_New");
 			emit Anyinfo(1, msg("Check_Update_Info_New"));
 		}
-		else if (VerNew[0][2].toFloat() < Program_Info("Build").toFloat()) {
+		else if (VerNew[0][2].toFloat() < PROINFO::Build.toFloat()) {
 			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Insider");
 			emit Anyinfo(1, msg("Check_Update_Info_Insider"));
 		}
