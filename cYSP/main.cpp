@@ -7,23 +7,31 @@
 #include <QApplication>
 #include <QtWidgets>
 #include <iostream>
-
 #include <exception>
-
 #include "langcontrol.h"
 #include <stdexcept>
-#include <windows.h>
-#include <shellapi.h>
 #include "UIFolder/WindowsWarn.h"
-#include <time.h>
-
+#include <QTest>
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     try {
         qRegisterMetaType<EIFL>("EIFL");
-        srand((unsigned)time(NULL));
+        qRegisterMetaType<Controller::Backdrop::Data>("Controller::Backdrop::Data");
+        qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+
+        qsrand((unsigned)time(NULL));
+        ////将字体文件名传给addApplicationFont,得到字体的Id 
+        //int fontId = QFontDatabase::addApplicationFont("C:/Users/Administrator/source/repos/cYSP/cYSP/InsiderSource/Fonts/SourceHanSans-Regular.otf");
+        ////将字体Id传给applicationFontFamilies,得到一个QStringList,其中的第一个元素为新添加字体的family 
+        //qDebug() << fontId;
+        //QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
+        //qDebug() << msyh;
+        //QFont font(msyh, 10);
+        ////将此字体设为QApplication的默认字体 
+        //QApplication::setFont(font);
+
         qDebug().noquote() << PROINFO::Kernal + "\t" + PROINFO::Total;
         qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
         sDebug("DebugInfo→Start path : " + QDir::currentPath());
@@ -84,9 +92,9 @@ This program has poor compatibility with Windows Systems released in and before 
         ensuredirs(0);
         langset("0");
         loadsettings();
-        //Sleep(1000);
+        //QTest::qSleep(1000);
         DeleteCache(0);
-        //Sleep(1000);
+        //QTest::qSleep(1000);
         if (Program_Settings("First_Start") != "False") {
             QApplication app(argc, argv);
             WindowsWarnSPOL_6 SPOL_6_Window;
@@ -106,7 +114,7 @@ This program has poor compatibility with Windows Systems released in and before 
 
         qDebug().noquote() << "sysinfo→" + msg("Kernal_Text_IFL_Version").arg("IFL_20211227");
         qDebug().noquote() << "sysinfo→" + msg("Kernal_Text_First_Print").arg("AASPCMD_"+PROINFO::Kernal);
-        Sleep(1000);
+        QTest::qSleep(1000);
         bool programme_run = TRUE;
         while (programme_run) {
             if (DirectOpen != 1) {
@@ -178,7 +186,7 @@ This program has poor compatibility with Windows Systems released in and before 
             }
             else if (Usript == "exit") {
                 qDebug().noquote() << "Safety Exit";
-                Sleep(500);
+                QTest::qSleep(500);
                 return 0;
             }
 

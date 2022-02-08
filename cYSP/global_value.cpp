@@ -5,8 +5,8 @@
 
 QString PROINFO::Main = "0.9.0";
 QString PROINFO::Channel = "Pre";
-QString PROINFO::Sub = "2.1";
-QString PROINFO::Build = "136.0";
+QString PROINFO::Sub = "3";
+QString PROINFO::Build = "137.0";
 QString PROINFO::SPOL = "0.9.0";
 QString PROINFO::Kernal = "K9U1";
 QString PROINFO::Day = "20211206";
