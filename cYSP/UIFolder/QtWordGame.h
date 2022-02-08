@@ -10,9 +10,8 @@
 #include "../langcontrol.h"
 #include "../global_value.h"
 #include "../core/core_T.h"
-#include <cmath>
+#include <QTest>
 using namespace std;
-#define tick int
 
 class SingleInfo :public QFrame
 {
@@ -26,7 +25,6 @@ public:
     QWidget* parent;
     QLabel* InfoLabel;
     QLabel* IconLabel;
-    QHBoxLayout* CurrentLayout;
     QImage Image;
     float FrameIn = 0.0;
     float FrameOut = 0.0;
@@ -45,7 +43,7 @@ public:
     int r = 0;
     int g = 0;
     int b = 0;
-    SingleInfo(QString Title, QString SubTitle = "", QString RawInfo = "", EIFL E_IFL = EIFL::URE, QWidget* gparent = Q_NULLPTR) :parent(gparent) {
+    SingleInfo(int Y, QString Title, QString SubTitle = "", QString RawInfo = "", EIFL E_IFL = EIFL::URE, QWidget* gparent = Q_NULLPTR) :parent(gparent) {
         switch (E_IFL) {
         case EIFL::SSE:
             r = 235; g = 113; b = 33;
@@ -77,21 +75,18 @@ public:
             QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + ")}");
         this->setObjectName("SingleInfo");
         this->setParent(parent);
+        this->setGeometry(QRect(parent->width(), 0.8 * parent->height(), parent->width(), parent->height() * 0.12));
+
         InfoLabel = new QLabel(this);
-        InfoLabel->setText("<style>fontset{font-family:'Microsoft YaHei';color:#FFFFFF;}</style><fontset><font size='6'>" + Title + "</font><br><font size='3'>" + SubTitle + "<br>" + RawInfo + "</font></fontset>");
+        InfoLabel->setText("<style>fontset{font-family:'Microsoft YaHei';color:#FFFFFF;}</style><fontset><font size='"+QString::number(Y/180) + "'>" + Title + "</font><br><font size='"+QString::number(Y/360) + "'>" + SubTitle + "<br>" + RawInfo + "</font></fontset>");
         Image = QImage(PROPATH::Users+"/source/BaseUI/Button/LogButton_N.png");
         Image = Image.scaled(QSize(50, 50), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         IconLabel = new QLabel(this);
         IconLabel->setPixmap(QPixmap::fromImage(Image));
         IconLabel->setMaximumWidth(60);
-
-        CurrentLayout = new QHBoxLayout(this);
-        CurrentLayout->addWidget(IconLabel);
-        CurrentLayout->addWidget(InfoLabel);
-
-        connect(this, SIGNAL(gTicker()), this, SLOT(tickslot()));
-
-        this->setGeometry(QRect(parent->width(), 0.8 * parent->height(), parent->width(), parent->height() * 0.12));
+        IconLabel->move(10, (this->height() - 50) / 2);
+        InfoLabel->setGeometry(QRect(70, this->height() * 0.03, this->width() * 0.9, this->height() * 0.94));
+        connect(this, SIGNAL(gTicker()), this, SLOT(tickslot()));  
         CurrentStatus = Status::moveIn;
     }
 public slots:
@@ -124,9 +119,9 @@ public slots:
     void flashThis() {
         this->setStyleSheet("QFrame#SingleInfo{border:4px solid rgb(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) +
             ");border-radius:10px;background-color:rgb(" +
-            QString::number(abs(cos(FrameFlash)) * r) + "," +
-            QString::number(abs(cos(FrameFlash)) * g) + "," +
-            QString::number(abs(cos(FrameFlash)) * b) + ")}");
+            QString::number(abs(qCos(FrameFlash)) * r) + "," +
+            QString::number(abs(qCos(FrameFlash)) * g) + "," +
+            QString::number(abs(qCos(FrameFlash)) * b) + ")}");
         FrameFlash += 0.02;
         if (FrameFlash >= 6.28) {
             FrameFlash = 0.0;
@@ -134,10 +129,10 @@ public slots:
     }
     void moveIn() {
         if (FrameIn < 0.5) {
-            this->move((1.05 - sin(FrameIn * 1.5708)) * parent->width(), 0.8 * parent->height());
+            this->move((1.05 - qSin(FrameIn * 1.5708)) * parent->width(), 0.8 * parent->height());
         }
         else {
-            this->move((1.05 - sin(FrameIn * 1.5708)) * parent->width(), (0.8 - (FrameIn - 0.5) * 0.2) * parent->height());
+            this->move((1.05 - qSin(FrameIn * 1.5708)) * parent->width(), (0.8 - (FrameIn - 0.5) * 0.2) * parent->height());
         }
         if (FrameIn >= 1.0) {
             CurrentStatus = Status::wait;
@@ -153,7 +148,7 @@ public slots:
         CurrentStatus = Status::moveTo;
     }
     void _moveTo() {
-        double transY = cos((double)(1.0 - FrameTo * 1.4286) * 1.5708) * 0.7;
+        double transY = qCos((double)(1.0 - FrameTo * 1.4286) * 1.5708) * 0.7;
         this->move(this->pos().x(), transY * parent->height());
         if (transY <= (0.15 * gStep + 0.05)) {
             CurrentStatus = Status::wait;
@@ -173,7 +168,7 @@ public slots:
         CurrentStatus = Status::moveOut;
     }
     void _moveOut() {
-        this->move((1.05 - sin(FrameOut * 1.5708 + 1.5708)) * parent->width(), this->pos().y());
+        this->move((1.05 - qSin(FrameOut * 1.5708 + 1.5708)) * parent->width(), this->pos().y());
         if (FrameOut >= 1.05) {
             emit disConnect();
             this->hide();
@@ -191,7 +186,9 @@ signals:
 public:
     QTimer* Ticker;
     QQueue<SingleInfo*> InfoList;
+    int gY;
     uInfoWidget( int X, int Y, QWidget* parent = Q_NULLPTR) {
+        gY = Y;
         this->setParent(parent);
         connect(this, SIGNAL(timeout()), this, SLOT(tickslot()));
     }
@@ -200,7 +197,7 @@ public slots:
 
     }
     void addNewInfo(QString Title, QString Subtitle, QString RawInfo, EIFL E_IFL) {
-        SingleInfo* NewInfo = new SingleInfo(Title, Subtitle, RawInfo, E_IFL, this);
+        SingleInfo* NewInfo = new SingleInfo(gY, Title, Subtitle, RawInfo, E_IFL, this);
         connect(this, SIGNAL(timeout()), NewInfo, SIGNAL(gTicker()));
         connect(NewInfo, SIGNAL(needEnter()), this, SLOT(tellStep()));
         connect(NewInfo, SIGNAL(willExit()), this, SLOT(moveForward()));
@@ -922,6 +919,7 @@ class uPlayerPage :public QWidget
             LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
             LogButton->setStyleSheet("QPushButton{background-color:rgba(0,0,0,0);}");
             connect(LogButton, SIGNAL(clicked()), this, SLOT(showLogPage()));
+
         }
 
     public slots:
@@ -1132,34 +1130,22 @@ class uPlayerPage :public QWidget
             }
         }
 
-        void setCurrentBGP(QStringList BGPSetList) {
-            if (BGPSetList[0] == "黑场") {
+        void setCurrentBGP(Controller::Backdrop::Data SetList) {
+            if (SetList.Backdrop == "黑场") {
                 BGR = QImage(gX, gY, QImage::Format_ARGB32);
                 BGR.fill(QColor(0, 0, 0, 255));
             }else{
-                if (BGPSetList[1] == "0") {
-                    BGR.load(PROPATH::Users + "/source/BGP/" + BGPSetList[0] + ".png");
+                if (SetList.Filter == "0") {
+                    BGR.load(PROPATH::Users + "/source/BGP/" + SetList.Backdrop + ".png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }else if (BGPSetList[1] == "1"){
-                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_6.png");
-                    BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }else if (BGPSetList[1] == "2"){
-                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_3.png");
-                    BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }else if (BGPSetList[1] == "3"){
-                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_3_6.png");
-                    BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }else if (BGPSetList[1] == "4"){
-                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_4.png");
-                    BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }else if (BGPSetList[1] == "5") {
-                    BGR.load(PROPATH::Users + "/cache/BGP/" + BGPSetList[0] + "_4_6.png");
+                }else{
+                    BGR.load(PROPATH::Users + "/cache/BGP/" + SetList.Backdrop + "_" + SetList.Filter +".png");
                     BGR = BGR.scaled(gX, gY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
                 }
             }
         }
 
-        void updateCurrentBGP(float Opacity_Float, QStringList BGSetList) {
+        void updateCurrentBGP(float Opacity_Float, Controller::Backdrop::Data SetList) {
             if (changeBG == 1) {
                 if (Opacity_Float == 0) {
                     BG1->setPixmap(QPixmap::fromImage(BGR));
@@ -1182,25 +1168,25 @@ class uPlayerPage :public QWidget
                 }
             }
             if (Opacity_Float >= 1) {
-                if (BGSetList[2] == "1") {
+                if (SetList.Effect == 1) {
                     ShakeFUNC = new ShakeFunc(SpeedFloat);
                     connect(ShakeFUNC, SIGNAL(shakeXY(int, int, int)), this, SLOT(_ShakeRect(int, int, int)));
                     ShakeFUNC->start();
                 }
-                else if (BGSetList[2] == "2") {
+                else if (SetList.Effect == 2) {
                     effectuse = 2;
                     FlashFUNCFast = new FlashFuncFast(SpeedFloat);
                     connect(FlashFUNCFast, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
                     FlashFUNCFast->start();
                 }
-                else if (BGSetList[2] == "3") {
+                else if (SetList.Effect == 3) {
                     effectuse = 3;
                     FlashFUNCSlow = new FlashFuncSlow(SpeedFloat);
                     connect(FlashFUNCSlow, SIGNAL(FlashOPint(float, int)), this, SLOT(_FlashWhite(float, int)));
                     FlashFUNCSlow->start();
                 }
                 else {
-                    Sleep(5);
+                    QTest::qSleep(5);
                     showNext();
                 }
             }
@@ -1263,7 +1249,7 @@ class uPlayerPage :public QWidget
                 BG2->repaint();
             }
             if (end == 1) {
-                Sleep(5);
+                QTest::qSleep(5);
                 showNext();
             }
         }
@@ -1283,7 +1269,7 @@ class uPlayerPage :public QWidget
                     FlashFUNCSlow->wait();
                     effectuse = 0;
                 }
-                Sleep(5);
+                QTest::qSleep(5);
                 showNext();
             }
         }
@@ -1399,10 +1385,12 @@ class uSoundService :public QObject
         QMediaPlayer* MediaPlayer;
         QMediaPlaylist* PlayList;
         uSoundService() {   
-        }
-        void loadFile(QString Filename, int Volume ,bool Loop) {
             MediaPlayer = new QMediaPlayer();
             PlayList = new QMediaPlaylist();
+            MediaPlayer->setPlaylist(PlayList);
+        }
+        void loadFile(QString Filename, int Volume ,bool Loop) {
+            PlayList->clear();
             PlayList->addMedia(QUrl::fromLocalFile(Filename));
             if (Loop) { PlayList->setPlaybackMode(QMediaPlaylist::Loop); }
             //MediaPlayer->setMedia(QMediaContent(QUrl::fromLocalFile(Filename)));
@@ -1410,14 +1398,14 @@ class uSoundService :public QObject
         }
 
         void playMedia(void) {
-            MediaPlayer->setPlaylist(PlayList);
+            PlayList->setCurrentIndex(0);
             MediaPlayer->play();
         }
 
         void fadeMedia(void) {
             for (int i = MediaPlayer->volume(); i > 0; i--) {
                 MediaPlayer->setVolume(i);
-                Sleep(10);
+                QTest::qSleep(10);
             }
             MediaPlayer->stop();
         }

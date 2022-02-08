@@ -4,16 +4,11 @@
 #include "..\loadsettings.h"
 #include "ProgramSettings.h"
 #include "..\Aaspcommand\aaspcommand.h"
-#include <math.h>
-#include "WindowEffect.h"
-#pragma comment(lib, "user32.lib")
-#include <qt_windows.h>
 #include <QtWidgets>
 #include <QtCore>
 #include <QtGui>
-#include <ctype.h>
 #include <exception>
-
+#include <QTest>
 using namespace std;
 
 static QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
@@ -40,8 +35,8 @@ class hGCPDialog :public QWidget
             this->setWindowFlags(Qt::FramelessWindowHint);
             this->setAttribute(Qt::WA_TranslucentBackground);
             this->setAttribute(Qt::WA_DeleteOnClose);
-            frame = new QFrame();
-            hl = new QHBoxLayout();
+            frame = new QFrame(this);
+            hl = new QHBoxLayout(this);
             hl->setContentsMargins(10, 10, 10, 10);
             SelfEffect = new QGraphicsDropShadowEffect();
             SelfEffect->setOffset(4, 4);
@@ -518,8 +513,8 @@ class hCreatePage :public QWidget
         }
     public slots:
         void showSPOLDevWindow(void) {
-            QString SPOLDevPath = "start " + QDir::currentPath() + "/SPOLDev.exe";
-            system(SPOLDevPath.toStdString().c_str());
+            QString SPOLDevPath = QDir::currentPath() + "/SPOLDev.exe";
+            system(("start " + SPOLDevPath).toLocal8Bit());
             //DevWindow = new SPOLDevWindow();
             //DevWindow->show();
         }
@@ -673,12 +668,6 @@ class TopDef :public QWidget
             this->setFixedSize(this->size());
             this->setStyleSheet(Style->Widget1);
 
-            //this->setWindowFlags(Qt::CustomizeWindowHint);
-            /*HWND hWnd = HWND(this->winId());
-            DWORD Color = DWORD(0x20333333);
-            DWORD SYSTEMCOLOR = GetWindowsThemeColor();
-            setBlur(hWnd, 0x00 * 0x1000000 +SYSTEMCOLOR);*/
-
             AnyInfolabel = new QLabel(this);
             AnyInfolabel->setText("Default Text");
             AnyInfolabel->setStyleSheet("\
@@ -807,14 +796,14 @@ class TopWindow :public TopDef
 		void Expand() {
 			double a;
 			for (int i = 0; i <= 101; i += 2) {
-				a = 0.5 * (1 - cos(i * 0.0314159));
+				a = 0.5 * (1 - qCos(i * 0.0314159));
 				//this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
                 this->move(600, (int)(400 - a * 200));
                 this->setFixedSize(700, (int)(300 + a * 350));
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
                 this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
 				this->repaint();
-				Sleep(1);
+				QTest::qSleep(1);
 			}
 		}
 
@@ -823,14 +812,14 @@ class TopWindow :public TopDef
 			double a;
             QRect Rect = this->geometry();
 			for (int i = 100; i >= -1; i -= 1) {
-				a = 0.5 * (1 - cos(i * 0.0314159));
+				a = 0.5 * (1 - qCos(i * 0.0314159));
 				//this->setGeometry(QRect(Rect.left(), (int)(Rect.top() + 200 - a * 200), 700, (int)(300 + a * 350)));
                 this->move(Rect.left(), (int)(Rect.top() + 200 - a * 200));
                 this->setFixedSize(700, (int)(300 + a * 350));
                 this->OPTitlelabel->setOpacity(1 - (float)i / 100);
                 this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
 				this->repaint();
-				Sleep(1);
+				QTest::qSleep(1);
 			}
 		}
 
@@ -922,11 +911,11 @@ class TopWindow :public TopDef
             float a = 0;
             QRect Rect = this->geometry();
             for (int i = 0; i <= 101; i += 4) {
-                a = 0.5 * (1 - cos(i * 0.0314159));
+                a = 0.5 * (1 - qCos(i * 0.0314159));
                 //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
                 this->setFixedSize(700, (int)(650 + a * 50));
                 this->repaint();
-                Sleep(3);
+                QTest::qSleep(3);
             }
             if (infoGroup == 0) {
                 AnyInfolabel->setStyleSheet("\
@@ -965,32 +954,20 @@ class TopWindow :public TopDef
             AnyInfolabel->setText(needToShow);
             OPAnyInfolabel->setOpacity(1);
             AnyInfolabel->repaint();
-            Sleep(1000);
+            QTest::qSleep(1000);
             AnyInfolabel->setText("");
             OPAnyInfolabel->setOpacity(0);
             AnyInfolabel->repaint();
             a = 0;
             for (int i = 101; i >= 2; i -= 4) {
-                a = 0.5 * (1 - cos(i * 0.0314159));
+                a = 0.5 * (1 - qCos(i * 0.0314159));
                 //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
                 this->setFixedSize(700, (int)(650 + a * 50));
                 this->repaint();
-                Sleep(3);
+                QTest::qSleep(3);
             }
         }
 
-        bool nativeEvent(const QByteArray& eventType, void* message, long* result) {
-            MSG* msg = static_cast<MSG*>(message);
-            switch (msg->message) {
-            case WM_DWMCOLORIZATIONCOLORCHANGED:
-                HWND hWnd = HWND(this->winId());
-                DWORD Color = DWORD(0x20333333);
-                DWORD SYSTEMCOLOR = GetWindowsThemeColor();
-                setBlur(hWnd, 0x70 * 0x1000000 + SYSTEMCOLOR);
-                return TRUE;
-            }
-            return FALSE;
-        }
 
         //展示一般设置
         void showNormalSetPage(void) {
@@ -1106,7 +1083,7 @@ class TopWindow :public TopDef
         //退出交互页面
         void exitPage(int exitType=0) {
             Shrink();
-            Sleep(500);
+            QTest::qSleep(500);
             close();
             QApplication* app;
             app->exit(exitType);

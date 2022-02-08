@@ -8,6 +8,7 @@
 #include "../global_value.h"
 #include "../Aaspcommand/aaspcommand.h"
 #include "../Aaspcommand/UICoreLauncher.h"
+#include <QTest>
 using namespace std;
 
 
@@ -42,8 +43,11 @@ public:
 	void run() {
 		Active = TRUE;
 		while (TRUE) {
-			Sleep(gTime);
-			if (!Active) { break; }
+			QTest::qSleep(gTime);
+			if (!Active) { 
+				//qDebug().noquote() << "Ticker Stop";
+				break; 
+			}
 			emit timeout();
 		}
 		this->deleteLater();
@@ -132,7 +136,7 @@ class PlayerWindow :public PlayerDef
 			//装载UI
 
 			this->setupUI(gX, gY, 100, 100);
-			this->setWindowIcon(QIcon(PROPATH::Users+"source/WinICO/Story.ico"));
+			this->setWindowIcon(QIcon(PROPATH::Users+"/source/WinICO/Story.ico"));
 			this->setWindowTitle("Yayin Story Player");
 			this->setParent(parent);
 			InfoWidget->raise();
@@ -169,8 +173,8 @@ class PlayerWindow :public PlayerDef
 				connect(Interpreter->signalName, SIGNAL(can_show_title(void)), this, SLOT(showTitle(void)));
 				connect(Interpreter->signalName, SIGNAL(can_hide_title(void)), this, SLOT(hideTitle(void)));
 				connect(Interpreter->signalName, SIGNAL(can_prepare_play(void)), this, SLOT(hideTitleLast(void)));
-				connect(Interpreter->signalName, SIGNAL(can_update_bg(QStringList)), this->PlayerPage, SLOT(setCurrentBGP(QStringList)));
-				connect(Interpreter->signalName, SIGNAL(update_num_bg(float, QStringList)), this->PlayerPage, SLOT(updateCurrentBGP(float, QStringList)));
+				connect(Interpreter->signalName, SIGNAL(can_update_bg(Controller::Backdrop::Data)), this->PlayerPage, SLOT(setCurrentBGP(Controller::Backdrop::Data)));
+				connect(Interpreter->signalName, SIGNAL(update_num_bg(float, Controller::Backdrop::Data)), this->PlayerPage, SLOT(updateCurrentBGP(float, Controller::Backdrop::Data)));
 				connect(Interpreter->signalName, SIGNAL(set_cover_status(bool)), this->PlayerPage, SLOT(setCurrentFrame(bool)));
 				connect(Interpreter->signalName, SIGNAL(can_update_chara(QList<QStringList>, int)), this->PlayerPage, SLOT(setCurrentAvg(QList<QStringList>, int)));
 				connect(Interpreter->signalName, SIGNAL(update_avg_num(QString, float)), this->PlayerPage, SLOT(updateCurrentAvg(QString, float)));
@@ -271,17 +275,34 @@ class PlayerWindow :public PlayerDef
 
 		//音乐控制器-音频启动函数
 		void playBGM(QString filename, int volume) {
-			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			PlayMusic->loadFile(PROPATH::Users+"/source/BGM/" + filename + ".mp3", volume ,TRUE);
-			PlayMusic->playMedia();
-			OneBGMIsPlaying = TRUE;
+			QString FilePath = PROPATH::Users + "/source/BGM/" + filename + ".mp3";
+			if (filename == "静音") {
+				if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+			}else if (QFile(FilePath).exists()) {
+				if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+				PlayMusic->loadFile(FilePath, volume, TRUE);
+				PlayMusic->playMedia();
+				OneBGMIsPlaying = TRUE;
+			}
+			else {
+				InfoWidget->addNewInfo("找不到目标", "未能打开音乐控制器指定的文件", filename + ".mp3", EIFL::PRE);
+			}
 		}
 
 		//音效控制器-音效启动函数
 		void playSound(QString filename, int volume) {
-			musicThreadList.append(new uSoundService());
-			musicThreadList[musicThreadList.length() - 1]->loadFile(PROPATH::Users+"/source/Sound/" + filename + ".mp3", volume ,FALSE);
-			musicThreadList[musicThreadList.length() - 1]->playMedia();
+			QString FilePath = PROPATH::Users + "/source/Sound/" + filename + ".mp3";
+			if (filename == "静音") {
+				None;
+			}
+			else if (QFile(FilePath).exists()) {
+				musicThreadList.append(new uSoundService());
+				musicThreadList[musicThreadList.length() - 1]->loadFile(FilePath, volume, FALSE);
+				musicThreadList[musicThreadList.length() - 1]->playMedia();
+			}
+			else {
+				InfoWidget->addNewInfo("找不到目标", "未能打开音频控制器指定的文件", filename + ".mp3", EIFL::PRE);
+			}
 		}
 
 		//快捷键函数
@@ -358,6 +379,7 @@ class PlayerWindow :public PlayerDef
 		//反正别动它就对了
 		void exitProgram(void) {
 			StoryShow = FALSE;
+			Ticker->stop();
 			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
 			QApplication::instance()->quit();
 		}
@@ -369,32 +391,6 @@ class PlayerWindow :public PlayerDef
 		}
 
 		void disconnectInterpreter() {
-			disconnect(Interpreter->signalName, SIGNAL(send_kernal_info(QString)), this->FirstPage, SLOT(getLoadingInfo(QString)));
-			disconnect(Interpreter->signalName, SIGNAL(send_EIFL_info(QString, QString, QString, EIFL)), this->InfoWidget, SLOT(addNewInfo(QString, QString, QString, EIFL)));
-			disconnect(Interpreter->signalName, SIGNAL(can_hide_hello(int)), this, SLOT(hideHello(int)));
-			disconnect(Interpreter->signalName, SIGNAL(can_reprint_hello(int)), this, SLOT(reprintHello(int)));
-			disconnect(Interpreter->signalName, SIGNAL(need_to_choose(QStringList)), this->PlayerPage, SLOT(setBranchButton(QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(can_set_title(QStringList)), this, SLOT(setTitle(QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(can_show_title(void)), this, SLOT(showTitle(void)));
-			disconnect(Interpreter->signalName, SIGNAL(can_hide_title(void)), this, SLOT(hideTitle(void)));
-			disconnect(Interpreter->signalName, SIGNAL(can_prepare_play(void)), this, SLOT(hideTitleLast(void)));
-			disconnect(Interpreter->signalName, SIGNAL(can_update_bg(QStringList)), this->PlayerPage, SLOT(setCurrentBGP(QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(update_num_bg(float, QStringList)), this->PlayerPage, SLOT(updateCurrentBGP(float, QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(set_cover_status(bool)), this->PlayerPage, SLOT(setCurrentFrame(bool)));
-			disconnect(Interpreter->signalName, SIGNAL(can_update_chara(QList<QStringList>, int)), this->PlayerPage, SLOT(setCurrentAvg(QList<QStringList>, int)));
-			disconnect(Interpreter->signalName, SIGNAL(update_avg_num(QString, float)), this->PlayerPage, SLOT(updateCurrentAvg(QString, float)));
-			disconnect(Interpreter->signalName, SIGNAL(update_chara_num(QString, QString, bool)), this->PlayerPage, SLOT(updateCurrentWords(QString, QString, bool)));
-			disconnect(Interpreter->signalName, SIGNAL(can_update_freedom(QStringList, QStringList)), this->PlayerPage, SLOT(setCurrentFree(QStringList, QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(update_num_freedom(QString)), this->PlayerPage, SLOT(updateCurrentFree(QString)));
-			disconnect(Interpreter->signalName, SIGNAL(can_clear_freedom(int)), this->PlayerPage, SLOT(clearCurrentFree(int)));
-			disconnect(Interpreter->signalName, SIGNAL(can_update_bgm(QString, int)), this, SLOT(playBGM(QString, int)));
-			disconnect(Interpreter->signalName, SIGNAL(can_update_sound(QString, int)), this, SLOT(playSound(QString, int)));
-			disconnect(Interpreter->signalName, SIGNAL(show_next()), this->PlayerPage, SLOT(showNext()));
-			disconnect(Interpreter->signalName, SIGNAL(willstop()), this->changeWAKE, SLOT(willStop()));
-			disconnect(Interpreter->signalName, SIGNAL(inrunning()), this->changeWAKE, SLOT(lastContinue()));
-			disconnect(Interpreter->signalName, SIGNAL(clr_line_list()), this->PlayerPage->LogPage, SLOT(initObject()));
-			disconnect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
-			disconnect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
-			disconnect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
+			Interpreter->disconnect();
 		}
 };

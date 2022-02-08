@@ -2,7 +2,7 @@
 #include <QtWidgets>
 #include <QtCore>
 #include <QtGui>
-#include <math.h>
+#include <QTest>
 #include "..\global_value.h"
 
 class ShakeFunc :public QThread
@@ -20,7 +20,7 @@ class ShakeFunc :public QThread
 				int a = randint(-10, 10);
 				int b = randint(-10, 10);
 				emit shakeXY(a, b, 0);
-				Sleep(10 * gSpeed);
+				QTest::qSleep(10 * gSpeed);
 			}
 			emit shakeXY(0, 0, 1);
 			this->deleteLater();
@@ -41,9 +41,9 @@ class FlashFuncFast :public QThread
 		void run(void) {
 			emit FlashOPint(0, 0);
 			for (int i = 0; i < 20; i++) {
-				float a = sin(i * 0.157);
+				float a = qSin(i * 0.157);
 				emit FlashOPint(a, 1);
-				Sleep(20 * gSpeed);
+				QTest::qSleep(20 * gSpeed);
 			}
 			emit FlashOPint(0, 2);
 			this->deleteLater();
@@ -64,9 +64,9 @@ public:
 	void run(void) {
 		emit FlashOPint(0, 0);
 		for (int i = 0; i < 40; i++) {
-			float a = sin(i * 0.0785);
+			float a = qSin(i * 0.0785);
 			emit FlashOPint(a, 1);
-			Sleep(20 * gSpeed);
+			QTest::qSleep(20 * gSpeed);
 		}
 		emit FlashOPint(0, 2);
 		this->deleteLater();

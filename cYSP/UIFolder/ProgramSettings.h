@@ -1,15 +1,10 @@
 #pragma once
-#pragma once
 #include "..\langcontrol.h"
 #include "..\global_value.h"
 #include "..\loadsettings.h"
-#include <math.h>
-#pragma comment(lib, "user32.lib")
-#include <qt_windows.h>
 #include <QtWidgets>
 #include <QtCore>
 #include <QtGui>
-#include <ctype.h>
 #include <exception>
 using namespace std;
 
