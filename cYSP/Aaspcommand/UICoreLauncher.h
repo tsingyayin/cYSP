@@ -4,7 +4,7 @@
 #include <QtCore>
 #include "../langcontrol.h"
 #include <exception>
-
+#include <QTest>
 class SPAWN :public mQThread
 {
 	public:
@@ -24,7 +24,7 @@ class SPAWN :public mQThread
 			StoryFile.setFileName(gFilename);
 			StoryFile.open(QIODevice::ReadOnly | QIODevice::Text);
 			emit signalName->can_hide_hello(1);
-			Sleep(2000);
+			QTest::qSleep(2000);
 			if (StoryFile.isOpen()) {
 				//qDebug().noquote() << "======正在进行版本筛选======";
 				emit signalName->send_kernal_info("======正在进行版本筛选======");

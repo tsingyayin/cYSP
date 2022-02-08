@@ -167,16 +167,16 @@ void ensuredirs(int num) {
 void OpenFolder(int num) {
 	QString Path = "";
 	if (num == 1) {
-		Path = PROPATH::Users + "\\cache";
+		Path = PROPATH::Users + "/cache";
 	}elif(num == 2) {
-		Path = PROPATH::Users + "\\source";
+		Path = PROPATH::Users + "/source";
 	}elif(num == 3) {
-		Path = PROPATH::Users + "\\arknights\\story";
+		Path = PROPATH::Users + "/arknights/story";
 	}elif(num == 4) {
-		Path = PROPATH::Users + "\\story";
+		Path = PROPATH::Users + "/story";
 	}
-	system(("start " + Path).toStdString().data());
-	qDebug().noquote() << ("start " + Path).toStdString().data();
+	system(("start " + Path).toLocal8Bit());
+	//qDebug().noquote() << ("start " + Path).toStdString().data();
 }
 
 QList<QStringList> spolEscapeList({ {"&lt", "<"},{"&gt", ">"},{"&cl", "{"},{"&cr", "}"},
