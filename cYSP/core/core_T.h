@@ -38,9 +38,9 @@ signals:
 	//µİËÍ½²Êö¿ØÖÆÆ÷ÎÄ±¾
 	void update_chara_num(QString, QString, bool);
 	//µİËÍ±³¾°¿ØÖÆÆ÷Í¼Ïñ
-	void can_update_bg(QStringList);
+	void can_update_bg(Controller::Backdrop::Data);
 	//µİËÍ±³¾°¿ØÖÆÆ÷ÊıÖµºÍÌØĞ§
-	void update_num_bg(float, QStringList);
+	void update_num_bg(float, Controller::Backdrop::Data);
 	//µİËÍBGM
 	void can_update_bgm(QString, int);
 	//µİËÍÒôĞ§
@@ -81,7 +81,7 @@ signals:
 	void now_which_line(int);
 public:
 	InterpreterSignals() {
-		qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+		
 	}
 };
 

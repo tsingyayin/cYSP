@@ -8,7 +8,7 @@
 #include <QtCore>
 #include <iostream>
 #include <algorithm>
-#include <windows.h>
+#include <QTest>
 using namespace std;
 
 int LineNum;
@@ -98,7 +98,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 
 		//多线程等待区域
 		for (int i = 0; i < 10; i++) {
-			Sleep(500);
+			QTest::qSleep(500);
 			if (TransThreadCount <= 0) { break; }
 		}
 		//追加长时控制器列表
@@ -112,7 +112,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		//实时解释模块
 		//qDebug().noquote() << "-->尝试启动实时解释模块<--- ";
 		emit signalsName->send_kernal_info("-->尝试启动实时解释模块<---");
-		Sleep(2000);
+		QTest::qSleep(2000);
 		LineNum = -1;
 		justJump = FALSE;
 		QStringList LineResult;
@@ -122,16 +122,17 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		exitNow = FALSE;
 
 		emit signalsName->can_show_title();
-		Sleep(4000);
+		QTest::qSleep(4000);
 		emit signalsName->can_hide_title();
-		Sleep(900);
+		QTest::qSleep(900);
 		//替换顶控件
 		if (FirstEnter) { emit signalsName->can_prepare_play(); }
+
 		//主解释循环
 		for (;;) {
 			LineNum += 1;
 
-			//确认本循环目标行号，以及是否仍处于运行状态
+			//确认本循环目标行号，以及是否仍处于运行状态。若不成立则退出主解释循环
 			if (LineNum == MeaningfulLine.length() || exitNow==TRUE) {
 				LineResult[0] = "FILEEND";
 				LineResult[1] = "FILEEND";
@@ -227,7 +228,7 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				break;
 			}
 		}
-		//退出循环
+		//退出文档循环
 		if (LineResult[0] == "FILEEND") {
 			break;
 		}
@@ -358,7 +359,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 	//背景控制器
 	if (Line.mid(0, 3) == "BGP" || Line.mid(0, 8) == "backdrop") {
 		QStringList RAW = Line.mid(Line.indexOf("(") + 1, Line.lastIndexOf(")") - Line.indexOf("(") - 1).split(",");
-		QStringList BGSetList = RAW;
+		/*QStringList BGSetList = RAW;
 		for (int i = 0; i < 4 - RAW.length(); i++) { BGSetList.append(""); }
 		if (BGSetList[0] == "") { BGSetList[0] = "黑场"; }
 		if (BGSetList[1] == "") { BGSetList[1] = "0"; }
@@ -372,12 +373,20 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			if (whichMode == InterpreterMode::debug) {
 				qDebug().noquote() << "检查行" + QString::number(LineNum) + "中背景控制器存在的数值设定超限";
 			}
-		}
+		}*/
+
+		int RAWLength = RAW.length();
+		for (int i = 0; i < 4 - RAWLength; i++) { RAW.append(""); }
+		Controller::Backdrop::Data SetList;
+		SetList.Backdrop = (RAW[0] == "" ? "黑场" : RAW[0]);
+		SetList.Filter = (RAW[1] == "" ? "0" : RAW[1]);
+		SetList.Effect = (RAW[2] == "" ? "0" : RAW[2]).toInt();
+		SetList.Time = (RAW[3] == "" ? "0.5" : RAW[3]).toFloat();
 
 		if (whichMode == InterpreterMode::presource) {
 			BGPList.append({ QString::number(MeaningfulLine.length() - 1),Line });
 			QList<Filter> FilterList;
-			QStringList FilterRaw=BGSetList[1].split("_");
+			QStringList FilterRaw=SetList.Filter.split("_");
 			for (int i = 0; i < FilterRaw.length(); i++) {
 				switch (FilterRaw[i].toInt()) {
 				case 1:
@@ -409,29 +418,29 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 					break;
 				}
 			}
-			TransThreadList.append(new cTransform(BGSetList[0], "BGP", FilterList, signalsName));
+			TransThreadList.append(new cTransform(SetList.Backdrop, "BGP", FilterList, signalsName));
 			TransThreadList[TransThreadList.length() - 1]->start();
 			TransThreadCount++;
 		}
 
 		if (whichMode == InterpreterMode::run) {
 
-			emit signalsName->can_update_bg(BGSetList);
-			if (BGSetList[3].toFloat() != 0) {
+			emit signalsName->can_update_bg(SetList);
+			if (SetList.Time != 0) {
 				emit signalsName->willstop();
-				for (float OpFloat = 0; OpFloat < 1; OpFloat += (1 / (BGSetList[3].toFloat() * 60))) {
-					emit signalsName->update_num_bg(OpFloat, BGSetList);		
-					Sleep((float)15*SpeedFloat);
+				for (float OpFloat = 0; OpFloat < 1; OpFloat += (1 / (SetList.Time * 60))) {
+					emit signalsName->update_num_bg(OpFloat, SetList);		
+					QTest::qSleep((float)15*SpeedFloat);
 				}
-				emit signalsName->update_num_bg(1, BGSetList);
+				emit signalsName->update_num_bg(1, SetList);
 				parent->pause();
 				emit signalsName->inrunning();
 			}
 			else {
 				emit signalsName->willstop();
-				Sleep(1);
-				emit signalsName->update_num_bg(0, BGSetList);
-				emit signalsName->update_num_bg(1, BGSetList);
+				QTest::qSleep(1);
+				emit signalsName->update_num_bg(0, SetList);
+				emit signalsName->update_num_bg(1, SetList);
 				parent->pause();
 				emit signalsName->inrunning();
 			}
@@ -441,15 +450,11 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 	//音乐控制器、音效控制器
 	else if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music" || Line.mid(0, 3) == "SND" || Line.mid(0, 5) == "sound") {
 		QStringList RAW = Line.mid(Line.indexOf("(") + 1, Line.lastIndexOf(")") - Line.indexOf("(") - 1).split(",");
-		QStringList MusicSetList = RAW;
-		for (int i = 0; i < 2 - RAW.length(); i++) { MusicSetList.append(""); }
-		if (MusicSetList[0] == "") { MusicSetList[0] = "静音"; }
-		if (MusicSetList[1] == "") { MusicSetList[1] = "50"; }
-
-		if (whichMode == InterpreterMode::debug) {
-			if (RAW.length() > 2) { qDebug() << "检查行" + QString::number(LineNum) + "中存在的音频或音效控制器参数个数超限的问题"; }
-		}
-
+		int RAWLength = RAW.length();
+		for (int i = 0; i < RAWLength; i++) { RAW.append(""); }
+		Controller::music::Data SetList;
+		SetList.music = (RAW[0] == "" ? "静音" : RAW[0]);
+		SetList.volume = (RAW[1] == "" ? 50 : RAW[1].toFloat());
 		if (whichMode == InterpreterMode::presource) {
 			if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music") {
 				BGMList.append({ QString::number(MeaningfulLine.length() - 1),Line });
@@ -458,10 +463,10 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 
 		if (whichMode == InterpreterMode::run) {
 			if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music") {
-				emit signalsName->can_update_bgm(MusicSetList[0], MusicSetList[1].toInt());
+				emit signalsName->can_update_bgm(SetList.music, SetList.volume);
 			}
 			else if (Line.mid(0, 3) == "SND" || Line.mid(0, 5) == "sound") {
-				emit signalsName->can_update_sound(MusicSetList[0], MusicSetList[1].toInt());
+				emit signalsName->can_update_sound(SetList.music, SetList.volume);
 			}
 		}
 	}
@@ -615,7 +620,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 					if (frame != 0) {
 						for (float i = 0; i < frame; i++) {
 							emit signalsName->update_avg_num("M", i / frame);
-							Sleep(33);
+							QTest::qSleep(33);
 						}
 					}
 					emit signalsName->update_avg_num("M", 1);
@@ -626,7 +631,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				if (frame != 0) {
 					for (float i = 0; i < frame; i++) {
 						emit signalsName->update_avg_num("LR", i / frame);
-						Sleep(33);
+						QTest::qSleep(33);
 					}
 				}
 				emit signalsName->update_avg_num("LR", 1);
@@ -658,12 +663,12 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				WordsAll += DisplayWords[j];
 				emit signalsName->update_chara_num(DisplayName, WordsAll, FALSE);
 				if (PlaySetList[0].toFloat() != 0) {
-					Sleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
+					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
 				}
 			}
 
 			emit signalsName->willstop();
-			Sleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
+			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
 			emit signalsName->show_next();
 			parent->pause();
 			emit signalsName->inrunning();
@@ -673,7 +678,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 					if (frame != 0) {
 						for (float i = 0; i < frame; i++) {
 							emit signalsName->update_avg_num("M", 1.0 - i / frame);
-							Sleep(33);
+							QTest::qSleep(33);
 						}
 					}
 					emit signalsName->update_avg_num("M", 1);
@@ -684,7 +689,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				if (frame != 0) {
 					for (float i = 0; i < frame; i++) {
 						emit signalsName->update_avg_num("LR", 1.0 - i / frame);
-						Sleep(33);
+						QTest::qSleep(33);
 					}
 				}
 				emit signalsName->update_avg_num("LR", 1);
@@ -732,7 +737,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			FreeSetList[1] = spolEscape(FreeSetList[1]);
 			if (PlaySetList[0].toFloat() != 0) {
 				for (int j = 0; j < FreeSetList[1].length(); j++) {
-					Sleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
+					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
 					ushort chara = FreeSetList[1][j].unicode();
 					if (0x4E00 <= chara && chara <= 0x9FFF ||
 						0x3040 <= chara && chara <= 0x309F ||
@@ -766,7 +771,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				emit signalsName->update_num_freedom(WordsAll);
 			}
 			emit signalsName->willstop();
-			Sleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
+			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
 			emit signalsName->show_next();
 			parent->pause();
 			emit signalsName->inrunning();
@@ -821,6 +826,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			if (ObjectSettings[3] == "") { ObjectSettings[3] = "1"; }
 		}
 	}
+
 	//非法文本兜底
 	else {
 		if (Line[0] != "/" && Line.mid(0, 5) != "title") {
