@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <QtWidgets>
 #include <QtGui>
@@ -21,67 +21,69 @@ public:
 	}
 };
 
-//ĞÅºÅ±í
+//ä¿¡å·è¡¨
 class InterpreterSignals :public QObject {
 	Q_OBJECT
 signals:
-	//µİËÍÄÚºËĞÅÏ¢
+	//é€’é€å†…æ ¸ä¿¡æ¯
 	void send_kernal_info(QString);
-	//µİËÍEIFLÏûÏ¢
+	//é€’é€EIFLæ¶ˆæ¯
 	void send_EIFL_info(QString, QString, QString, EIFL);
-	//µİËÍÕÚÕÖ¿ª±Õ
+	//é€’é€é®ç½©å¼€é—­
 	void set_cover_status(bool);
-	//µİËÍ½²Êö¿ØÖÆÆ÷ÈËÎïÁ¢»æ
+	//é€’é€è®²è¿°æ§åˆ¶å™¨äººç‰©ç«‹ç»˜
 	void can_update_chara(QList<QStringList>, int);
-	//µİËÍÈËÎïÁ¢»æµ­Èëµ­³öÊıÖµ
+	//é€’é€äººç‰©ç«‹ç»˜æ·¡å…¥æ·¡å‡ºæ•°å€¼
 	void update_avg_num(QString, float);
-	//µİËÍ½²Êö¿ØÖÆÆ÷ÎÄ±¾
+	//é€’é€è®²è¿°æ§åˆ¶å™¨æ–‡æœ¬
 	void update_chara_num(QString, QString, bool);
-	//µİËÍ±³¾°¿ØÖÆÆ÷Í¼Ïñ
+	//é€’é€èƒŒæ™¯æ§åˆ¶å™¨å›¾åƒ
 	void can_update_bg(Controller::Backdrop::Data);
-	//µİËÍ±³¾°¿ØÖÆÆ÷ÊıÖµºÍÌØĞ§
+	//é€’é€èƒŒæ™¯æ§åˆ¶å™¨æ•°å€¼å’Œç‰¹æ•ˆ
 	void update_num_bg(float, Controller::Backdrop::Data);
-	//µİËÍBGM
+	//é€’é€BGM
 	void can_update_bgm(QString, int);
-	//µİËÍÒôĞ§
+	//é€’é€éŸ³æ•ˆ
 	void can_update_sound(QString, int);
-	//Òş²Ø³õÊ¼ÆÁÄ»
+	//éšè—åˆå§‹å±å¹•
 	void can_hide_hello(int);
-	//»Ö¸´³õÊ¼ÆÁÄ»
+	//æ¢å¤åˆå§‹å±å¹•
 	void can_reprint_hello(int);
-	//ÉèÖÃ±êÌâÒ³Ãæ
+	//è®¾ç½®æ ‡é¢˜é¡µé¢
 	void can_set_title(QStringList);
-	//Õ¹Ê¾±êÌâÒ³Ãæ
+	//å±•ç¤ºæ ‡é¢˜é¡µé¢
 	void can_show_title();
-	//Õ¹Ê¾Ò³ÃæµÚ¶ş²¿·Ö
+	//å±•ç¤ºé¡µé¢ç¬¬äºŒéƒ¨åˆ†
 	void can_hide_title(void);
-	//Õ¹Ê¾Ò³ÃæµÚÈı²¿·Ö¡¢×¼±¸²¥·ÅÒ³Ãæ
+	//å±•ç¤ºé¡µé¢ç¬¬ä¸‰éƒ¨åˆ†ã€å‡†å¤‡æ’­æ”¾é¡µé¢
 	void can_prepare_play(void);
-	//µİËÍ´óĞ¡·ÖÖ§¿ØÖÆÆ÷Í¨ÓÃµÄ·ÖÖ§ÉèÖÃ
+	//é€’é€å¤§å°åˆ†æ”¯æ§åˆ¶å™¨é€šç”¨çš„åˆ†æ”¯è®¾ç½®
 	void need_to_choose(QStringList);
-	//ÎÄ±¾¸üĞÂ½áÊøºó·­Ò³º¯Êı
+	//æ–‡æœ¬æ›´æ–°ç»“æŸåç¿»é¡µå‡½æ•°
 	void show_next(void);
-	//¸æÖªUIÏß³Ì£¬½âÊÍÆ÷ÒÑ¾­ÔÚÔËĞĞ
+	//å‘ŠçŸ¥UIçº¿ç¨‹ï¼Œè§£é‡Šå™¨å·²ç»åœ¨è¿è¡Œ
 	void inrunning(void);
-	//¸æÖªUIÏß³Ì£¬½âÊÍÆ÷¼´½«Í£Ö¹
+	//å‘ŠçŸ¥UIçº¿ç¨‹ï¼Œè§£é‡Šå™¨å³å°†åœæ­¢
 	void willstop(void);
-	//µİËÍ×ÔÓÉÎÄ±¾¿ØÖÆÆ÷ÉèÖÃ
+	//é€’é€è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨è®¾ç½®
 	void can_update_freedom(QStringList, QStringList);
-	//µİËÍ×ÔÓÉÎÄ±¾ÄÚÈİ
+	//é€’é€è‡ªç”±æ–‡æœ¬å†…å®¹
 	void update_num_freedom(QString);
-	//ÇåÀí×ÔÓÉÎÄ±¾¿ØÖÆÆ÷
+	//æ¸…ç†è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨
 	void can_clear_freedom(int);
-	//ÇåÀíÌø×ªÁĞ±í
+	//æ¸…ç†è·³è½¬åˆ—è¡¨
 	void clr_line_list(void);
-	//±£´æÌø×ªĞÅÏ¢
+	//ä¿å­˜è·³è½¬ä¿¡æ¯
 	void save_line_list(QStringList);
-	//ºÏ³ÉÌø×ªÁĞ±í
+	//åˆæˆè·³è½¬åˆ—è¡¨
 	void set_scroll_info(void);
-	//¸æÖªUIË¢ĞÂµ±Ç°ĞĞ
+	//å‘ŠçŸ¥UIåˆ·æ–°å½“å‰è¡Œ
 	void now_which_line(int);
+
+	//GPOLæŒ‡ä»¤ä¼ é€’
+	void gpol_object_func(QStringList, QStringList);
 public:
 	InterpreterSignals() {
-		
 	}
 };
 
@@ -91,13 +93,18 @@ enum InterpreterMode {
 	debug = 2,
 };
 
+enum class GPOLInterpreterMode {
+	raw = 0,
+	insert = 1,
+};
+
 class ReciveUserControl :public QObject
 {
 	Q_OBJECT
 public:
 	ReciveUserControl(void) {}
 public slots:
-	void LineNumNow(int Num); 
+	void LineNumNow(int Num);
 	void SpeedNow(float Num);
 	void ChooseWhichBranch(QString Branchname);
 	void ExitNow(void);
@@ -107,14 +114,12 @@ class ObjectControllerInfo :public QObject
 {
 	Q_OBJECT
 public:
-	QStringList ObjectControllerList={ "BG","Chara_L","Chara_M","Chara_R","FreeLabel","NameLabel","WordLabel","LogButton",
+	QStringList ObjectControllerList = { "BG","Chara_L","Chara_M","Chara_R","FreeLabel","NameLabel","WordLabel","LogButton",
 	"AutoButton","SpeedButton","BranchButton1","BranchButton2","BranchButton3","BranchButton4","PictureLabel" };
 	ObjectControllerInfo() {};
 };
 
-
-void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThread* parent);
-
+void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThread* parent);
+void GPOLInterpreter(QStringList GPOLText, InterpreterSignals* signalsName, mQThread* parent);
 QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent = Q_NULLPTR);
-
-
+QStringList GPOLSingle(int LineNum, QString Line, GPOLInterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent);

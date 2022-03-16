@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../core/core_T.h"
 
 #include <QtCore>
@@ -7,94 +7,93 @@
 #include <QTest>
 class SPAWN :public mQThread
 {
-	public:
-		QString gFilename;
-		InterpreterSignals* signalName = new InterpreterSignals();
-		SPAWN(QString Filename) {
-			gFilename = Filename;
-			mutex = new QMutex();
-			mutex->lock();
-			cond = new QWaitCondition();
-		}
-		void run(void) {
-			
-			QFile StoryFile;
-			bool firstOpen=false;
-			bool continueOpen = false;
-			StoryFile.setFileName(gFilename);
-			StoryFile.open(QIODevice::ReadOnly | QIODevice::Text);
-			emit signalName->can_hide_hello(1);
-			QTest::qSleep(2000);
-			if (StoryFile.isOpen()) {
-				//qDebug().noquote() << "======ÕıÔÚ½øĞĞ°æ±¾É¸Ñ¡======";
-				emit signalName->send_kernal_info("======ÕıÔÚ½øĞĞ°æ±¾É¸Ñ¡======");
-				QString Version;
-				int Linecount = 0;
-				QStringList VerList;
-				bool ensureSPOLVer = FALSE;
-				QStringList Titlesetlist;
+public:
+	QString gFilename;
+	InterpreterSignals* signalName = new InterpreterSignals();
+	SPAWN(QString Filename) {
+		gFilename = Filename;
+		mutex = new QMutex();
+		mutex->lock();
+		cond = new QWaitCondition();
+	}
+	void run(void) {
+		QFile StoryFile;
+		bool firstOpen = false;
+		bool continueOpen = false;
+		StoryFile.setFileName(gFilename);
+		StoryFile.open(QIODevice::ReadOnly | QIODevice::Text);
+		emit signalName->can_hide_hello(1);
+		QTest::qSleep(2000);
+		if (StoryFile.isOpen()) {
+			//qDebug().noquote() << "======æ­£åœ¨è¿›è¡Œç‰ˆæœ¬ç­›é€‰======";
+			emit signalName->send_kernal_info("======æ­£åœ¨è¿›è¡Œç‰ˆæœ¬ç­›é€‰======");
+			QString Version;
+			int Linecount = 0;
+			QStringList VerList;
+			bool ensureSPOLVer = FALSE;
+			QStringList Titlesetlist;
 
-				QTextStream StoryFileText(&StoryFile);
-				StoryFileText.setCodec("UTF-8");
-				QString StoryFileTextSingleLine;
-				for (;;) {
-					Linecount += 1;
-					StoryFileTextSingleLine = StoryFileText.readLine();
-					int LineLength = StoryFileTextSingleLine.length();
-					if (StoryFileTextSingleLine[0] == "/") {
-						Version = StoryFileTextSingleLine.mid(1, LineLength - 1);
-						VerList = Version.split("-");
-						if (VerList.length() != 2) { VerList << "DONOTFOLLOW"; }
-						ensureSPOLVer = TRUE;
-						//qDebug().noquote() << "-->ÎÄµµÉùÃ÷°æ±¾" + Version + "<--";
-						//qDebug().noquote() << "-->³ÌĞòSPOL°æ±¾£ºSPOL" + PROINFO::SPOL + "<--";
-						//qDebug().noquote() << "£¡£¡£¡SPOL.9XÄÚ²âÆÚ¼ä£¬Êµ¼ÊÊ¶±ğ°æ±¾Îª0.8.0£¬¶ø·Ç0.9.0£¡£¡£¡";
-						emit signalName->send_kernal_info("-->ÎÄµµÉùÃ÷°æ±¾" + Version + "<--");
-						emit signalName->send_kernal_info("-->³ÌĞòSPOL°æ±¾£ºSPOL" + PROINFO::SPOL + "<--");
-						emit signalName->send_kernal_info("£¡£¡£¡SPOL.9XÄÚ²âÆÚ¼ä£¬Êµ¼ÊÊ¶±ğ°æ±¾Îª0.8.0£¬¶ø·Ç0.9.0£¡£¡£¡");
+			QTextStream StoryFileText(&StoryFile);
+			StoryFileText.setCodec("UTF-8");
+			QString StoryFileTextSingleLine;
+			for (;;) {
+				Linecount += 1;
+				StoryFileTextSingleLine = StoryFileText.readLine();
+				int LineLength = StoryFileTextSingleLine.length();
+				if (StoryFileTextSingleLine[0] == "/") {
+					Version = StoryFileTextSingleLine.mid(1, LineLength - 1);
+					VerList = Version.split("-");
+					if (VerList.length() != 2) { VerList << "DONOTFOLLOW"; }
+					ensureSPOLVer = TRUE;
+					//qDebug().noquote() << "-->æ–‡æ¡£å£°æ˜ç‰ˆæœ¬" + Version + "<--";
+					//qDebug().noquote() << "-->ç¨‹åºSPOLç‰ˆæœ¬ï¼šSPOL" + PROINFO::SPOL + "<--";
+					//qDebug().noquote() << "ï¼ï¼ï¼SPOL.9Xå†…æµ‹æœŸé—´ï¼Œå®é™…è¯†åˆ«ç‰ˆæœ¬ä¸º0.8.0ï¼Œè€Œé0.9.0ï¼ï¼ï¼";
+					emit signalName->send_kernal_info("-->æ–‡æ¡£å£°æ˜ç‰ˆæœ¬" + Version + "<--");
+					emit signalName->send_kernal_info("-->ç¨‹åºSPOLç‰ˆæœ¬ï¼šSPOL" + PROINFO::SPOL + "<--");
+					emit signalName->send_kernal_info("ï¼ï¼ï¼SPOL.9Xå†…æµ‹æœŸé—´ï¼Œå®é™…è¯†åˆ«ç‰ˆæœ¬ä¸º0.8.0ï¼Œè€Œé0.9.0ï¼ï¼ï¼");
+				}
+				else if (StoryFileTextSingleLine.mid(0, 6) == "title(" && StoryFileTextSingleLine[StoryFileTextSingleLine.length() - 1] == ")" && ensureSPOLVer) {
+					if (StoryFileTextSingleLine.count(",") != 3) {
+						break;
 					}
-					else if (StoryFileTextSingleLine.mid(0,6) == "title("  && StoryFileTextSingleLine[StoryFileTextSingleLine.length()-1]==")" && ensureSPOLVer) {
-						if (StoryFileTextSingleLine.count(",") != 3) {
-							break;
-						}
-						try {
-							Titlesetlist = StoryFileTextSingleLine.mid(6, LineLength - 2).split(",");
-							if (Titlesetlist.length() != 4) { throw 0; }
-						}
-						catch (...) {
-							break;
-						}
-						//qDebug().noquote() << "-->»ñµÃ±êÌâ<--";
-						emit signalName->send_kernal_info("-->»ñµÃ±êÌâ<---");
-						//if (VerList[0] == "SPOL"+PROINFO::SPOL || VerList[1] == "FollowNew") {
-						if (VerList[0] == "SPOL0.8.0" || VerList[0]== "SPOL0.9.0" || VerList[1] == "FollowNew") {
-							emit signalName->can_set_title(Titlesetlist);
-							firstOpen = true;
-							break;
-						}
-						else {
-							emit signalName->send_EIFL_info("SPOLÓï·¨Òì³££¡", "Î´ÄÜÊ¶±ğµ½ÎÄµµÉùÃ÷µÄSPOL°æ±¾£¬»òÕßÊÇSPOL°æ±¾²»ÊÜÖ§³Ö", "µ±Ç°°æ±¾³ÌĞò×îµÍÖ§³Ö0.9.0°æ±¾", EIFL::SSE);
-						}
+					try {
+						Titlesetlist = StoryFileTextSingleLine.mid(6, LineLength - 7).split(",");
+						if (Titlesetlist.length() != 4) { throw 0; }
 					}
-					if (StoryFileText.atEnd()) { break; }
+					catch (...) {
+						break;
+					}
+					//qDebug().noquote() << "-->è·å¾—æ ‡é¢˜<--";
+					emit signalName->send_kernal_info("-->è·å¾—æ ‡é¢˜<---");
+					//if (VerList[0] == "SPOL"+PROINFO::SPOL || VerList[1] == "FollowNew") {
+					if (VerList[0] == "SPOL0.8.0" || VerList[0] == "SPOL0.9.0" || VerList[1] == "FollowNew") {
+						emit signalName->can_set_title(Titlesetlist);
+						firstOpen = true;
+						break;
+					}
+					else {
+						emit signalName->send_EIFL_info("SPOLè¯­æ³•å¼‚å¸¸ï¼", "æœªèƒ½è¯†åˆ«åˆ°æ–‡æ¡£å£°æ˜çš„SPOLç‰ˆæœ¬ï¼Œæˆ–è€…æ˜¯SPOLç‰ˆæœ¬ä¸å—æ”¯æŒ", "å½“å‰ç‰ˆæœ¬ç¨‹åºæœ€ä½æ”¯æŒ0.9.0ç‰ˆæœ¬", EIFL::SSE);
+					}
 				}
-				StoryFile.close();
-				if (firstOpen) {
-					//qDebug().noquote() << "======Æô¶¯½âÊÍÆ÷ºËĞÄ======";
-					emit signalName->send_kernal_info("======Æô¶¯½âÊÍÆ÷ºËĞÄ======");
-					Interpreter(gFilename, signalName, this);
-				}
-				else {
-					emit signalName->send_EIFL_info("SPOLÓï·¨Òì³££¡", "Î´ÄÜÊ¶±ğµ½Óï·¨ÕıÈ·µÄ±êÌâ¿ØÖÆÆ÷£¡", "¼ì²éÄúÊÇ·ñÕıÈ·Ê¹ÓÃÁË±êÌâ¿ØÖÆÆ÷", EIFL::SSE);
-				}
-				if (!ensureSPOLVer) {
-					emit signalName->send_EIFL_info("SPOLÓï·¨Òì³££¡", "Î´ÄÜÊ¶±ğµ½ÎÄµµÉùÃ÷µÄSPOL°æ±¾£¬»òÕßÊÇSPOL°æ±¾²»ÊÜÖ§³Ö", "µ±Ç°°æ±¾³ÌĞò×îµÍÖ§³Ö0.9.0°æ±¾", EIFL::SSE);
-				}
+				if (StoryFileText.atEnd()) { break; }
 			}
-			mutex->tryLock();
-			mutex->unlock();
-			emit signalName->can_reprint_hello(1);
-			this->deleteLater();
-			this->exit();
+			StoryFile.close();
+			if (firstOpen) {
+				//qDebug().noquote() << "======å¯åŠ¨è§£é‡Šå™¨æ ¸å¿ƒ======";
+				emit signalName->send_kernal_info("======å¯åŠ¨è§£é‡Šå™¨æ ¸å¿ƒ======");
+				Interpreter(gFilename, signalName, this);
+			}
+			else {
+				emit signalName->send_EIFL_info("SPOLè¯­æ³•å¼‚å¸¸ï¼", "æœªèƒ½è¯†åˆ«åˆ°è¯­æ³•æ­£ç¡®çš„æ ‡é¢˜æ§åˆ¶å™¨ï¼", "æ£€æŸ¥æ‚¨æ˜¯å¦æ­£ç¡®ä½¿ç”¨äº†æ ‡é¢˜æ§åˆ¶å™¨", EIFL::SSE);
+			}
+			if (!ensureSPOLVer) {
+				emit signalName->send_EIFL_info("SPOLè¯­æ³•å¼‚å¸¸ï¼", "æœªèƒ½è¯†åˆ«åˆ°æ–‡æ¡£å£°æ˜çš„SPOLç‰ˆæœ¬ï¼Œæˆ–è€…æ˜¯SPOLç‰ˆæœ¬ä¸å—æ”¯æŒ", "å½“å‰ç‰ˆæœ¬ç¨‹åºæœ€ä½æ”¯æŒ0.9.0ç‰ˆæœ¬", EIFL::SSE);
+			}
 		}
+		mutex->tryLock();
+		mutex->unlock();
+		emit signalName->can_reprint_hello(1);
+		this->deleteLater();
+		this->exit();
+	}
 };

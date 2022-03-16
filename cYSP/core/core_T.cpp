@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "core_T.h"
 #include "core_B.h"
 #include "../global_value.h"
@@ -29,48 +29,46 @@ void ReciveUserControl::LineNumNow(int Num) {
 }
 void ReciveUserControl::SpeedNow(float Num) {
 	SpeedFloat = Num;
-
 }
-void ReciveUserControl::ChooseWhichBranch(QString BranchName){
+void ReciveUserControl::ChooseWhichBranch(QString BranchName) {
 	UserChooseBranch = BranchName;
 }
 void ReciveUserControl::ExitNow(void) {
 	exitNow = TRUE;
 }
 
-
 /*
-cYSP½âÊÍÆ÷Âß¼­²»Í¬ÓÚPython°æ±¾¡£Ê×ÏÈ£¬cYSP½«Ô­À´µÄÔ¤´¦ÀíºËĞÄ£¨PºËĞÄ£©¡¢½âÊÍÆ÷ºËĞÄ£¨UºËĞÄ£©µÄ´úÂëºÏ¶şÎªÒ»
-Çø·ÖÎª¶¥²ãºËĞÄ£¨TºËĞÄ£©µÄpresourceÄ£Ê½ºÍrunÄ£Ê½£¬²¢ÇÒ°ÑÔ­À´ÔÚUºËĞÄÊµÊ±½âÊÍÊ±²úÉúµÄ±¨´íĞÅÏ¢¹éÎªTºËĞÄµÄdebugÄ£Ê½ÒÔ¼õÉÙ¿ØÖÆÌ¨ÎÛÈ¾
-Æä´Î£¬ÔÚpresource½×¶Î£¬½âÊÍÆ÷³ıÁË´¦ÀíÍ¼ÏñÂË¾µÖ®Íâ£¬»¹Òª´ÓÔ´ÎÄ¼şÖĞÌáÈ¡ÓĞÒåÁĞ£¬¼´Ô¤ÏÈÌŞ³ı×¢ÊÍ£¨µ«²»ÌŞ³ıÆäËûÓï·¨´íÎóĞĞ£©£¬
-ÒÔ¼õÉÙÊµÊ±ÔËĞĞ¹ı³ÌÖĞÓöµ½³¬³¤×¢ÊÍÊ±²úÉúµÄ¿¨¶Ù¡£
-²¢ÇÒ£¬ÎªÁË±£Ö¤°´ĞĞÌø×ªÖ®ºóµÄÊÓÌıĞ§¹ûÕı³££¬ÏÖÔÚÔÚ°´ĞĞÌø×ªÖ®ºó»áÏÈ³¢ÊÔ´ÓÄ¿±êĞĞÏòÇ°»ØËİÒ»¸öÓĞĞ§µÄBGMºÍ±³¾°£¬ÔÙ¼ÌĞø½øĞĞÄ¿±êĞĞ½âÊÍ¡£
-Óë´ËÍ¬Ê±£¬ÔÚPython°æÖĞ£¬´ó·ÖÖ§¿ØÖÆÆ÷µÄÌø×ª½»»¹UICoreLauncher½øĞĞ´¦Àí£¬²¢ÔÚ´¦ÀíÖ®ºóÖØĞÂÆô¶¯½âÊÍÆ÷º¯Êı¡£
-µ«ÊÇÏÖÔÚÍ³Ò»ÓÃ½âÊÍÆ÷º¯ÊıµÄÍ¨ÓÃÎÄµµÑ­»·½â¾öÕâ¸öÎÊÌâ¡£È·±£ÁËUICoreLauncherÖ»ÊÇÒ»¸öºËĞÄÆô¶¯Æ÷£¬Ò»ÇĞSPOL½âÊÍ¶¼ÓÉ½âÊÍÆ÷±¾ÉíÍê³É¡£
-¶ÔÓÚ¶àÏß³Ì´¦ÀíÍ¼Ïñ£¬ÓÉÓÚC++ÔËĞĞËÙ¶ÈÉõÓÚPython£¬Òò´Ë²»»áÕ¼ÓÃÌ«³¤Ê±¼ä£¬ÏàÓ¦µÄ£¬ÔÚcYSPÖĞ£¬ÎÒÃÇ¼õÉÙÁË»ù´¡µÈ´ıÊ±¼ä¡£
-²¢ÇÒÓÉÓÚËÙ¶È¹ı¿ì£¬Ïß³Ì¼ÆÊıÖµºÜÓĞ¿ÉÄÜÒòÎªÏß³Ì³åÍ»£¨²¢·¢£©¶øµ¼ÖÂ×îºóµÄ¼ÆÊı²»¹éÁã£¬ÕâÔÚPython°æÖĞ¼¸ºõ²»´æÔÚ£¬µ«ÔÚC++°æ±¾ÖĞ³£¼û¡£
-ÎªÁË±ÜÃâÓÉ´Ë¿¨ËÀ£¬ÎÒÃÇ¸ø¼ÆÊı¹éÁã¸øÓèÁË5ÃëµÄµÈ´ıÉÏÏŞ¡£Èô5ÃëºóÈÔ²»¹éÁã£¬Ôò¼ÌĞøÖ´ĞĞ½ÓÏÂÀ´µÄ½âÊÍÓï¾ä¡£
-¾­¹ı²âËã£¬5ÃëµÄµÈ´ıÊ±¼äÔ¼µÈÓÚ´ó²¿·ÖÏÖÓĞ¼ÆËã»úÔÚ1080P²¥·ÅÊ±Ô¤ÏÈ´¦Àí50ÓàÍ¼ÏñËùĞèÒªµÄÆ½¾ùËÙ¶È¡£
+cYSPè§£é‡Šå™¨é€»è¾‘ä¸åŒäºPythonç‰ˆæœ¬ã€‚é¦–å…ˆï¼ŒcYSPå°†åŸæ¥çš„é¢„å¤„ç†æ ¸å¿ƒï¼ˆPæ ¸å¿ƒï¼‰ã€è§£é‡Šå™¨æ ¸å¿ƒï¼ˆUæ ¸å¿ƒï¼‰çš„ä»£ç åˆäºŒä¸ºä¸€
+åŒºåˆ†ä¸ºé¡¶å±‚æ ¸å¿ƒï¼ˆTæ ¸å¿ƒï¼‰çš„presourceæ¨¡å¼å’Œrunæ¨¡å¼ï¼Œå¹¶ä¸”æŠŠåŸæ¥åœ¨Uæ ¸å¿ƒå®æ—¶è§£é‡Šæ—¶äº§ç”Ÿçš„æŠ¥é”™ä¿¡æ¯å½’ä¸ºTæ ¸å¿ƒçš„debugæ¨¡å¼ä»¥å‡å°‘æ§åˆ¶å°æ±¡æŸ“
+å…¶æ¬¡ï¼Œåœ¨presourceé˜¶æ®µï¼Œè§£é‡Šå™¨é™¤äº†å¤„ç†å›¾åƒæ»¤é•œä¹‹å¤–ï¼Œè¿˜è¦ä»æºæ–‡ä»¶ä¸­æå–æœ‰ä¹‰åˆ—ï¼Œå³é¢„å…ˆå‰”é™¤æ³¨é‡Šï¼ˆä½†ä¸å‰”é™¤å…¶ä»–è¯­æ³•é”™è¯¯è¡Œï¼‰ï¼Œ
+ä»¥å‡å°‘å®æ—¶è¿è¡Œè¿‡ç¨‹ä¸­é‡åˆ°è¶…é•¿æ³¨é‡Šæ—¶äº§ç”Ÿçš„å¡é¡¿ã€‚
+å¹¶ä¸”ï¼Œä¸ºäº†ä¿è¯æŒ‰è¡Œè·³è½¬ä¹‹åçš„è§†å¬æ•ˆæœæ­£å¸¸ï¼Œç°åœ¨åœ¨æŒ‰è¡Œè·³è½¬ä¹‹åä¼šå…ˆå°è¯•ä»ç›®æ ‡è¡Œå‘å‰å›æº¯ä¸€ä¸ªæœ‰æ•ˆçš„BGMå’ŒèƒŒæ™¯ï¼Œå†ç»§ç»­è¿›è¡Œç›®æ ‡è¡Œè§£é‡Šã€‚
+ä¸æ­¤åŒæ—¶ï¼Œåœ¨Pythonç‰ˆä¸­ï¼Œå¤§åˆ†æ”¯æ§åˆ¶å™¨çš„è·³è½¬äº¤è¿˜UICoreLauncherè¿›è¡Œå¤„ç†ï¼Œå¹¶åœ¨å¤„ç†ä¹‹åé‡æ–°å¯åŠ¨è§£é‡Šå™¨å‡½æ•°ã€‚
+ä½†æ˜¯ç°åœ¨ç»Ÿä¸€ç”¨è§£é‡Šå™¨å‡½æ•°çš„é€šç”¨æ–‡æ¡£å¾ªç¯è§£å†³è¿™ä¸ªé—®é¢˜ã€‚ç¡®ä¿äº†UICoreLauncheråªæ˜¯ä¸€ä¸ªæ ¸å¿ƒå¯åŠ¨å™¨ï¼Œä¸€åˆ‡SPOLè§£é‡Šéƒ½ç”±è§£é‡Šå™¨æœ¬èº«å®Œæˆã€‚
+å¯¹äºå¤šçº¿ç¨‹å¤„ç†å›¾åƒï¼Œç”±äºC++è¿è¡Œé€Ÿåº¦ç”šäºPythonï¼Œå› æ­¤ä¸ä¼šå ç”¨å¤ªé•¿æ—¶é—´ï¼Œç›¸åº”çš„ï¼Œåœ¨cYSPä¸­ï¼Œæˆ‘ä»¬å‡å°‘äº†åŸºç¡€ç­‰å¾…æ—¶é—´ã€‚
+å¹¶ä¸”ç”±äºé€Ÿåº¦è¿‡å¿«ï¼Œçº¿ç¨‹è®¡æ•°å€¼å¾ˆæœ‰å¯èƒ½å› ä¸ºçº¿ç¨‹å†²çªï¼ˆå¹¶å‘ï¼‰è€Œå¯¼è‡´æœ€åçš„è®¡æ•°ä¸å½’é›¶ï¼Œè¿™åœ¨Pythonç‰ˆä¸­å‡ ä¹ä¸å­˜åœ¨ï¼Œä½†åœ¨C++ç‰ˆæœ¬ä¸­å¸¸è§ã€‚
+ä¸ºäº†é¿å…ç”±æ­¤å¡æ­»ï¼Œæˆ‘ä»¬ç»™è®¡æ•°å½’é›¶ç»™äºˆäº†5ç§’çš„ç­‰å¾…ä¸Šé™ã€‚è‹¥5ç§’åä»ä¸å½’é›¶ï¼Œåˆ™ç»§ç»­æ‰§è¡Œæ¥ä¸‹æ¥çš„è§£é‡Šè¯­å¥ã€‚
+ç»è¿‡æµ‹ç®—ï¼Œ5ç§’çš„ç­‰å¾…æ—¶é—´çº¦ç­‰äºå¤§éƒ¨åˆ†ç°æœ‰è®¡ç®—æœºåœ¨1080Pæ’­æ”¾æ—¶é¢„å…ˆå¤„ç†50ä½™å›¾åƒæ‰€éœ€è¦çš„å¹³å‡é€Ÿåº¦ã€‚
 */
 
-//½âÊÍÆ÷º¯Êı
-void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThread *parent ) {
+//è§£é‡Šå™¨å‡½æ•°
+void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThread* parent) {
 	QFile CurrentSPOLFile;
 	SpeedFloat = 1.0;
 	bool FirstEnter = TRUE;
-	//Í¨ÓÃÎÄµµÑ­»·
+	//é€šç”¨æ–‡æ¡£å¾ªç¯
 	while (TRUE) {
-		//ÎÄ¼ş»ñÈ¡
+		//æ–‡ä»¶è·å–
 		CurrentSPOLFile.setFileName(storyFilename);
 		CurrentSPOLFile.open(QIODevice::ReadOnly | QIODevice::Text);
 		if (!CurrentSPOLFile.isOpen()) { return; }
 		QTextStream CurrentSPOLText(&CurrentSPOLFile);
 		CurrentSPOLText.setCodec("UTF-8");
-		//ÇåÀíÌø×ªÁĞ±í
+		//æ¸…ç†è·³è½¬åˆ—è¡¨
 		emit signalsName->clr_line_list();
-		//Æô¶¯Ô¤¼ÓÔØ
-		//qDebug().noquote() << "-->³¢ÊÔÆô¶¯Ô¤½âÊÍºÍ×ÊÔ´²¹ÆëÄ£¿é<--- ";
-		emit signalsName->send_kernal_info("-->³¢ÊÔÆô¶¯Ô¤½âÊÍºÍ×ÊÔ´²¹ÆëÄ£¿é<---");
+		//å¯åŠ¨é¢„åŠ è½½
+		//qDebug().noquote() << "-->å°è¯•å¯åŠ¨é¢„è§£é‡Šå’Œèµ„æºè¡¥é½æ¨¡å—<--- ";
+		emit signalsName->send_kernal_info("-->å°è¯•å¯åŠ¨é¢„è§£é‡Šå’Œèµ„æºè¡¥é½æ¨¡å—<---");
 		bool InNotes = FALSE;
 		TransThreadCount = 0;
 		TransPictureName.clear();
@@ -78,46 +76,45 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		BGPList.clear();
 		BGMList.clear();
 		CVRList.clear();
-		//Ô¤¼ÓÔØÑ­»·
-		for (int i = 1;;i++) {
+		//é¢„åŠ è½½å¾ªç¯
+		for (int i = 1;; i++) {
 			QString CurrentLine = CurrentSPOLText.readLine();
 			if (CurrentLine.mid(0, 3) == "###") {
 				InNotes = !InNotes;
 				continue;
 			}
 			if (InNotes == TRUE) { continue; }
-			if (CurrentLine[0] != "#" && CurrentLine!="" && CurrentLine[0]!= ":" && CurrentLine[0]!="/") {
+			if (CurrentLine[0] != "#" && CurrentLine != "" && CurrentLine.mid(0, 5) != "title" && CurrentLine[0] != "/") {
 				SingleLine(i, CurrentLine, InterpreterMode::presource, signalsName, parent);
 			}
 			if (CurrentSPOLText.atEnd()) { break; }
 		}
 		if (MeaningfulLine.isEmpty()) { MeaningfulLine.append(">>>:"); }
-		
-		//×°ÔØÌø×ªÁĞ±í
+
+		//è£…è½½è·³è½¬åˆ—è¡¨
 		emit signalsName->set_scroll_info();
 
-		//¶àÏß³ÌµÈ´ıÇøÓò
+		//å¤šçº¿ç¨‹ç­‰å¾…åŒºåŸŸ
 		for (int i = 0; i < 10; i++) {
 			QTest::qSleep(500);
 			if (TransThreadCount <= 0) { break; }
 		}
-		//×·¼Ó³¤Ê±¿ØÖÆÆ÷ÁĞ±í
-		BGPList.append({ "51200","BGP(ºÚ³¡)" });
+		//è¿½åŠ é•¿æ—¶æ§åˆ¶å™¨åˆ—è¡¨
+		BGPList.append({ "51200","BGP(é»‘åœº)" });
 		BGMList.append({ "51200","BGM()" });
-		CVRList.append({"51200","CVR()"});
-		//qDebug().noquote() << "InterpreterInfo¡ú³É¹¦Ô¤ÌŞ³ı×¢ÊÍĞĞ";
-		emit signalsName->send_kernal_info("InterpreterInfo¡ú³É¹¦Ô¤ÌŞ³ı×¢ÊÍĞĞ");
-		
-		
-		//ÊµÊ±½âÊÍÄ£¿é
-		//qDebug().noquote() << "-->³¢ÊÔÆô¶¯ÊµÊ±½âÊÍÄ£¿é<--- ";
-		emit signalsName->send_kernal_info("-->³¢ÊÔÆô¶¯ÊµÊ±½âÊÍÄ£¿é<---");
+		CVRList.append({ "51200","CVR()" });
+		//qDebug().noquote() << "InterpreterInfoâ†’æˆåŠŸé¢„å‰”é™¤æ³¨é‡Šè¡Œ";
+		emit signalsName->send_kernal_info("InterpreterInfoâ†’æˆåŠŸé¢„å‰”é™¤æ³¨é‡Šè¡Œ");
+
+		//å®æ—¶è§£é‡Šæ¨¡å—
+		//qDebug().noquote() << "-->å°è¯•å¯åŠ¨å®æ—¶è§£é‡Šæ¨¡å—<--- ";
+		emit signalsName->send_kernal_info("-->å°è¯•å¯åŠ¨å®æ—¶è§£é‡Šæ¨¡å—<---");
 		QTest::qSleep(2000);
 		LineNum = -1;
 		justJump = FALSE;
 		QStringList LineResult;
 		QString Note = "UNKOWN_NOTE";
-		bool InBranch=FALSE;
+		bool InBranch = FALSE;
 		bool FindBranch = FALSE;
 		exitNow = FALSE;
 
@@ -125,35 +122,35 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 		QTest::qSleep(4000);
 		emit signalsName->can_hide_title();
 		QTest::qSleep(900);
-		//Ìæ»»¶¥¿Ø¼ş
+		//æ›¿æ¢é¡¶æ§ä»¶
 		if (FirstEnter) { emit signalsName->can_prepare_play(); }
 
-		//Ö÷½âÊÍÑ­»·
+		//ä¸»è§£é‡Šå¾ªç¯
 		for (;;) {
 			LineNum += 1;
 
-			//È·ÈÏ±¾Ñ­»·Ä¿±êĞĞºÅ£¬ÒÔ¼°ÊÇ·ñÈÔ´¦ÓÚÔËĞĞ×´Ì¬¡£Èô²»³ÉÁ¢ÔòÍË³öÖ÷½âÊÍÑ­»·
-			if (LineNum == MeaningfulLine.length() || exitNow==TRUE) {
+			//ç¡®è®¤æœ¬å¾ªç¯ç›®æ ‡è¡Œå·ï¼Œä»¥åŠæ˜¯å¦ä»å¤„äºè¿è¡ŒçŠ¶æ€ã€‚è‹¥ä¸æˆç«‹åˆ™é€€å‡ºä¸»è§£é‡Šå¾ªç¯
+			if (LineNum == MeaningfulLine.length() || exitNow == TRUE) {
 				LineResult[0] = "FILEEND";
 				LineResult[1] = "FILEEND";
 				break;
 			}
 
-			//¶ÔÓÚ¸Õ¸ÕÍê³ÉÌø×ªµÄÇé¿ö»ØËİÉÏÒ»³¤Ê±¿ØÖÆÆ÷
+			//å¯¹äºåˆšåˆšå®Œæˆè·³è½¬çš„æƒ…å†µå›æº¯ä¸Šä¸€é•¿æ—¶æ§åˆ¶å™¨
 			if (justJump == TRUE) {
 				InBranch = FALSE;
 				for (int i = BGPList.length() - 1; i >= 0; i--) {
 					if (BGPList[i][0].toInt() <= LineNum) {
-						SingleLine(BGPList[i][0].toInt() ,BGPList[i][1],InterpreterMode::run,signalsName, parent);
+						SingleLine(BGPList[i][0].toInt(), BGPList[i][1], InterpreterMode::run, signalsName, parent);
 						break;
 					}
 				}
 				for (int i = BGMList.length() - 1; i >= 0; i--) {
 					if (BGMList[i][0].toInt() <= LineNum) {
-						SingleLine(BGMList[i][0].toInt() ,BGMList[i][1], InterpreterMode::run, signalsName, parent);
+						SingleLine(BGMList[i][0].toInt(), BGMList[i][1], InterpreterMode::run, signalsName, parent);
 						break;
 					}
-				}	
+				}
 				for (int i = CVRList.length() - 1; i >= 0; i--) {
 					if (CVRList[i][0].toInt() <= LineNum) {
 						SingleLine(CVRList[i][0].toInt(), CVRList[i][1], InterpreterMode::run, signalsName, parent);
@@ -163,11 +160,11 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				justJump = FALSE;
 			}
 
-			//´ÓÓĞÒåÁĞÖĞÈ¡³öµ±Ç°ĞĞ
+			//ä»æœ‰ä¹‰åˆ—ä¸­å–å‡ºå½“å‰è¡Œ
 			QString CurrentLine = MeaningfulLine[LineNum];
-			
-			//Ô¤´¦ÀíĞ¡·ÖÖ§¿ØÖÆÆ÷¡ª¡ª¼ì²âĞ¡·ÖÖ§¿ªÊ¼Óë½áÊø
-			if (CurrentLine.mid(0, 3) == "|||" ) {
+
+			//é¢„å¤„ç†å°åˆ†æ”¯æ§åˆ¶å™¨â€”â€”æ£€æµ‹å°åˆ†æ”¯å¼€å§‹ä¸ç»“æŸ
+			if (CurrentLine.mid(0, 3) == "|||") {
 				if (InBranch == FALSE) {
 					QStringList SmallJumpSetList;
 					SmallJumpSetList = CurrentLine.mid(3, CurrentLine.length() - 4).split("|||");
@@ -178,11 +175,12 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 					}
 
 					InBranch = TRUE;
+
 					emit signalsName->need_to_choose(SmallJumpSetList);
 					emit signalsName->willstop();
 					parent->pause();
 					emit signalsName->inrunning();
-					
+					qDebug() << "run";
 					for (int i = 0; i < SmallJumpNoteList.length(); i++) {
 						if (UserChooseBranch == SmallJumpNoteList[i][1]) {
 							Note = SmallJumpNoteList[i][0];
@@ -193,10 +191,11 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				else {
 					InBranch = FALSE;
 					FindBranch = FALSE;
+					continue;
 				}
 			}
 
-			//Ô¤´¦ÀíĞ¡·ÖÖ§¿ØÖÆÆ÷¡ª¡ª¼ì²â±êÇ©ÊÇ·ñÆ¥Åä
+			//é¢„å¤„ç†å°åˆ†æ”¯æ§åˆ¶å™¨â€”â€”æ£€æµ‹æ ‡ç­¾æ˜¯å¦åŒ¹é…
 			if (CurrentLine.mid(0, 2) == "||" && CurrentLine.mid(0, 3) != "|||" && InBranch) {
 				if (CurrentLine.mid(2, CurrentLine.length() - 2) != Note) {
 					FindBranch = FALSE;
@@ -208,34 +207,35 @@ void Interpreter(QString storyFilename, InterpreterSignals *signalsName, mQThrea
 				}
 			}
 
-			//Ô¤´¦ÀíĞ¡·ÖÖ§¿ØÖÆÆ÷¡ª¡ªÆ¥Åä±êÇ©ºóÊ¶±ğ±êÇ©Çø
-			if (CurrentLine[0] == "|" && CurrentLine.mid(0, 2) != "||" && CurrentLine.mid(0, 3) != "|||" ) {
-				if (FindBranch==FALSE) {continue;}
+			//é¢„å¤„ç†å°åˆ†æ”¯æ§åˆ¶å™¨â€”â€”åŒ¹é…æ ‡ç­¾åè¯†åˆ«æ ‡ç­¾åŒº
+			if (CurrentLine[0] == "|" && CurrentLine.mid(0, 2) != "||" && CurrentLine.mid(0, 3) != "|||") {
+				if (FindBranch == FALSE) { continue; }
 				else {
 					CurrentLine = CurrentLine.mid(1, CurrentLine.length() - 1);
 				}
-				
 			}
 
-			//½âÊÍµ±Ç°ĞĞ
+			//è§£é‡Šå½“å‰è¡Œ
 			LineResult = SingleLine(LineNum, CurrentLine, InterpreterMode::run, signalsName, parent);
-			
-			//¶ÔÓÚ´ó·ÖÖ§¿ØÖÆÆ÷µÄ·µ»Ø½á¹û½øĞĞÎÄµµË¢ĞÂ
+
+			//å¯¹äºå¤§åˆ†æ”¯æ§åˆ¶å™¨çš„è¿”å›ç»“æœè¿›è¡Œæ–‡æ¡£åˆ·æ–°
 			if (LineResult[0] == "FILEJUMP") {
 				CurrentSPOLFile.close();
-				storyFilename = "./Users_Data/story/"+LineResult[1]+".spol";
+				storyFilename = "./Users_Data/story/" + LineResult[1] + ".spol";
 				FirstEnter = FALSE;
 				break;
 			}
 		}
-		//ÍË³öÎÄµµÑ­»·
+		//é€€å‡ºæ–‡æ¡£å¾ªç¯
 		if (LineResult[0] == "FILEEND") {
 			break;
 		}
 	}
 };
 
-//Í¨ÓÃÂË¾µ´¦ÀíÏß³Ì
+void GPOLInterpreter(QStringList GPOLText, InterpreterSignals* signalsName, mQThread* parent) {
+}
+//é€šç”¨æ»¤é•œå¤„ç†çº¿ç¨‹
 class cTransform :public QThread
 {
 public:
@@ -287,10 +287,10 @@ public:
 	void run(void) {
 		QString SourceName = PROPATH::Users + "/source/" + gFilefamily + "/" + gFilename + ".png";
 		QString NewPictureName = PROPATH::Users + "/cache/" + gFilefamily + "/" + gFilename + gAddname + ".png";
-		if (!TransPictureName.contains(NewPictureName) && gAddname!="") {
+		if (!TransPictureName.contains(NewPictureName) && gAddname != "") {
 			TransPictureName.append(NewPictureName);
-			//qDebug().noquote() << "InterpreterInfo¡úĞèÒª½¨Á¢ :" + NewPictureName;
-			gSignalsName->send_kernal_info("InterpreterInfo¡úĞèÒª½¨Á¢ :" + NewPictureName);
+			//qDebug().noquote() << "InterpreterInfoâ†’éœ€è¦å»ºç«‹ :" + NewPictureName;
+			gSignalsName->send_kernal_info("InterpreterInfoâ†’éœ€è¦å»ºç«‹ :" + NewPictureName);
 			QImage SourcePicture = QImage(SourceName);
 			int X = SourcePicture.width();
 			int Y = SourcePicture.height();
@@ -328,14 +328,14 @@ public:
 						}
 					}
 					for (int i = 0; i < gFilterList.length(); i++) {
-						transformation(gFilterList[i], &r, &g, &b, &a, y, Y ,colorMatrix);
+						transformation(gFilterList[i], &r, &g, &b, &a, y, Y, colorMatrix);
 					}
 					NewImage.setPixel(x, y, qRgba(r, g, b, a));
 				}
 			}
 			NewImage.save(NewPictureName);
-			//qDebug().noquote() << "InterpreterInfo¡ú³É¹¦½¨Á¢ :" + NewPictureName;
-			gSignalsName->send_kernal_info("InterpreterInfo¡ú³É¹¦½¨Á¢ :" + NewPictureName);
+			//qDebug().noquote() << "InterpreterInfoâ†’æˆåŠŸå»ºç«‹ :" + NewPictureName;
+			gSignalsName->send_kernal_info("InterpreterInfoâ†’æˆåŠŸå»ºç«‹ :" + NewPictureName);
 		}
 		TransThreadCount--;
 		this->deleteLater();
@@ -344,10 +344,10 @@ public:
 
 QList<cTransform*> TransThreadList;
 
-QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
+QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
 	if (whichMode == InterpreterMode::presource) {
 		MeaningfulLine.append(Line);
-		if (Line[0] != "|" || Line.mid(0,3)=="|||" && Line!="|||" ) {
+		if (Line[0] != "|" || Line.mid(0, 3) == "|||" && Line != "|||") {
 			emit signalsName->save_line_list({ QString::number(MeaningfulLine.length() - 1),Line });
 		}
 		if (Line[0] == "|") { Line = Line.mid(1, Line.length() - 1); }
@@ -355,30 +355,30 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 	if (whichMode == InterpreterMode::run) {
 		emit signalsName->now_which_line(LineNum);
 	}
-	
-	//±³¾°¿ØÖÆÆ÷
+
+	//èƒŒæ™¯æ§åˆ¶å™¨
 	if (Line.mid(0, 3) == "BGP" || Line.mid(0, 8) == "backdrop") {
 		QStringList RAW = Line.mid(Line.indexOf("(") + 1, Line.lastIndexOf(")") - Line.indexOf("(") - 1).split(",");
 		/*QStringList BGSetList = RAW;
 		for (int i = 0; i < 4 - RAW.length(); i++) { BGSetList.append(""); }
-		if (BGSetList[0] == "") { BGSetList[0] = "ºÚ³¡"; }
+		if (BGSetList[0] == "") { BGSetList[0] = "é»‘åœº"; }
 		if (BGSetList[1] == "") { BGSetList[1] = "0"; }
 		if (BGSetList[2] == "") { BGSetList[2] = "0"; }
-		if (BGSetList[3] == "") { BGSetList[3] = "0.5"; }	
+		if (BGSetList[3] == "") { BGSetList[3] = "0.5"; }
 		try {
 			if (0 > BGSetList[2].toInt() || BGSetList[2].toInt() > 3) { throw "Exception"; }
 			if (0 > BGSetList[3].toFloat()) { throw "Exception"; }
 		}
 		catch (...) {
 			if (whichMode == InterpreterMode::debug) {
-				qDebug().noquote() << "¼ì²éĞĞ" + QString::number(LineNum) + "ÖĞ±³¾°¿ØÖÆÆ÷´æÔÚµÄÊıÖµÉè¶¨³¬ÏŞ";
+				qDebug().noquote() << "æ£€æŸ¥è¡Œ" + QString::number(LineNum) + "ä¸­èƒŒæ™¯æ§åˆ¶å™¨å­˜åœ¨çš„æ•°å€¼è®¾å®šè¶…é™";
 			}
 		}*/
 
 		int RAWLength = RAW.length();
 		for (int i = 0; i < 4 - RAWLength; i++) { RAW.append(""); }
 		Controller::Backdrop::Data SetList;
-		SetList.Backdrop = (RAW[0] == "" ? "ºÚ³¡" : RAW[0]);
+		SetList.Backdrop = (RAW[0] == "" ? "é»‘åœº" : RAW[0]);
 		SetList.Filter = (RAW[1] == "" ? "0" : RAW[1]);
 		SetList.Effect = (RAW[2] == "" ? "0" : RAW[2]).toInt();
 		SetList.Time = (RAW[3] == "" ? "0.5" : RAW[3]).toFloat();
@@ -386,7 +386,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		if (whichMode == InterpreterMode::presource) {
 			BGPList.append({ QString::number(MeaningfulLine.length() - 1),Line });
 			QList<Filter> FilterList;
-			QStringList FilterRaw=SetList.Filter.split("_");
+			QStringList FilterRaw = SetList.Filter.split("_");
 			for (int i = 0; i < FilterRaw.length(); i++) {
 				switch (FilterRaw[i].toInt()) {
 				case 1:
@@ -424,13 +424,12 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 
 		if (whichMode == InterpreterMode::run) {
-
 			emit signalsName->can_update_bg(SetList);
 			if (SetList.Time != 0) {
 				emit signalsName->willstop();
 				for (float OpFloat = 0; OpFloat < 1; OpFloat += (1 / (SetList.Time * 60))) {
-					emit signalsName->update_num_bg(OpFloat, SetList);		
-					QTest::qSleep((float)15*SpeedFloat);
+					emit signalsName->update_num_bg(OpFloat, SetList);
+					QTest::qSleep((float)15 * SpeedFloat);
 				}
 				emit signalsName->update_num_bg(1, SetList);
 				parent->pause();
@@ -447,13 +446,13 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
-	//ÒôÀÖ¿ØÖÆÆ÷¡¢ÒôĞ§¿ØÖÆÆ÷
+	//éŸ³ä¹æ§åˆ¶å™¨ã€éŸ³æ•ˆæ§åˆ¶å™¨
 	else if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music" || Line.mid(0, 3) == "SND" || Line.mid(0, 5) == "sound") {
 		QStringList RAW = Line.mid(Line.indexOf("(") + 1, Line.lastIndexOf(")") - Line.indexOf("(") - 1).split(",");
 		int RAWLength = RAW.length();
-		for (int i = 0; i < RAWLength; i++) { RAW.append(""); }
+		for (int i = 0; i < 2 - RAWLength; i++) { RAW.append(""); }
 		Controller::music::Data SetList;
-		SetList.music = (RAW[0] == "" ? "¾²Òô" : RAW[0]);
+		SetList.music = (RAW[0] == "" ? "é™éŸ³" : RAW[0]);
 		SetList.volume = (RAW[1] == "" ? 50 : RAW[1].toFloat());
 		if (whichMode == InterpreterMode::presource) {
 			if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music") {
@@ -471,13 +470,15 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
-	//ÕÚÕÖ¿ª±Õ¿ØÖÆÆ÷
+	//é®ç½©å¼€é—­æ§åˆ¶å™¨
 	else if (Line.mid(0, 3) == "CVR" || Line.mid(0, 5) == "cover") {
 		QString UserSet;
-		bool Cover=TRUE;
-		if (Line.mid(0, 3) == "CVR") {UserSet = Line.mid(4, Line.length() - 5);
+		bool Cover = TRUE;
+		if (Line.mid(0, 3) == "CVR") {
+			UserSet = Line.mid(4, Line.length() - 5);
 		}
-		else {UserSet = Line.mid(6, Line.length() - 7);
+		else {
+			UserSet = Line.mid(6, Line.length() - 7);
 		}
 		qDebug() << UserSet;
 		if (UserSet == "true" || UserSet == "on") { Cover = TRUE; }
@@ -487,32 +488,33 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 		if (whichMode == InterpreterMode::run) {
 			emit signalsName->set_cover_status(Cover);
-		}	
+		}
 	}
 
-	//½²Êö¿ØÖÆÆ÷
+	//è®²è¿°æ§åˆ¶å™¨
 	else if (Line.mid(0, 3) == ">>>") {
-		//Ê×ÏÈÌáÈ¡ĞĞ½ø×¤Áô¿ØÖÆÆ÷£¨ÈôÓĞ£©
+		//é¦–å…ˆæå–è¡Œè¿›é©»ç•™æ§åˆ¶å™¨ï¼ˆè‹¥æœ‰ï¼‰
 		QStringList PlaySetList;
 		if (Line[Line.length() - 1] == ")") {
 			QStringList cachePlaySetList = Line.mid(Line.lastIndexOf("(") + 1, Line.length() - Line.lastIndexOf("(") - 2).split(",");
 			PlaySetList = cachePlaySetList;
 			for (int j = 0; j < 2 - cachePlaySetList.length(); j++) { PlaySetList.append(""); }
 			Line = Line.mid(0, Line.lastIndexOf("("));
-		}else {
+		}
+		else {
 			PlaySetList.append("");
 			PlaySetList.append("");
 		}
 		if (PlaySetList[0] == "") { PlaySetList[0] = "0.04"; }
 		if (PlaySetList[1] == "") { PlaySetList[1] = "1.75"; }
 
-		//ÌáÈ¡½²Êö¿ØÖÆÆ÷È«Ìå
+		//æå–è®²è¿°æ§åˆ¶å™¨å…¨ä½“
 		QStringList RAW = Line.mid(3, Line.length() - 3).split(">>>");
 		QList<QStringList> CharaSetList;
 		for (int i = 0; i < RAW.length(); i++) {
 			CharaSetList.append({ RAW[i].split(":") });
 		}
-		//´Ó½²Êö¿ØÖÆÆ÷È«ÌåÌáÈ¡Á¢»æÉèÖÃ
+		//ä»è®²è¿°æ§åˆ¶å™¨å…¨ä½“æå–ç«‹ç»˜è®¾ç½®
 		QList<QStringList> AvgSetList;
 		for (int i = 0; i < CharaSetList.length(); i++) {
 			AvgSetList.append({ CharaSetList[i][0].split("/") });
@@ -525,7 +527,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			if (AvgSetList[i][5] == "") { AvgSetList[i][5] = "0"; }
 			if (AvgSetList[i][6] == "") { AvgSetList[i][6] == "()"; }
 		}
-		//´Ó½²Êö¿ØÖÆÆ÷È«ÌåÌáÈ¡ÎÄ±¾ÉèÖÃ
+		//ä»è®²è¿°æ§åˆ¶å™¨å…¨ä½“æå–æ–‡æœ¬è®¾ç½®
 		QList<QStringList> WordSetList;
 		for (int i = 0; i < CharaSetList.length(); i++) {
 			if (CharaSetList[i].length() == 2) {
@@ -535,34 +537,34 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 				WordSetList.append({ CharaSetList[i][1],CharaSetList[i][2] });
 			}
 		}
-		
 
 		int Charanum = WordSetList.length();
 
 		if (Charanum == 1) {
-			if (WordSetList[0][1] == "") { AvgSetList[0][6]=("(ÁÁ£¬³ÁÄ¬)"); }
-			else if (WordSetList[0][1] != "") { AvgSetList[0][6]=("(ÁÁ£¬½²Êö)"); }
+			if (WordSetList[0][1] == "") { AvgSetList[0][6] = ("(äº®ï¼Œæ²‰é»˜)"); }
+			else if (WordSetList[0][1] != "") { AvgSetList[0][6] = ("(äº®ï¼Œè®²è¿°)"); }
 		}
 		else if (Charanum == 2) {
 			if (WordSetList[0][1] == "" && WordSetList[1][1] == "") {
-				AvgSetList[0][6]=("(ÁÁ£¬³ÁÄ¬)");
-				AvgSetList[1][6] = ("(ÁÁ£¬³ÁÄ¬)");
+				AvgSetList[0][6] = ("(äº®ï¼Œæ²‰é»˜)");
+				AvgSetList[1][6] = ("(äº®ï¼Œæ²‰é»˜)");
 			}
 			else if (WordSetList[0][1] != "" && WordSetList[1][1] == "") {
-				AvgSetList[0][6] = ("(ÁÁ£¬½²Êö)");
-				AvgSetList[1][6] = ("(°µ£¬³ÁÄ¬)");
+				AvgSetList[0][6] = ("(äº®ï¼Œè®²è¿°)");
+				AvgSetList[1][6] = ("(æš—ï¼Œæ²‰é»˜)");
 			}
 			else if (WordSetList[0][1] == "" && WordSetList[1][1] != "") {
-				AvgSetList[0][6] = ("(°µ£¬³ÁÄ¬)");
-				AvgSetList[1][6] = ("(ÁÁ£¬½²Êö)");
-			}else {
-				AvgSetList[0][6] = ("(ÁÁ£¬½²Êö)");
-				AvgSetList[1][6] = ("(ÁÁ£¬½²Êö)");
+				AvgSetList[0][6] = ("(æš—ï¼Œæ²‰é»˜)");
+				AvgSetList[1][6] = ("(äº®ï¼Œè®²è¿°)");
+			}
+			else {
+				AvgSetList[0][6] = ("(äº®ï¼Œè®²è¿°)");
+				AvgSetList[1][6] = ("(äº®ï¼Œè®²è¿°)");
 			}
 		}
 		if (whichMode == InterpreterMode::debug) {
 			if (Charanum > 2) {
-				qDebug().noquote() << "¼ì²éĞĞ" + QString::number(LineNum) + "ÖĞ´æÔÚµÄ½²Êö¿ØÖÆÆ÷ÊıÁ¿³¬ÏŞ";
+				qDebug().noquote() << "æ£€æŸ¥è¡Œ" + QString::number(LineNum) + "ä¸­å­˜åœ¨çš„è®²è¿°æ§åˆ¶å™¨æ•°é‡è¶…é™";
 			}
 		}
 		if (whichMode == InterpreterMode::presource) {
@@ -600,14 +602,14 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 						break;
 					}
 				}
-				if (AvgSetList[i][6] == "(°µ£¬³ÁÄ¬)") { FilterList.append(Filter::turnDark); }
+				if (AvgSetList[i][6] == "(æš—ï¼Œæ²‰é»˜)") { FilterList.append(Filter::turnDark); }
 				if (AvgSetList[i][1] == "") {
 					TransThreadList.append(new cTransform(AvgSetList[i][0], "Chara", FilterList, signalsName));
 				}
 				else {
 					TransThreadList.append(new cTransform(AvgSetList[i][0] + "_" + AvgSetList[i][1], "Chara", FilterList, signalsName));
 				}
-				
+
 				TransThreadList[TransThreadList.length() - 1]->start();
 				TransThreadCount++;
 			}
@@ -641,14 +643,14 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			QString WordsAll = "";
 			int AlphaCount = 0;
 			for (int i = 0; i < WordSetList.length(); i++) {
-				if (WordSetList[i][1] != "") { 
+				if (WordSetList[i][1] != "") {
 					DisplayName = WordSetList[i][0];
 					DisplayWords = WordSetList[i][1];
 					break;
 				}
 			}
 			emit signalsName->update_chara_num(DisplayName, WordsAll, TRUE);
-			for (int j = 0; j < DisplayWords.length(); j++) {				
+			for (int j = 0; j < DisplayWords.length(); j++) {
 				ushort chara = DisplayWords[j].unicode();
 				if (0x4E00 <= chara && chara <= 0x9FFF ||
 					0x3040 <= chara && chara <= 0x309F ||
@@ -697,9 +699,9 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
-	//×ÔÓÉÎÄ±¾¿ØÖÆÆ÷
+	//è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨
 	else if (Line.mid(0, 3) == ">^>") {
-	//Ê×ÏÈÌáÈ¡ĞĞ½ø×¤Áô¿ØÖÆÆ÷£¨ÈôÓĞ£©
+		//é¦–å…ˆæå–è¡Œè¿›é©»ç•™æ§åˆ¶å™¨ï¼ˆè‹¥æœ‰ï¼‰
 		QStringList PlaySetList;
 		if (Line[Line.length() - 1] == ")") {
 			QStringList cachePlaySetList = Line.mid(Line.lastIndexOf("(") + 1, Line.length() - Line.lastIndexOf("(") - 2).split(",");
@@ -714,7 +716,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		if (PlaySetList[0] == "") { PlaySetList[0] = "0.04"; }
 		if (PlaySetList[1] == "") { PlaySetList[1] = "1.75"; }
 
-		//ÌáÈ¡×ÔÓÉÎÄ±¾¿ØÖÆÆ÷
+		//æå–è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨
 		QStringList RAW = Line.mid(3, Line.length() - 3).split(":");
 		QStringList FreeSetList = RAW;
 		for (int i = 0; i < 2 - RAW.length(); i++) { FreeSetList.append(""); }
@@ -726,7 +728,7 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 
 		if (whichMode == InterpreterMode::debug) {
 			if (FreeSetList.length() > 2 || FreePoList.length() > 3) {
-				qDebug() << "¼ì²éĞĞ" + QString::number(LineNum) + "´æÔÚµÄ×ÔÓÉÎÄ±¾¿ØÖÆÆ÷²ÎÊı¸öÊı³¬ÏŞ";
+				qDebug() << "æ£€æŸ¥è¡Œ" + QString::number(LineNum) + "å­˜åœ¨çš„è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨å‚æ•°ä¸ªæ•°è¶…é™";
 			}
 		}
 
@@ -778,14 +780,14 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 			emit signalsName->can_clear_freedom(1);
 		}
 	}
-	
-	//´ó·ÖÖ§¿ØÖÆÆ÷
+
+	//å¤§åˆ†æ”¯æ§åˆ¶å™¨
 	else if (Line.mid(0, 3) == "-->") {
 		QStringList RAW = Line.mid(3, Line.length() - 3).split("-->");
 		QList<QStringList> JumpSetList;
 		QStringList JumpTextList;
 		for (int i = 0; i < RAW.length(); i++) {
-			JumpSetList.append({ RAW[i].split(":")});
+			JumpSetList.append({ RAW[i].split(":") });
 			for (int j = 0; j < 3 - RAW[i].split(":").length(); j++) { JumpSetList[i].append(""); }
 			JumpTextList.append(JumpSetList[i][1]);
 		}
@@ -804,40 +806,28 @@ QStringList SingleLine(int LineNum ,QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
-	//¶ÔÏó¿ØÖÆÆ÷
-	//¶ÔÏó¿ØÖÆÆ÷»ù±¾Ìå ~~>ObjectName:TransName:Parameter:Keep
-	//¶ÔÏó¿ØÖÆÆ÷³õÊ¼»¯±äÌå ~~>ObjectName:initAll
-	//ÔÚÉè¼ÆÉÏ£¬¶ÔÏó¿ØÖÆÆ÷»ù±¾Ìå²»ÔÊĞí³ıÁË×îºóÁ½¸ö×Ö¶ÎµÄËõĞ´Ö®ÍâµÄÈÎºÎÆäËûËõĞ´¡£
+	//å¯¹è±¡æ§åˆ¶å™¨
+	//å¯¹è±¡æ§åˆ¶å™¨åŸºæœ¬ä½“ ~~>ObjectName:TransName:Parameter:Keep
+	//å¯¹è±¡æ§åˆ¶å™¨åˆå§‹åŒ–å˜ä½“ ~~>ObjectName:initAll
+	//åœ¨è®¾è®¡ä¸Šï¼Œå¯¹è±¡æ§åˆ¶å™¨åŸºæœ¬ä½“ä¸å…è®¸é™¤äº†æœ€åä¸¤ä¸ªå­—æ®µçš„ç¼©å†™ä¹‹å¤–çš„ä»»ä½•å…¶ä»–ç¼©å†™ã€‚
 	else if (Line.mid(0, 3) == "~~>") {
-		QStringList RAW = Line.mid(3, Line.length() - 3).split(":");
-		QStringList ObjectSettings;
-		if (RAW.contains("initAll")) {
-			ObjectSettings.append(RAW[0]);
-			ObjectSettings.append(RAW[1]);
-			ObjectSettings.append("VOID");
-			ObjectSettings.append("1");
-		}
-		else {
-			ObjectSettings += RAW;
-			for (int i = 0; i < 4 - ObjectSettings[0].split("/").length(); i++) { ObjectSettings.append(""); }
-			if (ObjectSettings[0] == "") { ObjectSettings[0] = "EMPTYOBJECT"; }
-			if (ObjectSettings[1] == "") { ObjectSettings[1] = "EMPTYTFUNC"; }
-			if (ObjectSettings[2] == "") { ObjectSettings[2] = "EMPTYPARA"; }
-			if (ObjectSettings[3] == "") { ObjectSettings[3] = "1"; }
-		}
 	}
 
-	//·Ç·¨ÎÄ±¾¶µµ×
+	//éæ³•æ–‡æœ¬å…œåº•
 	else {
 		if (Line[0] != "/" && Line.mid(0, 5) != "title") {
 			if (whichMode == InterpreterMode::debug) {
-				qDebug() << "¼ì²éĞĞ" + QString::number(LineNum) + "ÖĞµÄ·Ç·¨ÎÄ±¾";
+				qDebug() << "æ£€æŸ¥è¡Œ" + QString::number(LineNum) + "ä¸­çš„éæ³•æ–‡æœ¬";
 			}
 			if (whichMode == InterpreterMode::run) {
-				signalsName->send_EIFL_info("SPOLÓï·¨Òì³££¡", "²»ÄÜÊ¶±ğĞĞ " + QString::number(LineNum) + " ÖĞµÄÄÚÈİ", Line, EIFL::SSE);
+				signalsName->send_EIFL_info("SPOLè¯­æ³•å¼‚å¸¸ï¼", "ä¸èƒ½è¯†åˆ«è¡Œ " + QString::number(LineNum) + " ä¸­çš„å†…å®¹", Line, EIFL::SSE);
 			}
 		}
 	}
 
 	return { "NORMAL","NORMAL" };
 };
+
+QStringList GPOLSingle(int LineNum, QString Line, GPOLInterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
+	return {};
+}

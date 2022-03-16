@@ -1,4 +1,4 @@
-#include "aaspcommand.h"
+ï»¿#include "aaspcommand.h"
 #include "../UIFolder/TopWindow.h"
 #include "checkupdate.h"
 #include <QDebug>
@@ -20,42 +20,42 @@ void checkupdate(int argc, char* argv[]) {
 	QList<QStringList> VerNew;
 	app.exit();
 	if (VerList[0][0] == "UNKNOWNNETERROR") {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Net_Error");
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Net_Error");
 	}
-	else if (VerList[0][0] == "UNKNOWNBLOG"){
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
+	else if (VerList[0][0] == "UNKNOWNBLOG") {
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Ver_Error");
 	}
 	for (int i = 0; i < VerList.length(); i++) {
-		if (Program_Settings("Update_Channel") == "Pre" && VerList[i][2]=="Pre") {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
+		if (Program_Settings("Update_Channel") == "Pre" && VerList[i][2] == "Pre") {
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pre");
 			VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 			break;
 		}
 		else if (Program_Settings("Update_Channel") == "Pub" && VerList[i][2] == "Pub") {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 			VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
-			break;	
+			break;
 		}
 		else if (Program_Settings("Update_Channel") == "Auto") {
 			if (VerList[i][2] == "Pre" && PROINFO::Channel == "Pre") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pre");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (VerList[i][2] == "Pub" && PROINFO::Channel == "Pub") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (VerList[i][2] == "Branch" && (PROINFO::Channel != "Pre" || PROINFO::Channel != "Pub")) {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Branch");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 		}
 		else {
 			if (VerList[i][2] == "Pub") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
@@ -63,28 +63,31 @@ void checkupdate(int argc, char* argv[]) {
 	}
 
 	if (VerNew.isEmpty()) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
-	}else if (VerNew[0][2].toFloat() > PROINFO::Build.toFloat()) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
-	}else if (VerNew[0][2].toFloat() == PROINFO::Build.toFloat()) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_New");
-	}else if (VerNew[0][2].toFloat() < PROINFO::Build.toFloat()) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Insider");
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Ver_Error");
+	}
+	else if (VerNew[0][2].toFloat() > PROINFO::Build.toFloat()) {
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
+	}
+	else if (VerNew[0][2].toFloat() == PROINFO::Build.toFloat()) {
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_New");
+	}
+	else if (VerNew[0][2].toFloat() < PROINFO::Build.toFloat()) {
+		qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Insider");
 	}
 }
 
 void langinput(void) {
 	string Usript;
-	qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_Filename_Input");
+	qDebug().noquote() << "sysinfoâ†’" + msg("Function_Language_Filename_Input");
 	while (TRUE) {
 		cout << "Userinput\\lang\u2192";
 		cin >> Usript;
-		if (Usript ==  "") { continue; }
+		if (Usript == "") { continue; }
 		if (Usript == "exit") { return; }
-		else { 
-			int a=langset(QString::fromStdString(Usript)); 
+		else {
+			int a = langset(QString::fromStdString(Usript));
 			if (a) {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_Loading_Success");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Function_Language_Loading_Success");
 			}
 		}
 	}
@@ -95,40 +98,42 @@ void about(void) {
 	qDebug().noquote() << msg("KAU_About_Info_SubVer") + PROINFO::Sub;
 	qDebug().noquote() << msg("KAU_About_Info_BuildVer") + PROINFO::Build;
 	qDebug().noquote() << msg("KAU_About_Info_SpolVer") + PROINFO::SPOL;
-	qDebug().noquote() << msg("KAU_About_Info_Developers") + "ÇàÑÅÒô Tsing Yayin";
+	qDebug().noquote() << msg("KAU_About_Info_Developers") + "é’é›…éŸ³ Tsing Yayin";
 	qDebug().noquote() << msg("KAU_About_Info_Environment") + "Visual Studio 2019";
-	qDebug().noquote() << msg("KAU_About_Info_Support") + "ÒÚÐ÷ÁªºÏÐ­»á UYXA";
+	qDebug().noquote() << msg("KAU_About_Info_Support") + "äº¿ç»ªè”åˆåä¼š UYXA";
 	qDebug().noquote() << msg("KAU_About_Info_Help").arg(urlGithub);
 	qDebug().noquote() << msg("KAU_About_Info_Donate").arg(urlAFD);
 }
 
 void aasphelp(void) {
-	qDebug().noquote()<<"about\t" + msg("Function_Help_Info_about_");
-	qDebug().noquote()<<"clear\t" + msg("Function_Help_Info_clear");
-	qDebug().noquote()<<"clrall\t" + msg("Function_Help_Info_clrall");
-	qDebug().noquote()<<"exit\t" + msg("Function_Help_Info_exit");
-	qDebug().noquote()<<"help\t" + msg("Function_Help_Info_help");
-	qDebug().noquote()<<"lang\t" + msg("Function_Help_Info_lang");
-	qDebug().noquote()<<"ui\t" + msg("Function_Help_Info_ui");
-	qDebug().noquote()<<"window\t" + msg("Function_Help_Info_window");
+	qDebug().noquote() << "about\t" + msg("Function_Help_Info_about_");
+	qDebug().noquote() << "clear\t" + msg("Function_Help_Info_clear");
+	qDebug().noquote() << "clrall\t" + msg("Function_Help_Info_clrall");
+	qDebug().noquote() << "exit\t" + msg("Function_Help_Info_exit");
+	qDebug().noquote() << "help\t" + msg("Function_Help_Info_help");
+	qDebug().noquote() << "lang\t" + msg("Function_Help_Info_lang");
+	qDebug().noquote() << "ui\t" + msg("Function_Help_Info_ui");
+	qDebug().noquote() << "window\t" + msg("Function_Help_Info_window");
 }
 
 void DeleteCache(int num) {
 	if (num == 0) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Function_Filecheck_Searching_Wrong");
-	}else if (num == 1) {
-		qDebug().noquote() << "sysinfo¡ú" + msg("Function_Filecheck_Delete_Cache");
+		qDebug().noquote() << "sysinfoâ†’" + msg("Function_Filecheck_Searching_Wrong");
 	}
-	QDir visualCacheCharaDir(PROPATH::Users+"/cache/Chara/");
-	visualCacheCharaDir.setFilter(QDir::Files | QDir::NoSymLinks); 
+	else if (num == 1) {
+		qDebug().noquote() << "sysinfoâ†’" + msg("Function_Filecheck_Delete_Cache");
+	}
+	QDir visualCacheCharaDir(PROPATH::Users + "/cache/Chara/");
+	visualCacheCharaDir.setFilter(QDir::Files | QDir::NoSymLinks);
 	QDir visualCacheBGPDir(PROPATH::Users + "/cache/BGP/");
 	visualCacheBGPDir.setFilter(QDir::Files | QDir::NoSymLinks);
 	for (int i = 0; i < visualCacheCharaDir.count(); i++) {
 		QFile cacheFile(PROPATH::Users + "/cache/Chara/" + visualCacheCharaDir.entryList()[i]);
-		if (cacheFile.size() == 0 && num==0) { 
-			cacheFile.remove(); 
+		if (cacheFile.size() == 0 && num == 0) {
+			cacheFile.remove();
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheCharaDir.entryList()[i];
-		}else if(num==1){
+		}
+		else if (num == 1) {
 			cacheFile.remove();
 		}
 	}
@@ -137,22 +142,23 @@ void DeleteCache(int num) {
 		if (cacheFile.size() == 0 && num == 0) {
 			cacheFile.remove();
 			qDebug().noquote() << msg("Function_Filecheck_Delete_Wrong") << visualCacheBGPDir.entryList()[i];
-		}else if (num == 1) {
+		}
+		else if (num == 1) {
 			cacheFile.remove();
 		}
 	}
-	qDebug().noquote() << "sysinfo¡ú" + msg("Function_Filecheck_Run_End");
+	qDebug().noquote() << "sysinfoâ†’" + msg("Function_Filecheck_Run_End");
 }
 
 void ensuredirs(int num) {
-	qDebug().noquote() << "sysinfo¡úChecking the files in the directory";
+	qDebug().noquote() << "sysinfoâ†’Checking the files in the directory";
 	QStringList dirlst;
 	dirlst << PROPATH::Users + "/cache/BGP" << PROPATH::Users + "/cache/Chara";
 	int count = 0;
 	QDir singleDir;
 	for (int i = 0; i < dirlst.length(); i++) {
 		if (!singleDir.exists(dirlst[i])) {
-			qDebug().noquote() << "sysinfo¡úDirectory '" << dirlst[i] << "'missed.Now rebuilding...";
+			qDebug().noquote() << "sysinfoâ†’Directory '" << dirlst[i] << "'missed.Now rebuilding...";
 			singleDir.mkpath(dirlst[i]);
 			count += 1;
 		}
@@ -161,7 +167,7 @@ void ensuredirs(int num) {
 		QString user_home = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 		qDebug().noquote() << user_home;
 	}
-	qDebug().noquote() << "sysinfo¡úChecked";
+	qDebug().noquote() << "sysinfoâ†’Checked";
 }
 
 void OpenFolder(int num) {
@@ -196,4 +202,3 @@ QString spolEscape(QString RawString) {
 	}
 	return RawString;
 }
-

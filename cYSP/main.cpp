@@ -1,6 +1,9 @@
-#pragma execution_character_set("utf-8")
+Ôªø#pragma execution_character_set("utf-8")
 #include "UIFolder/TopWindow.h"
 #include "UIFolder/ArtificialUI.h"
+#include "UIFolder/LoadingPage.h"
+#include "UIFolder/FirstPage.h"
+#include "UIFolder/NewProjectPage.h"
 #include "global_value.h"
 #include "loadsettings.h"
 #include "Aaspcommand/aaspcommand.h"
@@ -9,201 +12,119 @@
 #include <iostream>
 #include <exception>
 #include "langcontrol.h"
-#include <stdexcept>
 #include "UIFolder/WindowsWarn.h"
 #include <QTest>
+#include "core/GSS.h"
 using namespace std;
+
+#if DEPLOY == 1
+#include <stdlib.h>
+#include <Windows.h>
+#include <shellapi.h>
+#endif
 
 int main(int argc, char* argv[])
 {
-    try {
-        qRegisterMetaType<EIFL>("EIFL");
-        qRegisterMetaType<Controller::Backdrop::Data>("Controller::Backdrop::Data");
-        qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+	qRegisterMetaType<EIFL>("EIFL");
+	qRegisterMetaType<Controller::Backdrop::Data>("Controller::Backdrop::Data");
+	qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+#if DEPLOY == 2
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+#endif
+	qsrand((unsigned)time(NULL));
+	QApplication app(argc, argv);
+	////Â∞ÜÂ≠ó‰ΩìÊñá‰ª∂Âêç‰º†ÁªôaddApplicationFont,ÂæóÂà∞Â≠ó‰ΩìÁöÑId
+	int fontId = QFontDatabase::addApplicationFont(":/IRC/InsiderSource/Fonts/SourceHanSansCN-Regular.ttf");
+	////Â∞ÜÂ≠ó‰ΩìId‰º†ÁªôapplicationFontFamilies,ÂæóÂà∞‰∏Ä‰∏™QStringList,ÂÖ∂‰∏≠ÁöÑÁ¨¨‰∏Ä‰∏™ÂÖÉÁ¥†‰∏∫Êñ∞Ê∑ªÂä†Â≠ó‰ΩìÁöÑfamily
+	qDebug() << fontId;
+	QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
+	qDebug() << msyh;
+	QFont font(msyh, 10);
+	////Â∞ÜÊ≠§Â≠ó‰ΩìËÆæ‰∏∫QApplicationÁöÑÈªòËÆ§Â≠ó‰Ωì
+	QApplication::setFont(font);
 
-        qsrand((unsigned)time(NULL));
-        ////Ω´◊÷ÃÂŒƒº˛√˚¥´∏¯addApplicationFont,µ√µΩ◊÷ÃÂµƒId 
-        //int fontId = QFontDatabase::addApplicationFont("C:/Users/Administrator/source/repos/cYSP/cYSP/InsiderSource/Fonts/SourceHanSans-Regular.otf");
-        ////Ω´◊÷ÃÂId¥´∏¯applicationFontFamilies,µ√µΩ“ª∏ˆQStringList,∆‰÷–µƒµ⁄“ª∏ˆ‘™ÀÿŒ™–¬ÃÌº”◊÷ÃÂµƒfamily 
-        //qDebug() << fontId;
-        //QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
-        //qDebug() << msyh;
-        //QFont font(msyh, 10);
-        ////Ω´¥À◊÷ÃÂ…ËŒ™QApplicationµƒƒ¨»œ◊÷ÃÂ 
-        //QApplication::setFont(font);
+	//qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
+	//sDebug("DebugInfo‚ÜíStart path : " + QDir::currentPath());
+	//cout << argv[0] << endl;
+	//sDebug("DebugInfo‚ÜíProgram path : " + QString::fromLocal8Bit(argv[0]).section("\\", 0, -2));
+	if (QString(argv[1]) != "Launcher") {
+		QDir::setCurrent(QString::fromLocal8Bit(argv[0]).section("\\", 0, -2));
+		setCurrentPath(QString::fromLocal8Bit(argv[0]));
+	}
+	else {
+		setCurrentPath(QString::fromLocal8Bit(argv[0]), QString::fromLocal8Bit(argv[2]), TRUE);
+		QApplication::addLibraryPath(QDir::currentPath());
+		//qDebug() << QApplication::libraryPaths();
+	}
+	//qDebug() << QDir::currentPath();
+	/*GPOLSubInterpreterForSPOL* GI = new GPOLSubInterpreterForSPOL();
+	while (TRUE) {
+		string input;
+		cin >> input;
+		qDebug()<< (GI->Interpreter(QString::fromStdString(input)));
+	}*/
+	LoadingPage* win = new LoadingPage();
+	win->show();
+	int i = app.exec();
+	win->deleteLater();
 
-        qDebug().noquote() << PROINFO::Kernal + "\t" + PROINFO::Total;
-        qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
-        sDebug("DebugInfo°˙Start path : " + QDir::currentPath());
-        cout << argv[0] << endl;
-        sDebug("DebugInfo°˙Program path : " + QString::fromLocal8Bit(argv[0]).section("\\", 0, -2));
-        if (QString(argv[1]) != "Launcher") {
-            QDir::setCurrent(QString::fromLocal8Bit(argv[0]).section("\\", 0, -2));
-            setCurrentPath(QString::fromLocal8Bit(argv[0]));
+	if (Program_Settings("First_Start") != "False") {
+		WindowsWarnSPOL_6 SPOL_6_Window;
+		SPOL_6_Window.show();
+		int i = app.exec();
+		writesettings("First_Start", "False");
+	}
 
-        }
-        else {
-            setCurrentPath(QString::fromLocal8Bit(argv[0]), QString::fromLocal8Bit(argv[2]), TRUE);
-            QApplication::addLibraryPath(QDir::currentPath());
-            //qDebug() << QApplication::libraryPaths();
-        }
-        qDebug() << QDir::currentPath();
-
-        int DirectOpen = 0;
-        string Usript;
-        sDebug("DebugInfo°˙Number of parameters : " + QString::number(argc));
-        sDebug("DebugInfo°˙Parameters 1 : " + QString::fromUtf8(argv[0]));
-        sDebug("DebugInfo°˙Parameters 2 : " + QString::fromUtf8(argv[1]));
-        sDebug("DebugInfo°˙Your system version : " + QSysInfo::kernelVersion());
-        QString KernelVersion = QSysInfo::kernelVersion();
-        KernelVersion = "10.0.22000";
-        if (KernelVersion.split(".")[0].toInt() < 10) {
-
-            qDebug() << "##########\nWe are sorry to inform you that because the program uses the API provided by the new version of Windows10 (11), the YSP program cannot work on your old version of Windows System.\n\
-This program has poor compatibility with Windows Systems released in and before 2018. Consider upgrading to the latest version of Windows to use the program\n\
-Œ“√«∫‹±ß«∏µƒ∏Ê÷™ƒ˙£¨”…”⁄≥Ã–Ú π”√¡À”…–¬∞Ê±æWindows10£®11£©Ã·π©µƒAPI£¨“Ú¥ÀYSP≥Ã–ÚŒﬁ∑®‘⁄ƒ˙µƒ¿œæ…∞Ê±æWindowsœµÕ≥…œπ§◊˜°£\n\
-±æ≥Ã–Ú∂‘”⁄2018ƒÍº∞÷Æ«∞∑¢≤ºµƒWindowsœµÕ≥µƒºÊ»›–‘≤Ó°£«Îøº¬«…˝º∂µΩ◊Ó–¬∞Ê±æµƒWindows“‘ π”√≥Ã–Ú\n##########";
-            QApplication app(argc, argv);
-            WindowsWarn UIWindow;
-            UIWindow.show();
-            ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
-            int i = app.exec();
-            return 0;
-        }
-        if (KernelVersion.split(".")[2].toInt() < 22000) {
-            QApplication app(argc, argv);
-            WindowsWarn11 UIWindow;
-            UIWindow.show();
-            ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
-            int i = app.exec();
-            ShowWindow(GetConsoleWindow(), SW_NORMAL);
-        }
-        if (argv[1] != "") {
-            DirectOpen = 1;
-            Usript = "ui";
-        }
-        else {
-            DirectOpen = 1;
-            Usript = "window";
-        }
-        Usript = "window";
-        qDebug().noquote() << "======Execute program initialization======";
-
-        ensuredirs(0);
-        langset("0");
-        loadsettings();
-        //QTest::qSleep(1000);
-        DeleteCache(0);
-        //QTest::qSleep(1000);
-        if (Program_Settings("First_Start") != "False") {
-            QApplication app(argc, argv);
-            WindowsWarnSPOL_6 SPOL_6_Window;
-            SPOL_6_Window.show();
-            ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
-            int i = app.exec();
-            ShowWindow(GetConsoleWindow(), SW_NORMAL);
-            writesettings("First_Start", "False");
-        }
-        //initreg();
-
-        /*if (readreg("Language") == "zh_SC") {
-            qDebug().noquote() << "##############################";
-            qDebug().noquote() << "#µ÷÷∆≤ª¡º”Œœ∑£¨æ‹æ¯µ¡∞Ê”Œœ∑°£#\n#◊¢“‚◊‘Œ“±£ª§£¨Ω˜∑¿ ‹∆≠…œµ±°£#\n#  ∂»”Œœ∑“Êƒ‘£¨≥¡√‘”Œœ∑…À…Ì°£#\n#∫œ¿Ì∞≤≈≈ ±º‰£¨œÌ ‹Ω°øµ…˙ªÓ°£#";
-            qDebug().noquote() << "##############################";
-        }*/
-
-        qDebug().noquote() << "sysinfo°˙" + msg("Kernal_Text_IFL_Version").arg("IFL_20211227");
-        qDebug().noquote() << "sysinfo°˙" + msg("Kernal_Text_First_Print").arg("AASPCMD_"+PROINFO::Kernal);
-        QTest::qSleep(1000);
-        bool programme_run = TRUE;
-        while (programme_run) {
-            if (DirectOpen != 1) {
-                cout << "Userinput\u2192";
-                cin >> Usript;
-            }
-            if (Usript == "help") {
-                aasphelp();
-            }elif(Usript == "") {
-                continue;
-            }elif(Usript == "lang") {
-                langinput();
-            }elif(Usript == "about") {
-                about();
-            }elif(Usript == "update") {
-                checkupdate(argc, argv);
-                DirectOpen = 0;
-            }elif(Usript == "clear") {
-                DeleteCache(0);
-            }elif(Usript == "clrall") {
-                DeleteCache(1);
-            }elif(Usript == "exception") {
-                throw overflow_error(0);
-            }elif(Usript == "ui") {
-                QApplication app(argc, argv);
-                PlayerWindow UIWindow(argc, argv);
-                if (Program_Settings("Window_DisplayMode") == "Full") {
-                    UIWindow.gshowFullScreen();
-                }elif(Program_Settings("Window_DisplayMode") == "Window") {
-                    UIWindow.gshow();
-                }
-                else {
-                    UIWindow.gshowFullScreen();
-                }
-                int a = app.exec();
-                qDebug().noquote() << "UI";
-                Usript = "window";
-                DirectOpen = 1;
-
-            }elif(Usript == "window") {
-                QApplication app(argc, argv);
-                TopWindow* MainWindow = new TopWindow();
-                MainWindow->show();
-                ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
-                int a = app.exec();
-                delete MainWindow;
-
-
-                DirectOpen = 1;
-                if (a == 1) {
-                    Usript = "ui";
-                }elif(a == 2) {
-                    Usript = "exit";
-                }
-                else {
-                    DirectOpen = 0;
-                    ShowWindow(GetConsoleWindow(), SW_NORMAL);
-                }
-            }elif(Usript == "escape") {
-                for (;;) {
-                    string a;
-                    getline(cin, a);
-                    if (a == "exit") { break; }
-                    cout << spolEscape(QString::fromStdString(a)).toStdString();
-                }
-            }elif(Usript == "spoldev") {
-                QString SPOLDevPath = QDir::currentPath() + "/SPOLDev.exe";
-                system(SPOLDevPath.toStdString().c_str());
-            }
-            else if (Usript == "exit") {
-                qDebug().noquote() << "Safety Exit";
-                QTest::qSleep(500);
-                return 0;
-            }
-
-            else {
-                qDebug().noquote() << "sysinfo°˙" + msg("Kernel_Text_Command_Error").arg(QString::fromStdString(Usript));
-            }
-        }
-    }
-    catch (exception& e) {
-        cout << e.what() << endl;
-        getchar();
-        getchar();
-    }
-    catch (...) {
-        cout << "UNKNOWN_EXCEPTION" << endl;
-        getchar();
-        getchar();
-    }
+	if (i == 0) {
+		//Â∫îÁî®‰∏ªÂäüËÉΩÂæ™ÁéØ
+		while (TRUE) {
+			if (argc == 1) {
+				uProjectPage* win = new uProjectPage();
+				win->show();
+				i = app.exec();
+				win->deleteLater();
+			}
+			else {
+				GlobalValue::CurrentProject = QString::fromLocal8Bit(argv[1]).section("\\", -2, -2);
+				i = 1;
+			}
+			if (i == 0) {
+				if (GlobalValue::NewWhichProject == "Empty") {
+					uNewProjectPage* win = new uNewProjectPage(uNewProjectPage::InitProject::Empty);
+					win->show();
+					i = app.exec();
+					win->deleteLater();
+				}
+				else {
+					uNewProjectPage* win = new uNewProjectPage(uNewProjectPage::InitProject::Default);
+					win->show();
+					i = app.exec();
+					win->deleteLater();
+				}
+			}
+			if (i == 1) {
+				while (i == 1) {
+					TopWindow* MainWindow = new TopWindow();
+					MainWindow->show();
+					i = app.exec();
+					MainWindow->deleteLater();
+					if (i == 1) {
+						PlayerWindow UIWindow(argc, argv);
+						if (Program_Settings("Window_DisplayMode") == "Full") {
+							UIWindow.gshowFullScreen();
+						}elif(Program_Settings("Window_DisplayMode") == "Window") {
+							UIWindow.gshow();
+						}
+						else {
+							UIWindow.gshowFullScreen();
+						}
+						int a = app.exec();
+					}
+				}
+			}
+			if (i == 233) {
+				break;
+			}
+		}
+	}
 }
-

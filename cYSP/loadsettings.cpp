@@ -1,93 +1,97 @@
-#pragma once
+ï»¿#pragma once
 #include "loadsettings.h"
 #include "global_value.h"
 #include "langcontrol.h"
 #include <QtCore>
 static QMap<QString, QString> SettingsList;
-QString Initial_prompt_statement = "#Õâ¸öÎÄµµÊÇ³ÌĞòÉèÖÃµÄ¼ÇÂ¼ÎÄµµ¡£\n#ÈçĞè¿ìËÙ³õÊ¼»¯³ÌĞòÉè¶¨£¬¿ÉÒÔÖ±½ÓÉ¾³ı±¾ÎÄµµ¡£µ«Õâ£¨¿ÉÄÜ£©»áÓ°Ïì³ÌĞòÔÚÉ¾³ı±¾ÎÄµµºóµÄÊ×´ÎÆô¶¯ËÙ¶È¡£\n\n";
+QString Initial_prompt_statement = "#è¿™ä¸ªæ–‡æ¡£æ˜¯ç¨‹åºè®¾ç½®çš„è®°å½•æ–‡æ¡£ã€‚\n#å¦‚éœ€å¿«é€Ÿåˆå§‹åŒ–ç¨‹åºè®¾å®šï¼Œå¯ä»¥ç›´æ¥åˆ é™¤æœ¬æ–‡æ¡£ã€‚ä½†è¿™ï¼ˆå¯èƒ½ï¼‰ä¼šå½±å“ç¨‹åºåœ¨åˆ é™¤æœ¬æ–‡æ¡£åçš„é¦–æ¬¡å¯åŠ¨é€Ÿåº¦ã€‚\n\n";
 
 void writesettings(QString SettingsKey, QString SettingsValue)
 {
-    if (SettingsKey != "" && SettingsValue != "") {
-        SettingsList[SettingsKey] = SettingsValue; 
-    }
-    QMap<QString, QString>::const_iterator i = SettingsList.constBegin();
-    QString SettingsText;
-    SettingsText += Initial_prompt_statement;
-    for (i; i != SettingsList.constEnd(); i++) {
-        SettingsText += (i.key() + "=" + i.value() + "\n");
-    }
+	if (SettingsKey != "" && SettingsValue != "") {
+		SettingsList[SettingsKey] = SettingsValue;
+	}
+	QMap<QString, QString>::const_iterator i = SettingsList.constBegin();
+	QString SettingsText;
+	SettingsText += Initial_prompt_statement;
+	for (i; i != SettingsList.constEnd(); i++) {
+		SettingsText += (i.key() + "=" + i.value() + "\n");
+	}
 
-    QFile SettingsFile;
-    SettingsFile.setFileName(PROPATH::Users+"/options.txt");
-    SettingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    SettingsFile.write(SettingsText.toStdString().data());
-    SettingsFile.close();
+	QFile SettingsFile;
+	SettingsFile.setFileName(PROPATH::Users + "/options.txt");
+	SettingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
+	SettingsFile.write(SettingsText.toStdString().data());
+	SettingsFile.close();
 }
 
 int loadsettings(void) {
-    SettingsList["Filter_Level"] = "Full";
-    SettingsList["First_Start"] = "True";
-    SettingsList["Forced_Debugging_Info"] = "False";
-    SettingsList["GCPMode"] = "False";
-    SettingsList["Update_Channel"] = "Auto";
-    SettingsList["Window_DisplayMode"] = "Full";
-    SettingsList["Window_Geometry"] = "1366_768";
-    SettingsList["Window_Monitor"] = "0";
-    QFile settingsFile;
-    settingsFile.setFileName(PROPATH::Users + "/options.txt");
-    settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    if (!settingsFile.isOpen()) {
-        qDebug().noquote() << "CAN NOT FIND INIT SETTINGS!";
-        writesettings();
-    }else{
-        QTextStream settingsFileText(&settingsFile);
-        settingsFileText.setCodec("UTF-8");
-        QString stSingleLine;
-        for (;;) {
-            stSingleLine = settingsFileText.readLine();
-            if (stSingleLine[0] == '#' || stSingleLine[0] == '\n') { continue; }
-            SettingsList[stSingleLine.section("=", 0, 0)] = stSingleLine.section("=", 1, -1);
-            if (settingsFileText.atEnd()) { break; }
-        }
-    }
-    return 0;
+	SettingsList["Filter_Level"] = "Full";
+	SettingsList["First_Start"] = "True";
+	SettingsList["Forced_Debugging_Info"] = "False";
+	SettingsList["GCPMode"] = "False";
+	SettingsList["Update_Channel"] = "Auto";
+	SettingsList["Window_DisplayMode"] = "Full";
+	SettingsList["Window_Geometry"] = "1366_768";
+	SettingsList["Window_Size"] = "1366_768";
+	SettingsList["Window_SizePolicy"] = "N";
+	SettingsList["Window_Monitor"] = "0";
+	QFile settingsFile;
+	settingsFile.setFileName(PROPATH::Users + "/options.txt");
+	settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	if (!settingsFile.isOpen()) {
+		qDebug().noquote() << "CAN NOT FIND INIT SETTINGS!";
+		writesettings();
+	}
+	else {
+		QTextStream settingsFileText(&settingsFile);
+		settingsFileText.setCodec("UTF-8");
+		QString stSingleLine;
+		for (;;) {
+			stSingleLine = settingsFileText.readLine();
+			if (stSingleLine[0] == '#' || stSingleLine[0] == '\n') { continue; }
+			SettingsList[stSingleLine.section("=", 0, 0)] = stSingleLine.section("=", 1, -1);
+			if (settingsFileText.atEnd()) { break; }
+		}
+	}
+	return 0;
 }
 
-QString Program_Settings(QString SettingsName) 
+QString Program_Settings(QString SettingsName)
 {
-    try {
-        if (SettingsList[SettingsName] == "") {
-            throw "FAQ";
-        }
-        else {
-            return SettingsList[SettingsName];
-        }
-    }
-    catch (...) {
-        return "UNKNOWNSET:" + SettingsName;
-    }
+	try {
+		if (SettingsList[SettingsName] == "") {
+			throw "FAQ";
+		}
+		else {
+			return SettingsList[SettingsName];
+		}
+	}
+	catch (...) {
+		return "UNKNOWNSET:" + SettingsName;
+	}
 }
 
 void writereg(QString RegKeyName, QString RegValue) {
-    QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP", QSettings::NativeFormat);
-    ProgramSettings.setValue(RegKeyName, RegValue);
+	QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP", QSettings::NativeFormat);
+	ProgramSettings.setValue(RegKeyName, RegValue);
 }
 
 QString readreg(QString RegKeyName) {
-    QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP", QSettings::NativeFormat);
-    QString RegValue = ProgramSettings.value(RegKeyName, "POI_ERROR").toString();
-    if ( RegValue== "POI_ERROR") {
-        initreg();
-        return "ERROR";
-    }else {
-        return RegValue;
-    }
+	QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP", QSettings::NativeFormat);
+	QString RegValue = ProgramSettings.value(RegKeyName, "POI_ERROR").toString();
+	if (RegValue == "POI_ERROR") {
+		initreg();
+		return "ERROR";
+	}
+	else {
+		return RegValue;
+	}
 }
 
 void initreg(void) {
-    QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP",QSettings::NativeFormat);
-    if (ProgramSettings.value("Adult", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Adult", "UNKOWN"); }
-    if (ProgramSettings.value("Version", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Version", PROINFO::Total); }
-    if (ProgramSettings.value("Language", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Language","zh_SC"); }
+	QSettings ProgramSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\YixuSoftware\\cYSP", QSettings::NativeFormat);
+	if (ProgramSettings.value("Adult", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Adult", "UNKOWN"); }
+	if (ProgramSettings.value("Version", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Version", PROINFO::Total); }
+	if (ProgramSettings.value("Language", "POI_ERROR") == "POI_ERROR") { ProgramSettings.setValue("Language", "zh_SC"); }
 }

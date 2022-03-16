@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma execution_character_set("utf-8")
 #include <QApplication>
 #include <QtWidgets>
@@ -31,7 +31,7 @@ int langset(QString langname){
     spLanguageFile.setFileName(PROPATH::Users + "/Language/"+langname+".splang");
     spLanguageFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!spLanguageFile.isOpen()) { 
-        qDebug().noquote() << "sysinfo¡ú" + msg("Function_Language_File_NotFound").arg(langname);
+        qDebug().noquote() << "sysinfoâ†’" + msg("Function_Language_File_NotFound").arg(langname);
         return 0; 
     }else {
         writereg("Language", langname);
@@ -46,7 +46,7 @@ int langset(QString langname){
         if (spLanguageText.atEnd()) { break; }
     }
     timeEnd = clock();
-    qDebug().noquote()<< "sysinfo¡ú" + msg("Function_Language_Loading_End").arg(timeEnd-timeStart);
+    qDebug().noquote()<< "sysinfoâ†’" + msg("Function_Language_Loading_End").arg(timeEnd-timeStart);
     return 1;
 }
 

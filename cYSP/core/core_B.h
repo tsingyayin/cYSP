@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <QtWidgets>
 #include <QtGui>
 #include <QtCore>
@@ -38,13 +38,16 @@ void Fade(int* r, int* g, int* b) {
 	if (L <= 0.5) {
 		if (value != 0) {
 			S = delta / value;
-		}else {
+		}
+		else {
 			S = delta / 0.0000000000001;
 		}
-	}else {
+	}
+	else {
 		if (2 - value != 0) {
 			S = delta / (2 - value);
-		}else {
+		}
+		else {
 			S = delta / 0.0000000000001;
 		}
 	}
@@ -74,11 +77,9 @@ void TurnDark(int* r, int* g, int* b) {
 }
 
 void GaussianBlur5(int* r, int* g, int* b, QList<QList<int>> ColorMatrix) {
-	
 }
 
 void GaussianBlur11(int* r, int* g, int* b, QList<QList<int>> ColorMatrix) {
-
 }
 
 enum Filter {
@@ -93,7 +94,7 @@ enum Filter {
 	gaussianBlur11 = 8,
 };
 
-void transformation(Filter whichFilter = Filter::unknownFilter, int* r = NULL, int* g = NULL, int* b = NULL, int* a = NULL, int y = NULL, int Y = NULL, QList<QList<int>> ColorMatrix = {} ) {
+void transformation(Filter whichFilter = Filter::unknownFilter, int* r = NULL, int* g = NULL, int* b = NULL, int* a = NULL, int y = NULL, int Y = NULL, QList<QList<int>> ColorMatrix = {}) {
 	switch (whichFilter) {
 	case unknownFilter:
 		break;
@@ -123,4 +124,3 @@ void transformation(Filter whichFilter = Filter::unknownFilter, int* r = NULL, i
 		break;
 	}
 }
-

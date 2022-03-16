@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "..\langcontrol.h"
 #include "..\global_value.h"
 #include "..\loadsettings.h"
@@ -14,67 +14,66 @@ using namespace std;
 static QString urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 static QString urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
 
-
-//GCP¶Ô»°¿ò
+//GCPå¯¹è¯æ¡†
 class hGCPDialog :public QWidget
 {
-    Q_OBJECT
-    signals:
-        void chooseEnd(void);
-    public:
-        QPushButton* YesButton;
-        QPushButton* NoButton;
-        QLabel* EnableGCPDialogLabel;
+	Q_OBJECT
+signals:
+	void chooseEnd(void);
+public:
+	QPushButton* YesButton;
+	QPushButton* NoButton;
+	QLabel* EnableGCPDialogLabel;
 
-        QFrame* frame;
-        QHBoxLayout* hl;
-        QGraphicsDropShadowEffect* SelfEffect;
-        hGCPDialog(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(500, 400, 900, 300));
-            this->setWindowFlags(Qt::FramelessWindowHint);
-            this->setAttribute(Qt::WA_TranslucentBackground);
-            this->setAttribute(Qt::WA_DeleteOnClose);
-            frame = new QFrame(this);
-            hl = new QHBoxLayout(this);
-            hl->setContentsMargins(10, 10, 10, 10);
-            SelfEffect = new QGraphicsDropShadowEffect();
-            SelfEffect->setOffset(4, 4);
-            SelfEffect->setColor(QColor(0, 0, 0, 127));
-            SelfEffect->setBlurRadius(15);
-            frame->setGraphicsEffect(SelfEffect);
-            hl->addWidget(frame);
-            this->setLayout(hl);
+	QFrame* frame;
+	QHBoxLayout* hl;
+	QGraphicsDropShadowEffect* SelfEffect;
+	hGCPDialog(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(500, 400, 900, 300));
+		this->setWindowFlags(Qt::FramelessWindowHint);
+		this->setAttribute(Qt::WA_TranslucentBackground);
+		this->setAttribute(Qt::WA_DeleteOnClose);
+		frame = new QFrame(this);
+		hl = new QHBoxLayout(this);
+		hl->setContentsMargins(10, 10, 10, 10);
+		SelfEffect = new QGraphicsDropShadowEffect();
+		SelfEffect->setOffset(4, 4);
+		SelfEffect->setColor(QColor(0, 0, 0, 127));
+		SelfEffect->setBlurRadius(15);
+		frame->setGraphicsEffect(SelfEffect);
+		hl->addWidget(frame);
+		this->setLayout(hl);
 
-            this->setStyleSheet(
-                "QWidget{"
-                "background-color:rgba(230,230,230,230);"
-                "border:1px solid rgb(15,77,240);"
-                "border-radius:10px;"
-                "}");
-            EnableGCPDialogLabel = new QLabel(this);
-            EnableGCPDialogLabel->setText(msg("Ui_Msg_EnsureGCPMode"));
-            EnableGCPDialogLabel->setGeometry(QRect(50, 80, 800, 40));
-            EnableGCPDialogLabel->setAlignment(Qt::AlignCenter);
-            EnableGCPDialogLabel->setStyleSheet("\
+		this->setStyleSheet(
+			"QWidget{"
+			"background-color:rgba(230,230,230,230);"
+			"border:1px solid rgb(15,77,240);"
+			"border-radius:10px;"
+			"}");
+		EnableGCPDialogLabel = new QLabel(this);
+		EnableGCPDialogLabel->setText(msg("Ui_Msg_EnsureGCPMode"));
+		EnableGCPDialogLabel->setGeometry(QRect(50, 80, 800, 40));
+		EnableGCPDialogLabel->setAlignment(Qt::AlignCenter);
+		EnableGCPDialogLabel->setStyleSheet("\
                 QLabel{\
                     background-color:rgba(255,255,255,0);\
                     border:none;\
                     border-radius:0px;\
                     color:#BB0000;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     font-size:25px;\
                     }");
-            YesButton = new QPushButton(this);
-            YesButton->setText(msg("Ui_Msg_Yes"));
-            YesButton->setGeometry(QRect(50, 190, 350, 50));
-            YesButton->setStyleSheet("\
+		YesButton = new QPushButton(this);
+		YesButton->setText(msg("Ui_Msg_Yes"));
+		YesButton->setGeometry(QRect(50, 190, 350, 50));
+		YesButton->setStyleSheet("\
                 QPushButton{\
                     color:#333333;\
                     background-color:rgba(255,220,220,210);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     border:1px solid rgb(228, 39, 44); \
                 }\
                 QPushButton:hover{\
@@ -82,7 +81,7 @@ class hGCPDialog :public QWidget
                     background-color:rgba(255,230,230,255);\
                     text-align:center;\
                     font-size:36px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     border:1px solid rgb(228, 39, 44); \
                 }\
                 QPushButton:Pressed{\
@@ -90,1002 +89,1010 @@ class hGCPDialog :public QWidget
                     background-color:rgba(240,200,200,255);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     border:1px solid rgb(228, 39, 44); \
                     }");
-            NoButton = new QPushButton(this);
-            NoButton->setText(msg("Ui_Msg_Back"));
-            NoButton->setGeometry(QRect(500, 190, 350, 50));
-            NoButton->setStyleSheet("\
+		NoButton = new QPushButton(this);
+		NoButton->setText(msg("Ui_Msg_Back"));
+		NoButton->setGeometry(QRect(500, 190, 350, 50));
+		NoButton->setStyleSheet("\
                 QPushButton{\
                     color:#333333;\
                     background-color:rgba(255,255,255,200);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                     QPushButton:hover{\
                     color:#888888;\
                     background-color:rgba(255,255,255,255);\
                     text-align:center;\
                     font-size:36px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                     QPushButton:pressed{\
                     color:#66ccff;\
                     background-color:rgba(255,255,255,255);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     }");
-            connect(YesButton, SIGNAL(clicked()), this, SLOT(yesclose()));
-            connect(NoButton, SIGNAL(clicked()), this, SLOT(noclose()));
-        }
-        void mousePressEvent(QMouseEvent * event) {
-                QWidget* pWindow = this->window();
-                ReleaseCapture();
-                SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
-                event->ignore();
-        }
-    public slots:
-        void yesclose(void) {     
-            writesettings("GCPMode", "True");
-            emit chooseEnd();
-            close();
-        }
-        void noclose(void) {
-            emit chooseEnd();
-            close();
-        }
+		connect(YesButton, SIGNAL(clicked()), this, SLOT(yesclose()));
+		connect(NoButton, SIGNAL(clicked()), this, SLOT(noclose()));
+	}
+	void mousePressEvent(QMouseEvent* event) {
+#if DEPLOY == 1
+		QWidget* pWindow = this->window();
+		ReleaseCapture();
+		SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
+		event->ignore();
+#endif
+	}
+public slots:
+	void yesclose(void) {
+		writesettings("GCPMode", "True");
+		emit chooseEnd();
+		close();
+	}
+	void noclose(void) {
+		emit chooseEnd();
+		close();
+	}
 };
 
-//¸üÐÂÒ³Ãæ¶Ô»°¿ò
+//æ›´æ–°é¡µé¢å¯¹è¯æ¡†
 class hUpdateDialog :public QWidget
 {
-    Q_OBJECT
-    signals:
-        void windowIsClosed(void);
-    public:
-        QFrame* frame;
-        QHBoxLayout* hl;
-        QGraphicsDropShadowEffect* SelfEffect;
-        QLabel* OopsLabel;
-        QLabel* NewVersionLabel;
-        QLabel* UpdateInfoLabel;
-        QPushButton* BackButton;
-        QString Preurl="https://pan.baidu.com/s/1P2HXW0Y5G4piA7XUKXWWzg";
-        QString Puburl="https://pan.baidu.com/s/1Zo_lZzEjpIaEsM4LdCohYQ";
-        QString gVersionName;
-        QString gDialogLink;
-        CurrentStyle* Style;
-        int gX, gY;
-        hUpdateDialog(int X, int Y, QString VersionName,QString DialogLink,QWidget* parent = Q_NULLPTR) {
-            gVersionName = VersionName;
-            gDialogLink = DialogLink;
-            this->setParent(parent);
-            Style = new CurrentStyle(this);
-            this->setGeometry(QRect(500, 400, 900, 300));
-            this->setWindowFlags(Qt::FramelessWindowHint);
-            this->setAttribute(Qt::WA_TranslucentBackground);
-            this->setAttribute(Qt::WA_DeleteOnClose);
-            frame = new QFrame();
-            hl = new QHBoxLayout();
-            hl->setContentsMargins(10, 10, 10, 10);
-            SelfEffect = new QGraphicsDropShadowEffect();
-            SelfEffect->setOffset(4, 4);
-            SelfEffect->setColor(QColor(0, 0, 0, 127));
-            SelfEffect->setBlurRadius(15);
-            frame->setGraphicsEffect(SelfEffect);
-            hl->addWidget(frame);
-            this->setLayout(hl);
+	Q_OBJECT
+signals:
+	void windowIsClosed(void);
+public:
+	QFrame* frame;
+	QHBoxLayout* hl;
+	QGraphicsDropShadowEffect* SelfEffect;
+	QLabel* OopsLabel;
+	QLabel* NewVersionLabel;
+	QLabel* UpdateInfoLabel;
+	QPushButton* BackButton;
+	QString Preurl = "https://pan.baidu.com/s/1P2HXW0Y5G4piA7XUKXWWzg";
+	QString Puburl = "https://pan.baidu.com/s/1Zo_lZzEjpIaEsM4LdCohYQ";
+	QString gVersionName;
+	QString gDialogLink;
+	CurrentStyle* Style;
+	int gX, gY;
+	hUpdateDialog(int X, int Y, QString VersionName, QString DialogLink, QWidget* parent = Q_NULLPTR) {
+		gVersionName = VersionName;
+		gDialogLink = DialogLink;
+		this->setParent(parent);
+		Style = new CurrentStyle(this);
+		this->setGeometry(QRect(500, 400, 900, 300));
+		this->setWindowFlags(Qt::FramelessWindowHint);
+		this->setAttribute(Qt::WA_TranslucentBackground);
+		this->setAttribute(Qt::WA_DeleteOnClose);
+		frame = new QFrame();
+		hl = new QHBoxLayout();
+		hl->setContentsMargins(10, 10, 10, 10);
+		SelfEffect = new QGraphicsDropShadowEffect();
+		SelfEffect->setOffset(4, 4);
+		SelfEffect->setColor(QColor(0, 0, 0, 127));
+		SelfEffect->setBlurRadius(15);
+		frame->setGraphicsEffect(SelfEffect);
+		hl->addWidget(frame);
+		this->setLayout(hl);
 
-            this->setStyleSheet(Style->Widget1);
+		this->setStyleSheet(Style->Widget1);
 
-            OopsLabel = new QLabel(this);
-            OopsLabel->setText(msg("Ui_Update_Update_Available")+"UYXA");
-            OopsLabel->setGeometry(QRect(50, 50, 800, 40));
-            OopsLabel->setAlignment(Qt::AlignCenter);
-            OopsLabel->setStyleSheet("\
+		OopsLabel = new QLabel(this);
+		OopsLabel->setText(msg("Ui_Update_Update_Available") + "UYXA");
+		OopsLabel->setGeometry(QRect(50, 50, 800, 40));
+		OopsLabel->setAlignment(Qt::AlignCenter);
+		OopsLabel->setStyleSheet("\
                 QLabel{\
                 background-color:rgba(255, 255, 255, 0);\
                 border:none;\
                 border-radius:0px;\
                 color:#88DDFF;\
-                font-family:'Microsoft YaHei';\
+                \
                 font-size:30px;\
                 }");
-            
-            NewVersionLabel = new QLabel(this);
-            if (VersionName.contains("Pre")) {
-                NewVersionLabel->setText("<A href='" + Preurl + "'>" + VersionName + "</a>");
-            }
-            else {
-                NewVersionLabel->setText("<A href='" + Puburl + "'>" + VersionName + "</a>");
-            }
-            NewVersionLabel->setOpenExternalLinks(TRUE);
-            NewVersionLabel->setGeometry(QRect(50, 120, 800, 40));
-            NewVersionLabel->setAlignment(Qt::AlignCenter);
-            NewVersionLabel->setStyleSheet("\
+
+		NewVersionLabel = new QLabel(this);
+		if (VersionName.contains("Pre")) {
+			NewVersionLabel->setText("<A href='" + Preurl + "'>" + VersionName + "</a>");
+		}
+		else {
+			NewVersionLabel->setText("<A href='" + Puburl + "'>" + VersionName + "</a>");
+		}
+		NewVersionLabel->setOpenExternalLinks(TRUE);
+		NewVersionLabel->setGeometry(QRect(50, 120, 800, 40));
+		NewVersionLabel->setAlignment(Qt::AlignCenter);
+		NewVersionLabel->setStyleSheet("\
                 QLabel{\
                 background-color:rgba(255, 255, 255, 0);\
                 border:none;\
                 border-radius:0px;\
                 color:#000000;\
-                font-family:'Microsoft YaHei';\
+                \
                 font-size:20px;\
                 }");
 
-            BackButton = new QPushButton(this);
-            BackButton->setGeometry(QRect(50, 180, 800, 50));
-            BackButton->setText(msg("Ui_Text_Common_Back"));
-            BackButton->setStyleSheet(Style->Button2);
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(close()));
+		BackButton = new QPushButton(this);
+		BackButton->setGeometry(QRect(50, 180, 800, 50));
+		BackButton->setText(msg("Ui_Text_Common_Back"));
+		BackButton->setStyleSheet(Style->Button2);
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(close()));
 
-            UpdateInfoLabel = new QLabel(this);
-            UpdateInfoLabel->setGeometry(QRect(50, 250, 800, 30));
-            UpdateInfoLabel->setAlignment(Qt::AlignCenter);
-            UpdateInfoLabel->setStyleSheet("\
+		UpdateInfoLabel = new QLabel(this);
+		UpdateInfoLabel->setGeometry(QRect(50, 250, 800, 30));
+		UpdateInfoLabel->setAlignment(Qt::AlignCenter);
+		UpdateInfoLabel->setStyleSheet("\
                 QLabel{\
                 background-color:rgba(255, 255, 255, 0);\
                 border:none;\
                 border-radius:0px;\
                 color:#CC2211;\
-                font-family:'Microsoft YaHei';\
+                \
                 font-size:20px;\
                 }");
-            if (DialogLink != "NONELINK") {
-                UpdateInfoLabel->setOpenExternalLinks(TRUE);
-                UpdateInfoLabel->setText("<A href='" + DialogLink + "'>" + msg("Ui_Update_With_Log") + "</a>");
-            }
-            else {
-                UpdateInfoLabel->setOpenExternalLinks(FALSE);
-                UpdateInfoLabel->setText(msg("Ui_Update_Without_Log"));
-            }
-        }
-        void UpdateLang(void) {
-            OopsLabel->setText(msg("Ui_Update_Update_Available") + "UYXA");
-            if (gVersionName.contains("Pre")) {
-                NewVersionLabel->setText("<A href='" + Preurl + "'>" + gVersionName + "</a>");
-            }
-            else {
-                NewVersionLabel->setText("<A href='" + Puburl + "'>" + gVersionName + "</a>");
-            }
-            BackButton->setText(msg("Ui_Text_Common_Back"));
-            if (gDialogLink != "NONELINK") {
-                UpdateInfoLabel->setOpenExternalLinks(TRUE);
-                UpdateInfoLabel->setText("<A href='" + gDialogLink + "'>" + msg("Ui_Update_With_Log") + "</a>");
-            }
-            else {
-                UpdateInfoLabel->setOpenExternalLinks(FALSE);
-                UpdateInfoLabel->setText(msg("Ui_Update_Without_Log"));
-            }
-        }
-        void closeEvent(QCloseEvent* event) {
-            emit windowIsClosed();
-        }
+		if (DialogLink != "NONELINK") {
+			UpdateInfoLabel->setOpenExternalLinks(TRUE);
+			UpdateInfoLabel->setText("<A href='" + DialogLink + "'>" + msg("Ui_Update_With_Log") + "</a>");
+		}
+		else {
+			UpdateInfoLabel->setOpenExternalLinks(FALSE);
+			UpdateInfoLabel->setText(msg("Ui_Update_Without_Log"));
+		}
+	}
+	void UpdateLang(void) {
+		OopsLabel->setText(msg("Ui_Update_Update_Available") + "UYXA");
+		if (gVersionName.contains("Pre")) {
+			NewVersionLabel->setText("<A href='" + Preurl + "'>" + gVersionName + "</a>");
+		}
+		else {
+			NewVersionLabel->setText("<A href='" + Puburl + "'>" + gVersionName + "</a>");
+		}
+		BackButton->setText(msg("Ui_Text_Common_Back"));
+		if (gDialogLink != "NONELINK") {
+			UpdateInfoLabel->setOpenExternalLinks(TRUE);
+			UpdateInfoLabel->setText("<A href='" + gDialogLink + "'>" + msg("Ui_Update_With_Log") + "</a>");
+		}
+		else {
+			UpdateInfoLabel->setOpenExternalLinks(FALSE);
+			UpdateInfoLabel->setText(msg("Ui_Update_Without_Log"));
+		}
+	}
+	void closeEvent(QCloseEvent* event) {
+		emit windowIsClosed();
+	}
 };
 
-//Ê×Ò³¶¨Òå£¨²»º¬Í¼±êºÍ´ó±êÌâ£©
+//é¦–é¡µå®šä¹‰ï¼ˆä¸å«å›¾æ ‡å’Œå¤§æ ‡é¢˜ï¼‰
 class hFirstPage :public QWidget
 {
-
 	Q_OBJECT
-	public:
-        QPushButton* UIModeButton;
-        QPushButton* ToolsButton;
-        QPushButton* CreateButton;
-        QPushButton* SettingsButton;
-        QPushButton* ExitButton;
-        CurrentStyle* Style;
-		hFirstPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(0, 0, 700, 650));
-            Style = new CurrentStyle(this);
+public:
+	QPushButton* UIModeButton;
+	QPushButton* ToolsButton;
+	QPushButton* CreateButton;
+	QPushButton* SettingsButton;
+	QPushButton* ExitButton;
+	CurrentStyle* Style;
+	hFirstPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(0, 0, 700, 650));
+		Style = new CurrentStyle(this);
 
-            UIModeButton = new QPushButton(this);
-            UIModeButton->setGeometry(QRect(50, 350, 600, 50));
-            UIModeButton->setStyleSheet(Style->Button1);
+		UIModeButton = new QPushButton(this);
+		UIModeButton->setGeometry(QRect(50, 350, 600, 50));
+		UIModeButton->setStyleSheet(Style->Button1);
 
-            ToolsButton = new QPushButton(this);
-            ToolsButton->setGeometry(QRect(390, 420, 260, 50));
-            ToolsButton->setStyleSheet(Style->Button1);
+		ToolsButton = new QPushButton(this);
+		ToolsButton->setGeometry(QRect(390, 420, 260, 50));
+		ToolsButton->setStyleSheet(Style->Button1);
 
-            CreateButton = new QPushButton(this);
-            CreateButton->setGeometry(QRect(50, 420, 260, 50));
-            CreateButton->setStyleSheet(Style->Button1);
+		CreateButton = new QPushButton(this);
+		CreateButton->setGeometry(QRect(50, 420, 260, 50));
+		CreateButton->setStyleSheet(Style->Button1);
 
-            SettingsButton = new QPushButton(this);
-            SettingsButton->setGeometry(QRect(50, 490, 600, 50));
-            SettingsButton->setStyleSheet(Style->Button1);
+		SettingsButton = new QPushButton(this);
+		SettingsButton->setGeometry(QRect(50, 490, 600, 50));
+		SettingsButton->setStyleSheet(Style->Button1);
 
-            ExitButton = new QPushButton(this);
-            ExitButton->setGeometry(QRect(50, 560, 260, 50));
-            ExitButton->setStyleSheet(Style->Button1);
+		ExitButton = new QPushButton(this);
+		ExitButton->setGeometry(QRect(390, 560, 260, 50));
+		ExitButton->setStyleSheet(Style->Button1);
 
-            setChildText();
-		}
-        
-        void setChildText(void) {
-            UIModeButton->setText(msg("Ui_MainPage_Launch_UI"));
-            ToolsButton->setText(msg("Ui_MainPage_Open_Tools"));
-            CreateButton->setText(msg("Ui_MainPage_Open_Creation"));
-            SettingsButton->setText(msg("Ui_MainPage_Open_Settings"));
-            ExitButton->setText(msg("Ui_Text_Common_Exit"));
-        }
+		setChildText();
+	}
+
+	void setChildText(void) {
+		UIModeButton->setText(msg("Ui_MainPage_Launch_UI"));
+		ToolsButton->setText(msg("Ui_MainPage_Open_Tools"));
+		CreateButton->setText(msg("Ui_MainPage_Open_Creation"));
+		SettingsButton->setText(msg("Ui_MainPage_Open_Settings"));
+		ExitButton->setText(msg("Ui_Text_Common_Exit"));
+	}
 };
 
-//Éè¶¨Ò³¶¨Òå
+//è®¾å®šé¡µå®šä¹‰
 class hSettingsPage :public QWidget
 {
-    Q_OBJECT
-    public:
-        QPushButton* AboutButton;
-        QPushButton* LangButton;
-        QPushButton* DevButton;
-        QPushButton* NormalButton;
-        QPushButton* GCPButton;
-        hGCPDialog* GCPDialog;
-        hDevSettings* DevPage;
-        hProgramSettings* NormalSetPage;
-        CurrentStyle* Style;
-        int gX=0, gY=0;
-        hSettingsPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(0, 0, 700, 650));
-            Style = new CurrentStyle(this);
+	Q_OBJECT
+public:
+	QPushButton* AboutButton;
+	QPushButton* LangButton;
+	QPushButton* DevButton;
+	QPushButton* NormalButton;
+	QPushButton* GCPButton;
+	hGCPDialog* GCPDialog;
+	hDevSettings* DevPage;
+	hProgramSettings* NormalSetPage;
+	CurrentStyle* Style;
+	int gX = 0, gY = 0;
+	hSettingsPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(0, 0, 700, 650));
+		Style = new CurrentStyle(this);
 
-            gX = X;
-            gY = Y;
-            AboutButton = new QPushButton(this);
-            AboutButton->setGeometry(QRect(50,420,260,50));
-            AboutButton->setStyleSheet(Style->Button1);
+		gX = X;
+		gY = Y;
+		AboutButton = new QPushButton(this);
+		AboutButton->setGeometry(QRect(50, 420, 260, 50));
+		AboutButton->setStyleSheet(Style->Button1);
 
-            LangButton = new QPushButton(this);
-            LangButton->setGeometry(QRect(390,420,260,50));
-            LangButton->setStyleSheet(Style->Button1);
+		LangButton = new QPushButton(this);
+		LangButton->setGeometry(QRect(390, 420, 260, 50));
+		LangButton->setStyleSheet(Style->Button1);
 
-            NormalButton = new QPushButton(this);
-            NormalButton->setGeometry(QRect(50,350,260,50));
-            NormalButton->setStyleSheet(Style->Button1);
+		NormalButton = new QPushButton(this);
+		NormalButton->setGeometry(QRect(50, 350, 260, 50));
+		NormalButton->setStyleSheet(Style->Button1);
 
-            DevButton = new QPushButton(this);
-            DevButton->setGeometry(QRect(390, 350, 260, 50));
-            DevButton->setStyleSheet(Style->Button1);
+		DevButton = new QPushButton(this);
+		DevButton->setGeometry(QRect(390, 350, 260, 50));
+		DevButton->setStyleSheet(Style->Button1);
 
-            /*GCPButton = new QPushButton(this);
-            GCPButton->setGeometry(QRect(50, 490, 260, 50));
-            if (Program_Settings("GCPMode") == "True") {
-                GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
-            }else {
-                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
-            }
-            GCPButton->setStyleSheet("\
-                QPushButton{\
-                    color:#333333;\
-                    background-color:rgba(255,255,255,210);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                }\
-                QPushButton:hover{\
-                    color:#888888;\
-                    background-color:rgba(255,255,255,255);\
-                    text-align:center;\
-                    font-size:36px;\
-                    font-family:'Microsoft YaHei';\
-                }\
-                QPushButton:Pressed{\
-                    color:#66ccff;\
-                    background-color:rgba(255,255,255,255);\
-                    text-align:center;\
-                    font-size:32px;\
-                    font-family:'Microsoft YaHei';\
-                    }");*/
-            setChildText();
-        }
-        void setChildText(void) {
-            AboutButton->setText(msg("Ui_Text_Common_About_"));
-            LangButton->setText(msg("Ui_SettingsPage_Choose_Language"));
-            NormalButton->setText(msg("Ui_SettingsPage_Normal_Settings"));
-            DevButton->setText(msg("Ui_SettingsPage_Dev_Settings"));
-        }
+		/*GCPButton = new QPushButton(this);
+		GCPButton->setGeometry(QRect(50, 490, 260, 50));
+		if (Program_Settings("GCPMode") == "True") {
+			GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+		}else {
+			GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+		}
+		GCPButton->setStyleSheet("\
+			QPushButton{\
+				color:#333333;\
+				background-color:rgba(255,255,255,210);\
+				text-align:center;\
+				font-size:32px;\
+				\
+			}\
+			QPushButton:hover{\
+				color:#888888;\
+				background-color:rgba(255,255,255,255);\
+				text-align:center;\
+				font-size:36px;\
+				\
+			}\
+			QPushButton:Pressed{\
+				color:#66ccff;\
+				background-color:rgba(255,255,255,255);\
+				text-align:center;\
+				font-size:32px;\
+				\
+				}");*/
+		setChildText();
+	}
+	void setChildText(void) {
+		AboutButton->setText(msg("Ui_Text_Common_About_"));
+		LangButton->setText(msg("Ui_SettingsPage_Choose_Language"));
+		NormalButton->setText(msg("Ui_SettingsPage_Normal_Settings"));
+		DevButton->setText(msg("Ui_SettingsPage_Dev_Settings"));
+	}
 
-    public slots:
-        /*void showGCPDialog(void) {
-            if (Program_Settings("GCPMode") == "True") {
-                writesettings("GCPMode", "False");
-                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
-            }
-            else {
-                GCPDialog = new hGCPDialog(gX, gY);
-                GCPDialog->show();
-                connect(GCPDialog, SIGNAL(chooseEnd()), this, SLOT(repaintMsg()));
-            }
-        }*/
-        void showDevSetPage(void) {
-            DevPage = new hDevSettings(gX, gY);
-            DevPage->show(); 
-        }
-        void showNormalSetPage(void) {
-            NormalSetPage = new hProgramSettings(gX, gY);
-            NormalSetPage->show();
-        }
-        /*void repaintMsg(void){
-            if (Program_Settings("GCPMode") == "True") {
-                GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
-            }
-            else {
-                GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
-            }
-            
-        }*/
+public slots:
+	/*void showGCPDialog(void) {
+		if (Program_Settings("GCPMode") == "True") {
+			writesettings("GCPMode", "False");
+			GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+		}
+		else {
+			GCPDialog = new hGCPDialog(gX, gY);
+			GCPDialog->show();
+			connect(GCPDialog, SIGNAL(chooseEnd()), this, SLOT(repaintMsg()));
+		}
+	}*/
+	void showDevSetPage(void) {
+		DevPage = new hDevSettings(gX, gY);
+		DevPage->show();
+	}
+	void showNormalSetPage(void) {
+		NormalSetPage = new hProgramSettings(gX, gY);
+		NormalSetPage->show();
+	}
+	/*void repaintMsg(void){
+		if (Program_Settings("GCPMode") == "True") {
+			GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+		}
+		else {
+			GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+		}
+	}*/
 };
 
-//¹¤¾ßÒ³Ãæ¶¨Òå
+//å·¥å…·é¡µé¢å®šä¹‰
 class hToolsPage :public QWidget
 {
-    Q_OBJECT
-    public:
-        QPushButton* ToSpolButton;
-        QPushButton* ClrWrongButton;
-        QPushButton* ClrCacheButton;
-        CurrentStyle* Style;
-        int gX, gY;
-        hToolsPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(0, 0, 700, 650));
-            Style = new CurrentStyle(this);
-            gX = X;
-            gY = Y;
+	Q_OBJECT
+public:
+	QPushButton* ToSpolButton;
+	QPushButton* ClrWrongButton;
+	QPushButton* ClrCacheButton;
+	CurrentStyle* Style;
+	int gX, gY;
+	hToolsPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(0, 0, 700, 650));
+		Style = new CurrentStyle(this);
+		gX = X;
+		gY = Y;
 
-            /*ToSpolButton = new QPushButton(this);
-            ToSpolButton->setGeometry(QRect(390,420,260,50));
-            ToSpolButton->setStyleSheet(Style->Button1);*/
+		/*ToSpolButton = new QPushButton(this);
+		ToSpolButton->setGeometry(QRect(390,420,260,50));
+		ToSpolButton->setStyleSheet(Style->Button1);*/
 
-            ClrWrongButton = new QPushButton(this);
-            ClrWrongButton->setGeometry(QRect(50,350,260,50));
-            ClrWrongButton->setStyleSheet(Style->Button1);
+		ClrWrongButton = new QPushButton(this);
+		ClrWrongButton->setGeometry(QRect(50, 350, 260, 50));
+		ClrWrongButton->setStyleSheet(Style->Button1);
 
-            ClrCacheButton = new QPushButton(this);
-            ClrCacheButton->setGeometry(QRect(390,350,260,50));
-            ClrCacheButton->setStyleSheet(Style->Button1);
+		ClrCacheButton = new QPushButton(this);
+		ClrCacheButton->setGeometry(QRect(390, 350, 260, 50));
+		ClrCacheButton->setStyleSheet(Style->Button1);
 
-            setChildText();
-        }
-        void setChildText(void){
-            //ToSpolButton->setText(msg("Ui_Msg_To_Spol"));
-            ClrWrongButton->setText(msg("Ui_ToolsPage_Delete_Wrong"));
-            ClrCacheButton->setText(msg("Ui_ToolsPage_Delete_Cache"));
-        }
+		setChildText();
+	}
+	void setChildText(void) {
+		//ToSpolButton->setText(msg("Ui_Msg_To_Spol"));
+		ClrWrongButton->setText(msg("Ui_ToolsPage_Delete_Wrong"));
+		ClrCacheButton->setText(msg("Ui_ToolsPage_Delete_Cache"));
+	}
 };
 
-//´´×÷Ò³Ãæ¶¨Òå
+//åˆ›ä½œé¡µé¢å®šä¹‰
 class hCreatePage :public QWidget
 {
-    Q_OBJECT
-    public:
-        int gX, gY;
-        QPushButton* OpenButton_Cache;
-        QPushButton* OpenButton_Source;
-        QPushButton* OpenButton_Story;
-        QPushButton* OpenButton_Official;
-        QPushButton* SPOLDevButton;
-        CurrentStyle* Style;
-        hCreatePage(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(0, 0, 700, 650));
-            Style = new CurrentStyle(this);
-            gX = X;
-            gY = Y;
-            OpenButton_Cache= new QPushButton(this);
-            OpenButton_Cache->setGeometry(QRect(50,280,260,50));
-            OpenButton_Cache->setObjectName("OpenButton_Cache");
-            OpenButton_Cache->setStyleSheet(Style->Button1);
+	Q_OBJECT
+public:
+	int gX, gY;
+	QPushButton* OpenButton_Cache;
+	QPushButton* OpenButton_Source;
+	QPushButton* OpenButton_Story;
+	QPushButton* OpenButton_Official;
+	QPushButton* SPOLDevButton;
+	CurrentStyle* Style;
+	hCreatePage(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(0, 0, 700, 650));
+		Style = new CurrentStyle(this);
+		gX = X;
+		gY = Y;
+		OpenButton_Cache = new QPushButton(this);
+		OpenButton_Cache->setGeometry(QRect(50, 280, 260, 50));
+		OpenButton_Cache->setObjectName("OpenButton_Cache");
+		OpenButton_Cache->setStyleSheet(Style->Button1);
 
-            OpenButton_Source= new QPushButton(this);
-            OpenButton_Source->setGeometry(QRect(50,350,260,50));
-            OpenButton_Source->setObjectName("OpenButton_Source");
-            OpenButton_Source->setStyleSheet(Style->Button1);
+		OpenButton_Source = new QPushButton(this);
+		OpenButton_Source->setGeometry(QRect(50, 350, 260, 50));
+		OpenButton_Source->setObjectName("OpenButton_Source");
+		OpenButton_Source->setStyleSheet(Style->Button1);
 
-            OpenButton_Story= new QPushButton(this);
-            OpenButton_Story->setGeometry(QRect(50,420,260,50));
-            OpenButton_Story->setObjectName("OpenButton_Story");
-            OpenButton_Story->setStyleSheet(Style->Button1);
+		OpenButton_Story = new QPushButton(this);
+		OpenButton_Story->setGeometry(QRect(50, 420, 260, 50));
+		OpenButton_Story->setObjectName("OpenButton_Story");
+		OpenButton_Story->setStyleSheet(Style->Button1);
 
-            OpenButton_Official= new QPushButton(this);
-            OpenButton_Official->setGeometry(QRect(50,490,260,50));
-            OpenButton_Official->setObjectName("OpenButton_Official");
-            OpenButton_Official->setStyleSheet(Style->Button1);
+		OpenButton_Official = new QPushButton(this);
+		OpenButton_Official->setGeometry(QRect(50, 490, 260, 50));
+		OpenButton_Official->setObjectName("OpenButton_Official");
+		OpenButton_Official->setStyleSheet(Style->Button1);
+		/*
+		SPOLDevButton= new QPushButton(this);
+		SPOLDevButton->setGeometry(QRect(390, 280, 260, 50));
+		SPOLDevButton->setObjectName("SPOLDevButton");
+		SPOLDevButton->setStyleSheet(Style->Button1);
+		*/
 
-            SPOLDevButton= new QPushButton(this);
-            SPOLDevButton->setGeometry(QRect(390, 280, 260, 50));
-            SPOLDevButton->setObjectName("SPOLDevButton");
-            SPOLDevButton->setStyleSheet(Style->Button1);
-
-            setChildText();
-        }
-        void setChildText(void) {
-            OpenButton_Cache->setText(msg("Ui_CreationPage_Folder_Cache"));
-            OpenButton_Source->setText(msg("Ui_CreationPage_Folder_Source"));
-            OpenButton_Story->setText(msg("Ui_CreationPage_Folder_Story"));
-            OpenButton_Official->setText(msg("Ui_CreationPage_Folder_Official"));
-            SPOLDevButton->setText(msg("Ui_CreationPage_Open_SPOLDev"));
-        }
-    public slots:
-        void showSPOLDevWindow(void) {
-            QString SPOLDevPath = QDir::currentPath() + "/SPOLDev.exe";
-            system(("start " + SPOLDevPath).toLocal8Bit());
-            //DevWindow = new SPOLDevWindow();
-            //DevWindow->show();
-        }
+		setChildText();
+	}
+	void setChildText(void) {
+		OpenButton_Cache->setText(msg("Ui_CreationPage_Folder_Cache"));
+		OpenButton_Source->setText(msg("Ui_CreationPage_Folder_Source"));
+		OpenButton_Story->setText(msg("Ui_CreationPage_Folder_Story"));
+		OpenButton_Official->setText(msg("Ui_CreationPage_Folder_Official"));
+		//SPOLDevButton->setText(msg("Ui_CreationPage_Open_SPOLDev"));
+	}
+public slots:
+	void showSPOLDevWindow(void) {
+#if DEPLOY == 1
+		QString SPOLDevPath = QDir::currentPath() + "/SPOLDev.exe";
+		system(("start " + SPOLDevPath).toLocal8Bit());
+		//DevWindow = new SPOLDevWindow();
+		//DevWindow->show();
+#endif
+	}
 };
 
-//¹ØÓÚÒ³¶¨Òå
+//å…³äºŽé¡µå®šä¹‰
 class hAboutPage :public QWidget
 {
-    Q_OBJECT
-    public:
-        QWidget* BackgroundWidget;
-        QLabel* AboutLabel_FullVer;
-        QLabel* AboutLabel_MainVer;
-        QLabel* AboutLabel_SubVer;
-        QLabel* AboutLabel_BuildVer;
-        QLabel* AboutLabel_SpolVer;
-        QLabel* AboutLabel_Support;
-        QLabel* AboutLabel_Donate;
-        QPushButton* MoreAboutInfo;
-        QPushButton* CheckUpdateButton;
-        hMoreInfo* MoreInfoPage;
-        CurrentStyle* Style;
-        int gX, gY;
-        hAboutPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
-            this->setParent(parent);
-            this->setGeometry(QRect(0, 0, 700, 650));
-            Style = new CurrentStyle(this);
+	Q_OBJECT
+public:
+	QWidget* BackgroundWidget;
+	QLabel* AboutLabel_FullVer;
+	QLabel* AboutLabel_MainVer;
+	QLabel* AboutLabel_SubVer;
+	QLabel* AboutLabel_BuildVer;
+	QLabel* AboutLabel_SpolVer;
+	QLabel* AboutLabel_Support;
+	QLabel* AboutLabel_Donate;
+	QPushButton* MoreAboutInfo;
+	QPushButton* CheckUpdateButton;
+	hMoreInfo* MoreInfoPage;
+	CurrentStyle* Style;
+	int gX, gY;
+	hAboutPage(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setGeometry(QRect(0, 0, 700, 650));
+		Style = new CurrentStyle(this);
 
-            gX = X;
-            gY = Y;
-            BackgroundWidget = new QWidget(this);
-            BackgroundWidget->setGeometry(QRect(30, 275, 640, 200));
-            BackgroundWidget->setStyleSheet("QWidget{background-color:rgba(255,255,255,150);}");
+		gX = X;
+		gY = Y;
+		BackgroundWidget = new QWidget(this);
+		BackgroundWidget->setGeometry(QRect(30, 275, 640, 200));
+		BackgroundWidget->setStyleSheet("QWidget{background-color:rgba(255,255,255,150);}");
 
-            AboutLabel_FullVer = new QLabel(this);          
-            AboutLabel_FullVer->setGeometry(QRect(25,280,650,30));
-            AboutLabel_FullVer->setAlignment(Qt::AlignCenter);
-            AboutLabel_FullVer->setStyleSheet(Style->Label1);
+		AboutLabel_FullVer = new QLabel(this);
+		AboutLabel_FullVer->setGeometry(QRect(25, 280, 650, 30));
+		AboutLabel_FullVer->setAlignment(Qt::AlignCenter);
+		AboutLabel_FullVer->setStyleSheet(Style->Label1);
 
-            AboutLabel_MainVer = new QLabel(this);
-            AboutLabel_MainVer->setGeometry(QRect(60,320,300,30));
-            AboutLabel_MainVer->setAlignment(Qt::AlignLeft);
-            AboutLabel_MainVer->setStyleSheet(Style->Label1);
+		AboutLabel_MainVer = new QLabel(this);
+		AboutLabel_MainVer->setGeometry(QRect(60, 320, 300, 30));
+		AboutLabel_MainVer->setAlignment(Qt::AlignLeft);
+		AboutLabel_MainVer->setStyleSheet(Style->Label1);
 
-            AboutLabel_SubVer= new QLabel(this);
-            AboutLabel_SubVer->setGeometry(QRect(360,320,300,30));
-            AboutLabel_SubVer->setAlignment(Qt::AlignLeft);
-            AboutLabel_SubVer->setStyleSheet(Style->Label1);
+		AboutLabel_SubVer = new QLabel(this);
+		AboutLabel_SubVer->setGeometry(QRect(360, 320, 300, 30));
+		AboutLabel_SubVer->setAlignment(Qt::AlignLeft);
+		AboutLabel_SubVer->setStyleSheet(Style->Label1);
 
-            AboutLabel_BuildVer= new QLabel(this);
-            AboutLabel_BuildVer->setGeometry(QRect(60,360,300,30));
-            AboutLabel_BuildVer->setAlignment(Qt::AlignLeft);
-            AboutLabel_BuildVer->setStyleSheet(Style->Label1);
+		AboutLabel_BuildVer = new QLabel(this);
+		AboutLabel_BuildVer->setGeometry(QRect(60, 360, 300, 30));
+		AboutLabel_BuildVer->setAlignment(Qt::AlignLeft);
+		AboutLabel_BuildVer->setStyleSheet(Style->Label1);
 
-            AboutLabel_SpolVer= new QLabel(this);
-            AboutLabel_SpolVer->setGeometry(QRect(360,360,300,30));
-            AboutLabel_SpolVer->setAlignment(Qt::AlignLeft);
-            AboutLabel_SpolVer->setStyleSheet(Style->Label1);
+		AboutLabel_SpolVer = new QLabel(this);
+		AboutLabel_SpolVer->setGeometry(QRect(360, 360, 300, 30));
+		AboutLabel_SpolVer->setAlignment(Qt::AlignLeft);
+		AboutLabel_SpolVer->setStyleSheet(Style->Label1);
 
-            AboutLabel_Support= new QLabel(this);
-            AboutLabel_Support->setGeometry(QRect(60, 400, 600, 30));
-            AboutLabel_Support->setAlignment(Qt::AlignLeft);
-            AboutLabel_Support->setStyleSheet(Style->Label1);
+		AboutLabel_Support = new QLabel(this);
+		AboutLabel_Support->setGeometry(QRect(60, 400, 600, 30));
+		AboutLabel_Support->setAlignment(Qt::AlignLeft);
+		AboutLabel_Support->setStyleSheet(Style->Label1);
 
-            AboutLabel_Donate= new QLabel(this);
-            AboutLabel_Donate->setOpenExternalLinks(FALSE);
-            AboutLabel_Donate->setGeometry(QRect(60, 440, 600, 30));
-            AboutLabel_Donate->setAlignment(Qt::AlignLeft);
-            AboutLabel_Donate->setStyleSheet(Style->Label1);
+		AboutLabel_Donate = new QLabel(this);
+		AboutLabel_Donate->setOpenExternalLinks(FALSE);
+		AboutLabel_Donate->setGeometry(QRect(60, 440, 600, 30));
+		AboutLabel_Donate->setAlignment(Qt::AlignLeft);
+		AboutLabel_Donate->setStyleSheet(Style->Label1);
 
-            MoreAboutInfo = new QPushButton(this);
-            MoreAboutInfo->setGeometry(QRect(50, 490, 600, 50));
-            MoreAboutInfo->setStyleSheet(Style->Button1);
+		MoreAboutInfo = new QPushButton(this);
+		MoreAboutInfo->setGeometry(QRect(50, 490, 600, 50));
+		MoreAboutInfo->setStyleSheet(Style->Button1);
 
-            CheckUpdateButton= new QPushButton(this);
-            CheckUpdateButton->setGeometry(QRect(50,560,260,50));
-            CheckUpdateButton->setStyleSheet(Style->Button1);
+		CheckUpdateButton = new QPushButton(this);
+		CheckUpdateButton->setGeometry(QRect(50, 560, 260, 50));
+		CheckUpdateButton->setStyleSheet(Style->Button1);
 
-            setChildText();
-        }
-        void setChildText(void){
-            AboutLabel_FullVer->setText(PROINFO::Total);
-            AboutLabel_MainVer->setText(msg("KAU_About_Info_MainVer") + PROINFO::Main);
-            AboutLabel_SubVer->setText(msg("KAU_About_Info_SubVer") + PROINFO::Sub);
-            AboutLabel_BuildVer->setText(msg("KAU_About_Info_BuildVer") + PROINFO::Build);
-            AboutLabel_SpolVer->setText(msg("KAU_About_Info_SpolVer") + PROINFO::SPOL);
-            AboutLabel_Support->setText(msg("KAU_About_Info_Support") + "×Ïµå¹¤×÷ÊÒ");
-            AboutLabel_Donate->setText(msg("KAU_About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
-            MoreAboutInfo->setText(msg("KAU_About_Info_More"));
-            CheckUpdateButton->setText(msg("Ui_AboutPage_Check_Update"));
-        }
-    public slots:
-        void showMoreInfoPage(void) {
-            MoreInfoPage = new hMoreInfo(gX, gY);
-            MoreInfoPage->show();
-        }
+		setChildText();
+	}
+	void setChildText(void) {
+		AboutLabel_FullVer->setText(PROINFO::Total);
+		AboutLabel_MainVer->setText(msg("KAU_About_Info_MainVer") + PROINFO::Main);
+		AboutLabel_SubVer->setText(msg("KAU_About_Info_SubVer") + PROINFO::Sub);
+		AboutLabel_BuildVer->setText(msg("KAU_About_Info_BuildVer") + PROINFO::Build);
+		AboutLabel_SpolVer->setText(msg("KAU_About_Info_SpolVer") + PROINFO::SPOL);
+		AboutLabel_Support->setText(msg("KAU_About_Info_Support") + "ç´«é›å·¥ä½œå®¤");
+		AboutLabel_Donate->setText(msg("KAU_About_Info_Donate").arg("<A href='" + urlAFD + "'>" + urlAFD + "</a>"));
+		MoreAboutInfo->setText(msg("KAU_About_Info_More"));
+		CheckUpdateButton->setText(msg("Ui_AboutPage_Check_Update"));
+	}
+public slots:
+	void showMoreInfoPage(void) {
+		MoreInfoPage = new hMoreInfo(gX, gY);
+		MoreInfoPage->show();
+	}
 };
 
-//½»»¥´°¿Ú¿Ø¼þ×Ü¶¨Òå
+//äº¤äº’çª—å£æŽ§ä»¶æ€»å®šä¹‰
 class TopDef :public QWidget
 {
 	Q_OBJECT
-	public:
-		QDesktopWidget* desktop;
-		QFrame* frame;
-		QHBoxLayout* hl;
-		QGraphicsDropShadowEffect* SelfEffect;
-        hFirstPage* FirstPage;
-        hToolsPage* ToolsPage;
-        hCreatePage* CreatePage;
-        hSettingsPage* SettingsPage;
-        hAboutPage* AboutPage;
-        hDevSettings* DevSetPage;
-        QPushButton* BackButton;
-        QGraphicsDropShadowEffect* SABackButton;
-        
-        hUpdateDialog* UpdateDialog;
-        
-        QLabel* Titlelabel;
-        QLabel* Iconlabel;
-        QLabel* AnyInfolabel;
-        QImage LogoRaw;
-        QGraphicsOpacityEffect* OPTitlelabel;
-        QGraphicsOpacityEffect* OPIconlabel;
-        QGraphicsOpacityEffect* OPAnyInfolabel;
+public:
+	QDesktopWidget* desktop;
+	QFrame* frame;
+	QHBoxLayout* hl;
+	QGraphicsDropShadowEffect* SelfEffect;
+	hFirstPage* FirstPage;
+	hToolsPage* ToolsPage;
+	hCreatePage* CreatePage;
+	hSettingsPage* SettingsPage;
+	hAboutPage* AboutPage;
+	hDevSettings* DevSetPage;
+	QPushButton* BackButton;
+	QGraphicsDropShadowEffect* SABackButton;
 
-        CurrentStyle* Style;
-		int X,  Y;
-		void setupUI() {
-			desktop = new QDesktopWidget();
-			int Current_monitor = desktop->screenNumber();
-			QRect Display = desktop->screenGeometry(Current_monitor);
-			X = Display.width();
-			Y = Display.height();
-            Style = new CurrentStyle(this);
-            //»ù±¾Ô²½Ç¿ò¼ÜºÍ°ëÍ¸Ã÷Ð§¹ûÊµÏÖ
-            this->setGeometry(QRect(600, 400, 700, 300));
-			
-			this->setAttribute(Qt::WA_TranslucentBackground);           
-            this->setWindowFlags(Qt::FramelessWindowHint);
-			frame = new QFrame();
-			hl = new QHBoxLayout();
-			hl->setContentsMargins(10, 10, 10, 10);
-            SelfEffect = new QGraphicsDropShadowEffect();
-			SelfEffect->setOffset(4, 4);
-			SelfEffect->setColor(QColor(0, 0, 0, 127));
-			SelfEffect->setBlurRadius(15);
-            frame->setGraphicsEffect(SelfEffect);
-            hl->addWidget(frame);
-            this->setLayout(hl);
-            this->setFixedSize(this->size());
-            this->setStyleSheet(Style->Widget1);
+	hUpdateDialog* UpdateDialog;
 
-            AnyInfolabel = new QLabel(this);
-            AnyInfolabel->setText("Default Text");
-            AnyInfolabel->setStyleSheet("\
+	QLabel* Titlelabel;
+	QLabel* Iconlabel;
+	QLabel* AnyInfolabel;
+	QImage LogoRaw;
+	QGraphicsOpacityEffect* OPTitlelabel;
+	QGraphicsOpacityEffect* OPIconlabel;
+	QGraphicsOpacityEffect* OPAnyInfolabel;
+
+	CurrentStyle* Style;
+	int X, Y;
+	void setupUI() {
+		desktop = new QDesktopWidget();
+		int Current_monitor = desktop->screenNumber();
+		QRect Display = desktop->screenGeometry(Current_monitor);
+		X = Display.width();
+		Y = Display.height();
+		Style = new CurrentStyle(this);
+		//åŸºæœ¬åœ†è§’æ¡†æž¶å’ŒåŠé€æ˜Žæ•ˆæžœå®žçŽ°
+		this->setGeometry(QRect(600, 400, 700, 300));
+
+		this->setAttribute(Qt::WA_TranslucentBackground);
+		this->setWindowFlags(Qt::FramelessWindowHint);
+		frame = new QFrame();
+		hl = new QHBoxLayout();
+		hl->setContentsMargins(10, 10, 10, 10);
+		SelfEffect = new QGraphicsDropShadowEffect();
+		SelfEffect->setOffset(4, 4);
+		SelfEffect->setColor(QColor(0, 0, 0, 127));
+		SelfEffect->setBlurRadius(15);
+		frame->setGraphicsEffect(SelfEffect);
+		hl->addWidget(frame);
+		this->setLayout(hl);
+		this->setFixedSize(this->size());
+		this->setStyleSheet(Style->Widget1);
+
+		AnyInfolabel = new QLabel(this);
+		AnyInfolabel->setText("Default Text");
+		AnyInfolabel->setStyleSheet("\
                 QLabel{\
                     background-color:rgba(255,255,255,0);\
                     border:none;\
                     border-radius:0px;\
                     text-align:center;\
                     color:#4488FF;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     font-size:30px;\
                     }");
-            AnyInfolabel->setGeometry(QRect(50, 630, 600, 40));
-            AnyInfolabel->setAlignment(Qt::AlignCenter);
+		AnyInfolabel->setGeometry(QRect(50, 630, 600, 40));
+		AnyInfolabel->setAlignment(Qt::AlignCenter);
 
-            OPAnyInfolabel = new QGraphicsOpacityEffect();
-            OPAnyInfolabel->setOpacity(0);
-            AnyInfolabel->setGraphicsEffect(OPAnyInfolabel);
+		OPAnyInfolabel = new QGraphicsOpacityEffect();
+		OPAnyInfolabel->setOpacity(0);
+		AnyInfolabel->setGraphicsEffect(OPAnyInfolabel);
 
-            AboutPage = new hAboutPage(X, Y, this);
-            AboutPage->hide();
+		AboutPage = new hAboutPage(X, Y, this);
+		AboutPage->hide();
 
-            CreatePage = new hCreatePage(X, Y, this);
-            CreatePage->hide();
+		CreatePage = new hCreatePage(X, Y, this);
+		CreatePage->hide();
 
-            ToolsPage = new hToolsPage(X, Y, this);
-            ToolsPage->hide();
+		ToolsPage = new hToolsPage(X, Y, this);
+		ToolsPage->hide();
 
-            SettingsPage = new hSettingsPage(X, Y, this);
-            SettingsPage->hide();
+		SettingsPage = new hSettingsPage(X, Y, this);
+		SettingsPage->hide();
 
-            FirstPage = new hFirstPage(X,Y,this);
-            FirstPage->hide();
+		FirstPage = new hFirstPage(X, Y, this);
+		FirstPage->hide();
 
-            Titlelabel = new QLabel(this);
-            Titlelabel->setStyleSheet("\
+		Titlelabel = new QLabel(this);
+		Titlelabel->setStyleSheet("\
                 QLabel{\
                     background-color:rgba(255,255,255,0);\
                     border:none;\
                     border-radius:0px;\
                     color:#FFFFFF;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     font-size:50px;\
                     }");
-            Titlelabel->setGeometry(QRect(300, 100, 400, 100));
-            Titlelabel->setAlignment(Qt::AlignCenter);
-            OPTitlelabel = new QGraphicsOpacityEffect();
-            OPTitlelabel->setOpacity(0.999);
-            Titlelabel->setGraphicsEffect(OPTitlelabel);
+		Titlelabel->setGeometry(QRect(300, 100, 400, 100));
+		Titlelabel->setAlignment(Qt::AlignCenter);
+		OPTitlelabel = new QGraphicsOpacityEffect();
+		OPTitlelabel->setOpacity(0.999);
+		Titlelabel->setGraphicsEffect(OPTitlelabel);
 
-            Iconlabel = new QLabel(this);
-            Iconlabel->setGeometry(QRect(50, 15, 270, 270));
-            LogoRaw.load(PROPATH::Users + "/source/BaseUI/Image/Videotape_Win11.png");
-            LogoRaw = LogoRaw.scaled(270, 270, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-            Iconlabel->setPixmap(QPixmap::fromImage(LogoRaw));
-            Iconlabel->setStyleSheet("QLabel{background-color:rgba(255,255,255,0);border:none;border-radius:0px;}");
-            OPIconlabel = new QGraphicsOpacityEffect();
-            OPIconlabel->setOpacity(1);
-            Iconlabel->setGraphicsEffect(OPIconlabel);
+		Iconlabel = new QLabel(this);
+		Iconlabel->setGeometry(QRect(50, 15, 270, 270));
+		LogoRaw.load(PROPATH::Users + "/source/BaseUI/Image/Videotape_Win11.png");
+		LogoRaw = LogoRaw.scaled(270, 270, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		Iconlabel->setPixmap(QPixmap::fromImage(LogoRaw));
+		Iconlabel->setStyleSheet("QLabel{background-color:rgba(255,255,255,0);border:none;border-radius:0px;}");
+		OPIconlabel = new QGraphicsOpacityEffect();
+		OPIconlabel->setOpacity(1);
+		Iconlabel->setGraphicsEffect(OPIconlabel);
 
-            BackButton = new QPushButton(this);
-            BackButton->setGeometry(QRect(390, 560, 260, 50));
-            BackButton->setStyleSheet(Style->Button2);
-            setChildText();
-		}
-        void setChildText(void) {
-            BackButton->setText(msg("Ui_Text_Common_Back"));
-            Titlelabel->setText(msg("Ui_AllPage_Text_Title"));
-        }
+		BackButton = new QPushButton(this);
+		BackButton->setGeometry(QRect(390, 560, 260, 50));
+		BackButton->setStyleSheet(Style->Button2);
+		setChildText();
+	}
+	void setChildText(void) {
+		BackButton->setText(msg("Ui_Text_Common_Back"));
+		Titlelabel->setText(msg("Ui_AllPage_Text_Title"));
+	}
 };
 
-//½»»¥´°¿Ú¹¦ÄÜ×Ü¶¨Òå
+//äº¤äº’çª—å£åŠŸèƒ½æ€»å®šä¹‰
 class TopWindow :public TopDef
 {
 	Q_OBJECT
-	public:
-		int FirstEnter = 0;
-        hServiceFramework* Service;
-        bool UpdateDialogWindowIsShow = FALSE;
-        bool GCPDialogWindowIsShow = FALSE;
-		TopWindow(QWidget* parent = Q_NULLPTR){
-            this->setParent(parent);
-            this->setWindowTitle("YSP "+PROINFO::Main);
-            this->setWindowIcon(QIcon(PROPATH::Users + "/source/WinICO/Videotape_Win11.ico"));
-			setupUI();
-            showFirstPage();
-            connectAll();
-            Service = new hServiceFramework();
-            connect(Service, SIGNAL(Anyinfo(int, QString)), this, SLOT(showAnyInfo(int, QString)));
-            
+public:
+	int FirstEnter = 0;
+	hServiceFramework* Service;
+	bool UpdateDialogWindowIsShow = FALSE;
+	bool GCPDialogWindowIsShow = FALSE;
+	QTimer* timer;
+	TopWindow(QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setWindowTitle("YSP " + PROINFO::Main);
+		this->setWindowIcon(QIcon(PROPATH::Users + "/source/WinICO/Videotape_Win11.ico"));
+		setupUI();
+		showFirstPage();
+		connectAll();
+		Service = new hServiceFramework();
+		connect(Service, SIGNAL(Anyinfo(int, QString)), this, SLOT(showAnyInfo(int, QString)));
+		// _Expand();
+		timer = new QTimer(this);
+		timer->setSingleShot(TRUE);
+		connect(timer, SIGNAL(timeout()), this, SLOT(Expand()));
+		connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdate()));
+		timer->start(100);
+	}
+
+	//ä¿¡å·é“¾æŽ¥å‡½æ•°
+	void connectAll(void) {
+		connect(this->FirstPage->UIModeButton, SIGNAL(clicked()), this, SLOT(launchUIPage()));
+		connect(this->FirstPage->CreateButton, SIGNAL(clicked()), this, SLOT(showCreatePage()));
+		connect(this->FirstPage->CreateButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
+		connect(this->FirstPage->ToolsButton, SIGNAL(clicked()), this, SLOT(showToolsPage()));
+		connect(this->FirstPage->ToolsButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
+		connect(this->FirstPage->SettingsButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
+		connect(this->FirstPage->SettingsButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
+		connect(this->FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
+
+		//connect(this->CreatePage->SPOLDevButton, SIGNAL(clicked()), this->CreatePage, SLOT(showSPOLDevWindow()));
+		connect(this->CreatePage->OpenButton_Story, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
+		connect(this->CreatePage->OpenButton_Cache, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
+		connect(this->CreatePage->OpenButton_Official, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
+		connect(this->CreatePage->OpenButton_Source, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
+
+		connect(this->ToolsPage->ClrWrongButton, SIGNAL(clicked()), this, SLOT(clearWrongImage()));
+		connect(this->ToolsPage->ClrCacheButton, SIGNAL(clicked()), this, SLOT(clearAllCacheImage()));
+
+		connect(this->SettingsPage->DevButton, SIGNAL(clicked()), this, SLOT(showDevSetPage()));
+		connect(this->SettingsPage->NormalButton, SIGNAL(clicked()), this, SLOT(showNormalSetPage()));
+		//connect(this->SettingsPage->GCPButton, SIGNAL(clicked()), this->SettingsPage, SLOT(showGCPDialog()));
+		connect(this->SettingsPage->LangButton, SIGNAL(clicked()), this, SLOT(chooseLangFile()));
+		connect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(showAboutPage()));
+		connect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));
+
+		this->AboutPage->AboutLabel_Donate->setOpenExternalLinks(TRUE);
+		connect(this->AboutPage->CheckUpdateButton, SIGNAL(clicked()), this, SLOT(checkUpdate()));
+		connect(this->AboutPage->MoreAboutInfo, SIGNAL(clicked()), this, SLOT(showMoreInfoPage()));
+	}
+public slots:
+	//çª—ä½“æ‰©å±•å‡½æ•°
+	void Expand() {
+		double a;
+		for (int i = 0; i <= 101; i += 2) {
+			a = 0.5 * (1 - qCos(i * 0.0314159));
+			//this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
+			this->move(600, (int)(400 - a * 200));
+			this->setFixedSize(700, (int)(300 + a * 350));
+			this->OPTitlelabel->setOpacity(1 - (float)i / 100);
+			this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
+			this->repaint();
+			QTest::qSleep(1);
 		}
-
-        //ÐÅºÅÁ´½Óº¯Êý
-        void connectAll(void) {
-            connect(this->FirstPage->UIModeButton, SIGNAL(clicked()), this, SLOT(launchUIPage()));
-            connect(this->FirstPage->CreateButton, SIGNAL(clicked()), this, SLOT(showCreatePage()));
-            connect(this->FirstPage->CreateButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
-            connect(this->FirstPage->ToolsButton, SIGNAL(clicked()), this, SLOT(showToolsPage()));
-            connect(this->FirstPage->ToolsButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
-            connect(this->FirstPage->SettingsButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
-            connect(this->FirstPage->SettingsButton, SIGNAL(clicked()), this, SLOT(hideFirstPage()));
-            connect(this->FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
-
-            connect(this->CreatePage->SPOLDevButton, SIGNAL(clicked()), this->CreatePage, SLOT(showSPOLDevWindow()));
-            connect(this->CreatePage->OpenButton_Story, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
-            connect(this->CreatePage->OpenButton_Cache, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
-            connect(this->CreatePage->OpenButton_Official, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
-            connect(this->CreatePage->OpenButton_Source, SIGNAL(clicked()), this, SLOT(openAnyFolder()));
-
-            connect(this->ToolsPage->ClrWrongButton, SIGNAL(clicked()), this, SLOT(clearWrongImage()));
-            connect(this->ToolsPage->ClrCacheButton, SIGNAL(clicked()), this, SLOT(clearAllCacheImage()));
-
-            connect(this->SettingsPage->DevButton, SIGNAL(clicked()), this, SLOT(showDevSetPage()));
-            connect(this->SettingsPage->NormalButton, SIGNAL(clicked()), this, SLOT(showNormalSetPage()));
-            //connect(this->SettingsPage->GCPButton, SIGNAL(clicked()), this->SettingsPage, SLOT(showGCPDialog()));
-            connect(this->SettingsPage->LangButton, SIGNAL(clicked()), this, SLOT(chooseLangFile()));
-            connect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(showAboutPage()));
-            connect(this->SettingsPage->AboutButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));
-
-            this->AboutPage->AboutLabel_Donate->setOpenExternalLinks(TRUE);
-            connect(this->AboutPage->CheckUpdateButton, SIGNAL(clicked()), this, SLOT(checkUpdate()));
-            connect(this->AboutPage->MoreAboutInfo, SIGNAL(clicked()), this, SLOT(showMoreInfoPage()));
-        }
-
-        //´°ÌåÀ©Õ¹º¯Êý
-		void Expand() {
-			double a;
-			for (int i = 0; i <= 101; i += 2) {
-				a = 0.5 * (1 - qCos(i * 0.0314159));
-				//this->setGeometry(QRect(600, (int)(400 - a * 200), 700, (int)(300 + a * 350)));
-                this->move(600, (int)(400 - a * 200));
-                this->setFixedSize(700, (int)(300 + a * 350));
-                this->OPTitlelabel->setOpacity(1 - (float)i / 100);
-                this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
-				this->repaint();
-				QTest::qSleep(1);
-			}
+	}
+	void _Expand() {
+		double a;
+		int i = 100;
+		a = 0.5 * (1 - qCos(i * 0.0314159));
+		this->move(600, (int)(400 - a * 200));
+		this->setFixedSize(700, (int)(300 + a * 350));
+		this->OPTitlelabel->setOpacity(1 - (float)i / 100);
+		this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
+	}
+	//çª—ä½“æ”¶ç¼©å‡½æ•°
+	void Shrink() {
+		double a;
+		QRect Rect = this->geometry();
+		for (int i = 100; i >= -1; i -= 1) {
+			a = 0.5 * (1 - qCos(i * 0.0314159));
+			//this->setGeometry(QRect(Rect.left(), (int)(Rect.top() + 200 - a * 200), 700, (int)(300 + a * 350)));
+			this->move(Rect.left(), (int)(Rect.top() + 200 - a * 200));
+			this->setFixedSize(700, (int)(300 + a * 350));
+			this->OPTitlelabel->setOpacity(1 - (float)i / 100);
+			this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
+			this->repaint();
+			QTest::qSleep(1);
 		}
+	}
 
-        //´°ÌåÊÕËõº¯Êý
-		void Shrink() {
-			double a;
-            QRect Rect = this->geometry();
-			for (int i = 100; i >= -1; i -= 1) {
-				a = 0.5 * (1 - qCos(i * 0.0314159));
-				//this->setGeometry(QRect(Rect.left(), (int)(Rect.top() + 200 - a * 200), 700, (int)(300 + a * 350)));
-                this->move(Rect.left(), (int)(Rect.top() + 200 - a * 200));
-                this->setFixedSize(700, (int)(300 + a * 350));
-                this->OPTitlelabel->setOpacity(1 - (float)i / 100);
-                this->Iconlabel->setGeometry(QRect((int)(50 + 170 * a), 15, 270, 270));
-				this->repaint();
-				QTest::qSleep(1);
-			}
+	//é¼ æ ‡æ‹–æ‹½äº‹ä»¶
+	void mousePressEvent(QMouseEvent* event) {
+#if DEPLOY == 1
+		if (Iconlabel->underMouse()) {
+			QWidget* pWindow = this->window();
+			ReleaseCapture();
+			SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
+			event->ignore();
 		}
+#endif
+	}
 
-        //£¨Ê×´Î£©Êó±ê½øÈëÊÂ¼þ
-		void enterEvent(QEvent*) {
-			if (FirstEnter == 0) {
-				Expand();
-				FirstEnter = 1;
-                checkUpdate();
-                this->BackButton->show();
-			}
+	//æ£€æŸ¥æ›´æ–°å‡½æ•°
+	void checkUpdate() {
+		QStringList UpdateInfo = Service->ui_CheckUpdate();
+		if (UpdateInfo[0] != "NODIALOG" && !UpdateDialogWindowIsShow) {
+			UpdateDialog = new hUpdateDialog(X, Y, UpdateInfo[0], UpdateInfo[1]);
+			UpdateDialog->show();
+			UpdateDialogWindowIsShow = TRUE;
+			connect(this->UpdateDialog, SIGNAL(windowIsClosed()), this, SLOT(updateDialogClosed()));
 		}
+	}
 
-        //Êó±êÍÏ×§ÊÂ¼þ
-        void mousePressEvent(QMouseEvent* event) {
-            if (Iconlabel->underMouse()) {
-                QWidget* pWindow = this->window();
-                ReleaseCapture();
-                SendMessage(HWND(pWindow->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
-                event->ignore();
-            }
-        }
+	//æ›´æ–°å¯¹è¯æ¡†çŠ¶æ€å˜æ›´å‡½æ•°
+	void updateDialogClosed(void) {
+		UpdateDialogWindowIsShow = FALSE;
+	}
 
-    public slots:
-        //¼ì²é¸üÐÂº¯Êý
-        void checkUpdate() {
-            QStringList UpdateInfo = Service->ui_CheckUpdate();
-            if (UpdateInfo[0] != "NODIALOG" && !UpdateDialogWindowIsShow) {
-                UpdateDialog = new hUpdateDialog(X, Y, UpdateInfo[0], UpdateInfo[1]);
-                UpdateDialog->show();
-                UpdateDialogWindowIsShow = TRUE;
-                connect(this->UpdateDialog, SIGNAL(windowIsClosed()), this, SLOT(updateDialogClosed()));
-            }
-        }
+	//è¯­è¨€åˆ·æ–°å‡½æ•°
+	void chooseLangFile(void) {
+		QString LangFileDialog = QFileDialog::getOpenFileName(this, msg("Ui_Msg_Choose_Lang"), PROPATH::Users + "/Language", "Story Player Language(*.splang)");
+		QString LangFileName = LangFileDialog.section("/", -1, -1).section(".", 0, 0);
+		Service->ui_langset(LangFileName);
 
-        //¸üÐÂ¶Ô»°¿ò×´Ì¬±ä¸üº¯Êý
-        void updateDialogClosed(void) {
-            UpdateDialogWindowIsShow = FALSE;
-        }
+		setChildText();
+		FirstPage->setChildText();
+		SettingsPage->setChildText();
+		AboutPage->setChildText();
+		CreatePage->setChildText();
+		ToolsPage->setChildText();
 
-        //ÓïÑÔË¢ÐÂº¯Êý
-        void chooseLangFile(void) {
-            QString LangFileDialog = QFileDialog::getOpenFileName(this,msg("Ui_Msg_Choose_Lang"), PROPATH::Users+"/Language", "Story Player Language(*.splang)");
-            QString LangFileName = LangFileDialog.section("/",-1,-1).section(".",0,0);
-            Service->ui_langset(LangFileName);
+		/*if (Program_Settings("GCPMode") == "True") {
+			SettingsPage->GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
+		}else {
+			SettingsPage->GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
+		}*/
 
-            setChildText();
-            FirstPage->setChildText();
-            SettingsPage->setChildText();
-            AboutPage->setChildText();
-            CreatePage->setChildText();
-            ToolsPage->setChildText();
+		if (UpdateDialogWindowIsShow) { UpdateDialog->UpdateLang(); };
+	}
 
-            /*if (Program_Settings("GCPMode") == "True") {
-                SettingsPage->GCPButton->setText(msg("Ui_Msg_CloseGCPMode"));
-            }else {
-                SettingsPage->GCPButton->setText(msg("Ui_Msg_OpenGCPMode"));
-            }*/   
+	//æ‰“å¼€æ–‡ä»¶å¤¹å‡½æ•°
+	void openAnyFolder(void) {
+		QObject* OAFsourceButton = this->sender();
+		if (OAFsourceButton->objectName() == "OpenButton_Cache") {
+			Service->ui_OpenFolder(1);
+		}elif(OAFsourceButton->objectName() == "OpenButton_Source") {
+			Service->ui_OpenFolder(2);
+		}elif(OAFsourceButton->objectName() == "OpenButton_Official") {
+			Service->ui_OpenFolder(3);
+		}elif(OAFsourceButton->objectName() == "OpenButton_Story") {
+			Service->ui_OpenFolder(4);
+		}
+	}
 
-            if (UpdateDialogWindowIsShow) { UpdateDialog->UpdateLang(); };
-        }
+	//æ¸…é™¤æŸåå›¾åƒ
+	void clearWrongImage(void) {
+		Service->ui_DeleteEmptyMap();
+	}
 
-        //´ò¿ªÎÄ¼þ¼Ðº¯Êý
-        void openAnyFolder(void) {
-            QObject* OAFsourceButton=this->sender();
-            if (OAFsourceButton->objectName() == "OpenButton_Cache") {
-                Service->ui_OpenFolder(1);
-            }elif (OAFsourceButton->objectName() == "OpenButton_Source") {
-                Service->ui_OpenFolder(2);
-            }elif(OAFsourceButton->objectName() == "OpenButton_Official") {
-                Service->ui_OpenFolder(3);
-            }elif(OAFsourceButton->objectName() == "OpenButton_Story") {
-                Service->ui_OpenFolder(4);
-            }
-        }
+	//æ¸…é™¤æ‰€æœ‰ç¼“å­˜
+	void clearAllCacheImage(void) {
+		Service->ui_DeleteAllCache();
+	}
 
-        //Çå³ýËð»µÍ¼Ïñ
-        void clearWrongImage(void) {
-            Service->ui_DeleteEmptyMap();
-        }
-        
-        //Çå³ýËùÓÐ»º´æ
-        void clearAllCacheImage(void) {
-            Service->ui_DeleteAllCache();
-        }
-
-        //ÏÂÔöÊ½ÏûÏ¢·þÎñ
-        void showAnyInfo(int infoGroup = 2, QString needToShow = "UNKNOWN INFO") {
-            float a = 0;
-            QRect Rect = this->geometry();
-            for (int i = 0; i <= 101; i += 4) {
-                a = 0.5 * (1 - qCos(i * 0.0314159));
-                //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
-                this->setFixedSize(700, (int)(650 + a * 50));
-                this->repaint();
-                QTest::qSleep(3);
-            }
-            if (infoGroup == 0) {
-                AnyInfolabel->setStyleSheet("\
+	//ä¸‹å¢žå¼æ¶ˆæ¯æœåŠ¡
+	void showAnyInfo(int infoGroup = 2, QString needToShow = "UNKNOWN INFO") {
+		float a = 0;
+		QRect Rect = this->geometry();
+		for (int i = 0; i <= 101; i += 4) {
+			a = 0.5 * (1 - qCos(i * 0.0314159));
+			//this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+			this->setFixedSize(700, (int)(650 + a * 50));
+			this->repaint();
+			QTest::qSleep(3);
+		}
+		if (infoGroup == 0) {
+			AnyInfolabel->setStyleSheet("\
                     QLabel{\
                         background-color:rgba(255,255,255,0);\
                         border:none;\
                         border-radius:0px;\
                         text-align:center;\
                         color:#000000;\
-                        font-family:'Microsoft YaHei';\
+                        \
                         font-size:30px;\
                         }");
-            }else if (infoGroup == 1) {
-                AnyInfolabel->setStyleSheet("\
+		}
+		else if (infoGroup == 1) {
+			AnyInfolabel->setStyleSheet("\
                     QLabel{\
                         background-color:rgba(255,255,255,0);\
                         border:none;\
                         border-radius:0px;\
                         text-align:center;\
                         color:#88DDFF;\
-                        font-family:'Microsoft YaHei';\
+                        \
                         font-size:30px;\
                         }");
-            }else if (infoGroup == 2) {
-                AnyInfolabel->setStyleSheet("\
+		}
+		else if (infoGroup == 2) {
+			AnyInfolabel->setStyleSheet("\
                     QLabel{\
                         background-color:rgba(255,255,255,0);\
                         border:none;\
                         border-radius:0px;\
                         text-align:center;\
                         color:#CC2211;\
-                        font-family:'Microsoft YaHei';\
+                        \
                         font-size:30px;\
                         }");
-            }
-            AnyInfolabel->setText(needToShow);
-            OPAnyInfolabel->setOpacity(1);
-            AnyInfolabel->repaint();
-            QTest::qSleep(1000);
-            AnyInfolabel->setText("");
-            OPAnyInfolabel->setOpacity(0);
-            AnyInfolabel->repaint();
-            a = 0;
-            for (int i = 101; i >= 2; i -= 4) {
-                a = 0.5 * (1 - qCos(i * 0.0314159));
-                //this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
-                this->setFixedSize(700, (int)(650 + a * 50));
-                this->repaint();
-                QTest::qSleep(3);
-            }
-        }
+		}
+		AnyInfolabel->setText(needToShow);
+		OPAnyInfolabel->setOpacity(1);
+		AnyInfolabel->repaint();
+		QTest::qSleep(1000);
+		AnyInfolabel->setText("");
+		OPAnyInfolabel->setOpacity(0);
+		AnyInfolabel->repaint();
+		a = 0;
+		for (int i = 101; i >= 2; i -= 4) {
+			a = 0.5 * (1 - qCos(i * 0.0314159));
+			//this->setGeometry(QRect(Rect.left(), Rect.top(), 700, (int)(650 + a * 50)));
+			this->setFixedSize(700, (int)(650 + a * 50));
+			this->repaint();
+			QTest::qSleep(3);
+		}
+	}
 
+	//å±•ç¤ºä¸€èˆ¬è®¾ç½®
+	void showNormalSetPage(void) {
+		SettingsPage->showNormalSetPage();
+		this->hide();
+		connect(this->SettingsPage->NormalSetPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
+	}
 
-        //Õ¹Ê¾Ò»°ãÉèÖÃ
-        void showNormalSetPage(void) {
-            SettingsPage->showNormalSetPage();
-            this->hide();
-            connect(this->SettingsPage->NormalSetPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
-        }
-        
-        //Õ¹Ê¾¿ª·¢ÉèÖÃ
-        void showDevSetPage(void) {
-            SettingsPage->showDevSetPage();
-            this->hide();
-            connect(this->SettingsPage->DevPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
-        }
+	//å±•ç¤ºå¼€å‘è®¾ç½®
+	void showDevSetPage(void) {
+		SettingsPage->showDevSetPage();
+		this->hide();
+		connect(this->SettingsPage->DevPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
+	}
 
-        //Õ¹Ê¾¸ü¶àÐÅÏ¢
-        void showMoreInfoPage(void) {
-            AboutPage->showMoreInfoPage();
-            this->hide();
-            connect(this->AboutPage->MoreInfoPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
-        }
+	//å±•ç¤ºæ›´å¤šä¿¡æ¯
+	void showMoreInfoPage(void) {
+		AboutPage->showMoreInfoPage();
+		this->hide();
+		connect(this->AboutPage->MoreInfoPage, SIGNAL(windowIsClosed()), this, SLOT(show()));
+	}
 
-        //Õ¹Ê¾Ê×Ò³
-        void showFirstPage(void) {
-            FirstPage->show();
-            FirstPage->raise();
-            Iconlabel->raise();
-            BackButton->raise();          
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(exitPage()));
-        }
+	//å±•ç¤ºé¦–é¡µ
+	void showFirstPage(void) {
+		FirstPage->show();
+		FirstPage->raise();
+		Iconlabel->raise();
+		BackButton->hide();
+	}
 
-        //Òþ²ØÊ×Ò³
-        void hideFirstPage(void) {
-            FirstPage->hide();
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(exitPage()));
-        }
+	//éšè—é¦–é¡µ
+	void hideFirstPage(void) {
+		FirstPage->hide();
+		BackButton->show();
+	}
 
-        //Õ¹Ê¾´´×÷Ò³Ãæ
-        void showCreatePage(void) {
-            CreatePage->show();
-            CreatePage->raise();
-            Iconlabel->raise();
-            BackButton->raise();         
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideCreatePage()));
-        }
+	//å±•ç¤ºåˆ›ä½œé¡µé¢
+	void showCreatePage(void) {
+		CreatePage->show();
+		CreatePage->raise();
+		Iconlabel->raise();
+		BackButton->raise();
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideCreatePage()));
+	}
 
-        //Òþ²Ø´´×÷Ò³Ãæ
-        void hideCreatePage(void) {
-            CreatePage->hide();
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideCreatePage()));
-        }
+	//éšè—åˆ›ä½œé¡µé¢
+	void hideCreatePage(void) {
+		CreatePage->hide();
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideCreatePage()));
+	}
 
-        //Õ¹Ê¾¹¤¾ßÒ³Ãæ
-        void showToolsPage(void) {
-            ToolsPage->show();           
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideToolsPage()));
-        }
+	//å±•ç¤ºå·¥å…·é¡µé¢
+	void showToolsPage(void) {
+		ToolsPage->show();
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideToolsPage()));
+	}
 
-        //Òþ²Ø¹¤¾ßÒ³Ãæ
-        void hideToolsPage(void) {
-            ToolsPage->hide();
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideToolsPage()));
-        }
+	//éšè—å·¥å…·é¡µé¢
+	void hideToolsPage(void) {
+		ToolsPage->hide();
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideToolsPage()));
+	}
 
-        //Õ¹Ê¾Éè¶¨Ò³Ãæ
-        void showSettingsPage(void) {
-            SettingsPage->show();
-            SettingsPage->raise();
-            Iconlabel->raise();
-            BackButton->raise();          
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));            
-        }
+	//å±•ç¤ºè®¾å®šé¡µé¢
+	void showSettingsPage(void) {
+		SettingsPage->show();
+		SettingsPage->raise();
+		Iconlabel->raise();
+		BackButton->raise();
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));
+	}
 
-        //Òþ²ØÉè¶¨Ò³Ãæ
-        void hideSettingsPage(void) {
-            SettingsPage->hide();
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));
-        }
+	//éšè—è®¾å®šé¡µé¢
+	void hideSettingsPage(void) {
+		SettingsPage->hide();
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showFirstPage()));
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideSettingsPage()));
+	}
 
-        //Õ¹Ê¾¹ØÓÚÒ³Ãæ
-        void showAboutPage(void) {
-            AboutPage->show();
-            AboutPage->raise();
-            Iconlabel->raise();
-            BackButton->raise();          
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
-            connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
-        }
+	//å±•ç¤ºå…³äºŽé¡µé¢
+	void showAboutPage(void) {
+		AboutPage->show();
+		AboutPage->raise();
+		Iconlabel->raise();
+		BackButton->raise();
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
+		connect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
+	}
 
-        //Òþ²Ø¹ØÓÚÒ³Ãæ
-        void hideAboutPage(void) {
-            AboutPage->hide();
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
-            disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
-        }
+	//éšè—å…³äºŽé¡µé¢
+	void hideAboutPage(void) {
+		AboutPage->hide();
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(showSettingsPage()));
+		disconnect(this->BackButton, SIGNAL(clicked()), this, SLOT(hideAboutPage()));
+	}
 
-        //Æô¶¯²¥·ÅÆ÷
-        void launchUIPage(void) {
-            exitPage(1);
-        }
+	//å¯åŠ¨æ’­æ”¾å™¨
+	void launchUIPage(void) {
+		exitPage(1);
+	}
 
-        //ÍË³ö³ÌÐò
-        void exitProgram(void) {
-            exitPage(2);
-        }
+	//é€€å‡ºç¨‹åº
+	void exitProgram(void) {
+		exitPage(233);
+	}
 
-        //ÍË³ö½»»¥Ò³Ãæ
-        void exitPage(int exitType=0) {
-            Shrink();
-            QTest::qSleep(500);
-            close();
-            QApplication* app;
-            app->exit(exitType);
-        }
+	//é€€å‡ºäº¤äº’é¡µé¢
+	void exitPage(int exitType = 0) {
+		Shrink();
+		QTest::qSleep(500);
+		close();
+		QApplication* app;
+		app->exit(exitType);
+	}
 };

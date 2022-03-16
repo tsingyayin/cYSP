@@ -50,6 +50,27 @@
     <QtMoc Include="UIFolder\WindowsWarn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="UIFolder\LoadingPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="core\GPOLSignal.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="core\GPOLSingleLine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\FirstPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\CEWidgets.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\NewProjectPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Func\ProjectCES.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -70,12 +91,12 @@
     <ClCompile Include="core\core_T.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\GPOLPointer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="langcontrol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Aaspcommand\toSpol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\core_B.h">
@@ -91,6 +112,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="global_value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\GPOLPointer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\GSS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

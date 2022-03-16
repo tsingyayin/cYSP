@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/IRC">
+        <file>InsiderSource/Fonts/SourceHanSansCN-Regular.ttf</file>
+        <file>InsiderSource/Icons/LoadingPage.png</file>
+        <file>InsiderSource/Icons/EmptyProject.png</file>
+        <file>InsiderSource/Icons/EgProject.png</file>
+        <file>InsiderSource/Icons/CloseButton.png</file>
+        <file>InsiderSource/Icons/MaxButton.png</file>
+        <file>InsiderSource/Icons/MiniButton.png</file>
+        <file>InsiderSource/Icons/RecoverButton.png</file>
+    </qresource>
+</RCC>

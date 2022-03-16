@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma execution_character_set("utf-8")
 #include <QDebug>
 #include <QCoreApplication>
@@ -15,150 +15,150 @@
 
 using namespace std;
 
-/*ÃüÁîÐÐÏÂ¸üÐÂ¼ì²éº¯Êýcheckupdate
+/*å‘½ä»¤è¡Œä¸‹æ›´æ–°æ£€æŸ¥å‡½æ•°checkupdate
 argc,argv
 O======O
-Ë³ÊÖ°ÑmainµÄÁ½¸ö²ÎÊý´«½øÀ´¾ÍÐÐ£¬¸øQApplication³õÊ¼»¯ÓÃ¡£
-¸Ãº¯ÊýÔÚÃüÁîÐÐÏÂ»ñÈ¡¸üÐÂ×´Ì¬*/
+é¡ºæ‰‹æŠŠmainçš„ä¸¤ä¸ªå‚æ•°ä¼ è¿›æ¥å°±è¡Œï¼Œç»™QApplicationåˆå§‹åŒ–ç”¨ã€‚
+è¯¥å‡½æ•°åœ¨å‘½ä»¤è¡Œä¸‹èŽ·å–æ›´æ–°çŠ¶æ€*/
 void checkupdate(int argc, char* argv[]);
 
-/*ÃüÁîÐÐÏÂÓïÑÔ¸ü»»º¯Êýlanginput
-ÎÞ²ÎÊý
+/*å‘½ä»¤è¡Œä¸‹è¯­è¨€æ›´æ¢å‡½æ•°langinput
+æ— å‚æ•°
 O======O
-¸Ãº¯Êý¸ºÔð¹¹³ÉÃüÁîÐÐÏÂ¼üÈëÓïÑÔÃû³ÆµÄ½»»¥
-ÒÔ¼°ÒÀlangsetº¯Êý·µ»ØÖµÅÐ¶ÏÊÇ·ñ³É¹¦ÉèÖÃÓïÑÔ*/
+è¯¥å‡½æ•°è´Ÿè´£æž„æˆå‘½ä»¤è¡Œä¸‹é”®å…¥è¯­è¨€åç§°çš„äº¤äº’
+ä»¥åŠä¾langsetå‡½æ•°è¿”å›žå€¼åˆ¤æ–­æ˜¯å¦æˆåŠŸè®¾ç½®è¯­è¨€*/
 void langinput(void);
 
-/*ÃüÁîÐÐÏÂ³ÌÐòÐÅÏ¢Õ¹Ê¾º¯Êýabout
-ÎÞ²ÎÊý
+/*å‘½ä»¤è¡Œä¸‹ç¨‹åºä¿¡æ¯å±•ç¤ºå‡½æ•°about
+æ— å‚æ•°
 O======O
-¶ÔÃüÁîÐÐÊä³öÒ»Ð©³ÌÐòÐÅÏ¢
-¡°ÕæµÄÓÐÈË·Å×ÅUIµÄ¹ØÓÚÐÅÏ¢²»¿´£¬×ª¹ýÍ·À´¿´ÕâÐ©¡®ºÚÖ½°××Ö¡¯Ã´¡±*/
+å¯¹å‘½ä»¤è¡Œè¾“å‡ºä¸€äº›ç¨‹åºä¿¡æ¯
+â€œçœŸçš„æœ‰äººæ”¾ç€UIçš„å…³äºŽä¿¡æ¯ä¸çœ‹ï¼Œè½¬è¿‡å¤´æ¥çœ‹è¿™äº›â€˜é»‘çº¸ç™½å­—â€™ä¹ˆâ€*/
 void about(void);
 
-/*ÃüÁîÐÐÏÂÃüÁîÒ»ÀÀº¯Êýaasphelp
-ÎÞ²ÎÊý
+/*å‘½ä»¤è¡Œä¸‹å‘½ä»¤ä¸€è§ˆå‡½æ•°aasphelp
+æ— å‚æ•°
 O======O
-¶ÔÃüÁîÐÐÊä³öÃüÁîÒ»ÀÀ
-¡°¼ÇµÃ¸üÐÂÕâÍæÒâ¡±*/
+å¯¹å‘½ä»¤è¡Œè¾“å‡ºå‘½ä»¤ä¸€è§ˆ
+â€œè®°å¾—æ›´æ–°è¿™çŽ©æ„â€*/
 void aasphelp(void);
 
-/*ÎÄ¼þÇåÀíº¯ÊýDeleteCache
+/*æ–‡ä»¶æ¸…ç†å‡½æ•°DeleteCache
 num
 O======O
-ÕûºÏÁËPython°æ±¾µÄDeleteEmptyMapºÍDeleteAllCacheÁ½¸öº¯Êý
-ÓÃ³õÊ¼Öµ0 ºÍ 1Çø·ÖÉÏÊöÁ½¸ö¹¦ÄÜ¡£*/
+æ•´åˆäº†Pythonç‰ˆæœ¬çš„DeleteEmptyMapå’ŒDeleteAllCacheä¸¤ä¸ªå‡½æ•°
+ç”¨åˆå§‹å€¼0 å’Œ 1åŒºåˆ†ä¸Šè¿°ä¸¤ä¸ªåŠŸèƒ½ã€‚*/
 void DeleteCache(int num);
 
-/*ÎÄ¼þÏµÍ³±£È«º¯Êýensuredirs
+/*æ–‡ä»¶ç³»ç»Ÿä¿å…¨å‡½æ•°ensuredirs
 num
 O======O
-Õâ¸önumËæ±ãÐ´Ò»¸öÖµ£¬²¢Ã»ÓÐÉ¶ÓÃ£¬¹íÖªµÀÎªÉ¶µ±³õÐ´µÄ²¢²»ÊÇvoid
-¸Ãº¯Êýµ÷ÓÃºó²¹ÆëÈ±Ê§µÄÄ¿Â¼
+è¿™ä¸ªnuméšä¾¿å†™ä¸€ä¸ªå€¼ï¼Œå¹¶æ²¡æœ‰å•¥ç”¨ï¼Œé¬¼çŸ¥é“ä¸ºå•¥å½“åˆå†™çš„å¹¶ä¸æ˜¯void
+è¯¥å‡½æ•°è°ƒç”¨åŽè¡¥é½ç¼ºå¤±çš„ç›®å½•
 */
-void ensuredirs(int num); 
+void ensuredirs(int num);
 
-/*ÎÄ¼þ¼Ð´ò¿ªº¯ÊýOpenFolder
+/*æ–‡ä»¶å¤¹æ‰“å¼€å‡½æ•°OpenFolder
 num
 O======O
-ÊýÖµ1´ò¿ª»º´æÎÄ¼þ¼Ð£¬ÊýÖµ2´ò¿ª×ÊÔ´ÎÄ¼þ¼Ð
-ÊýÖµ3´ò¿ª¹Ù·½¾çÇéÎÄ¼þ¼Ð£¬ÊýÖµ4´ò¿ªÓÃ»§¾çÇéÎÄ¼þ¼Ð
-¡°ÔÞÃÀcmd.exe¡±*/
+æ•°å€¼1æ‰“å¼€ç¼“å­˜æ–‡ä»¶å¤¹ï¼Œæ•°å€¼2æ‰“å¼€èµ„æºæ–‡ä»¶å¤¹
+æ•°å€¼3æ‰“å¼€å®˜æ–¹å‰§æƒ…æ–‡ä»¶å¤¹ï¼Œæ•°å€¼4æ‰“å¼€ç”¨æˆ·å‰§æƒ…æ–‡ä»¶å¤¹
+â€œèµžç¾Žcmd.exeâ€*/
 void OpenFolder(int num);
 
-/*SPOL×ªÒåÏµÍ³
+/*SPOLè½¬ä¹‰ç³»ç»Ÿ
 RawString
 O======O
-´«Èëº¬ÓÐ×ªÒå×Ö·ûµÄÔ­Ê¼×Ö·û´®£¬´«»Ø×ªÒåºóµÄ×Ö·û´®*/
+ä¼ å…¥å«æœ‰è½¬ä¹‰å­—ç¬¦çš„åŽŸå§‹å­—ç¬¦ä¸²ï¼Œä¼ å›žè½¬ä¹‰åŽçš„å­—ç¬¦ä¸²*/
 QString spolEscape(QString RawString);
 
-/*Ö÷Ò³¹¦ÄÜÊµÏÖ¿ò¼ÜhServiceFramework
-¹¹Ôìº¯ÊýÎÞ²ÎÊý
+/*ä¸»é¡µåŠŸèƒ½å®žçŽ°æ¡†æž¶hServiceFramework
+æž„é€ å‡½æ•°æ— å‚æ•°
 O======O
-Ìá¹©¶àÖÖÊµÏÖÖ÷Ò³µÄ¹¦ÄÜµÄº¯Êý*/
+æä¾›å¤šç§å®žçŽ°ä¸»é¡µçš„åŠŸèƒ½çš„å‡½æ•°*/
 class hServiceFramework :public QObject {
 	Q_OBJECT
 signals:
-	/*ÐÅÏ¢µÝËÍº¯ÊýAnyinfo
+	/*ä¿¡æ¯é€’é€å‡½æ•°Anyinfo
 	int , QString
 	O======O
-	µÚÒ»¸ö²ÎÊý´ú±íÎÄ±¾ÏÔÊ¾ÑÕÉ«£¬Ô¼¶¨0ÎªºÚÉ«£¬1ÎªÀ¶É«£¬2ÎªºìÉ«
-	µÚ¶þ¸ö²ÎÊýÎªÎÄ±¾ÄÚÈÝ*/
+	ç¬¬ä¸€ä¸ªå‚æ•°ä»£è¡¨æ–‡æœ¬æ˜¾ç¤ºé¢œè‰²ï¼Œçº¦å®š0ä¸ºé»‘è‰²ï¼Œ1ä¸ºè“è‰²ï¼Œ2ä¸ºçº¢è‰²
+	ç¬¬äºŒä¸ªå‚æ•°ä¸ºæ–‡æœ¬å†…å®¹*/
 	void Anyinfo(int, QString);
 
 public:
 	hServiceFramework(void) {
 	}
 
-	//UIÏÂ¸üÐÂ¼ì²éº¯Êý
+	//UIä¸‹æ›´æ–°æ£€æŸ¥å‡½æ•°
 	QStringList ui_CheckUpdate(void) {
 		uCheckUpdate Check;
 		QList<QStringList> VerList = Check.getUpdate();
 		QList<QStringList> VerNew;
 		if (!VerList.isEmpty()) {
 			if (VerList[0][0] == "UNKNOWNNETERROR") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Net_Error");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Net_Error");
 			}
 			else if (VerList[0][0] == "UNKNOWNBLOG") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Ver_Error");
 			}
 		}
 		for (int i = 0; i < VerList.length(); i++) {
 			if (Program_Settings("Update_Channel") == "Pre" && VerList[i][2] == "Pre") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pre");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (Program_Settings("Update_Channel") == "Pub" && VerList[i][2] == "Pub") {
-				qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+				qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 				VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 				break;
 			}
 			else if (Program_Settings("Update_Channel") == "Auto") {
 				if (VerList[i][2] == "Pre" && PROINFO::Channel == "Pre") {
-					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pre");
+					qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pre");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
 				else if (VerList[i][2] == "Pub" && PROINFO::Channel == "Pub") {
-					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+					qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
 				else if (VerList[i][2] == "Branch" && (PROINFO::Channel != "Pre" || PROINFO::Channel != "Pub")) {
-					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Branch");
+					qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Branch");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
 			}
 			else {
 				if (VerList[i][2] == "Pub") {
-					qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Pub");
+					qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Pub");
 					VerNew.append({ VerList[i][0], VerList[i][1], VerList[i][3] ,VerList[i][4] });
 					break;
 				}
 			}
 		}
 		if (VerNew.isEmpty()) {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Ver_Error");
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Ver_Error");
 			emit Anyinfo(2, msg("Check_Update_Info_Ver_Error"));
 		}
 		else if (VerNew[0][2].toFloat() > PROINFO::Build.toFloat()) {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
-			return {VerNew[0][1],VerNew[0][3]};
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Latest").arg(VerNew[0][0]).arg(VerNew[0][1]);
+			return { VerNew[0][1],VerNew[0][3] };
 		}
 		else if (VerNew[0][2].toFloat() == PROINFO::Build.toFloat()) {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_New");
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_New");
 			emit Anyinfo(1, msg("Check_Update_Info_New"));
 		}
 		else if (VerNew[0][2].toFloat() < PROINFO::Build.toFloat()) {
-			qDebug().noquote() << "sysinfo¡ú" + msg("Check_Update_Info_Insider");
+			qDebug().noquote() << "sysinfoâ†’" + msg("Check_Update_Info_Insider");
 			emit Anyinfo(1, msg("Check_Update_Info_Insider"));
 		}
-		return {"NODIALOG","NODIALOG"};
+		return { "NODIALOG","NODIALOG" };
 	}
 
-	//SPOL×ª»»ºËÐÄÆô¶¯º¯Êý£¨ÔÝÊ±ÎÞÓÃ£©
+	//SPOLè½¬æ¢æ ¸å¿ƒå¯åŠ¨å‡½æ•°ï¼ˆæš‚æ—¶æ— ç”¨ï¼‰
 	void ui_Tospol(QString fileNameIpt) {
 		//bool func = HLtoSPOL(fileNameIpt);
 		/*
@@ -169,30 +169,30 @@ public:
 		}*/
 	}
 
-	//Ëð»µÍ¼ÏñÇåÀíº¯Êý
+	//æŸåå›¾åƒæ¸…ç†å‡½æ•°
 	void ui_DeleteEmptyMap(void) {
 		DeleteCache(0);
 		emit Anyinfo(1, msg("Function_Filecheck_Run_End"));
 	}
 
-	//»º´æÍ¼ÏñÈ«Çåº¯Êý
+	//ç¼“å­˜å›¾åƒå…¨æ¸…å‡½æ•°
 	void ui_DeleteAllCache(void) {
 		DeleteCache(1);
 		emit Anyinfo(1, msg("Function_Filecheck_Cache_Clean"));
 	}
 
-	//UIÏÂÉèÖÃÓïÑÔº¯Êý¡ª¡ª×¢ÒâfilenameÊÇÎÄ¼þ£¨ÓïÑÔ£©Ãû¶ø·ÇÂ·¾¶
+	//UIä¸‹è®¾ç½®è¯­è¨€å‡½æ•°â€”â€”æ³¨æ„filenameæ˜¯æ–‡ä»¶ï¼ˆè¯­è¨€ï¼‰åè€Œéžè·¯å¾„
 	void ui_langset(QString filename) {
 		langset(filename);
 		emit Anyinfo(1, msg("Function_Language_Loading_Success"));
 	}
 
-	/*ÎÄ¼þ¼Ð´ò¿ªº¯Êý
+	/*æ–‡ä»¶å¤¹æ‰“å¼€å‡½æ•°
 	num
 	O======O
-	ÊýÖµ1´ò¿ª»º´æÎÄ¼þ¼Ð£¬ÊýÖµ2´ò¿ª×ÊÔ´ÎÄ¼þ¼Ð
-	ÊýÖµ3´ò¿ª¹Ù·½¾çÇéÎÄ¼þ¼Ð£¬ÊýÖµ4´ò¿ªÓÃ»§¾çÇéÎÄ¼þ¼Ð
-	¡°ÔÞÃÀcmd.exe¡±*/
+	æ•°å€¼1æ‰“å¼€ç¼“å­˜æ–‡ä»¶å¤¹ï¼Œæ•°å€¼2æ‰“å¼€èµ„æºæ–‡ä»¶å¤¹
+	æ•°å€¼3æ‰“å¼€å®˜æ–¹å‰§æƒ…æ–‡ä»¶å¤¹ï¼Œæ•°å€¼4æ‰“å¼€ç”¨æˆ·å‰§æƒ…æ–‡ä»¶å¤¹
+	â€œèµžç¾Žcmd.exeâ€*/
 	void ui_OpenFolder(int num) {
 		OpenFolder(num);
 	}

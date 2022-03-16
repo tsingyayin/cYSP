@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <QtWidgets>
 #include <QtCore>
 #include <QtGui>
@@ -8,47 +8,47 @@
 class ShakeFunc :public QThread
 {
 	Q_OBJECT
-	signals:
-		void shakeXY(int, int, int);
-	public:
-		float gSpeed;
-		ShakeFunc(float SpeedNow) {
-			gSpeed = SpeedNow;
+signals:
+	void shakeXY(int, int, int);
+public:
+	float gSpeed;
+	ShakeFunc(float SpeedNow) {
+		gSpeed = SpeedNow;
+	}
+	void run(void) {
+		for (int i = 0; i < 20; i++) {
+			int a = randint(-10, 10);
+			int b = randint(-10, 10);
+			emit shakeXY(a, b, 0);
+			QTest::qSleep(10 * gSpeed);
 		}
-		void run(void) {
-			for (int i = 0; i < 20; i++) {
-				int a = randint(-10, 10);
-				int b = randint(-10, 10);
-				emit shakeXY(a, b, 0);
-				QTest::qSleep(10 * gSpeed);
-			}
-			emit shakeXY(0, 0, 1);
-			this->deleteLater();
-			this->quit();
-		}
+		emit shakeXY(0, 0, 1);
+		this->deleteLater();
+		this->quit();
+	}
 };
 
 class FlashFuncFast :public QThread
 {
 	Q_OBJECT
-	signals:
-		void FlashOPint(float, int);
-	public:
-		float gSpeed;
-		FlashFuncFast(float SpeedNow) {
-			gSpeed = SpeedNow;
+signals:
+	void FlashOPint(float, int);
+public:
+	float gSpeed;
+	FlashFuncFast(float SpeedNow) {
+		gSpeed = SpeedNow;
+	}
+	void run(void) {
+		emit FlashOPint(0, 0);
+		for (int i = 0; i < 20; i++) {
+			float a = qSin(i * 0.157);
+			emit FlashOPint(a, 1);
+			QTest::qSleep(20 * gSpeed);
 		}
-		void run(void) {
-			emit FlashOPint(0, 0);
-			for (int i = 0; i < 20; i++) {
-				float a = qSin(i * 0.157);
-				emit FlashOPint(a, 1);
-				QTest::qSleep(20 * gSpeed);
-			}
-			emit FlashOPint(0, 2);
-			this->deleteLater();
-			this->quit();
-		}
+		emit FlashOPint(0, 2);
+		this->deleteLater();
+		this->quit();
+	}
 };
 
 class FlashFuncSlow :public QThread
