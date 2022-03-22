@@ -50,6 +50,9 @@
     <QtMoc Include="UIFolder\WindowsWarn.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="UIFolder\LoadingPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,9 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="langcontrol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Aaspcommand\toSpol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\core_B.h">

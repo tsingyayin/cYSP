@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/IRC">
+        <file>InsiderSource/Fonts/SourceHanSansCN-Regular.ttf</file>
+        <file>InsiderSource/Icons/LoadingPage.png</file>
+    </qresource>
+</RCC>

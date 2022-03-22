@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <QApplication>
 #include <QtWidgets>
 #include <QCoreApplication>
@@ -6,17 +6,17 @@
 
 using namespace std;
 
-/*ÓïÑÔÉèÖÃº¯Êılangset
+/*è¯­è¨€è®¾ç½®å‡½æ•°langset
 langname
 O======O
-µÚÒ»¸ö²ÎÊıÎªÓïÑÔÃû³Æ¡£
-·µ»ØÊÇ·ñ³É¹¦¸ü»»ÓïÑÔ¡£1Îª³É¹¦£¬0ÎªÊ§°Ü
-¡°ÎÒ´ó¸ÅµÄÈ·Ó¦¸Ã°Ñint¸Ä³Ébool¡±*/
+ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºè¯­è¨€åç§°ã€‚
+è¿”å›æ˜¯å¦æˆåŠŸæ›´æ¢è¯­è¨€ã€‚1ä¸ºæˆåŠŸï¼Œ0ä¸ºå¤±è´¥
+â€œæˆ‘å¤§æ¦‚çš„ç¡®åº”è¯¥æŠŠintæ”¹æˆboolâ€*/
 int langset(QString langname);
 
-/*·­Òë·µ»Øº¯Êımsg
+/*ç¿»è¯‘è¿”å›å‡½æ•°msg
 Usript
 O======O
-´«ÈëÄÚ²¿Ãû³Æ
-·µ»Ø·­ÒëÎÄ±¾*/
+ä¼ å…¥å†…éƒ¨åç§°
+è¿”å›ç¿»è¯‘æ–‡æœ¬*/
 QString msg(QString Usript);

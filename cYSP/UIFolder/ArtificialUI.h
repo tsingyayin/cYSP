@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include <QtWidgets>
 #include <QtCore>
 #include <QtGui>
@@ -10,7 +10,6 @@
 #include "../Aaspcommand/UICoreLauncher.h"
 #include <QTest>
 using namespace std;
-
 
 class ChangeWake :public QObject
 {
@@ -35,7 +34,7 @@ signals:
 public:
 	int gTime;
 	bool Active = FALSE;
-	TickThread() {		
+	TickThread() {
 	}
 	void setInterval(int time) {
 		gTime = time;
@@ -44,9 +43,9 @@ public:
 		Active = TRUE;
 		while (TRUE) {
 			QTest::qSleep(gTime);
-			if (!Active) { 
+			if (!Active) {
 				//qDebug().noquote() << "Ticker Stop";
-				break; 
+				break;
 			}
 			emit timeout();
 		}
@@ -60,337 +59,345 @@ public:
 class PlayerDef :public QWidget
 {
 	Q_OBJECT
-	public:
-		uFirstPage* FirstPage;
-		uTitlePage* TitlePage;
-		uPlayerPage* PlayerPage;
-		uInfoWidget* InfoWidget;
-		uSoundService* PlayMusic;
-		ChangeWake* changeWAKE = new ChangeWake();
-		ReciveUserControl* userControl = new ReciveUserControl();
-		void setupUI(int X,int Y,int L,int T) {
-			this->setGeometry(100, 100, X, Y);
-			this->setFixedSize(this->width(), this->height());
-			this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
-			InfoWidget = new uInfoWidget(X, Y, this);
-			InfoWidget->setGeometry(QRect(0.70 * X, 0.07 * Y, 0.31 * X, 0.86 * Y));
-			FirstPage = new uFirstPage(X, Y, this);
-			FirstPage->setGOpacity(1);
-			connect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
-			connect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
+public:
+	uFirstPage* FirstPage;
+	uTitlePage* TitlePage;
+	uPlayerPage* PlayerPage;
+	uInfoWidget* InfoWidget;
+	uSoundService* PlayMusic;
+	ChangeWake* changeWAKE = new ChangeWake();
+	ReciveUserControl* userControl = new ReciveUserControl();
+	void setupUI(int X, int Y, int L, int T) {
+		this->setGeometry(100, 100, X, Y);
+		this->setFixedSize(this->width(), this->height());
+		this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
+		InfoWidget = new uInfoWidget(X, Y, this);
+		InfoWidget->setGeometry(QRect(0.70 * X, 0.07 * Y, 0.31 * X, 0.86 * Y));
+		FirstPage = new uFirstPage(X, Y, this);
+		FirstPage->setGOpacity(1);
+		connect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
+		connect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
 
-			TitlePage = new uTitlePage(X, Y, this);
+		TitlePage = new uTitlePage(X, Y, this);
 
-			PlayerPage = new uPlayerPage(X, Y, this);
-			connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
-			connect(this->PlayerPage, SIGNAL(UserSpeedSet(float)), this->userControl, SLOT(SpeedNow(float)));
-			connect(this->PlayerPage->LogPage, SIGNAL(EmitJumpLine(int)), this->userControl, SLOT(LineNumNow(int)));
-			connect(this->PlayerPage, SIGNAL(NeedWakeUp()), this, SLOT(Wakeup()));
+		PlayerPage = new uPlayerPage(X, Y, this);
+		connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
+		connect(this->PlayerPage, SIGNAL(UserSpeedSet(float)), this->userControl, SLOT(SpeedNow(float)));
+		connect(this->PlayerPage->LogPage, SIGNAL(EmitJumpLine(int)), this->userControl, SLOT(LineNumNow(int)));
+		connect(this->PlayerPage, SIGNAL(NeedWakeUp()), this, SLOT(Wakeup()));
 
-			PlayMusic = new uSoundService();
-		
-			PlayerPage->raise();
-			TitlePage->raise();
-			FirstPage->raise();
+		PlayMusic = new uSoundService();
 
-			connect(this, SIGNAL(stopNow()), userControl, SLOT(ExitNow()));
-		};
+		PlayerPage->raise();
+		TitlePage->raise();
+		FirstPage->raise();
+
+		connect(this, SIGNAL(stopNow()), userControl, SLOT(ExitNow()));
+	};
 };
 
 class PlayerWindow :public PlayerDef
 {
 	Q_OBJECT
-	signals:
-		void stopNow(void);
-	public:
-		int gX, gY;
-		bool StoryShow = FALSE;
-		bool OneBGMIsPlaying = FALSE;
-		QDesktopWidget* desktop;
-		QList<uSoundService*> musicThreadList;
-		SPAWN* Interpreter;
-		TickThread* Ticker;
-		tick AnimationTick = 0;
-		PlayerWindow(int argc, char* argv[], QWidget* parent = Q_NULLPTR) {
-			//≥ı ºªØ ±»∑»œƒø±Í¥Û–°
-			if (Program_Settings("Window_DisplayMode") == "Full") {
-				desktop = new QDesktopWidget();
-				int current_monitor = desktop->screenNumber();
-				QRect Display = desktop->screenGeometry(current_monitor);
-				int X = Display.width();
-				int Y = Display.height();
-				gX = X; gY = Y;
-			}elif (Program_Settings("Window_DisplayMode") == "Window") {
-				gX = Program_Settings("Window_Geometry").section("_", 0, 0).toInt();
-				gY = Program_Settings("Window_Geometry").section("_", -1, -1).toInt();
-				if (gX <= 800) { gX = 800; }
-				if (gY <= 600) { gY = 600; }
-			}else{
-				desktop = new QDesktopWidget();
-				int current_monitor = desktop->screenNumber();
-				QRect Display = desktop->screenGeometry(current_monitor);
-				int X = Display.width();
-				int Y = Display.height();
-				gX = X; gY = Y;
-			}
-			//◊∞‘ÿUI
+signals:
+	void stopNow(void);
+public:
+	int gX, gY;
+	bool StoryShow = FALSE;
+	bool OneBGMIsPlaying = FALSE;
+	QDesktopWidget* desktop;
+	QList<uSoundService*> musicThreadList;
+	SPAWN* Interpreter;
+	TickThread* Ticker;
+	tick AnimationTick = 0;
+	PlayerWindow(int argc, char* argv[], QWidget* parent = Q_NULLPTR) {
+		//ÂàùÂßãÂåñÊó∂Á°ÆËÆ§ÁõÆÊ†áÂ§ßÂ∞è
+		if (Program_Settings("Window_DisplayMode") == "Full") {
+			desktop = new QDesktopWidget();
+			int current_monitor = desktop->screenNumber();
+			QRect Display = desktop->screenGeometry(current_monitor);
+			int X = Display.width();
+			int Y = Display.height();
+			gX = X; gY = Y;
+		}elif(Program_Settings("Window_DisplayMode") == "Window") {
+			gX = Program_Settings("Window_Geometry").section("_", 0, 0).toInt();
+			gY = Program_Settings("Window_Geometry").section("_", -1, -1).toInt();
+			if (gX <= 800) { gX = 800; }
+			if (gY <= 600) { gY = 600; }
+		}
+		else {
+			desktop = new QDesktopWidget();
+			int current_monitor = desktop->screenNumber();
+			QRect Display = desktop->screenGeometry(current_monitor);
+			int X = Display.width();
+			int Y = Display.height();
+			gX = X; gY = Y;
+		}
+		//Ë£ÖËΩΩUI
 
-			this->setupUI(gX, gY, 100, 100);
-			this->setWindowIcon(QIcon(PROPATH::Users+"/source/WinICO/Story.ico"));
-			this->setWindowTitle("Yayin Story Player");
-			this->setParent(parent);
-			InfoWidget->raise();
-			Ticker = new TickThread();
-			Ticker->setInterval(10);
-			Ticker->start();
-			connect(this->Ticker, SIGNAL(timeout()), this, SLOT(tickslot()));
-			connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
-			connect(this, SIGNAL(stopNow()), this->userControl, SLOT(ExitNow()));
-		}
-	public slots:
-		//¡Ω∏ˆshow∫Ø ˝µƒ±‰÷÷°™°™“‘±∏∫Û”√
-		void gshow(void) {
-			this->show();	
-		}
-		void gshowFullScreen(void) {
-			this->showFullScreen();
-		}
-		//∫À–ƒ∆Ù∂Ø∫Ø ˝
-		void RUNCORE(void) {
-			QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Player_ChooseFilePage_Text_Title"), PROPATH::Users + "/story", "Story File(*.spol)");
-			//qDebug().noquote() << "StoryName" + ChooseStory;
-			if (ChooseStory != "") {
-				InfoWidget->addNewInfo("◊º±∏∆Ù∂ØΩ‚ Õ∆˜", "∆Ù∂Ø‘§¥¶¿Ìƒ£øÈ", "ƒø±ÍŒƒº˛"+ChooseStory.section("/",-1,-1), EIFL::SRI);
-				Interpreter = new SPAWN(ChooseStory);
-				
-				FirstPage->LoadingInfo->setText("");
-				connect(Interpreter->signalName, SIGNAL(send_kernal_info(QString)), this->FirstPage, SLOT(getLoadingInfo(QString)));
-				connect(Interpreter->signalName, SIGNAL(send_EIFL_info(QString, QString, QString, EIFL)), this->InfoWidget, SLOT(addNewInfo(QString, QString, QString, EIFL)));
-				connect(Interpreter->signalName, SIGNAL(can_hide_hello(int)), this, SLOT(hideHello(int)));
-				connect(Interpreter->signalName, SIGNAL(can_reprint_hello(int)), this, SLOT(reprintHello(int)));
-				connect(Interpreter->signalName, SIGNAL(need_to_choose(QStringList)), this->PlayerPage, SLOT(setBranchButton(QStringList)));
-				connect(Interpreter->signalName, SIGNAL(can_set_title(QStringList)), this, SLOT(setTitle(QStringList)));
-				connect(Interpreter->signalName, SIGNAL(can_show_title(void)), this, SLOT(showTitle(void)));
-				connect(Interpreter->signalName, SIGNAL(can_hide_title(void)), this, SLOT(hideTitle(void)));
-				connect(Interpreter->signalName, SIGNAL(can_prepare_play(void)), this, SLOT(hideTitleLast(void)));
-				connect(Interpreter->signalName, SIGNAL(can_update_bg(Controller::Backdrop::Data)), this->PlayerPage, SLOT(setCurrentBGP(Controller::Backdrop::Data)));
-				connect(Interpreter->signalName, SIGNAL(update_num_bg(float, Controller::Backdrop::Data)), this->PlayerPage, SLOT(updateCurrentBGP(float, Controller::Backdrop::Data)));
-				connect(Interpreter->signalName, SIGNAL(set_cover_status(bool)), this->PlayerPage, SLOT(setCurrentFrame(bool)));
-				connect(Interpreter->signalName, SIGNAL(can_update_chara(QList<QStringList>, int)), this->PlayerPage, SLOT(setCurrentAvg(QList<QStringList>, int)));
-				connect(Interpreter->signalName, SIGNAL(update_avg_num(QString, float)), this->PlayerPage, SLOT(updateCurrentAvg(QString, float)));
-				connect(Interpreter->signalName, SIGNAL(update_chara_num(QString, QString, bool)), this->PlayerPage, SLOT(updateCurrentWords(QString, QString, bool)));
-				connect(Interpreter->signalName, SIGNAL(can_update_freedom(QStringList, QStringList)), this->PlayerPage, SLOT(setCurrentFree(QStringList, QStringList)));
-				connect(Interpreter->signalName, SIGNAL(update_num_freedom(QString)), this->PlayerPage, SLOT(updateCurrentFree(QString)));
-				connect(Interpreter->signalName, SIGNAL(can_clear_freedom(int)), this->PlayerPage, SLOT(clearCurrentFree(int)));
-				connect(Interpreter->signalName, SIGNAL(can_update_bgm(QString, int)), this, SLOT(playBGM(QString, int)));
-				connect(Interpreter->signalName, SIGNAL(can_update_sound(QString, int)), this, SLOT(playSound(QString, int)));
-				connect(Interpreter->signalName, SIGNAL(show_next()), this->PlayerPage, SLOT(showNext()));
-				connect(Interpreter->signalName, SIGNAL(willstop()), this->changeWAKE, SLOT(willStop()));
-				connect(Interpreter->signalName, SIGNAL(inrunning()), this->changeWAKE, SLOT(lastContinue()));
-				connect(Interpreter->signalName, SIGNAL(clr_line_list()), this->PlayerPage->LogPage, SLOT(initObject()));
-				connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
-				connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
-				connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));			
-				
+		this->setupUI(gX, gY, 100, 100);
+		this->setWindowIcon(QIcon(PROPATH::Users + "/source/WinICO/Story.ico"));
+		this->setWindowTitle("Yayin Story Player");
+		this->setParent(parent);
+		InfoWidget->raise();
+		Ticker = new TickThread();
+		Ticker->setInterval(10);
+		Ticker->start();
+		connect(this->Ticker, SIGNAL(timeout()), this, SLOT(tickslot()));
+		connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
+		connect(this, SIGNAL(stopNow()), this->userControl, SLOT(ExitNow()));
+	}
+public slots:
+	//‰∏§‰∏™showÂáΩÊï∞ÁöÑÂèòÁßç‚Äî‚Äî‰ª•Â§áÂêéÁî®
+	void gshow(void) {
+		this->show();
+	}
+	void gshowFullScreen(void) {
+		this->showFullScreen();
+	}
+	//Ê†∏ÂøÉÂêØÂä®ÂáΩÊï∞
+	void RUNCORE(void) {
+		QString ChooseStory = QFileDialog::getOpenFileName(this, msg("Player_ChooseFilePage_Text_Title"), PROPATH::Users + "/story", "Story File(*.spol)");
+		//qDebug().noquote() << "StoryName" + ChooseStory;
+		if (ChooseStory != "") {
+			InfoWidget->addNewInfo("ÂáÜÂ§áÂêØÂä®Ëß£ÈáäÂô®", "ÂêØÂä®È¢ÑÂ§ÑÁêÜÊ®°Âùó", "ÁõÆÊ†áÊñá‰ª∂" + ChooseStory.section("/", -1, -1), EIFL::SRI);
+			Interpreter = new SPAWN(ChooseStory);
 
-				PlayerPage->initObject();
-				Interpreter->start();
-			}
-			else {
-				InfoWidget->addNewInfo("ƒ˙Œ¥—°‘ÒŒƒº˛£°", "ƒ„–Ë“™—°‘Ò“ª∏ˆŒƒº˛“‘∆Ù∂ØΩ‚ Õ∆˜", "", EIFL::NWI);
-			}
+			FirstPage->LoadingInfo->setText("");
+			connect(Interpreter->signalName, SIGNAL(send_kernal_info(QString)), this->FirstPage, SLOT(getLoadingInfo(QString)));
+			connect(Interpreter->signalName, SIGNAL(send_EIFL_info(QString, QString, QString, EIFL)), this->InfoWidget, SLOT(addNewInfo(QString, QString, QString, EIFL)));
+			connect(Interpreter->signalName, SIGNAL(can_hide_hello(int)), this, SLOT(hideHello(int)));
+			connect(Interpreter->signalName, SIGNAL(can_reprint_hello(int)), this, SLOT(reprintHello(int)));
+			connect(Interpreter->signalName, SIGNAL(need_to_choose(QStringList)), this->PlayerPage, SLOT(setBranchButton(QStringList)));
+			connect(Interpreter->signalName, SIGNAL(can_set_title(QStringList)), this, SLOT(setTitle(QStringList)));
+			connect(Interpreter->signalName, SIGNAL(can_show_title(void)), this, SLOT(showTitle(void)));
+			connect(Interpreter->signalName, SIGNAL(can_hide_title(void)), this, SLOT(hideTitle(void)));
+			connect(Interpreter->signalName, SIGNAL(can_prepare_play(void)), this, SLOT(hideTitleLast(void)));
+			connect(Interpreter->signalName, SIGNAL(can_update_bg(Controller::Backdrop::Data)), this->PlayerPage, SLOT(setCurrentBGP(Controller::Backdrop::Data)));
+			connect(Interpreter->signalName, SIGNAL(update_num_bg(float, Controller::Backdrop::Data)), this->PlayerPage, SLOT(updateCurrentBGP(float, Controller::Backdrop::Data)));
+			connect(Interpreter->signalName, SIGNAL(set_cover_status(bool)), this->PlayerPage, SLOT(setCurrentFrame(bool)));
+			connect(Interpreter->signalName, SIGNAL(can_update_chara(QList<QStringList>, int)), this->PlayerPage, SLOT(setCurrentAvg(QList<QStringList>, int)));
+			connect(Interpreter->signalName, SIGNAL(update_avg_num(QString, float)), this->PlayerPage, SLOT(updateCurrentAvg(QString, float)));
+			connect(Interpreter->signalName, SIGNAL(update_chara_num(QString, QString, bool)), this->PlayerPage, SLOT(updateCurrentWords(QString, QString, bool)));
+			connect(Interpreter->signalName, SIGNAL(can_update_freedom(QStringList, QStringList)), this->PlayerPage, SLOT(setCurrentFree(QStringList, QStringList)));
+			connect(Interpreter->signalName, SIGNAL(update_num_freedom(QString)), this->PlayerPage, SLOT(updateCurrentFree(QString)));
+			connect(Interpreter->signalName, SIGNAL(can_clear_freedom(int)), this->PlayerPage, SLOT(clearCurrentFree(int)));
+			connect(Interpreter->signalName, SIGNAL(can_update_bgm(QString, int)), this, SLOT(playBGM(QString, int)));
+			connect(Interpreter->signalName, SIGNAL(can_update_sound(QString, int)), this, SLOT(playSound(QString, int)));
+			connect(Interpreter->signalName, SIGNAL(show_next()), this->PlayerPage, SLOT(showNext()));
+			connect(Interpreter->signalName, SIGNAL(willstop()), this->changeWAKE, SLOT(willStop()));
+			connect(Interpreter->signalName, SIGNAL(inrunning()), this->changeWAKE, SLOT(lastContinue()));
+			connect(Interpreter->signalName, SIGNAL(clr_line_list()), this->PlayerPage->LogPage, SLOT(initObject()));
+			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
+			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
+			connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
+
+			PlayerPage->initObject();
+			Interpreter->start();
 		}
-		void tickslot() {
-			if (StoryShow) {
-				this->PlayerPage->repaintAutoButton();
-				this->TitlePage->timeout();
-			}
-			this->InfoWidget->timeout();
+		else {
+			InfoWidget->addNewInfo("ÊÇ®Êú™ÈÄâÊã©Êñá‰ª∂ÔºÅ", "‰Ω†ÈúÄË¶ÅÈÄâÊã©‰∏Ä‰∏™Êñá‰ª∂‰ª•ÂêØÂä®Ëß£ÈáäÂô®", "", EIFL::NWI);
 		}
-		//÷˜“≥√Ê“˛≤ÿ
-		void hideHello(int num) {
-			AnimationTick = 0;
-			StoryShow = TRUE;
-			connect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello()));
-			disconnect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
-			disconnect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
+	}
+	void tickslot() {
+		if (StoryShow) {
+			this->PlayerPage->repaintAutoButton();
+			this->TitlePage->timeout();
 		}
-		void _hideHello() {	
-			if (AnimationTick > 99) { 
-				disconnect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello())); 
-				FirstPage->OPLoadingInfo->setOpacity(1);				
-			}
-			FirstPage->setGOpacity(1 - (float)AnimationTick / 100);
-			AnimationTick++;
+		this->InfoWidget->timeout();
+	}
+	//‰∏ªÈ°µÈù¢ÈöêËóè
+	void hideHello(int num) {
+		AnimationTick = 0;
+		StoryShow = TRUE;
+		connect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello()));
+		disconnect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
+		disconnect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
+	}
+	void _hideHello() {
+		if (AnimationTick > 99) {
+			disconnect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello()));
+			FirstPage->OPLoadingInfo->setOpacity(1);
 		}
-		//÷˜“≥√Ê∏¥œ÷
-		void reprintHello(int num) {
-			AnimationTick = 0;
-			StoryShow = FALSE;
-			PlayerPage->clearAll();
-			FirstPage->raise();
-			InfoWidget->raise();
+		FirstPage->setGOpacity(1 - (float)AnimationTick / 100);
+		AnimationTick++;
+	}
+	//‰∏ªÈ°µÈù¢Â§çÁé∞
+	void reprintHello(int num) {
+		AnimationTick = 0;
+		StoryShow = FALSE;
+		PlayerPage->clearAll();
+		FirstPage->raise();
+		InfoWidget->raise();
+		if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+		disconnectInterpreter();
+		Interpreter->wait();
+		delete Interpreter;
+		FirstPage->OPLoadingInfo->setOpacity(0);
+		connect(Ticker, SIGNAL(timeout()), this, SLOT(_reprintHello()));
+		connect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
+		connect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
+	}
+	void _reprintHello() {
+		if (AnimationTick > 99) {
+			disconnect(Ticker, SIGNAL(timeout()), this, SLOT(_reprintHello()));
+		}
+		FirstPage->setGOpacity((float)AnimationTick / 100);
+		FirstPage->repaint();
+		AnimationTick++;
+	}
+
+	//Ê†áÈ¢òÂ±ïÁ§∫ÂáΩÊï∞-ÂâçÂçäÊÆµ
+	void setTitle(QStringList titlesetList) {
+		TitlePage->setTitleInfo(titlesetList[0], titlesetList[1], titlesetList[2], titlesetList[3]);
+	}
+	void showTitle(void) {
+		FirstPage->OPLoadingInfo->setOpacity(0);
+		TitlePage->showPage();
+		TitlePage->raise();
+		InfoWidget->raise();
+	}
+
+	//Ê†áÈ¢òÂ±ïÁ§∫ÂáΩÊï∞-‰∏≠ÂçäÊÆµ
+	void hideTitle(void) {
+		TitlePage->playAnimation();
+	}
+
+	//Ê†áÈ¢òÂ±ïÁ§∫ÂáΩÊï∞-ÂêéÂçäÊÆµ
+	void hideTitleLast(void) {
+		TitlePage->hidePage();
+		PlayerPage->raise();
+		InfoWidget->raise();
+		PlayerPage->showPlayerPage();
+		PlayerPage->Working = TRUE;
+	}
+
+	//Èü≥‰πêÊéßÂà∂Âô®-Èü≥È¢ëÂêØÂä®ÂáΩÊï∞
+	void playBGM(QString filename, int volume) {
+		QString FilePath = PROPATH::Users + "/source/BGM/" + filename + ".mp3";
+		if (filename == "ÈùôÈü≥") {
 			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			disconnectInterpreter();
-			Interpreter->wait();
-			delete Interpreter;
-			FirstPage->OPLoadingInfo->setOpacity(0);
-			connect(Ticker, SIGNAL(timeout()), this, SLOT(_reprintHello()));
-			connect(FirstPage->ChooseFileButton, SIGNAL(clicked()), this, SLOT(RUNCORE()));
-			connect(FirstPage->ExitButton, SIGNAL(clicked()), this, SLOT(exitProgram()));
 		}
-		void _reprintHello(){
-			if (AnimationTick > 99) {	
-				disconnect(Ticker, SIGNAL(timeout()), this, SLOT(_reprintHello()));
-			}
-			FirstPage->setGOpacity((float)AnimationTick / 100);
-			FirstPage->repaint();
-			AnimationTick++;
+		else if (QFile(FilePath).exists()) {
+			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+			PlayMusic->loadFile(FilePath, volume, TRUE);
+			PlayMusic->playMedia();
+			OneBGMIsPlaying = TRUE;
 		}
+		else {
+			InfoWidget->addNewInfo("Êâæ‰∏çÂà∞ÁõÆÊ†á", "Êú™ËÉΩÊâìÂºÄÈü≥‰πêÊéßÂà∂Âô®ÊåáÂÆöÁöÑÊñá‰ª∂", filename + ".mp3", EIFL::PRE);
+		}
+	}
 
-		//±ÍÃ‚’π æ∫Ø ˝-«∞∞Î∂Œ
-		void setTitle(QStringList titlesetList) {
-			TitlePage->setTitleInfo(titlesetList[0], titlesetList[1], titlesetList[2], titlesetList[3]);
+	//Èü≥ÊïàÊéßÂà∂Âô®-Èü≥ÊïàÂêØÂä®ÂáΩÊï∞
+	void playSound(QString filename, int volume) {
+		QString FilePath = PROPATH::Users + "/source/Sound/" + filename + ".mp3";
+		if (filename == "ÈùôÈü≥") {
+			None;
 		}
-		void showTitle(void){
-			FirstPage->OPLoadingInfo->setOpacity(0);
-			TitlePage->showPage();
-			TitlePage->raise();
-			InfoWidget->raise();
+		else if (QFile(FilePath).exists()) {
+			musicThreadList.append(new uSoundService());
+			musicThreadList[musicThreadList.length() - 1]->loadFile(FilePath, volume, FALSE);
+			musicThreadList[musicThreadList.length() - 1]->playMedia();
 		}
+		else {
+			InfoWidget->addNewInfo("Êâæ‰∏çÂà∞ÁõÆÊ†á", "Êú™ËÉΩÊâìÂºÄÈü≥È¢ëÊéßÂà∂Âô®ÊåáÂÆöÁöÑÊñá‰ª∂", filename + ".mp3", EIFL::PRE);
+		}
+	}
 
-		//±ÍÃ‚’π æ∫Ø ˝-÷–∞Î∂Œ
-		void hideTitle(void) {
-			TitlePage->playAnimation();
-		}
-
-		//±ÍÃ‚’π æ∫Ø ˝-∫Û∞Î∂Œ
-		void hideTitleLast(void) {
-			TitlePage->hidePage();
-			PlayerPage->raise();
-			InfoWidget->raise();
-			PlayerPage->showPlayerPage();
-			PlayerPage->Working = TRUE;
-		}
-
-		//“Ù¿÷øÿ÷∆∆˜-“Ù∆µ∆Ù∂Ø∫Ø ˝
-		void playBGM(QString filename, int volume) {
-			QString FilePath = PROPATH::Users + "/source/BGM/" + filename + ".mp3";
-			if (filename == "æ≤“Ù") {
-				if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			}else if (QFile(FilePath).exists()) {
-				if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-				PlayMusic->loadFile(FilePath, volume, TRUE);
-				PlayMusic->playMedia();
-				OneBGMIsPlaying = TRUE;
+	//Âø´Êç∑ÈîÆÂáΩÊï∞
+	void keyPressEvent(QKeyEvent* event) {
+		if (event->key() == Qt::Key_Escape) {
+			if (StoryShow == FALSE) {
+				exitProgram();
 			}
 			else {
-				InfoWidget->addNewInfo("’“≤ªµΩƒø±Í", "Œ¥ƒ‹¥Úø™“Ù¿÷øÿ÷∆∆˜÷∏∂®µƒŒƒº˛", filename + ".mp3", EIFL::PRE);
-			}
-		}
-
-		//“Ù–ßøÿ÷∆∆˜-“Ù–ß∆Ù∂Ø∫Ø ˝
-		void playSound(QString filename, int volume) {
-			QString FilePath = PROPATH::Users + "/source/Sound/" + filename + ".mp3";
-			if (filename == "æ≤“Ù") {
-				None;
-			}
-			else if (QFile(FilePath).exists()) {
-				musicThreadList.append(new uSoundService());
-				musicThreadList[musicThreadList.length() - 1]->loadFile(FilePath, volume, FALSE);
-				musicThreadList[musicThreadList.length() - 1]->playMedia();
-			}
-			else {
-				InfoWidget->addNewInfo("’“≤ªµΩƒø±Í", "Œ¥ƒ‹¥Úø™“Ù∆µøÿ÷∆∆˜÷∏∂®µƒŒƒº˛", filename + ".mp3", EIFL::PRE);
-			}
-		}
-
-		//øÏΩ›º¸∫Ø ˝
-		void keyPressEvent(QKeyEvent* event) {
-			if (event->key() == Qt::Key_Escape) {
-				if (StoryShow == FALSE) {
-					exitProgram();
-				}
-				else {
-					if (PlayerPage->searchParameter("InLogPage") == 0) {					
-						if (PlayerPage->Working) {
-							InfoWidget->addNewInfo("’˝‘⁄µ»¥˝Ω‚ Õ∆˜Õ£÷π", "“—æ≠Ω´÷’÷π–≈∫≈Ã·ΩªµΩΩ‚ Õ∆˜", "‘⁄ÕÍ≥…±æ––µƒΩ‚ Õ∫ÛΩ‚ Õ∆˜ª·÷’÷π‘À––", EIFL::SRI);
-							if (PlayerPage->searchParameter("Auto")) {
-								emit stopNow();
-								StoryShow = FALSE;
-							}
-							else {
-								PlayerPage->Auto = TRUE;
-								emit stopNow();
-								PlayerPage->_ToNext();
-								StoryShow = FALSE;
-							}
-						}else{
-							InfoWidget->addNewInfo("≥Ã–Ú‘À––æØ∏Ê£∫", "‘⁄Ω‚ Õ∆˜∆Ù∂ØΩ◊∂Œ£¨≤ª“™≥¢ ‘∞¥œ¬Escº¸", "∆Ù∂Øπ˝≥Ã≤ªø…¥Ú∂œ", EIFL::NWI);
-						}					
+				if (PlayerPage->searchParameter("InLogPage") == 0) {
+					if (PlayerPage->Working) {
+						InfoWidget->addNewInfo("Ê≠£Âú®Á≠âÂæÖËß£ÈáäÂô®ÂÅúÊ≠¢", "Â∑≤ÁªèÂ∞ÜÁªàÊ≠¢‰ø°Âè∑Êèê‰∫§Âà∞Ëß£ÈáäÂô®", "Âú®ÂÆåÊàêÊú¨Ë°åÁöÑËß£ÈáäÂêéËß£ÈáäÂô®‰ºöÁªàÊ≠¢ËøêË°å", EIFL::SRI);
+						if (PlayerPage->searchParameter("Auto")) {
+							emit stopNow();
+							StoryShow = FALSE;
+						}
+						else {
+							PlayerPage->Auto = TRUE;
+							emit stopNow();
+							PlayerPage->_ToNext();
+							StoryShow = FALSE;
+						}
 					}
-					else if (PlayerPage->searchParameter("InLogPage") == 1) {
-						PlayerPage->showLogPage();
+					else {
+						InfoWidget->addNewInfo("Á®ãÂ∫èËøêË°åË≠¶ÂëäÔºö", "Âú®Ëß£ÈáäÂô®ÂêØÂä®Èò∂ÊÆµÔºå‰∏çË¶ÅÂ∞ùËØïÊåâ‰∏ãEscÈîÆ", "ÂêØÂä®ËøáÁ®ã‰∏çÂèØÊâìÊñ≠", EIFL::NWI);
 					}
 				}
-			}
-			else if (event->key() == Qt::Key_Q && StoryShow) {
-				if (PlayerPage->gUseLogPage == TRUE && PlayerPage->searchParameter("Inbranch") == 0) {
+				else if (PlayerPage->searchParameter("InLogPage") == 1) {
 					PlayerPage->showLogPage();
 				}
 			}
-			else if (event->key() == Qt::Key_Return) {
-				if (StoryShow) {
-					if (PlayerPage->searchParameter("InLogPage") == 0) {
-						if (PlayerPage->searchParameter("Inbranch") == 0) {
-							PlayerPage->_ToNext();
-						}
-					}
-					else if (PlayerPage->searchParameter("InLogPage") == 1) {
-						PlayerPage->LogPage->EmitLineNum();
-						PlayerPage->showLogPage();
+		}
+		else if (event->key() == Qt::Key_Q && StoryShow) {
+			if (PlayerPage->gUseLogPage == TRUE && PlayerPage->searchParameter("Inbranch") == 0) {
+				PlayerPage->showLogPage();
+			}
+		}
+		else if (event->key() == Qt::Key_Return) {
+			if (StoryShow) {
+				if (PlayerPage->searchParameter("InLogPage") == 0) {
+					if (PlayerPage->searchParameter("Inbranch") == 0) {
+						PlayerPage->_ToNext();
 					}
 				}
-			}
-			else if (event->key() == Qt::Key_W && StoryShow) {
-				if (PlayerPage->searchParameter("InLogPage") == 0) {
-					PlayerPage->_SpeedChange();
-				}
-			}
-			else if (event->key() == Qt::Key_A && StoryShow) {
-				if (PlayerPage->searchParameter("InLogPage") == 0) {
-					PlayerPage->_AutoChange();
+				else if (PlayerPage->searchParameter("InLogPage") == 1) {
+					PlayerPage->LogPage->EmitLineNum();
+					PlayerPage->showLogPage();
 				}
 			}
 		}
+		else if (event->key() == Qt::Key_W && StoryShow) {
+			if (PlayerPage->searchParameter("InLogPage") == 0) {
+				PlayerPage->_SpeedChange();
+			}
+		}
+		else if (event->key() == Qt::Key_A && StoryShow) {
+			if (PlayerPage->searchParameter("InLogPage") == 0) {
+				PlayerPage->_AutoChange();
+			}
+		}
+	}
 
-		//Ω‚ Õ∆˜ªΩ–—∫Ø ˝
-		void Wakeup(void) {
-			connect(Ticker, SIGNAL(timeout()), this, SLOT(wakeInterpreter()));
-		}
-		void wakeInterpreter() {
+	//Ëß£ÈáäÂô®Âî§ÈÜíÂáΩÊï∞
+	void Wakeup(void) {
+		/*while (TRUE) {
+			if (changeWAKE->STOPUNLOCK == FALSE) {
+				Interpreter->wake();
+				break;
+			}
+		}*/
+		connect(Ticker, SIGNAL(timeout()), this, SLOT(wakeInterpreter()));
+	}
+	void wakeInterpreter() {
+		if (!changeWAKE->STOPUNLOCK) {
 			Interpreter->wake();
-			if (changeWAKE->STOPUNLOCK) {
-				disconnect(Ticker, SIGNAL(timeout()), this, SLOT(wakeInterpreter()));
-			}
+			disconnect(Ticker, SIGNAL(timeout()), this, SLOT(wakeInterpreter()));
 		}
-		//œ¬√Ê¡Ω∏ˆ∫Ø ˝ƒ√¿¥ÕÀ≥ˆ≥Ã–Ú
-		//µ´ «∞…£¨’‚¡©∫Ø ˝µƒª•œ‡∏®÷˙πÿœµ «…∂°¢“‘º∞√Ê∂‘µƒ «ƒƒ÷÷ÕÀ≥ˆ«Èøˆ£¨Œ“∏„≤ª«Â¡À
-		//∑¥’˝±∂ØÀ¸æÕ∂‘¡À
-		void exitProgram(void) {
-			StoryShow = FALSE;
-			Ticker->stop();
-			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			QApplication::instance()->quit();
-		}
+	}
+	//‰∏ãÈù¢‰∏§‰∏™ÂáΩÊï∞ÊãøÊù•ÈÄÄÂá∫Á®ãÂ∫è
+	//‰ΩÜÊòØÂêßÔºåËøô‰ø©ÂáΩÊï∞ÁöÑ‰∫íÁõ∏ËæÖÂä©ÂÖ≥Á≥ªÊòØÂï•„ÄÅ‰ª•ÂèäÈù¢ÂØπÁöÑÊòØÂì™ÁßçÈÄÄÂá∫ÊÉÖÂÜµÔºåÊàëÊêû‰∏çÊ∏Ö‰∫Ü
+	//ÂèçÊ≠£Âà´Âä®ÂÆÉÂ∞±ÂØπ‰∫Ü
+	void exitProgram(void) {
+		StoryShow = FALSE;
+		Ticker->stop();
+		if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+		QApplication::instance()->quit();
+	}
 
-		void closeEvent(QCloseEvent* event) {
-			Ticker->stop();
-			if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
-			emit stopNow();
-		}
+	void closeEvent(QCloseEvent* event) {
+		Ticker->stop();
+		if (OneBGMIsPlaying) { PlayMusic->fadeMedia(); }
+		emit stopNow();
+	}
 
-		void disconnectInterpreter() {
-			Interpreter->disconnect();
-		}
+	void disconnectInterpreter() {
+		Interpreter->disconnect();
+	}
 };

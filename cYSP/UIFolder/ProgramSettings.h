@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "..\langcontrol.h"
 #include "..\global_value.h"
 #include "..\loadsettings.h"
@@ -8,7 +8,7 @@
 #include <exception>
 using namespace std;
 
-//Í³Ò»µÄStyleÎÄ±¾
+//ç»Ÿä¸€çš„Styleæ–‡æœ¬
 class CurrentStyle :public QObject
 {
 	Q_OBJECT
@@ -22,42 +22,42 @@ public:
                     background-color:rgba(255,255,255,150);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                     QPushButton:hover{\
                     color:#888888;\
                     background-color:rgba(255,255,255,255);\
                     text-align:center;\
                     font-size:36px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                     QPushButton:pressed{\
                     color:#66ccff;\
                     background-color:rgba(255,255,255,255);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     }";
 	QString Button2 = "QPushButton{\
                     color:#333333;\
                     background-color:rgba(255,160,170,150);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                 QPushButton:hover{\
                     color:#FFFFFF;\
                     background-color:rgba(255,230,230,255);\
                     text-align:center;\
                     font-size:36px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                 }\
                 QPushButton:Pressed{\
                     color:#FF0000;\
                     background-color:rgba(240,200,200,255);\
                     text-align:center;\
                     font-size:32px;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     }";
 
 	QString Label1 = "\
@@ -66,7 +66,7 @@ public:
                     border:none;\
                     border-radius:0px;\
                     color:#000000;\
-                    font-family:'Microsoft YaHei';\
+                    \
                     font-size:22px;\
                     }";
 	QString Widget1 = "QWidget{\
@@ -76,7 +76,7 @@ public:
                 }";
 };
 
-//³ÌÐòÍ¨ÓÃÉèÖÃ
+//ç¨‹åºé€šç”¨è®¾ç½®
 class hProgramSettings :public QWidget
 {
 	Q_OBJECT
@@ -120,7 +120,7 @@ public:
 		CurrentLayout->addWidget(Text_Window_DisplayMode, 0, 1, 1, 1);
 
 		Edit_Window_DisplayMode = new QComboBox(this);
-		Edit_Window_DisplayMode->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei';}");
+		Edit_Window_DisplayMode->setStyleSheet("QComboBox{font-size:25px;}");
 		Edit_Window_DisplayMode->addItem(msg("Ui_Settings_Common_FullScreen"), 0);
 		Edit_Window_DisplayMode->addItem(msg("Ui_Settings_Common_Window"), 1);
 		Edit_Window_DisplayMode->setView(new QListView(this));
@@ -154,13 +154,13 @@ public:
 		}
 
 		for (int i = 0; i < GeometryList.length(); i++) {
-			if (GeometryList[i][0].replace("x","_") == Program_Settings("Window_Geometry")) {
+			if (GeometryList[i][0].replace("x", "_") == Program_Settings("Window_Geometry")) {
 				Edit_Window_Geometry->setCurrentIndex(GeometryList[i][1].toInt());
 				break;
 			}
 		}
 		Edit_Window_Geometry->setView(new QListView(this));
-		
+
 		CurrentLayout->addWidget(Edit_Window_Geometry, 1, 3, 1, 1);
 
 		InitButton = new QPushButton(this);
@@ -174,7 +174,6 @@ public:
 		EnableButton->setStyleSheet("QPushButton{text-align:center;font-size:25px;font-family:'Microsoft YaHei'}");
 		connect(EnableButton, SIGNAL(clicked()), this, SLOT(applySettings()));
 		CurrentLayout->addWidget(EnableButton, 11, 4, 1, 1);
-
 	}
 
 public slots:
@@ -199,218 +198,216 @@ public slots:
 	}
 };
 
-
-//¿ª·¢ÐÔÉèÖÃ
+//å¼€å‘æ€§è®¾ç½®
 class hDevSettings :public QWidget
 {
 	Q_OBJECT
-	signals:
-		void windowIsClosed(void);
+signals:
+	void windowIsClosed(void);
 
-	public:
-		QLabel* Text_Dev;
-		QComboBox* Edit_Dev;
-		QLabel* Text_GCP;
-		QComboBox* Edit_GCP;
-		QLabel* Text_Forced_Debugging;
-		QComboBox* Edit_Forced_Debugging;
-		QSpacerItem* Space1;
-		QSpacerItem* Space2;
-		QSpacerItem* Space3;
-		QGridLayout* CurrentLayout;
-		QPushButton* InitButton;
-		QPushButton* EnableButton;
-		
-		hDevSettings(int X, int Y, QWidget* parent = Q_NULLPTR) {
-			this->setParent(parent);
-			this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
-			this->setWindowTitle(msg("Ui_SettingsPage_Dev_Settings"));
-			this->setAttribute(Qt::WA_DeleteOnClose);
-			CurrentLayout = new QGridLayout(this);
-			this->setLayout(CurrentLayout);
+public:
+	QLabel* Text_Dev;
+	QComboBox* Edit_Dev;
+	QLabel* Text_GCP;
+	QComboBox* Edit_GCP;
+	QLabel* Text_Forced_Debugging;
+	QComboBox* Edit_Forced_Debugging;
+	QSpacerItem* Space1;
+	QSpacerItem* Space2;
+	QSpacerItem* Space3;
+	QGridLayout* CurrentLayout;
+	QPushButton* InitButton;
+	QPushButton* EnableButton;
 
-			Text_Dev = new QLabel(this);
-			Text_Dev->setText(msg("Ui_Settings_ChooseChannel_Label"));
-			Text_Dev->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
-			Text_Dev->setToolTip(msg("Ui_Settings_ChooseChannel_Text"));
-			Text_Dev->setAlignment(Qt::AlignLeft);
-			CurrentLayout->addWidget(Text_Dev, 0, 1, 1, 1);
+	hDevSettings(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
+		this->setWindowTitle(msg("Ui_SettingsPage_Dev_Settings"));
+		this->setAttribute(Qt::WA_DeleteOnClose);
+		CurrentLayout = new QGridLayout(this);
+		this->setLayout(CurrentLayout);
 
-			Edit_Dev = new QComboBox(this);
-			Edit_Dev->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei';}");
-			Edit_Dev->addItem(msg("Ui_Text_Common_Auto"), 0);
-			Edit_Dev->addItem(msg("Ui_Text_Common_Pre"), 1);
-			Edit_Dev->addItem(msg("Ui_Text_Common_Pub"), 2);
-			Edit_Dev->setView(new QListView(this));
+		Text_Dev = new QLabel(this);
+		Text_Dev->setText(msg("Ui_Settings_ChooseChannel_Label"));
+		Text_Dev->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
+		Text_Dev->setToolTip(msg("Ui_Settings_ChooseChannel_Text"));
+		Text_Dev->setAlignment(Qt::AlignLeft);
+		CurrentLayout->addWidget(Text_Dev, 0, 1, 1, 1);
 
-			if (Program_Settings("Update_Channel") == "Pre") {
-				Edit_Dev->setCurrentIndex(1);
-			}
-			else if (Program_Settings("Update_Channel") == "Pub") {
-				Edit_Dev->setCurrentIndex(2);
-			}
-			else {
-				Edit_Dev->setCurrentIndex(0);
-			}
-			CurrentLayout->addWidget(Edit_Dev, 0, 3, 1, 1);
+		Edit_Dev = new QComboBox(this);
+		Edit_Dev->setStyleSheet("QComboBox{font-size:25px;}");
+		Edit_Dev->addItem(msg("Ui_Text_Common_Auto"), 0);
+		Edit_Dev->addItem(msg("Ui_Text_Common_Pre"), 1);
+		Edit_Dev->addItem(msg("Ui_Text_Common_Pub"), 2);
+		Edit_Dev->setView(new QListView(this));
 
-			Space1 = new QSpacerItem(40,0);
-			Space2 = new QSpacerItem(40,0);
-			Space3 = new QSpacerItem(40,0);
-			CurrentLayout->addItem(Space1, 0, 0, 1, 1);
-			CurrentLayout->addItem(Space2, 0, 2, 1, 1);
-			CurrentLayout->addItem(Space3, 0, 4, 1, 1);
-			
-			Text_GCP = new QLabel(this);
-			Text_GCP->setText(msg("Ui_Settings_GCPMode_Label"));
-			Text_GCP->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
-			Text_GCP->setToolTip(msg("Ui_Settings_GCPMode_Text"));
-			Text_GCP->setAlignment(Qt::AlignLeft);
-			CurrentLayout->addWidget(Text_GCP, 1, 1, 1, 1);
-
-			Edit_GCP = new QComboBox(this);
-			Edit_GCP->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei'}");
-			Edit_GCP->addItem(msg("Ui_Text_Common_Disable"), 0);
-			Edit_GCP->addItem(msg("Ui_Text_Common_Enable"), 1);		
-			Edit_GCP->setView(new QListView(this));
-
-			if (Program_Settings("GCPMode") == "True") {
-				Edit_GCP->setCurrentIndex(1);
-			}
-			else {
-				Edit_GCP->setCurrentIndex(0);
-			}
-			CurrentLayout->addWidget(Edit_GCP, 1, 3, 1, 1);
-
-			Text_Forced_Debugging = new QLabel(this);
-			Text_Forced_Debugging->setText(msg("Ui_Settings_ForcedDebugging_Label"));
-			Text_Forced_Debugging->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
-			Text_Forced_Debugging->setToolTip(msg("Ui_Settings_ForcedDebugging_Text"));
-			Text_Forced_Debugging->setAlignment(Qt::AlignLeft);
-			CurrentLayout->addWidget(Text_Forced_Debugging, 2, 1, 1, 1);
-
-			Edit_Forced_Debugging = new QComboBox(this);
-			Edit_Forced_Debugging->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei'}");
-			Edit_Forced_Debugging->addItem(msg("Ui_Text_Common_Disable"), 0);
-			Edit_Forced_Debugging->addItem(msg("Ui_Text_Common_Enable"), 1);
-			Edit_Forced_Debugging->setView(new QListView(this));
-
-			if (Program_Settings("Forced_Debugging_Info") == "True") {
-				Edit_Forced_Debugging->setCurrentIndex(1);
-			}
-			else {
-				Edit_Forced_Debugging->setCurrentIndex(0);
-			}
-			CurrentLayout->addWidget(Edit_Forced_Debugging, 2, 3, 1, 1);
-
-			InitButton = new QPushButton(this);
-			InitButton->setText(msg("Ui_SettingsPage_Reset_Parameters"));
-			InitButton->setStyleSheet("QPushButton{text-align:center;font-size:25px;font-family:'Microsoft YaHei'}");
-			connect(InitButton, SIGNAL(clicked()), this, SLOT(resetAll()));
-			CurrentLayout->addWidget(InitButton, 10, 4, 1, 1);
-			
-			EnableButton = new QPushButton(this);
-			EnableButton->setText(msg("Ui_SettingsPage_Apply_Parameters"));
-			EnableButton->setStyleSheet("QPushButton{text-align:center;font-size:25px;font-family:'Microsoft YaHei'}");
-			connect(EnableButton, SIGNAL(clicked()), this, SLOT(applySettings()));
-			CurrentLayout->addWidget(EnableButton, 11, 4, 1, 1);
-
-			
+		if (Program_Settings("Update_Channel") == "Pre") {
+			Edit_Dev->setCurrentIndex(1);
 		}
-		~hDevSettings() {
-			//delete Space;
+		else if (Program_Settings("Update_Channel") == "Pub") {
+			Edit_Dev->setCurrentIndex(2);
 		}
-	public slots:
-		void resetAll(void) {
-			writesettings("Update_Channel","Auto");
-			writesettings("GCPMode","False");
-			writesettings("Forced_Debugging_Info", "False");
-			this->close();
+		else {
+			Edit_Dev->setCurrentIndex(0);
 		}
-		void applySettings(void) {
-			int UpdateChannelSet = Edit_Dev->currentIndex();
-			if (UpdateChannelSet == 0) { writesettings("Update_Channel", "Auto"); }
-			else if (UpdateChannelSet == 1) { writesettings("Update_Channel", "Pre"); }
-			else if (UpdateChannelSet == 2) { writesettings("Update_Channel", "Pub"); }
+		CurrentLayout->addWidget(Edit_Dev, 0, 3, 1, 1);
 
-			int GCPModSet = Edit_GCP->currentIndex();
-			if (GCPModSet == 0) { writesettings("GCPMode", "False"); }
-			if (GCPModSet == 1) { writesettings("GCPMode", "True"); }
+		Space1 = new QSpacerItem(40, 0);
+		Space2 = new QSpacerItem(40, 0);
+		Space3 = new QSpacerItem(40, 0);
+		CurrentLayout->addItem(Space1, 0, 0, 1, 1);
+		CurrentLayout->addItem(Space2, 0, 2, 1, 1);
+		CurrentLayout->addItem(Space3, 0, 4, 1, 1);
 
-			int Forced_Debugging_Set = Edit_Forced_Debugging->currentIndex();
-			if (Forced_Debugging_Set == 0) { writesettings("Forced_Debugging_Info", "False"); }
-			if (Forced_Debugging_Set == 1) { writesettings("Forced_Debugging_Info", "True"); }
+		Text_GCP = new QLabel(this);
+		Text_GCP->setText(msg("Ui_Settings_GCPMode_Label"));
+		Text_GCP->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
+		Text_GCP->setToolTip(msg("Ui_Settings_GCPMode_Text"));
+		Text_GCP->setAlignment(Qt::AlignLeft);
+		CurrentLayout->addWidget(Text_GCP, 1, 1, 1, 1);
+
+		Edit_GCP = new QComboBox(this);
+		Edit_GCP->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei'}");
+		Edit_GCP->addItem(msg("Ui_Text_Common_Disable"), 0);
+		Edit_GCP->addItem(msg("Ui_Text_Common_Enable"), 1);
+		Edit_GCP->setView(new QListView(this));
+
+		if (Program_Settings("GCPMode") == "True") {
+			Edit_GCP->setCurrentIndex(1);
 		}
-		void closeEvent(QCloseEvent* event) {
-			emit windowIsClosed();
+		else {
+			Edit_GCP->setCurrentIndex(0);
 		}
-		void showEvent(QShowEvent* event) {
-			this->setFixedSize(this->width(), this->height());
+		CurrentLayout->addWidget(Edit_GCP, 1, 3, 1, 1);
+
+		Text_Forced_Debugging = new QLabel(this);
+		Text_Forced_Debugging->setText(msg("Ui_Settings_ForcedDebugging_Label"));
+		Text_Forced_Debugging->setStyleSheet("QLabel{font-size:25px;font-family:'Microsoft YaHei'}");
+		Text_Forced_Debugging->setToolTip(msg("Ui_Settings_ForcedDebugging_Text"));
+		Text_Forced_Debugging->setAlignment(Qt::AlignLeft);
+		CurrentLayout->addWidget(Text_Forced_Debugging, 2, 1, 1, 1);
+
+		Edit_Forced_Debugging = new QComboBox(this);
+		Edit_Forced_Debugging->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei'}");
+		Edit_Forced_Debugging->addItem(msg("Ui_Text_Common_Disable"), 0);
+		Edit_Forced_Debugging->addItem(msg("Ui_Text_Common_Enable"), 1);
+		Edit_Forced_Debugging->setView(new QListView(this));
+
+		if (Program_Settings("Forced_Debugging_Info") == "True") {
+			Edit_Forced_Debugging->setCurrentIndex(1);
 		}
+		else {
+			Edit_Forced_Debugging->setCurrentIndex(0);
+		}
+		CurrentLayout->addWidget(Edit_Forced_Debugging, 2, 3, 1, 1);
+
+		InitButton = new QPushButton(this);
+		InitButton->setText(msg("Ui_SettingsPage_Reset_Parameters"));
+		InitButton->setStyleSheet("QPushButton{text-align:center;font-size:25px;font-family:'Microsoft YaHei'}");
+		connect(InitButton, SIGNAL(clicked()), this, SLOT(resetAll()));
+		CurrentLayout->addWidget(InitButton, 10, 4, 1, 1);
+
+		EnableButton = new QPushButton(this);
+		EnableButton->setText(msg("Ui_SettingsPage_Apply_Parameters"));
+		EnableButton->setStyleSheet("QPushButton{text-align:center;font-size:25px;font-family:'Microsoft YaHei'}");
+		connect(EnableButton, SIGNAL(clicked()), this, SLOT(applySettings()));
+		CurrentLayout->addWidget(EnableButton, 11, 4, 1, 1);
+	}
+	~hDevSettings() {
+		//delete Space;
+	}
+public slots:
+	void resetAll(void) {
+		writesettings("Update_Channel", "Auto");
+		writesettings("GCPMode", "False");
+		writesettings("Forced_Debugging_Info", "False");
+		this->close();
+	}
+	void applySettings(void) {
+		int UpdateChannelSet = Edit_Dev->currentIndex();
+		if (UpdateChannelSet == 0) { writesettings("Update_Channel", "Auto"); }
+		else if (UpdateChannelSet == 1) { writesettings("Update_Channel", "Pre"); }
+		else if (UpdateChannelSet == 2) { writesettings("Update_Channel", "Pub"); }
+
+		int GCPModSet = Edit_GCP->currentIndex();
+		if (GCPModSet == 0) { writesettings("GCPMode", "False"); }
+		if (GCPModSet == 1) { writesettings("GCPMode", "True"); }
+
+		int Forced_Debugging_Set = Edit_Forced_Debugging->currentIndex();
+		if (Forced_Debugging_Set == 0) { writesettings("Forced_Debugging_Info", "False"); }
+		if (Forced_Debugging_Set == 1) { writesettings("Forced_Debugging_Info", "True"); }
+	}
+	void closeEvent(QCloseEvent* event) {
+		emit windowIsClosed();
+	}
+	void showEvent(QShowEvent* event) {
+		this->setFixedSize(this->width(), this->height());
+	}
 };
 
-//¸ü¶à¸ß¼¶ÐÅÏ¢
+//æ›´å¤šé«˜çº§ä¿¡æ¯
 class hMoreInfo :public QWidget
 {
 	Q_OBJECT
-	signals:
-		void windowIsClosed(void);
-	public:
-		QLabel* Kernal_Version;
-		QLabel* Kernal_Introduce;
-		QLabel* Developer_Info;
-		QGridLayout* CurrentLayout;
-		int gX, gY;
-		hMoreInfo(int X,int Y,QWidget* parent = Q_NULLPTR) {
-			this->setParent(parent);
-			this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
-			this->setWindowTitle(msg("Ui_Text_Common_About_"));
-			this->setMinimumSize(370, 150);
-			this->setAttribute(Qt::WA_DeleteOnClose);
+signals:
+	void windowIsClosed(void);
+public:
+	QLabel* Kernal_Version;
+	QLabel* Kernal_Introduce;
+	QLabel* Developer_Info;
+	QGridLayout* CurrentLayout;
+	int gX, gY;
+	hMoreInfo(int X, int Y, QWidget* parent = Q_NULLPTR) {
+		this->setParent(parent);
+		this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinMaxButtonsHint | Qt::WindowMinimizeButtonHint);
+		this->setWindowTitle(msg("Ui_Text_Common_About_"));
+		this->setMinimumSize(370, 150);
+		this->setAttribute(Qt::WA_DeleteOnClose);
 
+		CurrentLayout = new QGridLayout(this);
+		this->setLayout(CurrentLayout);
 
-			CurrentLayout = new QGridLayout(this);
-			this->setLayout(CurrentLayout);
+		Kernal_Version = new QLabel(this);
+		Kernal_Version->setText(msg("KAU_About_Info_SPOLEnv") + "\n" + PROINFO::Kernal);
+		//Kernal_Version->setStyleSheet("QLabel{font-size:30px;font-family:'Microsoft YaHei'}");
+		Kernal_Version->setStyleSheet("QLabel{font-size:30px;}");
+		Kernal_Version->setAlignment(Qt::AlignCenter);
+		CurrentLayout->addWidget(Kernal_Version, 0, 0, 1, 1);
 
-			Kernal_Version = new QLabel(this);
-			Kernal_Version->setText(msg("KAU_About_Info_SPOLEnv") +"\n"+ PROINFO::Kernal);
-			Kernal_Version->setStyleSheet("QLabel{font-size:30px;font-family:'Microsoft YaHei'}");
-			Kernal_Version->setAlignment(Qt::AlignCenter);
-			CurrentLayout->addWidget(Kernal_Version, 0, 0, 1, 1);
-
-			Kernal_Introduce = new QLabel(this);
-			Kernal_Introduce->setText("AASPÊÇÓÉAyano_AishiÌá³ö³ÌÐò¹¹ÏëÖ®ºó£¬ÓÉÇàÑÅÒôÍê³ÉµÄ×î³õ°æ±¾µÄSPOL½âÊÍÆ÷³ÌÐò¡£\
-\n¸Ã½âÊÍÆ÷Ö»ÓÐÃüÁîÐÐ×´Ì¬£¬ÆäºóµÄÓµÓÐUIµÄPython°æYSP³ÌÐòÔÚ´ËÃüÁîÐÐ³ÌÐòÖ®ÉÏ¹¹½¨¡£\
-\nC++°æYSP³ÌÐòÒàÊ¹ÓÃÁËÓÅ»¯ÖØ¹¹ºóµÄAASPÄÚºË¡£ÖØ¹¹¹ý³ÌÊÜµ½ÁËÀ´×ÔAyano_AishiµÄÖ§³Ö¡£\
+		Kernal_Introduce = new QLabel(this);
+		Kernal_Introduce->setText("AASPæ˜¯ç”±Ayano_Aishiæå‡ºç¨‹åºæž„æƒ³ä¹‹åŽï¼Œç”±é’é›…éŸ³å®Œæˆçš„æœ€åˆç‰ˆæœ¬çš„SPOLè§£é‡Šå™¨ç¨‹åºã€‚\
+\nè¯¥è§£é‡Šå™¨åªæœ‰å‘½ä»¤è¡ŒçŠ¶æ€ï¼Œå…¶åŽçš„æ‹¥æœ‰UIçš„Pythonç‰ˆYSPç¨‹åºåœ¨æ­¤å‘½ä»¤è¡Œç¨‹åºä¹‹ä¸Šæž„å»ºã€‚\
+\nC++ç‰ˆYSPç¨‹åºäº¦ä½¿ç”¨äº†ä¼˜åŒ–é‡æž„åŽçš„AASPå†…æ ¸ã€‚é‡æž„è¿‡ç¨‹å—åˆ°äº†æ¥è‡ªAyano_Aishiçš„æ”¯æŒã€‚\
 \n\
-\nµ±Ç°K9U1ÄÚºËÎªÕýÊ½µÄ.9XÉè¼Æ£¬½â³ýÁËÔÚK9UT0°æ±¾ÖÐÎªÁËÓëK6U2ÄÚºË±£³ÖÒ»ÖÂ¶øÉèÏÂµÄÖÖÖÖÏÞÖÆ¡£\
-\nK9U1ÔÚK9UT0»ù´¡ÉÏÍêÈ«ÊÍ·ÅÁË.9XµÄÔ¤ÏëÌØÐÔ£¬ÎªSPOL.9XÌá¹©¼áÊµµÄ»·¾³Ö§³Å\
+\nå½“å‰K9U1å†…æ ¸ä¸ºæ­£å¼çš„.9Xè®¾è®¡ï¼Œè§£é™¤äº†åœ¨K9UT0ç‰ˆæœ¬ä¸­ä¸ºäº†ä¸ŽK6U2å†…æ ¸ä¿æŒä¸€è‡´è€Œè®¾ä¸‹çš„ç§ç§é™åˆ¶ã€‚\
+\nK9U1åœ¨K9UT0åŸºç¡€ä¸Šå®Œå…¨é‡Šæ”¾äº†.9Xçš„é¢„æƒ³ç‰¹æ€§ï¼Œä¸ºSPOL.9Xæä¾›åšå®žçš„çŽ¯å¢ƒæ”¯æ’‘\
 \n\
-\n±¾³ÌÐòÄÚº¬ÓÐÏàµ±ÊýÁ¿µÄÀ´×ÔÊÖÓÎµÄËØ²Ä¡£ÕâÐ©ËØ²Ä°æÈ¨¹éÆäÖÆ×÷·½ËùÓÐ¡£\
-\n±¾³ÌÐò½öÈ¡ÕâÐ©ËØ²ÄÓÃÓÚ³ÌÐòUI±íÏÖ£¬ÒÔÎªÓÃ»§Ìá¹©¿ìËÙ¶þ´´µÄ¹¦ÄÜ¡£\
-\nÈÎºÎÈËÔÚÎ´¾­°æÈ¨ÖÆ×÷·½Ðí¿ÉµÄÇé¿öÏÂ¶¼²»µÃÊ¹ÓÃÆäÖ±½Ó½øÐÐÓ¯Àû¡£\
-\n³öÏÖÈÎºÎÊ¹ÓÃÊÖÓÎËØ²Ä¶øµ¼ÖÂµÄÇÖÈ¨ÐÐÎª£¬±¾³ÌÐò¿ª·¢Õß¸Å²»¸ºÔð¡£\n\n");
+\næœ¬ç¨‹åºå†…å«æœ‰ç›¸å½“æ•°é‡çš„æ¥è‡ªæ‰‹æ¸¸çš„ç´ æã€‚è¿™äº›ç´ æç‰ˆæƒå½’å…¶åˆ¶ä½œæ–¹æ‰€æœ‰ã€‚\
+\næœ¬ç¨‹åºä»…å–è¿™äº›ç´ æç”¨äºŽç¨‹åºUIè¡¨çŽ°ï¼Œä»¥ä¸ºç”¨æˆ·æä¾›å¿«é€ŸäºŒåˆ›çš„åŠŸèƒ½ã€‚\
+\nä»»ä½•äººåœ¨æœªç»ç‰ˆæƒåˆ¶ä½œæ–¹è®¸å¯çš„æƒ…å†µä¸‹éƒ½ä¸å¾—ä½¿ç”¨å…¶ç›´æŽ¥è¿›è¡Œç›ˆåˆ©ã€‚\
+\nå‡ºçŽ°ä»»ä½•ä½¿ç”¨æ‰‹æ¸¸ç´ æè€Œå¯¼è‡´çš„ä¾µæƒè¡Œä¸ºï¼Œæœ¬ç¨‹åºå¼€å‘è€…æ¦‚ä¸è´Ÿè´£ã€‚\n\n");
 
-			Kernal_Introduce->setStyleSheet("QLabel{font-size:20px;font-family:'Microsoft YaHei'}");
-			Kernal_Introduce->setAlignment(Qt::AlignCenter);
-			CurrentLayout->addWidget(Kernal_Introduce, 1, 0, 1, 1);
+		//Kernal_Introduce->setStyleSheet("QLabel{font-size:20px;font-family:'Microsoft YaHei'}");
+		Kernal_Introduce->setStyleSheet("QLabel{font-size:20px;}");
+		Kernal_Introduce->setAlignment(Qt::AlignCenter);
+		CurrentLayout->addWidget(Kernal_Introduce, 1, 0, 1, 1);
 
-			Developer_Info = new QLabel(this);
-			Developer_Info->setText("\
-\n¿ª·¢Õß£ºÇàÑÅÒô\
-\n¿ª·¢Ö§³Ö£ºv0v_tempest¡¢Ayano_Aishi\
-\nÃÀ¹¤£ºÇàÑÅÒô\
-\n·­Òë£ºÇàÑÅÒô¡¢_µÍÒ÷©g\
-\n²âÊÔ£ºThe_Universeå¾Óî¡¢°×ÓðÄ«Ñ©");
-			Developer_Info->setAlignment(Qt::AlignCenter);
-			Developer_Info->setStyleSheet("QLabel{font-size:20px;font-family:'Microsoft YaHei'}");
-			CurrentLayout->addWidget(Developer_Info, 2, 0, 1, 1);
-		}
-	public slots:
-		void closeEvent(QCloseEvent* event) {
-			emit windowIsClosed();
-		}
-		void showEvent(QShowEvent* event) {
-			this->setFixedSize(this->width(), this->height());
-		}
+		Developer_Info = new QLabel(this);
+		Developer_Info->setText("\
+\nå¼€å‘è€…ï¼šé’é›…éŸ³\
+\nå¼€å‘æ”¯æŒï¼šv0v_tempestã€Ayano_Aishi\
+\nç¾Žå·¥ï¼šé’é›…éŸ³\
+\nç¿»è¯‘ï¼šé’é›…éŸ³ã€_ä½ŽåŸã‚ž\
+\næµ‹è¯•ï¼šThe_Universeå¯°å®‡ã€ç™½ç¾½å¢¨é›ªã€è°·é›¨æš®æ­Œ");
+		Developer_Info->setAlignment(Qt::AlignCenter);
+		Developer_Info->setStyleSheet("QLabel{font-size:20px;font-family:'Microsoft YaHei'}");
+		CurrentLayout->addWidget(Developer_Info, 2, 0, 1, 1);
+	}
+public slots:
+	void closeEvent(QCloseEvent* event) {
+		emit windowIsClosed();
+	}
+	void showEvent(QShowEvent* event) {
+		this->setFixedSize(this->width(), this->height());
+	}
 };

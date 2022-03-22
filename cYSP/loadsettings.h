@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 #include <QtCore>
 
-void writesettings(QString SettingsKey="",QString SettingsValue="");
+void writesettings(QString SettingsKey = "", QString SettingsValue = "");
 
 int loadsettings(void);
 

@@ -1,11 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include <QtCore>
 #include <QtWidgets>
 #include <QtGui>
 #include "..\global_value.h"
 #include "..\loadsettings.h"
 #include "..\langcontrol.h"
-#include <windows.h>
 
 class WindowsWarn :public QWidget
 {
@@ -14,7 +13,7 @@ public:
 	QLabel* TextLabel;
 	QPushButton* Button;
 
-	WindowsWarn(QWidget *parent = Q_NULLPTR) {
+	WindowsWarn(QWidget* parent = Q_NULLPTR) {
 		this->setParent(parent);
 		TextLabel = new QLabel(this);
 		Button = new QPushButton(this);
@@ -23,17 +22,17 @@ public:
 		this->setStyleSheet("QWidget{background-color:#0078D4}");
 		TextLabel->setGeometry(QRect(50, 10, 900, 200));
 		TextLabel->setWordWrap(TRUE);
-		TextLabel->setText("ÎÒÃÇºÜ±§Ç¸µÄ¸æÖªÄú£¬ÓÉÓÚ³ÌÐòÊ¹ÓÃÁËÓÉÐÂ°æ±¾Windows10£¨11£©Ìá¹©µÄAPI£¬Òò´ËYSP³ÌÐòÎÞ·¨ÔÚÄúµÄÀÏ¾É°æ±¾WindowsÏµÍ³ÉÏ¹¤×÷¡£\n\
-±¾³ÌÐò¶ÔÓÚ2018Äê¼°Ö®Ç°·¢²¼µÄWindowsÏµÍ³µÄ¼æÈÝÐÔ²î¡£Çë¿¼ÂÇÉý¼¶µ½×îÐÂ°æ±¾µÄWindowsÒÔÊ¹ÓÃ³ÌÐò");
-		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:25px}");
-		Button->setText("È·¶¨");
+		TextLabel->setText("æˆ‘ä»¬å¾ˆæŠ±æ­‰çš„å‘ŠçŸ¥æ‚¨ï¼Œç”±äºŽç¨‹åºä½¿ç”¨äº†ç”±æ–°ç‰ˆæœ¬Windows10ï¼ˆ11ï¼‰æä¾›çš„APIï¼Œå› æ­¤YSPç¨‹åºæ— æ³•åœ¨æ‚¨çš„è€æ—§ç‰ˆæœ¬Windowsç³»ç»Ÿä¸Šå·¥ä½œã€‚\n\
+æœ¬ç¨‹åºå¯¹äºŽ2018å¹´åŠä¹‹å‰å‘å¸ƒçš„Windowsç³»ç»Ÿçš„å…¼å®¹æ€§å·®ã€‚è¯·è€ƒè™‘å‡çº§åˆ°æœ€æ–°ç‰ˆæœ¬çš„Windowsä»¥ä½¿ç”¨ç¨‹åº");
+		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:25px}");
+		Button->setText("ç¡®å®š");
 		Button->setGeometry(QRect(800, 230, 160, 50));
-		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border:4px solid rgba(255,255,255,255);}\
-QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border:4px solid rgba(255,255,255,255);}\
-QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border:4px solid rgba(255,255,255,255);}");
+		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-size:20px;border:4px solid rgba(255,255,255,255);}\
+QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border:4px solid rgba(255,255,255,255);}\
+QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border:4px solid rgba(255,255,255,255);}");
 		connect(Button, SIGNAL(clicked()), this, SLOT(exitProgram()));
-		
-		this->setFixedSize(1000,300);
+
+		this->setFixedSize(1000, 300);
 	}
 public slots:
 	void exitProgram(void) {
@@ -57,13 +56,13 @@ public:
 		this->setStyleSheet("QWidget{background-color:#0078D4;}");
 		TextLabel->setGeometry(QRect(50, 10, 900, 200));
 		TextLabel->setWordWrap(TRUE);
-		TextLabel->setText("±ØÐëÏòÄúÖ¸³ö£¬YSP³ÌÐòÖ»ÓÐÔÚ´¦ÓÚWindows11ÉÏÊ±²ÅÄÜÕý³£ÏÔÊ¾£¬Çë¿¼ÂÇÉý¼¶µ½Windows11");
-		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:25px}");
-		Button->setText("È·¶¨");
+		TextLabel->setText("å¿…é¡»å‘æ‚¨æŒ‡å‡ºï¼ŒYSPç¨‹åºåªæœ‰åœ¨å¤„äºŽWindows11ä¸Šæ—¶æ‰èƒ½æ­£å¸¸æ˜¾ç¤ºï¼Œè¯·è€ƒè™‘å‡çº§åˆ°Windows11");
+		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:25px}");
+		Button->setText("ç¡®å®š");
 		Button->setGeometry(QRect(800, 230, 160, 50));
-		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
-QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
-QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}");
+		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
+QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
+QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}");
 		connect(Button, SIGNAL(clicked()), this, SLOT(exitProgram()));
 
 		this->setFixedSize(1000, 300);
@@ -90,14 +89,14 @@ public:
 		this->setStyleSheet("QWidget{background-color:#0078D4;}");
 		TextLabel->setGeometry(QRect(50, 10, 900, 200));
 		TextLabel->setWordWrap(TRUE);
-		TextLabel->setText("SPOL.6X->SPOL.9XÇ¨ÒÆÐëÖª£º\nSPOLÓï·¨ÔÚ.6X(0.5.10¡¢0.6.0¡¢0.6.5)Óë.9X(0.9.0)Ö®¼ä²îÒì¾Þ´ó£¬ËùÓÐ»ùÓÚ¾É°æSPOLµÄÎÄµµ¶¼²»ÄÜÍ¨¹ýFollowNew»úÖÆÕý³£Ö´ÐÐ\n\
-ÇëÄú´ò¿ª½ÌÑ§ÎÄµµÖØÐÂÁË½âÐÂ°æ±¾µÄ±ä»¯£¬²¢°´ÐèÐÞ¸ÄÄúµÄ¾É°æ±¾ÎÄµµ¡£\n\n±¾´°¿Ú½ö¶ÔÄúÕ¹Ê¾Ò»´Î¡£");
-		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:25px}");
-		Button->setText("È·¶¨");
+		TextLabel->setText("SPOL.6X->SPOL.9Xè¿ç§»é¡»çŸ¥ï¼š\nSPOLè¯­æ³•åœ¨.6X(0.5.10ã€0.6.0ã€0.6.5)ä¸Ž.9X(0.9.0)ä¹‹é—´å·®å¼‚å·¨å¤§ï¼Œæ‰€æœ‰åŸºäºŽæ—§ç‰ˆSPOLçš„æ–‡æ¡£éƒ½ä¸èƒ½é€šè¿‡FollowNewæœºåˆ¶æ­£å¸¸æ‰§è¡Œ\n\
+è¯·æ‚¨æ‰“å¼€æ•™å­¦æ–‡æ¡£é‡æ–°äº†è§£æ–°ç‰ˆæœ¬çš„å˜åŒ–ï¼Œå¹¶æŒ‰éœ€ä¿®æ”¹æ‚¨çš„æ—§ç‰ˆæœ¬æ–‡æ¡£ã€‚\n\næœ¬çª—å£ä»…å¯¹æ‚¨å±•ç¤ºä¸€æ¬¡ã€‚");
+		TextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:25px}");
+		Button->setText("ç¡®å®š");
 		Button->setGeometry(QRect(800, 230, 160, 50));
-		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
-QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
-QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-family:'Microsoft YaHei';font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}");
+		Button->setStyleSheet("QPushButton{color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
+QPushButton:hover{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}\
+QPushButton:Pressed{background-color:rgba(255,255,255,100);color:#FFFFFF;font-size:20px;border-radius:5px;border:1px solid rgba(255,255,255,255);}");
 		connect(Button, SIGNAL(clicked()), this, SLOT(exitProgram()));
 
 		this->setFixedSize(1000, 300);

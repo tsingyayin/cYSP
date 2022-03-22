@@ -1,16 +1,16 @@
-#include "global_value.h"
+Ôªø#include "global_value.h"
 #include "loadsettings.h"
 #include <QCoreApplication>
 #include <QDebug>
 
-QString PROINFO::Main = "0.9.0";
+QString PROINFO::Main = "0.9.1";
 QString PROINFO::Channel = "Pre";
-QString PROINFO::Sub = "3";
-QString PROINFO::Build = "137.0";
-QString PROINFO::SPOL = "0.9.0";
-QString PROINFO::Kernal = "K9U1";
-QString PROINFO::Day = "20211206";
-QString PROINFO::Dev = "«‡—≈“Ù°¢Ayano_Aishi°¢v0v_tempest";
+QString PROINFO::Sub = "1";
+QString PROINFO::Build = "140.0";
+QString PROINFO::SPOL = "0.9.1";
+QString PROINFO::Kernal = "K9U2";
+QString PROINFO::Day = "20211111";
+QString PROINFO::Dev = "ÈùíÈõÖÈü≥„ÄÅAyano_Aishi„ÄÅv0v_tempest";
 QString PROINFO::urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
 QString PROINFO::urlAFD = "https://afdian.net/@ysp_Dev?tab=home";
 QString PROINFO::Total = "Ver" + PROINFO::Main + "_" +
@@ -21,6 +21,7 @@ QString PROPATH::Program = "";
 QString PROPATH::Users = "";
 
 void setCurrentPath(QString CurrentPath, QString User_Path, bool FromLauncher) {
+#if DEPLOY == 1
 	if (!FromLauncher) {
 		PROPATH::Program = CurrentPath;
 		PROPATH::Users = CurrentPath.replace("\\", "/").section("/", 0, -2) + "/Users_Data";
@@ -28,22 +29,22 @@ void setCurrentPath(QString CurrentPath, QString User_Path, bool FromLauncher) {
 	else {
 		PROPATH::Program = CurrentPath;
 		PROPATH::Users = User_Path;
-		qDebug().noquote() << "Get Users_Path:" + PROPATH::Users;
-		LoadLibrary(LPCWSTR((QDir::currentPath() + "/libcrypto-1_1-x64.dll").toStdString().c_str()));
-		LoadLibrary(LPCWSTR((QDir::currentPath() + "/libssl-1_1-x64.dll").toStdString().c_str()));
 	}
+#elif DEPLOY == 2
+	PROPATH::Program = CurrentPath;
+	PROPATH::Users = "/sdcard/cysp/Users_Data";
+#endif
 };
 
 void sDebug(QString DebugInfo) {
-	if (PROINFO::Sub.contains("Pre") || (Program_Settings("Force_Debugging_Info")=="True")) {
+	if (PROINFO::Sub.contains("Pre") || (Program_Settings("Force_Debugging_Info") == "True")) {
 		qDebug().noquote() << DebugInfo;
 	}
 }
 
 int randint(int min, int max)
 {
-	srand((unsigned)time(NULL));
-	return rand() % (max - min + 1) + min;
+	return qrand() % (max - min + 1) + min;
 }
 
 int limitmax(int num, int max) {
