@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
 	qRegisterMetaType<EIFL>("EIFL");
 	qRegisterMetaType<Controller::Backdrop::Data>("Controller::Backdrop::Data");
 	qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+	qRegisterMetaType<QMediaPlayer::MediaStatus>("QMediaPlayer::MediaStatus");
 #if DEPLOY == 2
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 #endif

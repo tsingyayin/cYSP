@@ -40,7 +40,7 @@ public:
 				Linecount += 1;
 				StoryFileTextSingleLine = StoryFileText.readLine();
 				int LineLength = StoryFileTextSingleLine.length();
-				if (StoryFileTextSingleLine[0] == "/") {
+				if (StoryFileTextSingleLine.mid(0,5) == "/SPOL") {
 					Version = StoryFileTextSingleLine.mid(1, LineLength - 1);
 					VerList = Version.split("-");
 					if (VerList.length() != 2) { VerList << "DONOTFOLLOW"; }
@@ -51,6 +51,16 @@ public:
 					emit signalName->send_kernal_info("-->文档声明版本" + Version + "<--");
 					emit signalName->send_kernal_info("-->程序SPOL版本：SPOL" + PROINFO::SPOL + "<--");
 					emit signalName->send_kernal_info("！！！SPOL.9X内测期间，实际识别版本为0.8.0，而非0.9.0！！！");
+				}
+				else if (StoryFileTextSingleLine.mid(0, 11) == "/setUIStyle") {
+					QString UIStyle = StoryFileTextSingleLine.mid(12, StoryFileTextSingleLine.length() - 13);
+					if (UIStyle == "") { 
+						UIStyle = "__INSIDER_YSP__"; 
+					}
+					else {
+						UIStyle = PROPATH::Users + "/ui/" + UIStyle + ".ceui";
+					}
+					emit signalName->set_UI_style(UIStyle);
 				}
 				else if (StoryFileTextSingleLine.mid(0, 6) == "title(" && StoryFileTextSingleLine[StoryFileTextSingleLine.length() - 1] == ")" && ensureSPOLVer) {
 					if (StoryFileTextSingleLine.count(",") != 3) {

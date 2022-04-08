@@ -3,12 +3,12 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-QString PROINFO::Main = "0.9.1";
+QString PROINFO::Main = "0.9.2";
 QString PROINFO::Channel = "Pre";
-QString PROINFO::Sub = "1";
-QString PROINFO::Build = "140.0";
-QString PROINFO::SPOL = "0.9.1";
-QString PROINFO::Kernal = "K9U2";
+QString PROINFO::Sub = "2";
+QString PROINFO::Build = "140.10100";
+QString PROINFO::SPOL = "0.9.2";
+QString PROINFO::Kernal = "K9U3";
 QString PROINFO::Day = "20211111";
 QString PROINFO::Dev = "青雅音、Ayano_Aishi、v0v_tempest";
 QString PROINFO::urlGithub = "https://github.com/tsingyayin/YSP-Yayin_Story_Player";
@@ -19,6 +19,9 @@ PROINFO::Build + ")_SPOL" + PROINFO::SPOL + ";" + PROINFO::Kernal;
 
 QString PROPATH::Program = "";
 QString PROPATH::Users = "";
+
+bool ResourceHost::isLocal = FALSE;
+QString ResourceHost::Host = "";
 
 void setCurrentPath(QString CurrentPath, QString User_Path, bool FromLauncher) {
 #if DEPLOY == 1

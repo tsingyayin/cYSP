@@ -11,6 +11,7 @@
 #include "../global_value.h"
 #include "../core/core_T.h"
 #include <QTest>
+#define elif else if
 using namespace std;
 
 class SingleInfo :public QFrame
@@ -262,6 +263,8 @@ public:
 
 		LoadingInfo = new QTextBrowser(this);
 		LoadingInfo->setGeometry(QRect(X * 0.1, Y * 0.1, X * 0.8, Y * 0.8));
+		LoadingInfo->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+		LoadingInfo->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
 		OPLoadingInfo = new QGraphicsOpacityEffect();
 		OPLoadingInfo->setOpacity(0);
 		LoadingInfo->setGraphicsEffect(OPLoadingInfo);
@@ -702,16 +705,16 @@ public:
 	QPushButton* BranchButton_3;
 	QPushButton* BranchButton_2;
 	QPushButton* BranchButton_1;
-	QString QSSBranchButton;
+	
 	QPushButton* AutoButton;
 	QPushButton* NextButton;
 	QPushButton* SpeedButton;
 	int AutoButtonTick = 0;
 	QString QSSNAButton;
-	QString QSSSpeedButton;
 	uScrollPage* LogPage;
 	QPushButton* LogButton;
 	QPixmap LogButtonPixRaw;
+	QLabel* TopCover;
 	int changeBG = 1;
 	int SpeedNow = 0;
 	float SpeedFloat = 1.0;
@@ -722,6 +725,16 @@ public:
 	ShakeFunc* ShakeFUNC;
 	FlashFuncFast* FlashFUNCFast;
 	FlashFuncSlow* FlashFUNCSlow;
+	QRect BranchButton1_1, BranchButton1_2, BranchButton1_3, BranchButton1_4;
+	QRect BranchButton2_2, BranchButton2_3, BranchButton2_4;
+	QRect BranchButton3_3, BranchButton3_4;
+	QRect BranchButton4_4;
+	QRect RecWordLabel, RecNameLabel, RecNextButton, RecLogButton, RecAutoButton, RecSpeedButton;
+	QString QSSFrame;
+	QString QSSBranchButton, QSSBranchButton_1, QSSBranchButton_2, QSSBranchButton_3, QSSBranchButton_4;
+	QString QSSWordLabel, QSSNameLabel, QSSNextButton, QSSLogButton, QSSAutoButton, QSSSpeedButton, QSSFreeLabel;
+	QString Fontsize90, Fontsize80, Fontsize60, Fontsize45, Fontsize40, Fontsize35, Fontsize30;
+	QString QSSTopCover;
 	tick AutoTick = 0;
 	bool Working = FALSE;
 	uPlayerPage(int X, int Y, QWidget* parent = Q_NULLPTR, bool UseLogPage = 1) {
@@ -730,13 +743,13 @@ public:
 		gY = Y;
 		gUseLogPage = UseLogPage;
 
-		QString Fontsize90 = QString::number((int)(gY * 0.082)) + "px";
-		QString Fontsize80 = QString::number((int)(gY * 0.073)) + "px";
-		QString Fontsize60 = QString::number((int)(gY * 0.054)) + "px";
-		QString Fontsize45 = QString::number((int)(gY * 0.040)) + "px";
-		QString Fontsize40 = QString::number((int)(gY * 0.036)) + "px";
-		QString Fontsize35 = QString::number((int)(gY * 0.031)) + "px";
-		QString Fontsize30 = QString::number((int)(gY * 0.026)) + "px";
+		Fontsize90 = QString::number((int)(gY * 0.082)) + "px";
+		Fontsize80 = QString::number((int)(gY * 0.073)) + "px";
+		Fontsize60 = QString::number((int)(gY * 0.054)) + "px";
+		Fontsize45 = QString::number((int)(gY * 0.040)) + "px";
+		Fontsize40 = QString::number((int)(gY * 0.036)) + "px";
+		Fontsize35 = QString::number((int)(gY * 0.031)) + "px";
+		Fontsize30 = QString::number((int)(gY * 0.026)) + "px";
 
 		BG2 = new QLabel(this);
 		BG1 = new QLabel(this);
@@ -779,21 +792,22 @@ public:
 
 		Frame = new QLabel(this);
 		Frame->setGeometry(QRect(0, 0, X, Y));
-		Frame_R.load(PROPATH::Users + "/source/BaseUI/Frame/frame.png");
-		Frame_R = Frame_R.scaled(X, Y, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		Frame->setPixmap(QPixmap::fromImage(Frame_R));
+		//Frame_R.load(PROPATH::Users + "/source/BaseUI/Frame/frame.png");
+		//Frame_R = Frame_R.scaled(X, Y, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		//Frame->setPixmap(QPixmap::fromImage(Frame_R));
 		OPFrame = new QGraphicsOpacityEffect();
 		OPFrame->setOpacity(0);
 		Frame->setGraphicsEffect(OPFrame);
+		Frame->hide();
 
 		NameLabel = new QLabel(this);
 		WordLabel = new QLabel(this);
-		NameLabel->setStyleSheet("QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}");
+		//NameLabel->setStyleSheet("QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}");
 		NameLabel->setAlignment(Qt::AlignRight);
-		NameLabel->setGeometry(QRect(0, gY * 0.865, gX * 0.2078125, gY * 0.07));
-		WordLabel->setStyleSheet("QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}");
+		//NameLabel->setGeometry(QRect(0, gY * 0.865, gX * 0.2078125, gY * 0.07));
+		//WordLabel->setStyleSheet("QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}");
 		WordLabel->setAlignment(Qt::AlignLeft);
-		WordLabel->setGeometry(QRect(gX * 0.2609375, gY * 0.87685, gX * 0.6875, gY * 0.105));
+		//WordLabel->setGeometry(QRect(gX * 0.2609375, gY * 0.87685, gX * 0.6875, gY * 0.105));
 
 		//如果必要，这是一层用于盖住除了自由文本和按钮之外其他所有部件的灰色层
 		BlackCover = new QLabel(this);
@@ -805,7 +819,7 @@ public:
 		BlackCover->setGraphicsEffect(OPBlackCover);
 
 		FreeLabel = new QLabel(this);
-		FreeLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}");
+		//FreeLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}");
 		FreeLabel->setAlignment(Qt::AlignCenter);
 		FreeLabel->setGeometry(QRect(gX * 2, -gY * 0.034, gX * 0.75, gY * 0.033));
 		OPFreeLabel = new QGraphicsOpacityEffect();
@@ -822,37 +836,15 @@ public:
 		BranchButton_3->setObjectName("BranchButton");
 		BranchButton_4->setObjectName("BranchButton");
 
-		QSSBranchButton = "\
-                #BranchButton{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_N.png');\
-                }\
-                #BranchButton:hover{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_P.png');\
-                }\
-                #BranchButton:Pressed{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_C.png');\
-                    }";
 		BranchButton_1->setStyleSheet(QSSBranchButton);
 		BranchButton_2->setStyleSheet(QSSBranchButton);
 		BranchButton_3->setStyleSheet(QSSBranchButton);
 		BranchButton_4->setStyleSheet(QSSBranchButton);
 
-		BranchButton_1->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_2->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_3->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_4->setGeometry(QRect(-640, -80, 635, 70));
+		BranchButton_1->hide();
+		BranchButton_2->hide();
+		BranchButton_3->hide();
+		BranchButton_4->hide();
 
 		connect(BranchButton_1, SIGNAL(clicked()), this, SLOT(_Chooselabel()));
 		connect(BranchButton_2, SIGNAL(clicked()), this, SLOT(_Chooselabel()));
@@ -861,44 +853,26 @@ public:
 
 		AutoButton = new QPushButton(this);
 		AutoButton->setObjectName("AutoButton");
-		AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
+		//AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
+		AutoButton->hide();
 		AutoButton->setText(msg("Player_Playing_Text_Auto"));
 		AutoButtonTick = 0;
 		connect(AutoButton, SIGNAL(clicked()), this, SLOT(_AutoChange()));
 
 		NextButton = new QPushButton(this);
 		NextButton->setObjectName("NextButton");
-		NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		//NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		NextButton->hide();
 		NextButton->setText(msg("Player_Playing_Text_Next"));
 		connect(NextButton, SIGNAL(clicked()), this, SLOT(_ToNext()));
 
 		SpeedButton = new QPushButton(this);
 		SpeedButton->setObjectName("SpeedButton");
-		SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
+		//SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
 		SpeedButton->setText("1.0x");
+		SpeedButton->hide();
 		connect(SpeedButton, SIGNAL(clicked()), this, SLOT(_SpeedChange()));
 
-		QSSNAButton = "\
-                QPushButton{\
-                    background-color:rgba(0,0,0,0);\
-                    color:#FFFFFF;\
-                    font-family:'SimHei';\
-                    font-size:" + Fontsize40 + ";\
-                    font-weight:bold;\
-                    text-align:left;\
-                    }";
-		AutoButton->setStyleSheet(QSSNAButton);
-		NextButton->setStyleSheet(QSSNAButton);
-
-		QSSSpeedButton = "\
-                #SpeedButton{\
-                    background-color:rgba(0,0,0,0);\
-                    font-size:" + Fontsize40 + ";\
-                    \
-                    text-align:left;\
-                    color:#FFFFFF;\
-                    }";
-		SpeedButton->setStyleSheet(QSSSpeedButton);
 
 		if (UseLogPage) {
 			LogPage = new uScrollPage(X, Y, this);
@@ -907,13 +881,17 @@ public:
 		}
 
 		LogButton = new QPushButton(this);
-		LogButtonPixRaw = QPixmap(PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png");
-		LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		LogButton->setIcon(QIcon(LogButtonPixRaw));
-		LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
-		LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
-		LogButton->setStyleSheet("QPushButton{background-color:rgba(0,0,0,0);}");
+		//LogButtonPixRaw = QPixmap(PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png");
+		//LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		//LogButton->setIcon(QIcon(LogButtonPixRaw));
+		//LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
+		//LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
+		LogButton->hide();
 		connect(LogButton, SIGNAL(clicked()), this, SLOT(showLogPage()));
+		TopCover = new QLabel(this);
+		TopCover->hide();
+		TopCover->setGeometry(QRect(0, 0, X, Y));
+		loadUIStyleSheet();
 	}
 
 public slots:
@@ -937,6 +915,7 @@ public slots:
 		OPAVG_R->setOpacity(0);
 		OPFrame->setOpacity(0);
 		if (gUseLogPage) { LogPage->initObject(); }
+		loadUIStyleSheet();
 	}
 
 	int searchParameter(QString Parametername) {
@@ -951,38 +930,46 @@ public slots:
 		emit NowInBranch();
 		int converlstlen = BranchList.length();
 		qDebug() << "SETBRANCHBUTTON";
-		if (gUseLogPage) { LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		if (gUseLogPage) { LogButton->hide(); }
+
+		if (converlstlen == 1) {
+			BranchButton_1->setGeometry(BranchButton1_1);
+
+		}if (converlstlen == 2) {
+			BranchButton_1->setGeometry(BranchButton1_2);
+			BranchButton_2->setGeometry(BranchButton2_2);
+		}if (converlstlen == 3) {
+			BranchButton_1->setGeometry(BranchButton1_3);
+			BranchButton_2->setGeometry(BranchButton2_3);
+			BranchButton_3->setGeometry(BranchButton3_3);
+		}if (converlstlen == 4) {
+			BranchButton_1->setGeometry(BranchButton1_4);
+			BranchButton_2->setGeometry(BranchButton2_4);
+			BranchButton_3->setGeometry(BranchButton3_4);
+			BranchButton_4->setGeometry(BranchButton4_4);
+		}
 
 		if (converlstlen > 0) {
 			BranchButton_1->setText(BranchList[0].section(":", -1, -1));
+			BranchButton_1->show();
 		}if (converlstlen > 1) {
 			BranchButton_2->setText(BranchList[1].section(":", -1, -1));
+			BranchButton_2->show();
 		}if (converlstlen > 2) {
 			BranchButton_3->setText(BranchList[2].section(":", -1, -1));
+			BranchButton_3->show();
 		}if (converlstlen > 3) {
 			BranchButton_4->setText(BranchList[3].section(":", -1, -1));
+			BranchButton_4->show();
 		}
-		if (converlstlen == 1) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.402777, 635, 70));
-		}if (converlstlen == 2) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.337962963, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.435185, 635, 70));
-		}if (converlstlen == 3) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.273148, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.37037037, 635, 70));
-			BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.46759, 635, 70));
-		}if (converlstlen == 4) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.2574074, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.3546296, 635, 70));
-			BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.45185185, 635, 70));
-			BranchButton_4->setGeometry(QRect(gX / 2 - 317.5, gY * 0.549074, 635, 70));
-		}
+		
 	}
 
 	void showPlayerPage(void) {
-		AutoButton->setGeometry(QRect(gX * 0.80729, gY * 0.038, gX * 0.098125, gY * 0.046296));
-		SpeedButton->setGeometry(QRect(gX * 0.902604, gY * 0.038, gX * 0.078125, gY * 0.046296));
-		if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		AutoButton->show();
+		SpeedButton->show();
+		if (gUseLogPage) { LogButton->show(); }
+		Frame->show();
 	}
 
 	void setCurrentFrame(bool FrameOpacity) {
@@ -1221,6 +1208,30 @@ public slots:
 		OPFreeLabel->setOpacity(0);
 	}
 
+	void moveAVG(QString whichAVG, double dX, double dY) {
+		if (whichAVG.contains("L")) {
+			AVG_L->move(AVG_L->x() + dX * gX, AVG_L->y() + dY * gY);
+		}
+		if (whichAVG.contains("R")) {
+			AVG_R->move(AVG_R->x() + dX * gX, AVG_R->y() + dY * gY);
+		}
+		if (whichAVG.contains("M")) {
+			AVG_M->move(AVG_M->x() + dX * gX, AVG_M->y() + dY * gY);
+		}
+	}
+	
+	void moveAVGBack(QString whichAVG) {
+		if (whichAVG.contains("L")) {
+			AVG_L->move(gX * -0.068229, gY * 0.12);
+		}
+		if (whichAVG.contains("R")) {
+			AVG_R->move(gX * 0.321354, gY * 0.12);
+		}
+		if (whichAVG.contains("M")) {
+			AVG_M->move(gX * 0.127083, gY * 0.12);
+		}
+	}
+
 	void clearAll(void) {
 		Working = FALSE;
 		NameLabel->setText("");
@@ -1232,12 +1243,14 @@ public slots:
 		BG1->setPixmap(QPixmap(""));
 		BG2->setPixmap(QPixmap(""));
 
-		AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
-		SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
-		NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		AutoButton->hide();
+		SpeedButton->hide();
+		NextButton->hide();
 		if (gUseLogPage) {
-			LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
+			LogButton->hide();
 		}
+		TopCover->hide();
+		Frame->hide();
 	}
 
 	void wheelEvent(QWheelEvent* event) {
@@ -1342,10 +1355,10 @@ public slots:
 		QPushButton* WhichButtonSend = static_cast<QPushButton*>(this->sender());
 		emit UserChooseWhich(WhichButtonSend->text());
 
-		BranchButton_1->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_2->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_3->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_4->setGeometry(QRect(-640, -80, 635, 70));
+		BranchButton_1->hide();
+		BranchButton_2->hide();
+		BranchButton_3->hide();
+		BranchButton_4->hide();
 
 		BranchButton_1->setText("");
 		BranchButton_2->setText("");
@@ -1353,7 +1366,7 @@ public slots:
 		BranchButton_4->setText("");
 
 		Inbranch = FALSE;
-		if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		if (gUseLogPage) { LogButton->show(); }
 		showNext();
 	}
 
@@ -1362,13 +1375,13 @@ public slots:
 			emit NeedWakeUp();
 		}
 		else {
-			NextButton->setGeometry(QRect(gX * 0.868, gY * 0.925, gX * 0.078125, gY * 0.046296));
+			NextButton->show();
 		}
 	}
 
 	void _ToNext(void) {
 		emit NeedWakeUp();
-		NextButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		NextButton->hide();
 	}
 
 	void showLogPage(void) {
@@ -1391,6 +1404,333 @@ public slots:
 			InLogPage = FALSE;
 		}
 	}
+
+	void loadUIStyleSheet(QString Filename = "__INSIDER_YSP__") {
+		initYSPUIStyle();
+		if (Filename != "__INSIDER_YSP__") {
+			QFile File(Filename);
+			if (File.open(QIODevice::ReadOnly)) {
+				QTextStream CurrentSPOLText(&File);
+				CurrentSPOLText.setCodec("UTF-8");
+				while (TRUE) {
+					if (CurrentSPOLText.atEnd()) {
+						break;
+					}
+					CEUISingleLine(CurrentSPOLText.readLine());
+				}
+				File.close();
+			}
+		}
+		loadStaticStyle();
+	}
+
+	void CEUISingleLine(QString LineString) {
+		QStringList CommandRAW;
+		QString CommandSplit;
+		bool InText = FALSE;
+		bool InEsc = FALSE;
+		foreach(QChar SC, LineString) {
+			if (SC == "#" && !InText) {
+				break;
+			}
+			if (SC == '\\') {
+				InEsc = TRUE;
+				continue;
+			}
+			if (SC == '"' && !InEsc) {
+				InText = !InText;
+				InEsc = FALSE;
+				continue;
+			}
+			if ((SC == ' ' || SC == ';') && !InText) {
+				CommandRAW.append(CommandSplit);
+				CommandSplit.clear();
+			}
+			else {
+				CommandSplit += SC;
+				InEsc = FALSE;
+			}
+		}
+		qDebug() << CommandRAW;
+		initUserUIStyle(CommandRAW);
+	}
+
+	void initUserUIStyle(QStringList CommandRAW) {
+		if (CommandRAW[1] == "S") {
+			if (CommandRAW.length() != 3) {
+				return;
+			}
+			else {
+				while (TRUE) {
+					if (CommandRAW[2].contains("AUTO_") && CommandRAW[2].contains("_PR")) {
+						int Index_b = CommandRAW[2].indexOf("AUTO_");
+						int Index_e = CommandRAW[2].indexOf("_PR");
+						QString pr = CommandRAW[2].mid(Index_b + 5, Index_e - Index_b - 5);
+						CommandRAW[2].replace("AUTO_" + pr + "_PR", QString::number((int)(pr.toFloat() * gY / 100))+"px");
+					}
+					else {
+						break;
+					}
+				}
+				CommandRAW[2].replace("AUTO_PATH:", PROPATH::Users);
+			}
+			qDebug() << CommandRAW;
+		}
+		if (CommandRAW[0] == "WordLabel") {
+			if (CommandRAW[1] == "S") {
+				QSSWordLabel = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecWordLabel = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY )};
+				}
+			}
+		}elif(CommandRAW[0] == "NameLabel") {
+			if (CommandRAW[1] == "S") {
+				QSSNameLabel = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecNameLabel = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "LogButton") {
+			if (CommandRAW[1] == "S") {
+				QSSLogButton = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecLogButton = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "AutoButton") {
+			if (CommandRAW[1] == "S") {
+				QSSAutoButton = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecAutoButton = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "SpeedButton") {
+			if (CommandRAW[1] == "S") {
+				QSSSpeedButton = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecSpeedButton = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0]=="NextButton") {
+			if (CommandRAW[1] == "S") {
+				QSSNextButton = CommandRAW[2];
+			}elif(CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					RecNextButton = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton") {
+			if (CommandRAW[1] == "S") {
+				QSSBranchButton = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "BranchButton_1") {
+			if (CommandRAW[1] == "S") {
+				QSSBranchButton_1 = CommandRAW[2];
+			}
+		}elif(CommandRAW[0]=="BranchButton_2") {
+			if (CommandRAW[1] == "S") {
+				QSSBranchButton_2 = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "BranchButton_3") {
+			if (CommandRAW[1] == "S") {
+				QSSBranchButton_2 = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "BranchButton_4") {
+			if (CommandRAW[1] == "S") {
+				QSSBranchButton_2 = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "BranchButton_1_1") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton1_1 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton_1_2") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton1_2 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0]=="BranchButton_1_3") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton1_3 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton_1_4") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton1_4 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0]=="BranchButton_2_2") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton2_2 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton_2_3") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton2_3 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton_2_4") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton2_4 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0]=="BranchButton_3_3") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton3_3 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "BranchButton_3_4") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton3_4 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0]=="BranchButton_4_4") {
+			if (CommandRAW[1] == "G") {
+				if (CommandRAW.length() == 6) {
+					BranchButton4_4 = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+				}
+			}
+		}elif(CommandRAW[0] == "FreeLabel") {
+			if (CommandRAW[1] == "S") {
+				QSSFreeLabel = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "Frame") {
+			if (CommandRAW[1] == "S") {
+				QSSFrame = CommandRAW[2];
+			}
+		}elif(CommandRAW[0] == "TopCover") {
+			if (CommandRAW[1] == "S") {
+				QSSTopCover = CommandRAW[2];
+			}
+		}
+	}
+
+	void initYSPUIStyle() {
+		QSSWordLabel = "QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}";
+		QSSNameLabel = "QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}";
+		QSSFreeLabel = "QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}";
+
+		QSSFrame="QLabel{background-color:rgba(0,0,0,0);border-image:url("+ PROPATH::Users + "/source/BaseUI/Frame/frame.png)}";
+		QSSLogButton = "QPushButton{background-color:rgba(0,0,0,0);border-image:url(" + PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png)}";
+		QSSSpeedButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    font-size:" + Fontsize40 + ";\
+                    \
+                    text-align:left;\
+                    color:#FFFFFF;\
+                    }";
+		QSSNextButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    color:#FFFFFF;\
+                    font-family:'SimHei';\
+                    font-size:" + Fontsize40 + ";\
+                    font-weight:bold;\
+                    text-align:left;\
+                    }";
+		QSSAutoButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    color:#FFFFFF;\
+                    font-family:'SimHei';\
+                    font-size:" + Fontsize40 + ";\
+                    font-weight:bold;\
+                    text-align:left;\
+                    }";
+		QSSBranchButton = "\
+                #BranchButton{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_N.png');\
+                }\
+                #BranchButton:hover{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_P.png');\
+                }\
+                #BranchButton:Pressed{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_C.png');\
+                    }";
+		QSSBranchButton_1 = QSSBranchButton; 
+		QSSBranchButton_2 = QSSBranchButton; 
+		QSSBranchButton_3 = QSSBranchButton; 
+		QSSBranchButton_4 = QSSBranchButton;
+		QSSTopCover = "";
+		RecNameLabel = { 0, (int)(gY * 0.865), (int)(gX * 0.2078125), (int)(gY * 0.07) };
+		RecWordLabel = { (int)(gX * 0.2609375), (int)(gY * 0.87685), (int)(gX * 0.6875), (int)(gY * 0.105) };
+		RecAutoButton = { (int)(gX * 0.80729),(int)(gY * 0.038), (int)(gX * 0.098125),(int)(gY * 0.046296) };
+		RecNextButton = { (int)(gX * 0.902604), (int)(gY * 0.8981), (int)(gX * 0.078125), (int)(gY * 0.046296) };
+		RecSpeedButton = { (int)(gX * 0.902604),(int)(gY * 0.038), (int)(gX * 0.078125), (int)(gY * 0.046296) };
+		RecLogButton = { (int)(gX * 0.030416), (int)(gY * 0.033),(int)(gY * 0.055), (int)(gY * 0.055) };
+		BranchButton1_1 = { (int)(gX * 0.25), (int)(gY * 0.402777), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_2 = { (int)(gX * 0.25), (int)(gY * 0.337962), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_3 = { (int)(gX * 0.25), (int)(gY * 0.273148), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_4 = { (int)(gX * 0.25), (int)(gY * 0.257407),(int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton2_2 = { (int)(gX * 0.25), (int)(gY * 0.435185),(int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton2_3 = { (int)(gX * 0.25), (int)(gY * 0.370370), (int)(gX * 0.5),(int)(gY * 0.08) };
+		BranchButton2_4 = { (int)(gX * 0.25), (int)(gY * 0.354629), (int)(gX * 0.5),(int)(gY * 0.08) };
+		BranchButton3_3 = { (int)(gX * 0.25), (int)(gY * 0.467591), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton3_4 = { (int)(gX * 0.25), (int)(gY * 0.451852), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton4_4 = { (int)(gX * 0.25), (int)(gY * 0.549074),(int)(gX * 0.5), (int)(gY * 0.08) };
+	}
+
+	void loadStaticStyle() {
+		WordLabel->setStyleSheet(QSSWordLabel);
+		WordLabel->setGeometry(RecWordLabel);
+		NameLabel->setStyleSheet(QSSNameLabel);
+		NameLabel->setGeometry(RecNameLabel);
+		FreeLabel->setStyleSheet(QSSFreeLabel);
+		Frame->setStyleSheet(QSSFrame);
+		BranchButton_1->setStyleSheet(QSSBranchButton);
+		BranchButton_2->setStyleSheet(QSSBranchButton);
+		BranchButton_3->setStyleSheet(QSSBranchButton);
+		BranchButton_4->setStyleSheet(QSSBranchButton);
+		BranchButton_1->setStyleSheet(QSSBranchButton_1);
+		BranchButton_2->setStyleSheet(QSSBranchButton_2);
+		BranchButton_3->setStyleSheet(QSSBranchButton_3);
+		BranchButton_4->setStyleSheet(QSSBranchButton_4);	
+
+		NextButton->setStyleSheet(QSSNextButton);
+		AutoButton->setStyleSheet(QSSAutoButton);
+		SpeedButton->setStyleSheet(QSSSpeedButton);
+		LogButton->setStyleSheet(QSSLogButton);
+		AutoButton->setGeometry(RecAutoButton);
+		SpeedButton->setGeometry(RecSpeedButton);
+		LogButton->setGeometry(RecLogButton);
+		NextButton->setGeometry(RecNextButton);
+
+		TopCover->setStyleSheet(QSSTopCover);
+		if (QSSTopCover != "") {
+			TopCover->show();
+		}
+		else {
+			TopCover->hide();
+		}
+	}
+	
 };
 
 //音频放送服务
@@ -1401,8 +1741,8 @@ public:
 	QMediaPlayer* MediaPlayer;
 	QMediaPlaylist* PlayList;
 	uSoundService() {
-		MediaPlayer = new QMediaPlayer();
-		PlayList = new QMediaPlaylist();
+		MediaPlayer = new QMediaPlayer(this);
+		PlayList = new QMediaPlaylist(this);
 		MediaPlayer->setPlaylist(PlayList);
 	}
 	void loadFile(QString Filename, int Volume, bool Loop) {
@@ -1418,11 +1758,12 @@ public:
 		MediaPlayer->play();
 	}
 
-	void fadeMedia(void) {
+	void fadeMedia(bool deleteLater = FALSE) {
 		for (int i = MediaPlayer->volume(); i > 0; i--) {
 			MediaPlayer->setVolume(i);
 			QTest::qSleep(10);
 		}
 		MediaPlayer->stop();
+		if (deleteLater) { this->deleteLater(); }
 	}
 };

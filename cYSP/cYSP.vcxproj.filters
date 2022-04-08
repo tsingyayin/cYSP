@@ -53,6 +53,9 @@
     <QtMoc Include="UIFolder\LoadingPage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Aaspcommand\getSource.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

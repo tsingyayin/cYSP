@@ -263,6 +263,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">%(Filename).moc</QtMocFileName>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Public|ARM'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <QtMoc Include="Aaspcommand\getSource.h" />
     <ClInclude Include="core\core_B.h">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">input</DynamicSource>

@@ -18,6 +18,7 @@
 #define FALSE false
 #define TRUE true
 #endif
+
 void setCurrentPath(QString CurrentPath, QString User_Path = "", bool FromLauncher = FALSE);
 
 class PROINFO
@@ -43,6 +44,12 @@ public:
 	static QString Users;
 };
 
+class ResourceHost
+{
+public:
+	static bool isLocal;
+	static QString Host;
+};
 /*可选调试信息输出函数sDebug
 DebugInfo
 O======O

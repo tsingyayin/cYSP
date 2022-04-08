@@ -191,7 +191,9 @@ public slots:
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
 			connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
-
+			connect(Interpreter->signalName, SIGNAL(move_AVG_to(QString, double, double)), this->PlayerPage, SLOT(moveAVG(QString, double, double)));
+			connect(Interpreter->signalName, SIGNAL(move_AVG_back(QString)), this->PlayerPage, SLOT(moveAVGBack(QString)));
+			connect(Interpreter->signalName, SIGNAL(set_UI_style(QString)), this->PlayerPage, SLOT(loadUIStyleSheet(QString)));
 			PlayerPage->initObject();
 			Interpreter->start();
 		}
@@ -224,6 +226,12 @@ public slots:
 	}
 	//主页面复现
 	void reprintHello(int num) {
+		if (!musicThreadList.isEmpty()) {
+			for (int i = 0; i < musicThreadList.length(); i++) {
+				musicThreadList[i]->fadeMedia(TRUE);
+			}
+			musicThreadList.clear();
+		}
 		AnimationTick = 0;
 		StoryShow = FALSE;
 		PlayerPage->clearAll();
@@ -362,6 +370,18 @@ public slots:
 			if (PlayerPage->searchParameter("InLogPage") == 0) {
 				PlayerPage->_AutoChange();
 			}
+		}
+		else if (event->key() == Qt::Key_1 && StoryShow) {
+			if (PlayerPage->BranchButton_1->isVisible()) { PlayerPage->BranchButton_1->click(); }
+		}
+		else if (event->key() == Qt::Key_2 && StoryShow) {
+			if (PlayerPage->BranchButton_2->isVisible()) { PlayerPage->BranchButton_2->click(); }
+		}
+		else if (event->key() == Qt::Key_3 && StoryShow) {
+			if (PlayerPage->BranchButton_3->isVisible()) { PlayerPage->BranchButton_3->click(); }
+		}
+		else if (event->key() == Qt::Key_4 && StoryShow) {
+			if (PlayerPage->BranchButton_4->isVisible()) { PlayerPage->BranchButton_4->click(); }
 		}
 	}
 
