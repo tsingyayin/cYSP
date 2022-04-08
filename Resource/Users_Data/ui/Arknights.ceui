@@ -1,0 +1,7 @@
+WordLabel G 0.2609 0.87685 0.6875 0.105;
+Frame S "QLabel{border-image:url(AUTO_PATH:/source/BaseUI/Frame/arknightsUIBottom.png)}";
+TopCover S "QLabel{border-image:url(AUTO_PATH:/source/BaseUI/Frame/arknightsUITop.png)}";
+LogButton G 1 1 0.1 0.1;
+SpeedButton G 0.7326 0.05 0.078125 0.046296;
+AutoButton G 0.792 0.051 0.08 0.046296;
+AutoButton S "QPushButton{background-color:rgba(0,0,0,0);color:#CCFFFFFF;font-family:'SimHei';font-size:AUTO_3.87_PR;font-weight:medium;text-align:left;}";
