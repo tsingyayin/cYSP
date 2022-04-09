@@ -34,6 +34,7 @@ int loadsettings(void) {
 	SettingsList["Window_DisplayMode"] = "Full";
 	SettingsList["Window_Geometry"] = "1366_768";
 	SettingsList["Window_Monitor"] = "0";
+	SettingsList["CodecPath"] = "__Default__";
 	QFile settingsFile;
 	settingsFile.setFileName(PROPATH::Users + "/options.txt");
 	settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);

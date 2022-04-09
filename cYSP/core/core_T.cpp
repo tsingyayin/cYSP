@@ -25,6 +25,7 @@ QString ExtendRawLine;
 bool InExtend = FALSE;
 int TransThreadCount;
 QStringList TransPictureName;
+QMutex TransformMutex;
 
 void ReciveUserControl::LineNumNow(int Num) {
 	LineNum = Num;
@@ -100,9 +101,11 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		emit signalsName->set_scroll_info();
 
 		//多线程等待区域
-		for (int i = 0; i < 10; i++) {
-			QTest::qSleep(500);
+		for (int i = 0; i <= 10; i++) {
+			TransformMutex.lock();
 			if (TransThreadCount <= 0) { break; }
+			TransformMutex.unlock();
+			QTest::qSleep(100);
 		}
 		//追加长时控制器列表
 		BGPList.append({ "51200","BGP(黑场)" });
@@ -293,6 +296,9 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 
 void GPOLInterpreter(QStringList GPOLText, InterpreterSignals* signalsName, mQThread* parent) {
 }
+
+
+
 //通用滤镜处理线程
 class cTransform :public QThread
 {
@@ -393,9 +399,13 @@ public:
 			}
 			NewImage.save(NewPictureName);
 			//qDebug().noquote() << "InterpreterInfo→成功建立 :" + NewPictureName;
+
 			gSignalsName->send_kernal_info("InterpreterInfo→成功建立 :" + NewPictureName);
+
 		}
+		TransformMutex.lock();
 		TransThreadCount--;
+		TransformMutex.unlock();
 		this->deleteLater();
 	}
 };
@@ -955,6 +965,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 			emit signalsName->inrunning();
 		}
 	}
+	
 	//对象（立绘）移回控制器
 	else if (Line.mid(0, 8) == "moveBack") {
 		InExtend = FALSE;

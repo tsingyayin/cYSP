@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 	win->show();
 	int i = app.exec();
 	win->deleteLater();
-
+	if (i == -1) { return 0; }
 	if (Program_Settings("First_Start") != "False") {
 		WindowsWarnSPOL_6 SPOL_6_Window;
 		SPOL_6_Window.show();

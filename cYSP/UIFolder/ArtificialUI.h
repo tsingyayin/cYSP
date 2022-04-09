@@ -86,7 +86,7 @@ public:
 		connect(this->PlayerPage->LogPage, SIGNAL(EmitJumpLine(int)), this->userControl, SLOT(LineNumNow(int)));
 		connect(this->PlayerPage, SIGNAL(NeedWakeUp()), this, SLOT(Wakeup()));
 
-		PlayMusic = new uSoundService();
+		
 
 		PlayerPage->raise();
 		TitlePage->raise();
@@ -112,12 +112,12 @@ public:
 	tick AnimationTick = 0;
 	PlayerWindow(int argc, char* argv[], QWidget* parent = Q_NULLPTR) {
 		//初始化时确认目标大小
+		desktop = new QDesktopWidget();
+		int current_monitor = desktop->screenNumber();
+		QRect Display = desktop->screenGeometry(current_monitor);
+		int X = Display.width();
+		int Y = Display.height();
 		if (Program_Settings("Window_DisplayMode") == "Full") {
-			desktop = new QDesktopWidget();
-			int current_monitor = desktop->screenNumber();
-			QRect Display = desktop->screenGeometry(current_monitor);
-			int X = Display.width();
-			int Y = Display.height();
 			gX = X; gY = Y;
 		}elif(Program_Settings("Window_DisplayMode") == "Window") {
 			gX = Program_Settings("Window_Geometry").section("_", 0, 0).toInt();
@@ -125,14 +125,10 @@ public:
 			if (gX <= 800) { gX = 800; }
 			if (gY <= 600) { gY = 600; }
 		}
-		else {
-			desktop = new QDesktopWidget();
-			int current_monitor = desktop->screenNumber();
-			QRect Display = desktop->screenGeometry(current_monitor);
-			int X = Display.width();
-			int Y = Display.height();
+		else {		
 			gX = X; gY = Y;
 		}
+		desktop->deleteLater();
 		//装载UI
 
 		this->setupUI(gX, gY, 100, 100);
@@ -146,6 +142,8 @@ public:
 		connect(this->Ticker, SIGNAL(timeout()), this, SLOT(tickslot()));
 		connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
 		connect(this, SIGNAL(stopNow()), this->userControl, SLOT(ExitNow()));
+
+		PlayMusic = new uSoundService();
 	}
 public slots:
 	//两个show函数的变种——以备后用
@@ -210,6 +208,7 @@ public slots:
 	}
 	//主页面隐藏
 	void hideHello(int num) {
+		
 		AnimationTick = 0;
 		StoryShow = TRUE;
 		connect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello()));
@@ -257,6 +256,7 @@ public slots:
 
 	//标题展示函数-前半段
 	void setTitle(QStringList titlesetList) {
+		
 		TitlePage->setTitleInfo(titlesetList[0], titlesetList[1], titlesetList[2], titlesetList[3]);
 	}
 	void showTitle(void) {
