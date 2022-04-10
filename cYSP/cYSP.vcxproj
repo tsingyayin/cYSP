@@ -323,6 +323,7 @@
     <QtMoc Include="UIFolder\TopWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Language\zh_CN.splang" />
     <None Include="logo.aps" />
   </ItemGroup>

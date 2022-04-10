@@ -124,6 +124,7 @@
   <ItemGroup>
     <None Include="Language\zh_CN.splang" />
     <None Include="logo.aps" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="text\splashes.txt" />

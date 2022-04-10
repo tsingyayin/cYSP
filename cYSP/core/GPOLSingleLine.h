@@ -14,12 +14,20 @@ public:
 	}
 	bool SingleLine(QString LineString) {
 		QStringList CommandRAW;
-
 		QString CommandSplit;
 		bool InText = FALSE;
+		bool InEsc = FALSE;
 		foreach(QChar SC, LineString) {
-			if (SC == '"') {
+			if (SC == "#") {
+				break;
+			}
+			if (SC == '\\') {
+				InEsc = TRUE;
+				continue;
+			}
+			if (SC == '"' && !InEsc) {
 				InText = !InText;
+				InEsc = FALSE;
 			}
 			if ((SC == ' ' || SC == ';') && !InText) {
 				CommandRAW.append(CommandSplit);
@@ -27,6 +35,7 @@ public:
 			}
 			else {
 				CommandSplit += SC;
+				InEsc = FALSE;
 			}
 		}
 		if (CommandRAW[0] == "USE") {

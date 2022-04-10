@@ -91,6 +91,7 @@ enum InterpreterMode {
 	presource = 0,
 	run = 1,
 	debug = 2,
+	rerun = 3,
 };
 
 enum class GPOLInterpreterMode {

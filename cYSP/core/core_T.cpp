@@ -20,6 +20,9 @@ QStringList MeaningfulLine;
 QList<QStringList> BGPList;
 QList<QStringList> BGMList;
 QList<QStringList> CVRList;
+QList<QStringList> ExtendList;
+QString ExtendRawLine;
+bool InExtend = FALSE;
 int TransThreadCount;
 QStringList TransPictureName;
 
@@ -70,12 +73,14 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		//qDebug().noquote() << "-->尝试启动预解释和资源补齐模块<--- ";
 		emit signalsName->send_kernal_info("-->尝试启动预解释和资源补齐模块<---");
 		bool InNotes = FALSE;
+		InExtend = FALSE;
 		TransThreadCount = 0;
 		TransPictureName.clear();
 		MeaningfulLine.clear();
 		BGPList.clear();
 		BGMList.clear();
 		CVRList.clear();
+		ExtendList.clear();
 		//预加载循环
 		for (int i = 1;; i++) {
 			QString CurrentLine = CurrentSPOLText.readLine();
@@ -103,6 +108,7 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		BGPList.append({ "51200","BGP(黑场)" });
 		BGMList.append({ "51200","BGM()" });
 		CVRList.append({ "51200","CVR()" });
+		ExtendList.append({ "51200",">>>:===" });
 		//qDebug().noquote() << "InterpreterInfo→成功预剔除注释行";
 		emit signalsName->send_kernal_info("InterpreterInfo→成功预剔除注释行");
 
@@ -135,7 +141,9 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 				LineResult[1] = "FILEEND";
 				break;
 			}
-
+			LineResult.clear();
+			LineResult.append("");
+			LineResult.append("");
 			//对于刚刚完成跳转的情况回溯上一长时控制器
 			if (justJump == TRUE) {
 				InBranch = FALSE;
@@ -157,6 +165,13 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 						break;
 					}
 				}
+				for (int i = ExtendList.length() - 1; i >= 0; i--) {
+					if (ExtendList[i][0].toInt() <= LineNum) {
+						ExtendRawLine = ExtendList[i][1];
+						InExtend = TRUE;
+						break;
+					}
+				}
 				justJump = FALSE;
 			}
 
@@ -165,9 +180,10 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 
 			//预处理小分支控制器——检测小分支开始与结束
 			if (CurrentLine.mid(0, 3) == "|||") {
+				InExtend = FALSE;
 				if (InBranch == FALSE) {
 					QStringList SmallJumpSetList;
-					SmallJumpSetList = CurrentLine.mid(3, CurrentLine.length() - 4).split("|||");
+					SmallJumpSetList = CurrentLine.mid(3, CurrentLine.length() - 3).split("|||");
 					if (SmallJumpSetList.length() > 4) { continue; }
 					QList<QStringList> SmallJumpNoteList;
 					for (int i = 0; i < SmallJumpSetList.length(); i++) {
@@ -195,8 +211,15 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 				}
 			}
 
+			//小分支控制器自动结束——检测“|”是否还是一行的第一个字符。
+			if (InBranch && CurrentLine[0] != "|") {
+				InBranch = FALSE;
+				FindBranch = FALSE;
+			}
+
 			//预处理小分支控制器——检测标签是否匹配
 			if (CurrentLine.mid(0, 2) == "||" && CurrentLine.mid(0, 3) != "|||" && InBranch) {
+				InExtend = FALSE;
 				if (CurrentLine.mid(2, CurrentLine.length() - 2) != Note) {
 					FindBranch = FALSE;
 					continue;
@@ -215,9 +238,43 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 				}
 			}
 
+			
 			//解释当前行
-			LineResult = SingleLine(LineNum, CurrentLine, InterpreterMode::run, signalsName, parent);
-
+			if (CurrentLine != "/" && CurrentLine.mid(0, 5) != "title") {
+				LineResult = SingleLine(LineNum, CurrentLine, InterpreterMode::run, signalsName, parent);
+				if (LineResult[0] == "NOTFOUND" && LineResult[1] == "NOTFOUND" && InExtend) {
+					QString ReplaceString = ExtendRawLine;
+					ReplaceString.replace("===", CurrentLine);
+					LineResult = SingleLine(LineNum, ReplaceString, InterpreterMode::rerun, signalsName, parent);
+				}
+				else if (LineResult[0] == "NOTFOUND" && LineResult[1] == "NOTFOUND" && !InExtend) {
+					if (!InExtend) {
+						int count = 0;
+						QFile tryFile;
+						tryFile.setFileName(PROPATH::Users + "/source/BGP/" + CurrentLine + ".png");
+						if (tryFile.exists() || CurrentLine == "黑场") {
+							count++;
+							LineResult = SingleLine(LineNum, "BGP(" + CurrentLine + ")", InterpreterMode::run, signalsName, parent);
+						}
+						tryFile.setFileName(PROPATH::Users + "/source/Sound/" + CurrentLine + ".mp4");
+						if (tryFile.exists()) {
+							count++;
+							LineResult = SingleLine(LineNum, "SND(" + CurrentLine + ")", InterpreterMode::run, signalsName, parent);
+						}
+						tryFile.setFileName(PROPATH::Users + "/source/BGM/" + CurrentLine + ".mp4");
+						if (tryFile.exists()) {
+							count++;
+							LineResult = SingleLine(LineNum, "BGM(" + CurrentLine + ")", InterpreterMode::run, signalsName, parent);
+						}
+						if (count != 0) {
+							continue;
+						}
+					}
+				}
+				if (LineResult[0] == "NOTFOUND") {
+					signalsName->send_EIFL_info("SPOL语法异常！", "不能识别行 " + QString::number(LineNum) + " 中的内容", CurrentLine, EIFL::SSE);
+				}
+			}
 			//对于大分支控制器的返回结果进行文档刷新
 			if (LineResult[0] == "FILEJUMP") {
 				CurrentSPOLFile.close();
@@ -352,7 +409,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		}
 		if (Line[0] == "|") { Line = Line.mid(1, Line.length() - 1); }
 	}
-	if (whichMode == InterpreterMode::run) {
+	if (whichMode == InterpreterMode::run || whichMode == InterpreterMode::rerun) {
 		emit signalsName->now_which_line(LineNum);
 	}
 
@@ -448,9 +505,10 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 
 	//音乐控制器、音效控制器
 	else if (Line.mid(0, 3) == "BGM" || Line.mid(0, 5) == "music" || Line.mid(0, 3) == "SND" || Line.mid(0, 5) == "sound") {
+		InExtend = FALSE;
 		QStringList RAW = Line.mid(Line.indexOf("(") + 1, Line.lastIndexOf(")") - Line.indexOf("(") - 1).split(",");
 		int RAWLength = RAW.length();
-		for (int i = 0; i < 2 - RAWLength; i++) { RAW.append(""); }
+		for (int i = 0; i < RAWLength; i++) { RAW.append(""); }
 		Controller::music::Data SetList;
 		SetList.music = (RAW[0] == "" ? "静音" : RAW[0]);
 		SetList.volume = (RAW[1] == "" ? 50 : RAW[1].toFloat());
@@ -472,6 +530,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 
 	//遮罩开闭控制器
 	else if (Line.mid(0, 3) == "CVR" || Line.mid(0, 5) == "cover") {
+		InExtend = FALSE;
 		QString UserSet;
 		bool Cover = TRUE;
 		if (Line.mid(0, 3) == "CVR") {
@@ -568,6 +627,9 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 			}
 		}
 		if (whichMode == InterpreterMode::presource) {
+			if (Line.contains("===")) {
+				ExtendList.append({ QString::number(MeaningfulLine.length() - 1),Line });
+			}
 			for (int i = 0; i < AvgSetList.length(); i++) {
 				QList<Filter> FilterList;
 				QStringList FilterRaw = AvgSetList[i][3].split("_");
@@ -614,7 +676,17 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 				TransThreadCount++;
 			}
 		}
-		if (whichMode == InterpreterMode::run) {
+		if (whichMode == InterpreterMode::run || whichMode == InterpreterMode::rerun) {
+			if (whichMode == InterpreterMode::run) {
+				if (Line.contains("===")) {
+					ExtendRawLine = Line;
+					InExtend = TRUE;
+					return { "JUSTEXTEND","JUSTEXTEND" };
+				}
+				else {
+					InExtend = FALSE;
+				}
+			}
 			emit signalsName->can_update_chara(AvgSetList, Charanum);
 			if (Charanum == 1) {
 				if (WordSetList[0][0] != "") {
@@ -665,12 +737,12 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 				WordsAll += DisplayWords[j];
 				emit signalsName->update_chara_num(DisplayName, WordsAll, FALSE);
 				if (PlaySetList[0].toFloat() != 0) {
-					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
+					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat + 1);
 				}
 			}
 
 			emit signalsName->willstop();
-			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
+			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat + 1);
 			emit signalsName->show_next();
 			parent->pause();
 			emit signalsName->inrunning();
@@ -724,22 +796,36 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		for (int i = 0; i < 3 - FreeSetList[0].split("/").length(); i++) { FreePoList.append(""); }
 		if (FreePoList[0] == "") { FreePoList[0] = "0.125"; }
 		if (FreePoList[1] == "") { FreePoList[1] = "0.444"; }
-		if (FreePoList[2] == "") { FreePoList[2] = "M"; }
+		if (FreePoList[2] == "") { FreePoList[2] = "L"; }
 
 		if (whichMode == InterpreterMode::debug) {
 			if (FreeSetList.length() > 2 || FreePoList.length() > 3) {
 				qDebug() << "检查行" + QString::number(LineNum) + "存在的自由文本控制器参数个数超限";
 			}
 		}
-
-		if (whichMode == InterpreterMode::run) {
+		if (whichMode == InterpreterMode::presource) {
+			if (Line.contains("===")) {
+				ExtendList.append({ QString::number(MeaningfulLine.length() - 1),Line });
+			}
+		}
+		if (whichMode == InterpreterMode::run || whichMode == InterpreterMode::rerun) {
+			if (whichMode == InterpreterMode::run) {
+				if (Line.contains("===")) {
+					ExtendRawLine = Line;
+					InExtend = TRUE;
+					return { "JUSTEXTEND","JUSTEXTEND" };
+				}
+				else {
+					InExtend = FALSE;
+				}
+			}
 			emit signalsName->can_update_freedom(FreePoList, PlaySetList);
 			int AlphaCount = 0;
 			QString WordsAll = "";
 			FreeSetList[1] = spolEscape(FreeSetList[1]);
 			if (PlaySetList[0].toFloat() != 0) {
 				for (int j = 0; j < FreeSetList[1].length(); j++) {
-					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat);
+					QTest::qSleep(1000 * PlaySetList[0].toFloat() * SpeedFloat + 1);
 					ushort chara = FreeSetList[1][j].unicode();
 					if (0x4E00 <= chara && chara <= 0x9FFF ||
 						0x3040 <= chara && chara <= 0x309F ||
@@ -773,7 +859,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 				emit signalsName->update_num_freedom(WordsAll);
 			}
 			emit signalsName->willstop();
-			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat);
+			QTest::qSleep((float)1000 * PlaySetList[1].toFloat() * SpeedFloat + 1);
 			emit signalsName->show_next();
 			parent->pause();
 			emit signalsName->inrunning();
@@ -783,6 +869,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 
 	//大分支控制器
 	else if (Line.mid(0, 3) == "-->") {
+		InExtend = FALSE;
 		QStringList RAW = Line.mid(3, Line.length() - 3).split("-->");
 		QList<QStringList> JumpSetList;
 		QStringList JumpTextList;
@@ -806,23 +893,19 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
-	//对象控制器
-	//对象控制器基本体 ~~>ObjectName:TransName:Parameter:Keep
-	//对象控制器初始化变体 ~~>ObjectName:initAll
-	//在设计上，对象控制器基本体不允许除了最后两个字段的缩写之外的任何其他缩写。
-	else if (Line.mid(0, 3) == "~~>") {
-	}
-
-	//非法文本兜底
 	else {
-		if (Line[0] != "/" && Line.mid(0, 5) != "title") {
-			if (whichMode == InterpreterMode::debug) {
-				qDebug() << "检查行" + QString::number(LineNum) + "中的非法文本";
+		if (whichMode == InterpreterMode::presource) {
+			QFile tryFile;
+			tryFile.setFileName(PROPATH::Users + "/source/BGP/" + Line + ".png");
+			if (tryFile.exists() || Line == "黑场") {
+				BGPList.append({ QString::number(MeaningfulLine.length() - 1),"BGP(" + Line + ")" });
 			}
-			if (whichMode == InterpreterMode::run) {
-				signalsName->send_EIFL_info("SPOL语法异常！", "不能识别行 " + QString::number(LineNum) + " 中的内容", Line, EIFL::SSE);
+			tryFile.setFileName(PROPATH::Users + "/source/Sound/" + Line + ".mp4");
+			if (tryFile.exists()) {
+				BGMList.append({ QString::number(MeaningfulLine.length() - 1),"BGM(" + Line + ")" });
 			}
 		}
+		return { "NOTFOUND","NOTFOUND" };
 	}
 
 	return { "NORMAL","NORMAL" };
