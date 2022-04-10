@@ -9,7 +9,6 @@
 #include "../Aaspcommand/aaspcommand.h"
 #include "../Aaspcommand/UICoreLauncher.h"
 #include <QTest>
-#include "../core/GPOLPointer.h"
 using namespace std;
 
 class ChangeWake :public QObject
@@ -87,7 +86,7 @@ public:
 		connect(this->PlayerPage->LogPage, SIGNAL(EmitJumpLine(int)), this->userControl, SLOT(LineNumNow(int)));
 		connect(this->PlayerPage, SIGNAL(NeedWakeUp()), this, SLOT(Wakeup()));
 
-		PlayMusic = new uSoundService();
+		
 
 		PlayerPage->raise();
 		TitlePage->raise();
@@ -112,14 +111,13 @@ public:
 	TickThread* Ticker;
 	tick AnimationTick = 0;
 	PlayerWindow(int argc, char* argv[], QWidget* parent = Q_NULLPTR) {
-		GPointer::PlayerPage = this;
 		//初始化时确认目标大小
+		desktop = new QDesktopWidget();
+		int current_monitor = desktop->screenNumber();
+		QRect Display = desktop->screenGeometry(current_monitor);
+		int X = Display.width();
+		int Y = Display.height();
 		if (Program_Settings("Window_DisplayMode") == "Full") {
-			desktop = new QDesktopWidget();
-			int current_monitor = desktop->screenNumber();
-			QRect Display = desktop->screenGeometry(current_monitor);
-			int X = Display.width();
-			int Y = Display.height();
 			gX = X; gY = Y;
 		}elif(Program_Settings("Window_DisplayMode") == "Window") {
 			gX = Program_Settings("Window_Geometry").section("_", 0, 0).toInt();
@@ -127,14 +125,10 @@ public:
 			if (gX <= 800) { gX = 800; }
 			if (gY <= 600) { gY = 600; }
 		}
-		else {
-			desktop = new QDesktopWidget();
-			int current_monitor = desktop->screenNumber();
-			QRect Display = desktop->screenGeometry(current_monitor);
-			int X = Display.width();
-			int Y = Display.height();
+		else {		
 			gX = X; gY = Y;
 		}
+		desktop->deleteLater();
 		//装载UI
 
 		this->setupUI(gX, gY, 100, 100);
@@ -148,6 +142,8 @@ public:
 		connect(this->Ticker, SIGNAL(timeout()), this, SLOT(tickslot()));
 		connect(this->PlayerPage, SIGNAL(UserChooseWhich(QString)), this->userControl, SLOT(ChooseWhichBranch(QString)));
 		connect(this, SIGNAL(stopNow()), this->userControl, SLOT(ExitNow()));
+
+		PlayMusic = new uSoundService();
 	}
 public slots:
 	//两个show函数的变种——以备后用
@@ -156,10 +152,6 @@ public slots:
 	}
 	void gshowFullScreen(void) {
 		this->showFullScreen();
-	}
-	void GPSignalSlot(QStringList Name, QStringList Arg) {
-		if (Name[2] == "PlayerPage") {
-		}
 	}
 	//核心启动函数
 	void RUNCORE(void) {
@@ -197,7 +189,9 @@ public slots:
 			connect(Interpreter->signalName, SIGNAL(save_line_list(QStringList)), this->PlayerPage->LogPage, SLOT(setLineList(QStringList)));
 			connect(Interpreter->signalName, SIGNAL(set_scroll_info()), this->PlayerPage->LogPage, SLOT(setScroll()));
 			connect(Interpreter->signalName, SIGNAL(now_which_line(int)), this->PlayerPage->LogPage, SLOT(UpdateLineNum(int)));
-
+			connect(Interpreter->signalName, SIGNAL(move_AVG_to(QString, double, double)), this->PlayerPage, SLOT(moveAVG(QString, double, double)));
+			connect(Interpreter->signalName, SIGNAL(move_AVG_back(QString)), this->PlayerPage, SLOT(moveAVGBack(QString)));
+			connect(Interpreter->signalName, SIGNAL(set_UI_style(QString)), this->PlayerPage, SLOT(loadUIStyleSheet(QString)));
 			PlayerPage->initObject();
 			Interpreter->start();
 		}
@@ -214,6 +208,7 @@ public slots:
 	}
 	//主页面隐藏
 	void hideHello(int num) {
+		
 		AnimationTick = 0;
 		StoryShow = TRUE;
 		connect(Ticker, SIGNAL(timeout()), this, SLOT(_hideHello()));
@@ -230,6 +225,12 @@ public slots:
 	}
 	//主页面复现
 	void reprintHello(int num) {
+		if (!musicThreadList.isEmpty()) {
+			for (int i = 0; i < musicThreadList.length(); i++) {
+				musicThreadList[i]->fadeMedia(TRUE);
+			}
+			musicThreadList.clear();
+		}
 		AnimationTick = 0;
 		StoryShow = FALSE;
 		PlayerPage->clearAll();
@@ -255,6 +256,7 @@ public slots:
 
 	//标题展示函数-前半段
 	void setTitle(QStringList titlesetList) {
+		
 		TitlePage->setTitleInfo(titlesetList[0], titlesetList[1], titlesetList[2], titlesetList[3]);
 	}
 	void showTitle(void) {
@@ -368,6 +370,18 @@ public slots:
 			if (PlayerPage->searchParameter("InLogPage") == 0) {
 				PlayerPage->_AutoChange();
 			}
+		}
+		else if (event->key() == Qt::Key_1 && StoryShow) {
+			if (PlayerPage->BranchButton_1->isVisible()) { PlayerPage->BranchButton_1->click(); }
+		}
+		else if (event->key() == Qt::Key_2 && StoryShow) {
+			if (PlayerPage->BranchButton_2->isVisible()) { PlayerPage->BranchButton_2->click(); }
+		}
+		else if (event->key() == Qt::Key_3 && StoryShow) {
+			if (PlayerPage->BranchButton_3->isVisible()) { PlayerPage->BranchButton_3->click(); }
+		}
+		else if (event->key() == Qt::Key_4 && StoryShow) {
+			if (PlayerPage->BranchButton_4->isVisible()) { PlayerPage->BranchButton_4->click(); }
 		}
 	}
 

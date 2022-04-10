@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="cTransform" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAkgEAAAAAAAEEAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>core\core_T.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GPointer" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABAAAAAA=</HashCode>
+      <FileName>core\GPOLPointer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GPOLSubInterpreterForSPOL" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABCBAAAAAAAAAAAACAAAAAIAAAAAAAAAAEA=</HashCode>
+      <FileName>core\GSS.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SPAWN" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAABACAAAA=</HashCode>
+      <FileName>Aaspcommand\UICoreLauncher.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PROINFO" Collapsed="true">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgIAAAAACAAAAAAAAAAABIwAAIAABABAAAAAQ=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PROPATH" Collapsed="true">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerBaseInfo" Collapsed="true">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GlobalValue" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgDgAAAEAAAQAQBkAIgAAAIAAIQAAggAAAiAMAACAgA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uNewProjectPage" Collapsed="true">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAJAAQAIAQAQCAAgIKAYBBwABAIAAAgACABAAAAAA=</HashCode>
+      <FileName>UIFolder\NewProjectPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEMultiHorizontalScrollBar" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAQAAEAAAAAAAQAAAEAQBAAABAAAgAAAAgAA=</HashCode>
+      <FileName>UIFolder\CEWidgets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnsureDelete" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAEAABChACEAAgQAIBAAAAAIAAgAAAAAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NoticeCESFalse" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAABAAAAAAEAABAhAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uNewProjectWidget" Collapsed="true">
+    <Position X="11.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAEAAAAAAAAAAAAIAEAAAAAACAAAAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uOpenProjectWidget" Collapsed="true">
+    <Position X="13" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAFgAAAAQEAAQAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uTLDRWidget" Collapsed="true">
+    <Position X="9.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAAAICAAAAAEAAACAAgABCAAIEAIIgAAEAABAAAAAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uProjectPage" Collapsed="true">
+    <Position X="16.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAYIAAAAACAAAABAAAAAAgAEAAAJAAAAAAAACAAIAA=</HashCode>
+      <FileName>UIFolder\FirstPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GPOLBaseSignal" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>core\GPOLSignal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GPOLSingleLine" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAMAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>core\GPOLSingleLine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CENotice" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAEAABAhAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>UIFolder\LoadingPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoadingPage" Collapsed="true">
+    <Position X="14.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAgAAAABAgIGAICAEQAAIACAAAAAAAAAAAg=</HashCode>
+      <FileName>UIFolder\LoadingPage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsWarn" Collapsed="true">
+    <Position X="11.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\WindowsWarn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsWarn11" Collapsed="true">
+    <Position X="13" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAQAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\WindowsWarn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WindowsWarnSPOL_6" Collapsed="true">
+    <Position X="14.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAQAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\WindowsWarn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurrentStyle" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAEAAAAAAAAAAAABgAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\ProgramSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hProgramSettings" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAAAAgAEEgAACAAAAAAIAAAAAAAAoAEAAMAAAA=</HashCode>
+      <FileName>UIFolder\ProgramSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hDevSettings" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIACAAAAgAEAkEwAAAIEAAAAAAAAAAAIACAAIAAAA=</HashCode>
+      <FileName>UIFolder\ProgramSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hMoreInfo" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAQAAABAAAAGAAAACAAAAAAAAAAAAAAAAAEAAAAAAE=</HashCode>
+      <FileName>UIFolder\ProgramSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uCheckUpdate" Collapsed="true">
+    <Position X="18.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAQAAAACAAEIAEABICEAAAABAAAgACgAAAAEAA=</HashCode>
+      <FileName>Aaspcommand\checkupdate.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hServiceFramework" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAEAAMAIABAAAAAEAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Aaspcommand\aaspcommand.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mQThread" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAAAAAIAA=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InterpreterSignals" Collapsed="true">
+    <Position X="13" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAEAiFAIAAEKBBACCAAAAiAAAABgoAMIAAAAAQhAI=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReciveUserControl" Collapsed="true">
+    <Position X="11.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectControllerInfo" Collapsed="true">
+    <Position X="18.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChangeWake" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>UIFolder\ArtificialUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TickThread" Collapsed="true">
+    <Position X="16.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAEAAAAAAAAAAAAAAgAAAgACAgAAAAACA=</HashCode>
+      <FileName>UIFolder\ArtificialUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerDef" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAABAAAAABAEAAAAAAAAEEBAABAAAAAA=</HashCode>
+      <FileName>UIFolder\ArtificialUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerWindow" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAABAEkAACACAAAAAAAAAAAAAAAIAGACAAAAA=</HashCode>
+      <FileName>UIFolder\ArtificialUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShakeFunc" Collapsed="true">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAEAAEAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashFuncFast" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAIEAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashFuncSlow" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAgAAAAAAEAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SingleInfo" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMgAAAAAAAAEABAAAgACAAAACBgABAIARQBAgAIAAQ=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uInfoWidget" Collapsed="true">
+    <Position X="7.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAEAACgAAAAAAAAAIAAAAABAAEAAAAAAA=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uFirstPage" Collapsed="true">
+    <Position X="6" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAgEAIAAKAQAAAgAAAAgAhAAAA0ACAABAA=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uTitlePage" Collapsed="true">
+    <Position X="7.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAIMAAMAgAACAAIGSgAAAACAAACCQGAiQAhII=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uScrollPage" Collapsed="true">
+    <Position X="18.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAMAAAACgIAAAAAACAAEAABAAEYAAAAAo=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uPlayerPage" Collapsed="true">
+    <Position X="14.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QoAyAgLgCQABkBUAAyQogoqtAIAAoBAAQagMcCCAABU=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="uSoundService" Collapsed="true">
+    <Position X="6" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAAAAAAAAgAAAAAAAAAQAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\QtWordGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hGCPDialog" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEEAAAABAAAAAgAAAQAAAQAIAAgUAAAgA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hUpdateDialog" Collapsed="true">
+    <Position X="11.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAEQBQEEAgQgCABAAAACAIAAAAABAAEAUAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hFirstPage" Collapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAMAAAAgAAAAAAQAAAAAAAAIQACABAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hSettingsPage" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAFAAAAAAAAAgSAAAQAAQAAACAACBAAEAAAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hToolsPage" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAkAAAAAAAAACGBAAAAAAAAAAAAABAAEAAAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hCreatePage" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEIAAAAAACAACAAAgBAAAAQAAQABABEAAAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hAboutPage" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABgQAAEAAAIEEABAAGgAAAAAAAABAAAABgAEAAQAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopDef" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAEAAABUAAAQACAFBIAQAAgACCQABBAAAUAQ4AA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopWindow" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAAAAAAAAAAAAAAEAQAAAEAAAAEAAAAA=</HashCode>
+      <FileName>UIFolder\TopWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CE::FormatConversion" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UIFolder\CEWidgets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CE::CEMultiButton" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AA4QAAAAgACgEAgECAEAAKHAAAAQIcEAAAAiABaCwAA=</HashCode>
+      <FileName>UIFolder\CEWidgets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CE::CEButtonGroup" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAgABAAAAAEACAAEIAgAAAAACAAAAAAAAAAkEAQCA=</HashCode>
+      <FileName>UIFolder\CEWidgets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CE::CESettings" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAggACAAAAACAIAAAAAAAgAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Func\ProjectCES.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Controller::Title::Data" Collapsed="true">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAEAAAAAAAEAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Backdrop::Data" Collapsed="true">
+    <Position X="7.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAIAAAAAQA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::music::Data" Collapsed="true">
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::WordSet::Data" Collapsed="true">
+    <Position X="11.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Speak::Speaker::Data" Collapsed="true">
+    <Position X="13" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Speak::AVG::Data" Collapsed="true">
+    <Position X="14.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAACAAAAAAAIEAAQAABAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Free::Data" Collapsed="true">
+    <Position X="16.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAYAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Jump::SingleData" Collapsed="true">
+    <Position X="6" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAgAAACAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Controller::Object::Data" Collapsed="true">
+    <Position X="18.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAABAAAAAAAAAAAAAkAIAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Filter" Collapsed="true">
+    <Position X="9.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQBAABgAAAAAAAAgAAAAAQQAAAAAIAAAAEAAAA=</HashCode>
+      <FileName>core\core_B.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EIFL" Collapsed="true">
+    <Position X="7.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAACAAAAgCkACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="InterpreterMode" Collapsed="true">
+    <Position X="14.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAACACAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GPOLInterpreterMode" Collapsed="true">
+    <Position X="13" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>core\core_T.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Controller::Free::Alignment" Collapsed="true">
+    <Position X="6" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAQA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Controller::Object::PlayerPageList" Collapsed="true">
+    <Position X="16.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACEAAAAAABAAAAAQAIAAgkAAAAAAAAAIAAAACAAAU=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Controller::Object::Func" Collapsed="true">
+    <Position X="11.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAEAAAAAAIAABAAQAAAACAIAAAgAAACAAgAAAAgAA=</HashCode>
+      <FileName>global_value.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CE::TILayout" Collapsed="true">
+    <Position X="18.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgkE=</HashCode>
+      <FileName>UIFolder\CEWidgets.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

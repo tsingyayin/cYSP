@@ -11,6 +11,8 @@
 #include "../global_value.h"
 #include "../core/core_T.h"
 #include <QTest>
+#define elif else if
+
 using namespace std;
 
 class SingleInfo :public QFrame
@@ -262,7 +264,9 @@ public:
 
 		LoadingInfo = new QTextBrowser(this);
 		LoadingInfo->setGeometry(QRect(X * 0.1, Y * 0.1, X * 0.8, Y * 0.8));
-		OPLoadingInfo = new QGraphicsOpacityEffect();
+		LoadingInfo->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+		LoadingInfo->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+		OPLoadingInfo = new QGraphicsOpacityEffect(this);
 		OPLoadingInfo->setOpacity(0);
 		LoadingInfo->setGraphicsEffect(OPLoadingInfo);
 
@@ -280,7 +284,7 @@ public:
 		UIModeTextLabel->setAlignment(Qt::AlignCenter);
 		UIModeTextLabel->setText("Yayin Story Player");
 		UIModeTextLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + QString::number((int)(Y * 0.074074)) + "px;font-family:'Microsoft YaHei'}");
-		OPUIModeTextLabel = new QGraphicsOpacityEffect();
+		OPUIModeTextLabel = new QGraphicsOpacityEffect(this);
 		OPUIModeTextLabel->setOpacity(0);
 		UIModeTextLabel->setGraphicsEffect(OPUIModeTextLabel);
 
@@ -300,7 +304,7 @@ public:
                     background-color:rgba(0,0,0,0);\
                     background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/StartButton_C.png');\
                     }");
-		OPChooseFileButton = new QGraphicsOpacityEffect();
+		OPChooseFileButton = new QGraphicsOpacityEffect(this);
 		OPChooseFileButton->setOpacity(0);
 		ChooseFileButton->setGraphicsEffect(OPChooseFileButton);
 
@@ -320,7 +324,7 @@ public:
                     background-color:rgba(0,0,0,0);\
                     background-image:url('" + PROPATH::Users + "/source/BaseUI/Button/ExitButton_C.png');\
                     }");
-		OPExitButton = new QGraphicsOpacityEffect();
+		OPExitButton = new QGraphicsOpacityEffect(this);
 		OPExitButton->setOpacity(1);
 		ExitButton->setGraphicsEffect(OPExitButton);
 
@@ -397,7 +401,7 @@ public:
 
 		TitleBackgroundLabel = new QLabel(this);
 		TitleBackgroundLabel->setGeometry(QRect(0, 0, gX, gY));
-		OPTitleBackgroundLabel = new QGraphicsOpacityEffect();
+		OPTitleBackgroundLabel = new QGraphicsOpacityEffect(this);
 		OPTitleBackgroundLabel->setOpacity(0);
 		TitleBackgroundLabel->setGraphicsEffect(OPTitleBackgroundLabel);
 
@@ -408,7 +412,7 @@ public:
 		BlackHide = QImage(gX, gY, QImage::Format_ARGB32);
 		BlackHide.fill(QColor(0, 0, 0, 255));
 		BlackHideLabel->setPixmap(QPixmap::fromImage(BlackHide));
-		OPBlackHideLabel = new QGraphicsOpacityEffect();
+		OPBlackHideLabel = new QGraphicsOpacityEffect(this);
 		OPBlackHideLabel->setOpacity(0);
 		BlackHideLabel->setGraphicsEffect(OPBlackHideLabel);
 
@@ -422,7 +426,7 @@ public:
 		TopTitle->setGeometry(QRect(gX * 0.333333, gY * 0.30, gX * 0.333333, gY * 0.1666666));
 		TopTitle->setAlignment(Qt::AlignCenter);
 		TopTitle->setText("SPOL STORY");
-		OPTopTitle = new QGraphicsOpacityEffect();
+		OPTopTitle = new QGraphicsOpacityEffect(this);
 		OPTopTitle->setOpacity(0);
 		TopTitle->setGraphicsEffect(OPTopTitle);
 
@@ -430,7 +434,7 @@ public:
 		MainTitle->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize90 + ";}");
 		MainTitle->setGeometry(QRect(gX * 0.333333, gY * 0.40, gX * 0.333333, gY * 0.1666666));
 		MainTitle->setAlignment(Qt::AlignCenter);
-		OPMainTitle = new QGraphicsOpacityEffect();
+		OPMainTitle = new QGraphicsOpacityEffect(this);
 		OPMainTitle->setOpacity(0);
 		MainTitle->setGraphicsEffect(OPMainTitle);
 
@@ -438,7 +442,7 @@ public:
 		SubTitle->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize60 + ";}");
 		SubTitle->setGeometry(QRect(gX * 0.333333, gY * 0.5, gX * 0.333333, gY * 0.1666666));
 		SubTitle->setAlignment(Qt::AlignCenter);
-		OPSubTitle = new QGraphicsOpacityEffect();
+		OPSubTitle = new QGraphicsOpacityEffect(this);
 		OPSubTitle->setOpacity(0);
 		SubTitle->setGraphicsEffect(OPSubTitle);
 
@@ -446,7 +450,7 @@ public:
 		Splashes_Label->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize30 + ";font-weight:bold}");
 		Splashes_Label->setAlignment(Qt::AlignCenter);
 		Splashes_Label->setGeometry(QRect(0, gY * 0.85, gX, gY * 0.02777));
-		OPSplashes_Label = new QGraphicsOpacityEffect();
+		OPSplashes_Label = new QGraphicsOpacityEffect(this);
 		OPSplashes_Label->setOpacity(0);
 		Splashes_Label->setGraphicsEffect(OPSplashes_Label);
 	}
@@ -466,7 +470,7 @@ public slots:
 	}
 
 	void showPage(void) {
-		BLTitleBackgroundLabel = new QGraphicsBlurEffect();
+		BLTitleBackgroundLabel = new QGraphicsBlurEffect(this);
 		BLTitleBackgroundLabel->setBlurRadius(5);
 		TitleBackgroundLabel->setGraphicsEffect(BLTitleBackgroundLabel);
 
@@ -475,6 +479,7 @@ public slots:
 		OPMainTitle->setOpacity(1);
 		OPSplashes_Label->setOpacity(1);
 		OPBlackHideLabel->setOpacity(0);
+		BLTitleBackgroundLabel->deleteLater();
 	}
 
 	void playAnimation(void) {
@@ -495,7 +500,7 @@ public slots:
 	}
 
 	void hidePage(void) {
-		OPTitleBackgroundLabel = new QGraphicsOpacityEffect();
+		OPTitleBackgroundLabel = new QGraphicsOpacityEffect(this);
 		OPTitleBackgroundLabel->setOpacity(0);
 		TitleBackgroundLabel->setGraphicsEffect(OPTitleBackgroundLabel);
 
@@ -504,6 +509,7 @@ public slots:
 		OPSubTitle->setOpacity(0);
 		OPSplashes_Label->setOpacity(0);
 		OPBlackHideLabel->setOpacity(0);
+		OPTitleBackgroundLabel->deleteLater();
 	}
 };
 
@@ -672,46 +678,28 @@ signals:
 public:
 	float gX, gY;
 	bool gUseLogPage;
-	QLabel* BG2;
-	QLabel* BG1;
+	QLabel* BG2, * BG1;
 	QGraphicsOpacityEffect* OPBG1;
 	QLabel* WhiteFlash;
 	QImage WhiteFlashPixmap;
 	QGraphicsOpacityEffect* OPWhiteFlash;
-	QLabel* AVG_L;
-	QLabel* AVG_M;
-	QLabel* AVG_R;
-	QGraphicsOpacityEffect* OPAVG_L;
-	QGraphicsOpacityEffect* OPAVG_M;
-	QGraphicsOpacityEffect* OPAVG_R;
-	QImage BGR;
-	QImage AVG_L_R;
-	QImage AVG_M_R;
-	QImage AVG_R_R;
+	QLabel* AVG_L, * AVG_M, * AVG_R;
+	QGraphicsOpacityEffect* OPAVG_L, * OPAVG_M, * OPAVG_R;
+	QImage BGR, AVG_L_R, AVG_M_R, AVG_R_R;
 	QLabel* Frame;
 	QImage Frame_R;
 	QGraphicsOpacityEffect* OPFrame;
-	QLabel* NameLabel;
-	QLabel* WordLabel;
+	QLabel* NameLabel, * WordLabel, * FreeLabel;
 	QLabel* BlackCover;
 	QImage BlackCoverPixmap;
-	QGraphicsOpacityEffect* OPBlackCover;
-	QLabel* FreeLabel;
-	QGraphicsOpacityEffect* OPFreeLabel;
-	QPushButton* BranchButton_4;
-	QPushButton* BranchButton_3;
-	QPushButton* BranchButton_2;
-	QPushButton* BranchButton_1;
-	QString QSSBranchButton;
-	QPushButton* AutoButton;
-	QPushButton* NextButton;
-	QPushButton* SpeedButton;
+	QGraphicsOpacityEffect* OPBlackCover, * OPFreeLabel;
+	QPushButton* BranchButton_4, * BranchButton_3, * BranchButton_2, * BranchButton_1;
+	QPushButton* AutoButton, * NextButton, * SpeedButton;
 	int AutoButtonTick = 0;
-	QString QSSNAButton;
-	QString QSSSpeedButton;
 	uScrollPage* LogPage;
 	QPushButton* LogButton;
 	QPixmap LogButtonPixRaw;
+	QLabel* TopCover;
 	int changeBG = 1;
 	int SpeedNow = 0;
 	float SpeedFloat = 1.0;
@@ -722,6 +710,17 @@ public:
 	ShakeFunc* ShakeFUNC;
 	FlashFuncFast* FlashFUNCFast;
 	FlashFuncSlow* FlashFUNCSlow;
+	QRect BranchButton1_1, BranchButton1_2, BranchButton1_3, BranchButton1_4;
+	QRect BranchButton2_2, BranchButton2_3, BranchButton2_4;
+	QRect BranchButton3_3, BranchButton3_4;
+	QRect BranchButton4_4;
+	QRect RecWordLabel, RecNameLabel, RecNextButton, RecLogButton, RecAutoButton, RecSpeedButton;
+	QString QSSFrame, QSSTopCover;
+	QString QSSBranchButton, QSSBranchButton_1, QSSBranchButton_2, QSSBranchButton_3, QSSBranchButton_4;
+	QString QSSWordLabel, QSSNameLabel, QSSNextButton, QSSLogButton, QSSAutoButton, QSSSpeedButton, QSSFreeLabel;
+	QString Fontsize90, Fontsize80, Fontsize60, Fontsize45, Fontsize40, Fontsize35, Fontsize30;
+	QMap <QString, QString*>QSSMap;
+	QMap<QString, QRect*>QRectMap;
 	tick AutoTick = 0;
 	bool Working = FALSE;
 	uPlayerPage(int X, int Y, QWidget* parent = Q_NULLPTR, bool UseLogPage = 1) {
@@ -730,13 +729,13 @@ public:
 		gY = Y;
 		gUseLogPage = UseLogPage;
 
-		QString Fontsize90 = QString::number((int)(gY * 0.082)) + "px";
-		QString Fontsize80 = QString::number((int)(gY * 0.073)) + "px";
-		QString Fontsize60 = QString::number((int)(gY * 0.054)) + "px";
-		QString Fontsize45 = QString::number((int)(gY * 0.040)) + "px";
-		QString Fontsize40 = QString::number((int)(gY * 0.036)) + "px";
-		QString Fontsize35 = QString::number((int)(gY * 0.031)) + "px";
-		QString Fontsize30 = QString::number((int)(gY * 0.026)) + "px";
+		Fontsize90 = QString::number((int)(gY * 0.082)) + "px";
+		Fontsize80 = QString::number((int)(gY * 0.073)) + "px";
+		Fontsize60 = QString::number((int)(gY * 0.054)) + "px";
+		Fontsize45 = QString::number((int)(gY * 0.040)) + "px";
+		Fontsize40 = QString::number((int)(gY * 0.036)) + "px";
+		Fontsize35 = QString::number((int)(gY * 0.031)) + "px";
+		Fontsize30 = QString::number((int)(gY * 0.026)) + "px";
 
 		BG2 = new QLabel(this);
 		BG1 = new QLabel(this);
@@ -744,7 +743,7 @@ public:
 		BG2->setGeometry(QRect(0, 0, X, Y));
 		BG1->setGeometry(QRect(0, 0, X, Y));
 
-		OPBG1 = new QGraphicsOpacityEffect();
+		OPBG1 = new QGraphicsOpacityEffect(this);
 		OPBG1->setOpacity(0);
 		BG1->setGraphicsEffect(OPBG1);
 
@@ -753,7 +752,7 @@ public:
 		WhiteFlashPixmap.fill(QColor(255, 255, 255, 255));
 		WhiteFlash->setPixmap(QPixmap::fromImage(WhiteFlashPixmap));
 
-		OPWhiteFlash = new QGraphicsOpacityEffect();
+		OPWhiteFlash = new QGraphicsOpacityEffect(this);
 		OPWhiteFlash->setOpacity(0);
 		WhiteFlash->setGraphicsEffect(OPWhiteFlash);
 
@@ -765,9 +764,9 @@ public:
 		AVG_M->setGeometry(QRect(gX * 0.127083, gY * 0.12, gX * 0.74635, gX * 0.75635));
 		AVG_R->setGeometry(QRect(gX * 0.321354, gY * 0.12, gX * 0.74635, gX * 0.75635));
 
-		OPAVG_L = new QGraphicsOpacityEffect();
-		OPAVG_M = new QGraphicsOpacityEffect();
-		OPAVG_R = new QGraphicsOpacityEffect();
+		OPAVG_L = new QGraphicsOpacityEffect(this);
+		OPAVG_M = new QGraphicsOpacityEffect(this);
+		OPAVG_R = new QGraphicsOpacityEffect(this);
 
 		OPAVG_L->setOpacity(0);
 		OPAVG_M->setOpacity(0);
@@ -779,36 +778,30 @@ public:
 
 		Frame = new QLabel(this);
 		Frame->setGeometry(QRect(0, 0, X, Y));
-		Frame_R.load(PROPATH::Users + "/source/BaseUI/Frame/frame.png");
-		Frame_R = Frame_R.scaled(X, Y, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		Frame->setPixmap(QPixmap::fromImage(Frame_R));
-		OPFrame = new QGraphicsOpacityEffect();
+		OPFrame = new QGraphicsOpacityEffect(this);
 		OPFrame->setOpacity(0);
 		Frame->setGraphicsEffect(OPFrame);
+		Frame->hide();
 
 		NameLabel = new QLabel(this);
 		WordLabel = new QLabel(this);
-		NameLabel->setStyleSheet("QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}");
 		NameLabel->setAlignment(Qt::AlignRight);
-		NameLabel->setGeometry(QRect(0, gY * 0.865, gX * 0.2078125, gY * 0.07));
-		WordLabel->setStyleSheet("QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}");
 		WordLabel->setAlignment(Qt::AlignLeft);
-		WordLabel->setGeometry(QRect(gX * 0.2609375, gY * 0.87685, gX * 0.6875, gY * 0.105));
+
 
 		//如果必要，这是一层用于盖住除了自由文本和按钮之外其他所有部件的灰色层
 		BlackCover = new QLabel(this);
 		BlackCoverPixmap = QImage(X, Y, QImage::Format_ARGB32);
 		BlackCoverPixmap.fill(QColor(0, 0, 0, 128));
 		BlackCover->setPixmap(QPixmap::fromImage(BlackCoverPixmap));
-		OPBlackCover = new QGraphicsOpacityEffect();
+		OPBlackCover = new QGraphicsOpacityEffect(this);
 		OPBlackCover->setOpacity(0);
 		BlackCover->setGraphicsEffect(OPBlackCover);
 
 		FreeLabel = new QLabel(this);
-		FreeLabel->setStyleSheet("QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}");
 		FreeLabel->setAlignment(Qt::AlignCenter);
-		FreeLabel->setGeometry(QRect(gX * 2, -gY * 0.033, gX * 0.75, gY * 0.0324074));
-		OPFreeLabel = new QGraphicsOpacityEffect();
+		FreeLabel->setGeometry(QRect(gX * 2, -gY * 0.034, gX * 0.75, gY * 0.033));
+		OPFreeLabel = new QGraphicsOpacityEffect(this);
 		OPFreeLabel->setOpacity(0);
 		FreeLabel->setGraphicsEffect(OPFreeLabel);
 
@@ -822,37 +815,15 @@ public:
 		BranchButton_3->setObjectName("BranchButton");
 		BranchButton_4->setObjectName("BranchButton");
 
-		QSSBranchButton = "\
-                #BranchButton{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_N.png');\
-                }\
-                #BranchButton:hover{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_P.png');\
-                }\
-                #BranchButton:Pressed{\
-                    color:#FFFFFF;\
-                    font-size:25px;\
-                    \
-                    background-color:rgba(0,0,0,0);\
-                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_C.png');\
-                    }";
 		BranchButton_1->setStyleSheet(QSSBranchButton);
 		BranchButton_2->setStyleSheet(QSSBranchButton);
 		BranchButton_3->setStyleSheet(QSSBranchButton);
 		BranchButton_4->setStyleSheet(QSSBranchButton);
 
-		BranchButton_1->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_2->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_3->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_4->setGeometry(QRect(-640, -80, 635, 70));
+		BranchButton_1->hide();
+		BranchButton_2->hide();
+		BranchButton_3->hide();
+		BranchButton_4->hide();
 
 		connect(BranchButton_1, SIGNAL(clicked()), this, SLOT(_Chooselabel()));
 		connect(BranchButton_2, SIGNAL(clicked()), this, SLOT(_Chooselabel()));
@@ -861,44 +832,23 @@ public:
 
 		AutoButton = new QPushButton(this);
 		AutoButton->setObjectName("AutoButton");
-		AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
+		AutoButton->hide();
 		AutoButton->setText(msg("Player_Playing_Text_Auto"));
 		AutoButtonTick = 0;
 		connect(AutoButton, SIGNAL(clicked()), this, SLOT(_AutoChange()));
 
 		NextButton = new QPushButton(this);
 		NextButton->setObjectName("NextButton");
-		NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		NextButton->hide();
 		NextButton->setText(msg("Player_Playing_Text_Next"));
 		connect(NextButton, SIGNAL(clicked()), this, SLOT(_ToNext()));
 
 		SpeedButton = new QPushButton(this);
 		SpeedButton->setObjectName("SpeedButton");
-		SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
 		SpeedButton->setText("1.0x");
+		SpeedButton->hide();
 		connect(SpeedButton, SIGNAL(clicked()), this, SLOT(_SpeedChange()));
 
-		QSSNAButton = "\
-                QPushButton{\
-                    background-color:rgba(0,0,0,0);\
-                    color:#FFFFFF;\
-                    font-family:'SimHei';\
-                    font-size:" + Fontsize40 + ";\
-                    font-weight:bold;\
-                    text-align:left;\
-                    }";
-		AutoButton->setStyleSheet(QSSNAButton);
-		NextButton->setStyleSheet(QSSNAButton);
-
-		QSSSpeedButton = "\
-                #SpeedButton{\
-                    background-color:rgba(0,0,0,0);\
-                    font-size:" + Fontsize40 + ";\
-                    \
-                    text-align:left;\
-                    color:#FFFFFF;\
-                    }";
-		SpeedButton->setStyleSheet(QSSSpeedButton);
 
 		if (UseLogPage) {
 			LogPage = new uScrollPage(X, Y, this);
@@ -907,16 +857,54 @@ public:
 		}
 
 		LogButton = new QPushButton(this);
-		LogButtonPixRaw = QPixmap(PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png");
-		LogButtonPixRaw = LogButtonPixRaw.scaled(gY * 0.055, gY * 0.055, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		LogButton->setIcon(QIcon(LogButtonPixRaw));
-		LogButton->setIconSize(QSize(gY * 0.055, gY * 0.055));
-		LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
-		LogButton->setStyleSheet("QPushButton{background-color:rgba(0,0,0,0);}");
+		LogButton->hide();
 		connect(LogButton, SIGNAL(clicked()), this, SLOT(showLogPage()));
+		TopCover = new QLabel(this);
+		TopCover->hide();
+		TopCover->setGeometry(QRect(0, 0, X, Y));
+		initMap();
+		loadUIStyleSheet();
 	}
 
 public slots:
+	void initMap() {
+		QSSMap.insert("TopCover", &QSSTopCover);
+		QSSMap.insert("Frame", &QSSFrame);
+		
+		QSSMap.insert("WordLabel", &QSSWordLabel);
+		QSSMap.insert("FreeLabel", &QSSFreeLabel);
+		QSSMap.insert("NameLabel", &QSSNameLabel);
+		
+		QSSMap.insert("AutoButton", &QSSAutoButton);
+		QSSMap.insert("NextButton", &QSSNextButton);
+		QSSMap.insert("SpeedButton", &QSSSpeedButton);
+		QSSMap.insert("LogButton", &QSSLogButton);
+		
+		QSSMap.insert("BranchButton_1", &QSSBranchButton_1);
+		QSSMap.insert("BranchButton_2", &QSSBranchButton_2);
+		QSSMap.insert("BranchButton_3", &QSSBranchButton_3);
+		QSSMap.insert("BranchButton_4", &QSSBranchButton_4);
+		QSSMap.insert("BranchButton", &QSSBranchButton);
+				
+		QRectMap.insert("WordLabel", &RecWordLabel);
+		QRectMap.insert("NameLabel", &RecNameLabel);
+		QRectMap.insert("AutoButton", &RecAutoButton);
+		QRectMap.insert("NextButton", &RecNextButton);
+		QRectMap.insert("SpeedButton", &RecSpeedButton);
+		QRectMap.insert("LogButton", &RecLogButton);
+		QRectMap.insert("BranchButton1_1", &BranchButton1_1);
+		QRectMap.insert("BranchButton1_2", &BranchButton1_2);
+		QRectMap.insert("BranchButton1_3", &BranchButton1_3);
+		QRectMap.insert("BranchButton1_4", &BranchButton1_4);
+		QRectMap.insert("BranchButton2_2", &BranchButton2_2);
+		QRectMap.insert("BranchButton2_3", &BranchButton2_3);
+		QRectMap.insert("BranchButton2_4", &BranchButton2_4);
+		QRectMap.insert("BranchButton3_3", &BranchButton3_3);
+		QRectMap.insert("BranchButton3_4", &BranchButton3_4);
+		QRectMap.insert("BranchButton4_4", &BranchButton4_4);
+		
+	}
+	
 	void initObject(void) {
 		changeBG = 1;
 		SpeedNow = 0;
@@ -937,6 +925,7 @@ public slots:
 		OPAVG_R->setOpacity(0);
 		OPFrame->setOpacity(0);
 		if (gUseLogPage) { LogPage->initObject(); }
+		loadUIStyleSheet();
 	}
 
 	int searchParameter(QString Parametername) {
@@ -951,38 +940,46 @@ public slots:
 		emit NowInBranch();
 		int converlstlen = BranchList.length();
 		qDebug() << "SETBRANCHBUTTON";
-		if (gUseLogPage) { LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		if (gUseLogPage) { LogButton->hide(); }
+
+		if (converlstlen == 1) {
+			BranchButton_1->setGeometry(BranchButton1_1);
+
+		}if (converlstlen == 2) {
+			BranchButton_1->setGeometry(BranchButton1_2);
+			BranchButton_2->setGeometry(BranchButton2_2);
+		}if (converlstlen == 3) {
+			BranchButton_1->setGeometry(BranchButton1_3);
+			BranchButton_2->setGeometry(BranchButton2_3);
+			BranchButton_3->setGeometry(BranchButton3_3);
+		}if (converlstlen == 4) {
+			BranchButton_1->setGeometry(BranchButton1_4);
+			BranchButton_2->setGeometry(BranchButton2_4);
+			BranchButton_3->setGeometry(BranchButton3_4);
+			BranchButton_4->setGeometry(BranchButton4_4);
+		}
 
 		if (converlstlen > 0) {
 			BranchButton_1->setText(BranchList[0].section(":", -1, -1));
+			BranchButton_1->show();
 		}if (converlstlen > 1) {
 			BranchButton_2->setText(BranchList[1].section(":", -1, -1));
+			BranchButton_2->show();
 		}if (converlstlen > 2) {
 			BranchButton_3->setText(BranchList[2].section(":", -1, -1));
+			BranchButton_3->show();
 		}if (converlstlen > 3) {
 			BranchButton_4->setText(BranchList[3].section(":", -1, -1));
+			BranchButton_4->show();
 		}
-		if (converlstlen == 1) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.402777, 635, 70));
-		}if (converlstlen == 2) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.337962963, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.435185, 635, 70));
-		}if (converlstlen == 3) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.273148, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.37037037, 635, 70));
-			BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.46759, 635, 70));
-		}if (converlstlen == 4) {
-			BranchButton_1->setGeometry(QRect(gX / 2 - 317.5, gY * 0.2574074, 635, 70));
-			BranchButton_2->setGeometry(QRect(gX / 2 - 317.5, gY * 0.3546296, 635, 70));
-			BranchButton_3->setGeometry(QRect(gX / 2 - 317.5, gY * 0.45185185, 635, 70));
-			BranchButton_4->setGeometry(QRect(gX / 2 - 317.5, gY * 0.549074, 635, 70));
-		}
+		
 	}
 
 	void showPlayerPage(void) {
-		AutoButton->setGeometry(QRect(gX * 0.80729, gY * 0.038, gX * 0.098125, gY * 0.046296));
-		SpeedButton->setGeometry(QRect(gX * 0.902604, gY * 0.038, gX * 0.078125, gY * 0.046296));
-		if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		AutoButton->show();
+		SpeedButton->show();
+		if (gUseLogPage) { LogButton->show(); }
+		Frame->show();
 	}
 
 	void setCurrentFrame(bool FrameOpacity) {
@@ -1199,7 +1196,7 @@ public slots:
 	void setCurrentFree(QStringList textsetlst, QStringList wordset) {
 		FreeLabel->setText("");
 		OPFreeLabel->setOpacity(0);
-		FreeLabel->setGeometry(QRect(gX * textsetlst[0].toFloat(), gY * textsetlst[1].toFloat(), gX * 0.75, gY * 0.0324074));
+		FreeLabel->setGeometry(QRect(gX * textsetlst[0].toFloat(), gY * textsetlst[1].toFloat(), gX * 0.75, gY * 0.04));
 		if (textsetlst[2] == "L") {
 			FreeLabel->setAlignment(Qt::AlignLeft);
 		}
@@ -1221,6 +1218,30 @@ public slots:
 		OPFreeLabel->setOpacity(0);
 	}
 
+	void moveAVG(QString whichAVG, double dX, double dY) {
+		if (whichAVG.contains("L")) {
+			AVG_L->move(AVG_L->x() + dX * gX, AVG_L->y() + dY * gY);
+		}
+		if (whichAVG.contains("R")) {
+			AVG_R->move(AVG_R->x() + dX * gX, AVG_R->y() + dY * gY);
+		}
+		if (whichAVG.contains("M")) {
+			AVG_M->move(AVG_M->x() + dX * gX, AVG_M->y() + dY * gY);
+		}
+	}
+	
+	void moveAVGBack(QString whichAVG) {
+		if (whichAVG.contains("L")) {
+			AVG_L->move(gX * -0.068229, gY * 0.12);
+		}
+		if (whichAVG.contains("R")) {
+			AVG_R->move(gX * 0.321354, gY * 0.12);
+		}
+		if (whichAVG.contains("M")) {
+			AVG_M->move(gX * 0.127083, gY * 0.12);
+		}
+	}
+
 	void clearAll(void) {
 		Working = FALSE;
 		NameLabel->setText("");
@@ -1232,12 +1253,14 @@ public slots:
 		BG1->setPixmap(QPixmap(""));
 		BG2->setPixmap(QPixmap(""));
 
-		AutoButton->setGeometry(QRect(-gX * 0.80729, -gY * 0.038, gX * 0.098125, gY * 0.046296));
-		SpeedButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.038, gX * 0.078125, gY * 0.046296));
-		NextButton->setGeometry(QRect(-gX * 0.902604, gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		AutoButton->hide();
+		SpeedButton->hide();
+		NextButton->hide();
 		if (gUseLogPage) {
-			LogButton->setGeometry(QRect(-gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055));
+			LogButton->hide();
 		}
+		TopCover->hide();
+		Frame->hide();
 	}
 
 	void wheelEvent(QWheelEvent* event) {
@@ -1342,10 +1365,10 @@ public slots:
 		QPushButton* WhichButtonSend = static_cast<QPushButton*>(this->sender());
 		emit UserChooseWhich(WhichButtonSend->text());
 
-		BranchButton_1->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_2->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_3->setGeometry(QRect(-640, -80, 635, 70));
-		BranchButton_4->setGeometry(QRect(-640, -80, 635, 70));
+		BranchButton_1->hide();
+		BranchButton_2->hide();
+		BranchButton_3->hide();
+		BranchButton_4->hide();
 
 		BranchButton_1->setText("");
 		BranchButton_2->setText("");
@@ -1353,7 +1376,7 @@ public slots:
 		BranchButton_4->setText("");
 
 		Inbranch = FALSE;
-		if (gUseLogPage) { LogButton->setGeometry(QRect(gX * 0.030416, gY * 0.033, gY * 0.055, gY * 0.055)); }
+		if (gUseLogPage) { LogButton->show(); }
 		showNext();
 	}
 
@@ -1362,13 +1385,13 @@ public slots:
 			emit NeedWakeUp();
 		}
 		else {
-			NextButton->setGeometry(QRect(gX * 0.868, gY * 0.925, gX * 0.078125, gY * 0.046296));
+			NextButton->show();
 		}
 	}
 
 	void _ToNext(void) {
 		emit NeedWakeUp();
-		NextButton->setGeometry(QRect(-gX * 0.902604, -gY * 0.8981, gX * 0.078125, gY * 0.046296));
+		NextButton->hide();
 	}
 
 	void showLogPage(void) {
@@ -1391,6 +1414,199 @@ public slots:
 			InLogPage = FALSE;
 		}
 	}
+
+	void loadUIStyleSheet(QString Filename = "__INSIDER_YSP__") {
+		initYSPUIStyle();
+		if (Filename != "__INSIDER_YSP__") {
+			QFile File(Filename);
+			if (File.open(QIODevice::ReadOnly)) {
+				QTextStream CurrentSPOLText(&File);
+				CurrentSPOLText.setCodec("UTF-8");
+				while (TRUE) {
+					if (CurrentSPOLText.atEnd()) {
+						break;
+					}
+					CEUISingleLine(CurrentSPOLText.readLine());
+				}
+				File.close();
+			}
+		}
+		loadStaticStyle();
+	}
+
+	void CEUISingleLine(QString LineString) {
+		QStringList CommandRAW;
+		QString CommandSplit;
+		bool InText = FALSE;
+		bool InEsc = FALSE;
+		foreach(QChar SC, LineString) {
+			if (SC == "#" && !InText) {
+				break;
+			}
+			if (SC == '\\') {
+				InEsc = TRUE;
+				continue;
+			}
+			if (SC == '"' && !InEsc) {
+				InText = !InText;
+				InEsc = FALSE;
+				continue;
+			}
+			if ((SC == ' ' || SC == ';') && !InText) {
+				CommandRAW.append(CommandSplit);
+				CommandSplit.clear();
+			}
+			else {
+				CommandSplit += SC;
+				InEsc = FALSE;
+			}
+		}
+		qDebug() << CommandRAW;
+		initUserUIStyle(CommandRAW);
+	}
+
+	void initUserUIStyle(QStringList CommandRAW) {
+		if (CommandRAW[1] == "S") {
+			if (CommandRAW.length() != 3) {
+				return;
+			}
+			else {
+				while (TRUE) {
+					if (CommandRAW[2].contains("AUTO_") && CommandRAW[2].contains("_PR")) {
+						int Index_b = CommandRAW[2].indexOf("AUTO_");
+						int Index_e = CommandRAW[2].indexOf("_PR");
+						QString pr = CommandRAW[2].mid(Index_b + 5, Index_e - Index_b - 5);
+						CommandRAW[2].replace("AUTO_" + pr + "_PR", QString::number((int)(pr.toFloat() * gY / 100))+"px");
+					}
+					else {
+						break;
+					}
+				}
+				CommandRAW[2].replace("AUTO_PATH:", PROPATH::Users);
+			}
+			if (QSSMap.contains(CommandRAW[0])) {
+				*QSSMap[CommandRAW[0]] = CommandRAW[2];
+			}
+		}
+		else if (CommandRAW[1] == "G") {
+			if (QRectMap.contains(CommandRAW[0])) {
+				*QRectMap[CommandRAW[0]] = { (int)(CommandRAW[2].toFloat() * gX),(int)(CommandRAW[3].toFloat() * gY),(int)(CommandRAW[4].toFloat() * gX),(int)(CommandRAW[5].toFloat() * gY) };
+			}
+		}
+	}
+
+	void initYSPUIStyle() {
+		QSSWordLabel = "QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}";
+		QSSNameLabel = "QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}";
+		QSSFreeLabel = "QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}";
+
+		QSSFrame="QLabel{background-color:rgba(0,0,0,0);border-image:url("+ PROPATH::Users + "/source/BaseUI/Frame/frame.png)}";
+		QSSLogButton = "QPushButton{background-color:rgba(0,0,0,0);border-image:url(" + PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png)}";
+		QSSSpeedButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    font-size:" + Fontsize40 + ";\
+                    \
+                    text-align:left;\
+                    color:#FFFFFF;\
+                    }";
+		QSSNextButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    color:#FFFFFF;\
+                    font-family:'SimHei';\
+                    font-size:" + Fontsize40 + ";\
+                    font-weight:bold;\
+                    text-align:left;\
+                    }";
+		QSSAutoButton = "\
+                QPushButton{\
+                    background-color:rgba(0,0,0,0);\
+                    color:#FFFFFF;\
+                    font-family:'SimHei';\
+                    font-size:" + Fontsize40 + ";\
+                    font-weight:bold;\
+                    text-align:left;\
+                    }";
+		QSSBranchButton = "\
+                #BranchButton{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_N.png');\
+                }\
+                #BranchButton:hover{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_P.png');\
+                }\
+                #BranchButton:Pressed{\
+                    color:#FFFFFF;\
+                    font-size:25px;\
+                    \
+                    background-color:rgba(0,0,0,0);\
+                    border-image:url('" + PROPATH::Users + "/source/BaseUI/Button/BranchButton_C.png');\
+                    }";
+		QSSBranchButton_1 = QSSBranchButton; 
+		QSSBranchButton_2 = QSSBranchButton; 
+		QSSBranchButton_3 = QSSBranchButton; 
+		QSSBranchButton_4 = QSSBranchButton;
+		QSSTopCover = "";
+		RecNameLabel = { 0, (int)(gY * 0.865), (int)(gX * 0.2078125), (int)(gY * 0.07) };
+		RecWordLabel = { (int)(gX * 0.2609375), (int)(gY * 0.87685), (int)(gX * 0.6875), (int)(gY * 0.105) };
+		RecAutoButton = { (int)(gX * 0.80729),(int)(gY * 0.038), (int)(gX * 0.098125),(int)(gY * 0.046296) };
+		RecNextButton = { (int)(gX * 0.902604), (int)(gY * 0.8981), (int)(gX * 0.078125), (int)(gY * 0.046296) };
+		RecSpeedButton = { (int)(gX * 0.902604),(int)(gY * 0.038), (int)(gX * 0.078125), (int)(gY * 0.046296) };
+		RecLogButton = { (int)(gX * 0.030416), (int)(gY * 0.033),(int)(gY * 0.055), (int)(gY * 0.055) };
+		BranchButton1_1 = { (int)(gX * 0.25), (int)(gY * 0.402777), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_2 = { (int)(gX * 0.25), (int)(gY * 0.337962), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_3 = { (int)(gX * 0.25), (int)(gY * 0.273148), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton1_4 = { (int)(gX * 0.25), (int)(gY * 0.257407),(int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton2_2 = { (int)(gX * 0.25), (int)(gY * 0.435185),(int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton2_3 = { (int)(gX * 0.25), (int)(gY * 0.370370), (int)(gX * 0.5),(int)(gY * 0.08) };
+		BranchButton2_4 = { (int)(gX * 0.25), (int)(gY * 0.354629), (int)(gX * 0.5),(int)(gY * 0.08) };
+		BranchButton3_3 = { (int)(gX * 0.25), (int)(gY * 0.467591), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton3_4 = { (int)(gX * 0.25), (int)(gY * 0.451852), (int)(gX * 0.5), (int)(gY * 0.08) };
+		BranchButton4_4 = { (int)(gX * 0.25), (int)(gY * 0.549074),(int)(gX * 0.5), (int)(gY * 0.08) };
+	}
+
+	void loadStaticStyle() {
+		WordLabel->setStyleSheet(QSSWordLabel);
+		WordLabel->setGeometry(RecWordLabel);
+		NameLabel->setStyleSheet(QSSNameLabel);
+		NameLabel->setGeometry(RecNameLabel);
+		FreeLabel->setStyleSheet(QSSFreeLabel);
+		Frame->setStyleSheet(QSSFrame);
+		BranchButton_1->setStyleSheet(QSSBranchButton);
+		BranchButton_2->setStyleSheet(QSSBranchButton);
+		BranchButton_3->setStyleSheet(QSSBranchButton);
+		BranchButton_4->setStyleSheet(QSSBranchButton);
+		BranchButton_1->setStyleSheet(QSSBranchButton_1);
+		BranchButton_2->setStyleSheet(QSSBranchButton_2);
+		BranchButton_3->setStyleSheet(QSSBranchButton_3);
+		BranchButton_4->setStyleSheet(QSSBranchButton_4);	
+
+		NextButton->setStyleSheet(QSSNextButton);
+		AutoButton->setStyleSheet(QSSAutoButton);
+		SpeedButton->setStyleSheet(QSSSpeedButton);
+		LogButton->setStyleSheet(QSSLogButton);
+		AutoButton->setGeometry(RecAutoButton);
+		SpeedButton->setGeometry(RecSpeedButton);
+		LogButton->setGeometry(RecLogButton);
+		NextButton->setGeometry(RecNextButton);
+
+		TopCover->setStyleSheet(QSSTopCover);
+		if (QSSTopCover != "") {
+			TopCover->show();
+		}
+		else {
+			TopCover->hide();
+		}
+	}
+	
 };
 
 //音频放送服务
@@ -1401,8 +1617,8 @@ public:
 	QMediaPlayer* MediaPlayer;
 	QMediaPlaylist* PlayList;
 	uSoundService() {
-		MediaPlayer = new QMediaPlayer();
-		PlayList = new QMediaPlaylist();
+		MediaPlayer = new QMediaPlayer(this);
+		PlayList = new QMediaPlaylist(this);
 		MediaPlayer->setPlaylist(PlayList);
 	}
 	void loadFile(QString Filename, int Volume, bool Loop) {
@@ -1418,11 +1634,12 @@ public:
 		MediaPlayer->play();
 	}
 
-	void fadeMedia(void) {
+	void fadeMedia(bool deleteLater = FALSE) {
 		for (int i = MediaPlayer->volume(); i > 0; i--) {
 			MediaPlayer->setVolume(i);
 			QTest::qSleep(10);
 		}
 		MediaPlayer->stop();
+		if (deleteLater) { this->deleteLater(); }
 	}
 };

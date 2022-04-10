@@ -378,22 +378,13 @@ public:
 		Kernal_Introduce->setText("AASP是由Ayano_Aishi提出程序构想之后，由青雅音完成的最初版本的SPOL解释器程序。\
 \n该解释器只有命令行状态，其后的拥有UI的Python版YSP程序在此命令行程序之上构建。\
 \nC++版YSP程序亦使用了优化重构后的AASP内核。重构过程受到了来自Ayano_Aishi的支持。\
-\n此后，青雅音将C++版YSP再次重构为Visindigo程序，以完成SPOL的全流程一体化。\
-\nVisindigo基于全新的GPOL解释器，并通过适用于GPOL的SPOL子解释器继续支持SPOL。\
+\n\
+\n当前K9U2内核新增了若干动态识别特性，并且进行了一部分逻辑上的优化。\
 \n\
 \n本程序内含有相当数量的来自手游的素材。这些素材版权归其制作方所有。\
 \n本程序仅取这些素材用于程序UI表现，以为用户提供快速二创的功能。\
 \n任何人在未经版权制作方许可的情况下都不得使用其直接进行盈利。\
-\n出现任何使用手游素材而导致的侵权行为，本程序开发者概不负责。\
-\n\
-\n本程序使用其他项目：\
-\nCommonEdit 项目by 青雅音、Ayano_Aishi 用于实现部分控件。\
-\ncFirework 项目by 青雅音 用于组织程序结构。\
-\ncYSP 项目by 青雅音 用于支持原生SPOL动态解释。\
-\nPyGP 项目by 青雅音 用于在Python上编写Visindigo脚本。\
-\n\
-\n\
-\n");
+\n出现任何使用手游素材而导致的侵权行为，本程序开发者概不负责。\n\n");
 
 		//Kernal_Introduce->setStyleSheet("QLabel{font-size:20px;font-family:'Microsoft YaHei'}");
 		Kernal_Introduce->setStyleSheet("QLabel{font-size:20px;}");

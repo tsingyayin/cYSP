@@ -79,9 +79,14 @@ signals:
 	void set_scroll_info(void);
 	//告知UI刷新当前行
 	void now_which_line(int);
-
+	//移动信号
+	void move_AVG_to(QString, double, double);
+	//移动回原位信号
+	void move_AVG_back(QString);
 	//GPOL指令传递
 	void gpol_object_func(QStringList, QStringList);
+	//程序UI信息传递
+	void set_UI_style(QString);
 public:
 	InterpreterSignals() {
 	}

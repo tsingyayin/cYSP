@@ -1084,7 +1084,7 @@ public slots:
 
 	//退出程序
 	void exitProgram(void) {
-		exitPage(233);
+		exitPage(2);
 	}
 
 	//退出交互页面

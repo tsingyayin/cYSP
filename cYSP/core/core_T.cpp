@@ -25,6 +25,7 @@ QString ExtendRawLine;
 bool InExtend = FALSE;
 int TransThreadCount;
 QStringList TransPictureName;
+QMutex TransformMutex;
 
 void ReciveUserControl::LineNumNow(int Num) {
 	LineNum = Num;
@@ -100,9 +101,9 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		emit signalsName->set_scroll_info();
 
 		//多线程等待区域
-		for (int i = 0; i < 10; i++) {
-			QTest::qSleep(500);
+		for (int i = 0; i <= 10; i++) {
 			if (TransThreadCount <= 0) { break; }
+			QTest::qSleep(100);
 		}
 		//追加长时控制器列表
 		BGPList.append({ "51200","BGP(黑场)" });
@@ -178,6 +179,7 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 			//从有义列中取出当前行
 			QString CurrentLine = MeaningfulLine[LineNum];
 
+			
 			//预处理小分支控制器——检测小分支开始与结束
 			if (CurrentLine.mid(0, 3) == "|||") {
 				InExtend = FALSE;
@@ -292,6 +294,9 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 
 void GPOLInterpreter(QStringList GPOLText, InterpreterSignals* signalsName, mQThread* parent) {
 }
+
+
+
 //通用滤镜处理线程
 class cTransform :public QThread
 {
@@ -392,7 +397,9 @@ public:
 			}
 			NewImage.save(NewPictureName);
 			//qDebug().noquote() << "InterpreterInfo→成功建立 :" + NewPictureName;
+
 			gSignalsName->send_kernal_info("InterpreterInfo→成功建立 :" + NewPictureName);
+
 		}
 		TransThreadCount--;
 		this->deleteLater();
@@ -552,6 +559,9 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 
 	//讲述控制器
 	else if (Line.mid(0, 3) == ">>>") {
+		if (!Line.contains(":")) {
+			return { "NOTFOUND","NOTFOUND" };
+		}
 		//首先提取行进驻留控制器（若有）
 		QStringList PlaySetList;
 		if (Line[Line.length() - 1] == ")") {
@@ -571,7 +581,12 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		QStringList RAW = Line.mid(3, Line.length() - 3).split(">>>");
 		QList<QStringList> CharaSetList;
 		for (int i = 0; i < RAW.length(); i++) {
-			CharaSetList.append({ RAW[i].split(":") });
+			if (RAW[i].contains(":")) {
+				CharaSetList.append({ RAW[i].split(":") });
+			}
+			else {
+				return { "NOTFOUND","NOTFOUND" };
+			}
 		}
 		//从讲述控制器全体提取立绘设置
 		QList<QStringList> AvgSetList;
@@ -593,6 +608,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 				WordSetList.append({ AvgSetList[i][0],CharaSetList[i][1] });
 			}
 			else if (CharaSetList[i].length() == 3) {
+				if (CharaSetList[i][1] == "") { CharaSetList[i][1] = " "; }
 				WordSetList.append({ CharaSetList[i][1],CharaSetList[i][2] });
 			}
 		}
@@ -773,6 +789,9 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 
 	//自由文本控制器
 	else if (Line.mid(0, 3) == ">^>") {
+		if (!Line.contains(":")) {
+			return { "NOTFOUND","NOTFOUND" };
+		}
 		//首先提取行进驻留控制器（若有）
 		QStringList PlaySetList;
 		if (Line[Line.length() - 1] == ")") {
@@ -893,6 +912,67 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		}
 	}
 
+	//对象（立绘）移动控制器
+	else if (Line.mid(0, 4) == "move" && Line.mid(0, 8) != "moveBack") {
+	qDebug() << Line;
+		InExtend = FALSE;
+		QStringList RAW = Line.mid(5, Line.length() - 6).split(",");
+		int RAWLength = RAW.length();
+		for (int i = 0; i < 5 - RAWLength ; i++) { RAW.append(""); }
+		qDebug() << RAW;
+		QStringList MoveSetList;
+		RAW[0]=="" ? MoveSetList.append("M") : MoveSetList.append( RAW[0] );
+		RAW[1]=="" ? MoveSetList.append("0") : MoveSetList.append( RAW[1] );
+		RAW[2]=="" ? MoveSetList.append("0") : MoveSetList.append( RAW[2] );
+		RAW[3]=="" ? MoveSetList.append("0") : MoveSetList.append( RAW[3] );
+		RAW[4]=="" ? MoveSetList.append("SFS") : MoveSetList.append( RAW[4] );
+		MoveSetList[3] = QString::number(MoveSetList[3].toFloat() * 120 + 1);
+		qDebug() << MoveSetList;
+		if (whichMode == InterpreterMode::run) {
+			emit signalsName->willstop();
+			if (MoveSetList[4] == "K") {
+				for (int i = 1; i <= MoveSetList[3].toInt(); i++) {
+					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() / MoveSetList[3].toFloat(), MoveSetList[2].toFloat() / MoveSetList[3].toFloat());
+					QTest::qSleep(8);
+				}
+			}else if (MoveSetList[4] == "FS") {
+				for (int i = 1; i <= MoveSetList[3].toInt(); i++) {
+					double d = qSin((i * 3.1415) / (2 * MoveSetList[3].toInt())) - qSin(((i - 1) * 3.1415) / (2 * MoveSetList[3].toInt()));
+					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() *d);
+					QTest::qSleep(8);
+				}
+			}
+			else if (MoveSetList[4] == "SF") {
+				for (int i = MoveSetList[3].toInt(); i >= 1; i--) {
+					double d = qSin((i * 3.1415) / (2 * MoveSetList[3].toInt())) - qSin(((i - 1) * 3.1415) / (2 * MoveSetList[3].toInt()));
+					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() * d);
+					QTest::qSleep(8);
+				}
+			}
+			else if (MoveSetList[4] == "SFS") {
+				for (int i = MoveSetList[3].toInt(); i >= 1; i--) {
+					double d = (-qPow(qCos((i * 3.1415) / (MoveSetList[3].toInt())) + 1, 2) + qPow(qCos(((i - 1) * 3.1415) / (MoveSetList[3].toInt())) + 1, 2)) / 4;
+					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() * d);
+					QTest::qSleep(8);
+				}
+			}
+			emit signalsName->show_next();
+			parent->pause();
+			emit signalsName->inrunning();
+		}
+	}
+	
+	//对象（立绘）移回控制器
+	else if (Line.mid(0, 8) == "moveBack") {
+		InExtend = FALSE;
+		QString RAW = Line.mid(9, Line.length() - 10);
+		if (RAW == "") { RAW = "LMR"; }
+
+		if (whichMode == InterpreterMode::run) {
+			emit signalsName->move_AVG_back(RAW);
+		}
+	}
+	
 	else {
 		if (whichMode == InterpreterMode::presource) {
 			QFile tryFile;
@@ -911,6 +991,14 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 	return { "NORMAL","NORMAL" };
 };
 
+
+
+
 QStringList GPOLSingle(int LineNum, QString Line, GPOLInterpreterMode whichMode, InterpreterSignals* signalsName, mQThread* parent) {
 	return {};
 }
+
+
+
+
+
