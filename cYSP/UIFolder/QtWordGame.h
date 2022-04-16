@@ -1407,7 +1407,7 @@ public slots:
 			if (!Auto) {
 				_AutoChange();
 			}
-			if (NextButton->geometry() == QRect(gX * 0.868, gY * 0.925, gX * 0.078125, gY * 0.046296)) {
+			if (NextButton->isVisible()) {
 				_ToNext();
 			}
 			LogPage->setGeometry(QRect(-gX, -gY, gX, gY));

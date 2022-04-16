@@ -21,6 +21,7 @@ QList<QStringList> BGPList;
 QList<QStringList> BGMList;
 QList<QStringList> CVRList;
 QList<QStringList> ExtendList;
+QList<QStringList> MoveList;
 QString ExtendRawLine;
 bool InExtend = FALSE;
 int TransThreadCount;
@@ -82,6 +83,7 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		BGMList.clear();
 		CVRList.clear();
 		ExtendList.clear();
+		MoveList.clear();
 		//预加载循环
 		for (int i = 1;; i++) {
 			QString CurrentLine = CurrentSPOLText.readLine();
@@ -102,9 +104,7 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 
 		//多线程等待区域
 		for (int i = 0; i <= 10; i++) {
-			TransformMutex.lock();
 			if (TransThreadCount <= 0) { break; }
-			TransformMutex.unlock();
 			QTest::qSleep(100);
 		}
 		//追加长时控制器列表
@@ -112,6 +112,7 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 		BGMList.append({ "51200","BGM()" });
 		CVRList.append({ "51200","CVR()" });
 		ExtendList.append({ "51200",">>>:===" });
+		MoveList.append({ "51200","moveBack(L)","moveBack(M)","moveBack(R)" });
 		//qDebug().noquote() << "InterpreterInfo→成功预剔除注释行";
 		emit signalsName->send_kernal_info("InterpreterInfo→成功预剔除注释行");
 
@@ -172,6 +173,18 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 					if (ExtendList[i][0].toInt() <= LineNum) {
 						ExtendRawLine = ExtendList[i][1];
 						InExtend = TRUE;
+						break;
+					}
+				}
+				for (int i = MoveList.length() - 1; i >= 0; i--) {
+					//qDebug() << MoveList[i][0].toInt();
+					if (MoveList[i][0].toInt() < LineNum) {
+						SingleLine(MoveList[i][0].toInt(), "moveBack()", InterpreterMode::run, signalsName, parent);
+						//qDebug() << "RE:" << MoveList[i];
+						for (int j = 1; j < MoveList[i].length(); j++) {
+							SingleLine(MoveList[i][0].toInt(), MoveList[i][j], InterpreterMode::run, signalsName, parent);
+							//qDebug() << MoveList[i][j];
+						}
 						break;
 					}
 				}
@@ -403,9 +416,7 @@ public:
 			gSignalsName->send_kernal_info("InterpreterInfo→成功建立 :" + NewPictureName);
 
 		}
-		TransformMutex.lock();
 		TransThreadCount--;
-		TransformMutex.unlock();
 		this->deleteLater();
 	}
 };
@@ -932,6 +943,108 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		RAW[4]=="" ? MoveSetList.append("SFS") : MoveSetList.append( RAW[4] );
 		MoveSetList[3] = QString::number(MoveSetList[3].toFloat() * 120 + 1);
 		qDebug() << MoveSetList;
+		if (whichMode == InterpreterMode::presource) {
+			if (!MoveList.isEmpty()) {
+				QStringList LastMoveList = MoveList.last();
+				QStringList LMRSplitList;
+				LMRSplitList.append(QString::number(MeaningfulLine.length() - 1));
+				if (LastMoveList[1] == "moveBack(L)") {
+					if (MoveSetList[0].contains("L")) {
+						LMRSplitList.append("move(L," + MoveSetList[1] + "," + MoveSetList[2] + ")");
+					}
+					else {
+						LMRSplitList.append("move(L,0,0)");
+					}
+				}
+				else {
+					QStringList Last;
+					if (LastMoveList[1] == "INSIDER_NULL") {
+						Last = MoveList[MoveList.length() - 2][1].split(",");
+					}
+					else {
+						Last = MoveList.last()[1].split(",");
+					}
+					if (MoveSetList[0].contains("L")) {
+						LMRSplitList.append("move(L," + QString::number(Last[1].toFloat() + MoveSetList[1].toFloat()) + "," + QString::number(Last[2].mid(0, Last[2].length() - 1).toFloat() + MoveSetList[2].toFloat()) + ")");
+					}
+					else {
+						LMRSplitList.append(Last.join(","));
+					}
+				}
+				
+				if (LastMoveList[2] == "moveBack(M)") {
+					if (MoveSetList[0].contains("M")) {
+						LMRSplitList.append("move(M," + MoveSetList[1] + "," + MoveSetList[2] + ")");
+					}
+					else {
+						LMRSplitList.append("move(M,0,0)");
+					}
+				}
+				else {
+					QStringList Last;
+					if (LastMoveList[2] == "INSIDER_NULL") {
+						Last = MoveList[MoveList.length() - 2][2].split(",");
+					}
+					else {
+						Last = MoveList.last()[2].split(",");
+					}
+					if (MoveSetList[0].contains("M")) {
+						LMRSplitList.append("move(M," + QString::number(Last[1].toFloat() + MoveSetList[1].toFloat()) + "," + QString::number(Last[2].mid(0, Last[2].length() - 1).toFloat() + MoveSetList[2].toFloat()) + ")");
+					}
+					else {
+						LMRSplitList.append(Last.join(","));
+					}
+				}
+				
+				if (LastMoveList[3] == "moveBack(R)") {
+					if (MoveSetList[0].contains("R")) {
+						LMRSplitList.append("move(R," + MoveSetList[1] + "," + MoveSetList[2] + ")");
+					}
+					else {
+						LMRSplitList.append("move(R,0,0)");
+					}
+				}
+				else {
+					QStringList Last;
+					if (LastMoveList[3] == "INSIDER_NULL") {
+						Last = MoveList[MoveList.length() - 2][3].split(",");
+					}
+					else {
+						Last = MoveList.last()[3].split(",");
+					}
+					if (MoveSetList[0].contains("R")) {
+						LMRSplitList.append("move(R," + QString::number(Last[1].toFloat() + MoveSetList[1].toFloat()) + "," + QString::number(Last[2].mid(0, Last[2].length() - 1).toFloat() + MoveSetList[2].toFloat()) + ")");
+					}
+					else {
+						LMRSplitList.append(Last.join(","));
+					}
+				}
+				MoveList.append(LMRSplitList);
+			}
+			else {
+				QStringList LMRSplitList;
+				LMRSplitList.append(QString::number(MeaningfulLine.length() - 1));
+				if (MoveSetList[0].contains("L")) {
+					LMRSplitList.append("move(L,"+MoveSetList[1]+","+MoveSetList[2]+")");
+				}
+				else {
+					LMRSplitList.append("move(L,0,0)");
+				}
+				if (MoveSetList[0].contains("M")) {
+					LMRSplitList.append("move(M," + MoveSetList[1] + "," + MoveSetList[2]+")");
+				}
+				else {
+					LMRSplitList.append("move(L,0,0)");
+				}
+				if (MoveSetList[0].contains("R")) {
+					LMRSplitList.append("move(R," + MoveSetList[1] + "," + MoveSetList[2] + ")");
+				}
+				else {
+					LMRSplitList.append("move(R,0,0)");
+				}
+				MoveList.append(LMRSplitList);
+			}
+		}
 		if (whichMode == InterpreterMode::run) {
 			emit signalsName->willstop();
 			if (MoveSetList[4] == "K") {
@@ -971,7 +1084,34 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 		InExtend = FALSE;
 		QString RAW = Line.mid(9, Line.length() - 10);
 		if (RAW == "") { RAW = "LMR"; }
-
+		if (whichMode == InterpreterMode::presource) {
+			if (!MoveList.isEmpty()) {
+				QStringList MoveSetList;
+				MoveSetList.append(QString::number(MeaningfulLine.length() - 1));
+				if (RAW.contains("L")) {
+					MoveSetList.append("moveBack(L)");
+				}
+				else {
+					MoveSetList.append("INSIDER_NULL");
+				}
+				if (RAW.contains("M")) {
+					MoveSetList.append("moveBack(M)");
+				}
+				else {
+					MoveSetList.append("INSIDER_NULL");
+				}
+				if (RAW.contains("R")) {
+					MoveSetList.append("moveBack(R)");
+				}
+				else {
+					MoveSetList.append("INSIDER_NULL");
+				}
+				MoveList.append(MoveSetList);
+			}
+			else {
+				MoveList.append({ QString::number(MeaningfulLine.length() - 1),"moveBack(L)","moveBack(M)","moveBack(R)" });
+			}
+		}
 		if (whichMode == InterpreterMode::run) {
 			emit signalsName->move_AVG_back(RAW);
 		}
