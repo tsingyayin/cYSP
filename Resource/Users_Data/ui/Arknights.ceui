@@ -1,4 +1,6 @@
-WordLabel G 0.2609 0.87685 0.6875 0.105;
+WordLabel G 0.3009 0.87 0.55 0.105;
+WordLabel S "QLabel{color:#FFF5F5;font-size:AUTO_3.5_PR;}";
+NameLabel G 0.052 0.86685 0.1987125 0.07;
 Frame S "QLabel{border-image:url(AUTO_PATH:/source/BaseUI/Frame/arknightsUIBottom.png)}";
 TopCover S "QLabel{border-image:url(AUTO_PATH:/source/BaseUI/Frame/arknightsUITop.png)}";
 LogButton G 1 1 0.1 0.1;
