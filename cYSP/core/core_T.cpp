@@ -744,7 +744,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 			QString DisplayName = "";
 			QString DisplayWords = "";
 			QString WordsAll = "";
-			int AlphaCount = 0;
+			//int AlphaCount = 0;
 			for (int i = 0; i < WordSetList.length(); i++) {
 				if (WordSetList[i][1] != "") {
 					DisplayName = WordSetList[i][0];
@@ -754,7 +754,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 			}
 			emit signalsName->update_chara_num(DisplayName, WordsAll, TRUE);
 			for (int j = 0; j < DisplayWords.length(); j++) {
-				ushort chara = DisplayWords[j].unicode();
+				/*ushort chara = DisplayWords[j].unicode();
 				if (0x4E00 <= chara && chara <= 0x9FFF ||
 					0x3040 <= chara && chara <= 0x309F ||
 					0x30A0 <= chara && chara <= 0x30FF) {
@@ -765,6 +765,7 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 					WordsAll += "\n";
 					AlphaCount = 1;
 				}
+				*/
 				WordsAll += DisplayWords[j];
 				emit signalsName->update_chara_num(DisplayName, WordsAll, FALSE);
 				if (PlaySetList[0].toFloat() != 0) {
@@ -1050,27 +1051,27 @@ QStringList SingleLine(int LineNum, QString Line, InterpreterMode whichMode, Int
 			if (MoveSetList[4] == "K") {
 				for (int i = 1; i <= MoveSetList[3].toInt(); i++) {
 					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() / MoveSetList[3].toFloat(), MoveSetList[2].toFloat() / MoveSetList[3].toFloat());
-					QTest::qSleep(8);
+					QTest::qSleep(8 * SpeedFloat);
 				}
 			}else if (MoveSetList[4] == "FS") {
 				for (int i = 1; i <= MoveSetList[3].toInt(); i++) {
 					double d = qSin((i * 3.1415) / (2 * MoveSetList[3].toInt())) - qSin(((i - 1) * 3.1415) / (2 * MoveSetList[3].toInt()));
 					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() *d);
-					QTest::qSleep(8);
+					QTest::qSleep(8 * SpeedFloat);
 				}
 			}
 			else if (MoveSetList[4] == "SF") {
 				for (int i = MoveSetList[3].toInt(); i >= 1; i--) {
 					double d = qSin((i * 3.1415) / (2 * MoveSetList[3].toInt())) - qSin(((i - 1) * 3.1415) / (2 * MoveSetList[3].toInt()));
 					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() * d);
-					QTest::qSleep(8);
+					QTest::qSleep(8 * SpeedFloat);
 				}
 			}
 			else if (MoveSetList[4] == "SFS") {
 				for (int i = MoveSetList[3].toInt(); i >= 1; i--) {
 					double d = (-qPow(qCos((i * 3.1415) / (MoveSetList[3].toInt())) + 1, 2) + qPow(qCos(((i - 1) * 3.1415) / (MoveSetList[3].toInt())) + 1, 2)) / 4;
 					emit signalsName->move_AVG_to(MoveSetList[0], MoveSetList[1].toFloat() * d, MoveSetList[2].toFloat() * d);
-					QTest::qSleep(8);
+					QTest::qSleep(8 * SpeedFloat);
 				}
 			}
 			emit signalsName->show_next();

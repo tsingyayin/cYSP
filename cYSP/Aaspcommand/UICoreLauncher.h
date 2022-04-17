@@ -58,6 +58,9 @@ public:
 					}
 					emit signalName->set_UI_style(UIStyle);
 				}
+				else if (StoryFileTextSingleLine.mid(0,13)=="/dynamicDelay") {
+					
+				}
 				else if (StoryFileTextSingleLine.mid(0, 6) == "title(" && StoryFileTextSingleLine[StoryFileTextSingleLine.length() - 1] == ")" && ensureSPOLVer) {
 					if (StoryFileTextSingleLine.count(",") != 3) {
 						break;

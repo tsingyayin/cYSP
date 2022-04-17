@@ -787,7 +787,7 @@ public:
 		WordLabel = new QLabel(this);
 		NameLabel->setAlignment(Qt::AlignRight);
 		WordLabel->setAlignment(Qt::AlignLeft);
-
+		WordLabel->setWordWrap(TRUE);
 
 		//如果必要，这是一层用于盖住除了自由文本和按钮之外其他所有部件的灰色层
 		BlackCover = new QLabel(this);
@@ -1496,9 +1496,9 @@ public slots:
 	}
 
 	void initYSPUIStyle() {
-		QSSWordLabel = "QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";font-weight:bold}";
-		QSSNameLabel = "QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";font-weight:bold}";
-		QSSFreeLabel = "QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";font-weight:bold}";
+		QSSWordLabel = "QLabel{color:#FFF5F5;font-size:" + Fontsize35 + ";}";
+		QSSNameLabel = "QLabel{color:#AAAAAA;font-size:" + Fontsize45 + ";}";
+		QSSFreeLabel = "QLabel{color:#FFFFFF;font-size:" + Fontsize35 + ";}";
 
 		QSSFrame="QLabel{background-color:rgba(0,0,0,0);border-image:url("+ PROPATH::Users + "/source/BaseUI/Frame/frame.png)}";
 		QSSLogButton = "QPushButton{background-color:rgba(0,0,0,0);border-image:url(" + PROPATH::Users + "/source/BaseUI/Button/LogButton_N.png)}";
@@ -1556,7 +1556,7 @@ public slots:
 		QSSBranchButton_4 = QSSBranchButton;
 		QSSTopCover = "";
 		RecNameLabel = { 0, (int)(gY * 0.865), (int)(gX * 0.2078125), (int)(gY * 0.07) };
-		RecWordLabel = { (int)(gX * 0.2609375), (int)(gY * 0.87685), (int)(gX * 0.6875), (int)(gY * 0.105) };
+		RecWordLabel = { (int)(gX * 0.2609375), (int)(gY * 0.87685), (int)(gX * 0.55), (int)(gY * 0.105) };
 		RecAutoButton = { (int)(gX * 0.80729),(int)(gY * 0.038), (int)(gX * 0.098125),(int)(gY * 0.046296) };
 		RecNextButton = { (int)(gX * 0.902604), (int)(gY * 0.8981), (int)(gX * 0.078125), (int)(gY * 0.046296) };
 		RecSpeedButton = { (int)(gX * 0.902604),(int)(gY * 0.038), (int)(gX * 0.078125), (int)(gY * 0.046296) };

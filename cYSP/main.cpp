@@ -32,14 +32,7 @@ int main(int argc, char* argv[])
 	qsrand((unsigned)time(NULL));
 	QApplication app(argc, argv);
 	////将字体文件名传给addApplicationFont,得到字体的Id
-	int fontId = QFontDatabase::addApplicationFont(":/IRC/InsiderSource/Fonts/SourceHanSansCN-Regular.ttf");
-	////将字体Id传给applicationFontFamilies,得到一个QStringList,其中的第一个元素为新添加字体的family
-	qDebug() << fontId;
-	QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
-	qDebug() << msyh;
-	QFont font(msyh, 10);
-	////将此字体设为QApplication的默认字体
-	QApplication::setFont(font);
+	
 
 	//qDebug().noquote() << "The kernel is checking startup parameters. Some information may not be displayed when the program is not in Forced Debugging Mode";
 	//sDebug("DebugInfo→Start path : " + QDir::currentPath());
@@ -55,7 +48,19 @@ int main(int argc, char* argv[])
 		//qDebug() << QApplication::libraryPaths();
 	}
 	//qDebug() << QDir::currentPath();
-
+	QFile fontFile;
+	fontFile.setFileName(PROPATH::Users + "/fonts/default.ttf");
+	if (fontFile.exists()) {
+		int fontId = QFontDatabase::addApplicationFont(PROPATH::Users + "/fonts/default.ttf");
+		QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
+		QFont font(msyh, 10);
+		QApplication::setFont(font);
+	}
+	else {
+		QApplication::setFont(QFont("Microsoft YaHei"));
+	}
+	qDebug() << PROPATH::Users + "/fonts/default.ttf";
+	qDebug() << QApplication::font();
 	LoadingPage* win = new LoadingPage();
 	win->show();
 	int i = app.exec();

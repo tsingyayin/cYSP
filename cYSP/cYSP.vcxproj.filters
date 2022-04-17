@@ -3,7 +3,7 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
@@ -23,68 +23,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="UIFolder\TopWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Aaspcommand\aaspcommand.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\QtWordGame.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\effect.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Aaspcommand\checkupdate.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\ArtificialUI.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="core\core_T.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\ProgramSettings.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\WindowsWarn.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="UIFolder\LoadingPage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Aaspcommand\getSource.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="global_value.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="langcontrol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Aaspcommand\aaspcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="loadsettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Aaspcommand\aaspcommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Aaspcommand\SPOLDevFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="core\core_T.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="langcontrol.h">
+    <ClInclude Include="global_value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\core_B.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Aaspcommand\UICoreLauncher.h">
+    <ClInclude Include="langcontrol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="loadsettings.h">
@@ -93,21 +58,21 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global_value.h">
+    <ClInclude Include="Aaspcommand\SPOLDevFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Aaspcommand\toSpol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Aaspcommand\UICoreLauncher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\core_B.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Language\zh_CN.splang" />
     <None Include="logo.aps" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="text\splashes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="logo.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="logo.ico">
@@ -115,8 +80,51 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="logo.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
     <QtRcc Include="Resource.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Aaspcommand\aaspcommand.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Aaspcommand\checkupdate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Aaspcommand\getSource.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="core\core_T.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\ArtificialUI.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\effect.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\LoadingPage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\ProgramSettings.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\QtWordGame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\SPOLDev.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\TopWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UIFolder\WindowsWarn.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
