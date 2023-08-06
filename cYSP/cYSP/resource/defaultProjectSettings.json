@@ -1,0 +1,7 @@
+{
+    "ProjectName": "My Project",
+    "ProjectAuthor": "My Name",
+    "ProjectDescription": "My Project Description",
+    "ProjectVersion": "0.10.0",
+    "ProjectEntry": "main.js"
+}

@@ -5,25 +5,64 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DllDebug|x64">
+      <Configuration>DllDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DllRelease|x64">
+      <Configuration>DllRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cYSP/cpp/cYSPPackage.cpp" />
+    <ClCompile Include="cYSPMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="cYSP\YSPProject.h" />
+    <QtMoc Include="cYSP\YSPResourceManager.h" />
+    <QtMoc Include="SPDFYSP\Speaking.h">
+      <SubType>
+      </SubType>
+    </QtMoc>
+    <QtMoc Include="cYSP/cYSPPackage.h" />
+    <QtMoc Include="cYSP/cYSPPackageMeta.h" />
+    <ClInclude Include="cYSP/private/cYSPCompileMacro.h" />
+    <ClInclude Include="cYSP/cYSP.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resource.qrc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AFFB3404-CE25-477F-B6ED-7725AEDD553B}</ProjectGuid>
+    <ProjectGuid>{3f12cdb0-5cc4-4459-8934-d84d4748e5d3}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
-    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">10.0.22000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <ProjectName>cYSP</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'" Label="Configuration">
+    <TargetName>$(ProjectName)d</TargetName>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -31,13 +70,23 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>5.12.11</QtInstall>
-    <QtModules>core;network;gui;testlib;multimedia;widgets;networkauth;</QtModules>
+    <QtInstall>5.15.2</QtInstall>
+    <QtModules>core;network;gui;testlib;multimedia;widgets;qml;</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'" Label="QtSettings">
+    <QtInstall>5.15.2</QtInstall>
+    <QtModules>core;network;gui;testlib;multimedia;widgets;qml;</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>5.12.11</QtInstall>
-    <QtModules>core;network;gui;testlib;multimedia;widgets;networkauth;</QtModules>
+    <QtInstall>5.15.2</QtInstall>
+    <QtModules>core;network;gui;testlib;multimedia;widgets;</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'" Label="QtSettings">
+    <QtInstall>5.15.2</QtInstall>
+    <QtModules>core;network;gui;testlib;multimedia;widgets;</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -49,21 +98,96 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(QtMsBuild)\Qt.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(QtMsBuild)\Qt.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <TargetName>cYSP</TargetName>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigo;D:\SPDF\0.10.0\x64\Debug\SPDF;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug;D:\SPDF\0.10.0\x64\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigo;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <TargetName>cYSP</TargetName>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <AdditionalDependencies>Visindigod.lib;SPDFd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>$(ProjectName)_EVERYWHERE;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigod.dll" "$(OutDir)"
+xcopy /y /d "D:\SPDF\0.10.0\x64\Debug\SPDFd.dll" "$(OutDir)"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
+    <Link>
+      <EntryPointSymbol>_DllMainCRTStartup</EntryPointSymbol>
+      <AdditionalDependencies>Visindigod.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>python "$(SolutionDir)PyTools\WindowsDllExport\WindowsDllExport.py" "$(ProjectName)"</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>$(ProjectName)_DEVELOPER;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <QtMoc>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <AdditionalOptions>
+      </AdditionalOptions>
+    </QtMoc>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <AdditionalDependencies>Visindigo.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>$(ProjectName)_EVERYWHERE;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
+    <Link>
+      <EntryPointSymbol>_DllMainCRTStartup</EntryPointSymbol>
+      <AdditionalDependencies>Visindigo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>python "$(SolutionDir)PyTools\WindowsDllExport\WindowsDllExport.py" "$(ProjectName)"</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>$(ProjectName)_DEVELOPER;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
@@ -71,10 +195,21 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -84,56 +219,24 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Aaspcommand\aaspcommand.cpp" />
-    <ClCompile Include="Aaspcommand\SPOLDevFunc.cpp" />
-    <ClCompile Include="core\core_T.cpp" />
-    <ClCompile Include="global_value.cpp" />
-    <ClCompile Include="langcontrol.cpp" />
-    <ClCompile Include="loadsettings.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Aaspcommand\SPOLDevFunc.h" />
-    <ClInclude Include="Aaspcommand\toSpol.h" />
-    <ClInclude Include="Aaspcommand\UICoreLauncher.h" />
-    <ClInclude Include="core\core_B.h" />
-    <QtMoc Include="UIFolder\WindowsWarn.h" />
-    <QtMoc Include="UIFolder\TopWindow.h" />
-    <QtMoc Include="UIFolder\SPOLDev.h" />
-    <QtMoc Include="UIFolder\QtWordGame.h" />
-    <QtMoc Include="UIFolder\ProgramSettings.h" />
-    <QtMoc Include="UIFolder\LoadingPage.h" />
-    <QtMoc Include="UIFolder\effect.h" />
-    <QtMoc Include="UIFolder\ArtificialUI.h" />
-    <QtMoc Include="core\core_T.h" />
-    <QtMoc Include="Aaspcommand\getSource.h" />
-    <QtMoc Include="Aaspcommand\checkupdate.h" />
-    <QtMoc Include="Aaspcommand\aaspcommand.h" />
-    <ClInclude Include="global_value.h" />
-    <ClInclude Include="langcontrol.h" />
-    <ClInclude Include="loadsettings.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="logo.aps" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="logo.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="Resource.qrc" />
-  </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
