@@ -29,12 +29,39 @@
     <ClCompile Include="cYSP/cpp/cYSPPackage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerTerminal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cYSP\cpp\YSPImageResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cYSP\cpp\YSPResouceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cYSP/private/cYSPCompileMacro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cYSP/cYSP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWidget\YSPSideMessageWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPDFYSP\SPDFYSPMacro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPDFYSP\SPDFYSP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,13 +72,37 @@
     <QtMoc Include="cYSP/cYSPPackageMeta.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="SPDFYSP\Speaking.h">
+    <QtMoc Include="SPDFYSP\YSPSpeaking.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="cYSP\YSPResourceManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="cYSP\YSPProject.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPPlayerWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cYSP\ImageFilter\YSPImageFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cYSP\ImageFilter\YSPConvolutionBlur.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPStoryLogWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPPlayerView.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPPlayerObjectAnimations.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cYSP\YSPImageResource.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SPDFYSP\YSPBackground.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

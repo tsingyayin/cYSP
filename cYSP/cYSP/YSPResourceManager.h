@@ -12,7 +12,7 @@ class YSPResourceManager :public VIObject
 	VI_Singleton(YSPResourceManager);
 	_Signal void currentProjectChanged();
 	_Public QString CurrentProjectPath;
-	_Public def_init YSPResourceManager() {
+	_Public def_init YSPResourceManager(VISuper* parent):VIObject(parent) {
 		VI_Singleton_Init;
 	};
 	_Public void executeInRawPath() {
@@ -47,5 +47,8 @@ class YSPResourceManager :public VIObject
 	}
 	_Public QString getProjectPath() {
 		return "./UsersData/Projects";
+	}
+	_Public QString getCachesPath() {
+		return "./UsersData/Caches";
 	}
 };

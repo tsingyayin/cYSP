@@ -3,7 +3,8 @@
 */
 #pragma once
 #include "cYSPPackageMeta.h"
-
+#include "YSPResourceManager.h"
+#include "YSPImageResource.h"
 namespace cYSP {
 	class cYSPPublicAPI Package :public VIPackage, VITranslatableObject
 	{
@@ -17,6 +18,9 @@ namespace cYSP {
 			setPackageMeta(new cYSP::PackageMeta);
 			getPackageMeta()->addTranslatableObject(this);
 			getPackageMeta()->initTranslation();
+			YSPResourceManager* rm = new YSPResourceManager(this);
+			YSPImageResource* ir = new YSPImageResource(this);
+			YSPResourceManager::getInstance()->executeInRawPath();
 		}
 		_Public virtual void onTranslating() override {
 

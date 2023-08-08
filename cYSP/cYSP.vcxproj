@@ -21,11 +21,34 @@
   <ItemGroup>
     <ClCompile Include="cYSP/cpp/cYSPPackage.cpp" />
     <ClCompile Include="cYSPMain.cpp" />
+    <ClCompile Include="cYSP\cpp\YSPImageResource.cpp" />
+    <ClCompile Include="cYSP\cpp\YSPResouceManager.cpp" />
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerBackground.cpp" />
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerTerminal.cpp" />
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerView.cpp" />
+    <ClCompile Include="PlayerWidget\cpp\YSPPlayerWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PlayerWidget\YSPSideMessageWidget.h" />
+    <ClInclude Include="SPDFYSP\SPDFYSP.h" />
+    <ClInclude Include="SPDFYSP\SPDFYSPMacro.h" />
+    <QtMoc Include="SPDFYSP\YSPBackground.h">
+      <SubType>
+      </SubType>
+    </QtMoc>
+    <QtMoc Include="cYSP\YSPImageResource.h" />
+    <QtMoc Include="PlayerWidget\YSPPlayerObjectAnimations.h">
+      <SubType>
+      </SubType>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPPlayerView.h" />
+    <QtMoc Include="PlayerWidget\YSPStoryLogWidget.h" />
+    <QtMoc Include="cYSP\ImageFilter\YSPConvolutionBlur.h" />
+    <QtMoc Include="cYSP\ImageFilter\YSPImageFilter.h" />
+    <QtMoc Include="PlayerWidget\YSPPlayerWidget.h" />
     <QtMoc Include="cYSP\YSPProject.h" />
     <QtMoc Include="cYSP\YSPResourceManager.h" />
-    <QtMoc Include="SPDFYSP\Speaking.h">
+    <QtMoc Include="SPDFYSP\YSPSpeaking.h">
       <SubType>
       </SubType>
     </QtMoc>

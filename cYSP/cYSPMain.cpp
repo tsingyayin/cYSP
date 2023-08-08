@@ -12,7 +12,7 @@ cYSP文件夹。与此同时，此文件夹内应该含有和其同名的头文�
 #include <VIWidgets>
 #include <SPDF>
 #include "cYSP/cYSP.h"
-
+#include "PlayerWidget/YSPPlayerWidget.h"
 #ifndef cYSP_DEVELOPER //用于dll导出时不编译主函数，如果你不知道这是什么，请不要修改
 visindigo Program {
 	VIFramework Frame(sysArgv);
@@ -29,7 +29,8 @@ visindigo Program {
 	LOAD_PACKAGE(SPDF::Package);
 	LOAD_PACKAGE(cYSP::Package);
 	
-
+	YSPPlayerWidget* w = new YSPPlayerWidget;
+	w->show();
 	// AAAAAAAAAAAAAAAAAAA
 	Frame.start(); // 启动框架，此行之后的代码将不会被执行
 } ProgramEnd;

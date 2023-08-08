@@ -1,3 +1,6 @@
 <RCC>
-    <qresource prefix="/package"/>
+    <qresource prefix="/package">
+        <file>cYSP/resource/defaultProjectSettings.json</file>
+        <file>cYSP/resource/defaultEmptyJson.json</file>
+    </qresource>
 </RCC>

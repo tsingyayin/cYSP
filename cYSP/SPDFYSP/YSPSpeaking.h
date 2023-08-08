@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <SPDF>
+#include "SPDFYSPMacro.h"
+
 namespace YSP_10X {
 	class Speaking :public SPDFAbstractControllerParser
 	{
@@ -11,7 +13,7 @@ namespace YSP_10X {
 			setControllerColor(QColor(0, 0, 0)); //此项用于后期的语法高亮，您可以设置您的控制器的颜色
 			setDefaultColor(true); //此项用于后期的语法高亮，设置为真时采用内部默认的颜色，否则采用您设置的颜色
 		}
-		_Public bool onParseLine(const QString& line, SPDFNamespace::SPOLExecutionMode mode) {
+		_Public bool onParseLine(const QString& line, SPDF::SPOLExecutionMode mode) {
 			/*此函数用于解析您的控制器，您可以在此函数中对您的控制器进行解析，请注意：
 			1. 您拿到的line参数中已经剥离了行首标识符。如果您的控制器是函数形式的，那么您拿到的line参数相当于是括号中的内容
 			2. mode参数代表当前的执行模式，目前分为预加载（Preload）和运行时（Runtime）模式，
@@ -35,7 +37,7 @@ namespace YSP_10X {
 
 			QStringList Speakers = line.split(">>>");
 			for (auto speaker = Speakers.begin(); speaker != Speakers.end(); speaker++) {
-				QStringList SpeakerInfo = speaker->split(":");
+				QStringList SpeakerInfo = scientificSplit(*speaker, ':');
 				if (SpeakerInfo.length() < 1 || SpeakerInfo.length() > 3) {
 					consoleLog("讲述控制器：主参数个数少于1个或多于三个");
 					return false;
@@ -61,10 +63,6 @@ namespace YSP_10X {
 				QString FadeInSecond = (SpeakerDisplayInfo[3] != "" ? SpeakerDisplayInfo[3] : "0");
 				QString FadeOutSecond = (SpeakerDisplayInfo[4] != "" ? SpeakerDisplayInfo[4] : "0");
 				QString FileName = SpeakerDisplayInfo[0];
-				if (FileNameSuffix != "") { FileName += "_" + FileNameSuffix; }
-				if (FilterSuffix != "") { FileName += "_" + FilterSuffix; }
-				if (FileName == "") { FileName = "__None__"; }
-				else { FileName += ".png"; }
 				int index = SpeakerText.lastIndexOf("(");
 				QStringList SpeedSubController = { "0.04","1.75" };
 				if (index != -1 && SpeakerText.endsWith(")")) {
@@ -84,17 +82,24 @@ namespace YSP_10X {
 				讲述控制器一行内有多个时，按SPOL规范要求应该只有一个人是可以说话的，但是这里实现的是多个人同时说话
 				应该被拆分为多个CharaController和一个SpeakingController
 				*/
-				SPDFParserResult SpeakerController;
-				SpeakerController.MethodName = "YSP_Speaking";
-				SpeakerController.Parameters["SpeakerCount"] = Speakers.length();
-				SpeakerController.Parameters["DisplayName"] = DisplayName;
-				SpeakerController.Parameters["FileName"] = FileName;
-				SpeakerController.Parameters["FadeInSecond"] = FadeInSecond;
-				SpeakerController.Parameters["FadeOutSecond"] = FadeOutSecond;
-				SpeakerController.Parameters["SecondPerChar"] = SpeedSubController[0];
-				SpeakerController.Parameters["SecondLineEnd"] = SpeedSubController[1];
-				SpeakerController.Parameters["Text"] = SpeakerText;
-				Parameters.append(SpeakerController);
+				if (SpeakerText != "") {
+					SPDFParserResult SpeakingController;
+					SpeakingController.MethodName = SPDFYSP_Speaking;
+					SpeakingController.Parameters["DisplayName"] = DisplayName;
+					SpeakingController.Parameters["Text"] = SpeakerText;
+					SpeakingController.Parameters["SecondPerChar"] = SpeedSubController[0];
+					SpeakingController.Parameters["SecondLineEnd"] = SpeedSubController[1];
+					recordParserResult(SpeakingController);
+				}
+				SPDFParserResult CharaController;
+				CharaController.MethodName = SPDFYSP_Chara;
+				CharaController.Parameters["SpeakerCount"] = Speakers.length();
+				CharaController.Parameters["FileName"] = FileName;
+				CharaController.Parameters["FileNameSuffix"] = FileNameSuffix;
+				CharaController.Parameters["FilterSuffix"] = FilterSuffix;
+				CharaController.Parameters["FadeInSecond"] = FadeInSecond;
+				CharaController.Parameters["FadeOutSecond"] = FadeOutSecond;
+				recordParserResult(CharaController);
 			}
 			return true;
 		}
