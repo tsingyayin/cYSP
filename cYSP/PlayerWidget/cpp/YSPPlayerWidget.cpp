@@ -1,5 +1,6 @@
 ﻿#include "../YSPPlayerWidget.h"
 #include "../../SPDFYSP/SPDFYSP.h"
+#include "../../cYSP/YSPImageResource.h"
 
 def_init YSPPlayerWidget::YSPPlayerWidget(QWidget* parent) {
 	this->PlayerView = new YSPPlayerView(this);
@@ -7,7 +8,7 @@ def_init YSPPlayerWidget::YSPPlayerWidget(QWidget* parent) {
 	SPDF::Package::getInstance()->attachNewHostToTerminal(this->PlayerTerminal);
 	PlayerTerminal->Host->installParser(new YSP_10X::Speaking);
 	PlayerTerminal->Host->installParser(new YSP_10X::Background);
-	PlayerTerminal->Host->exec("./spoltest.js");
+	connect(PlayerTerminal->Host->Scripts, &SPDFScripts::finished, YSPImageResource::getInstance(), &YSPImageResource::clearCache);
 	this->setMinimumSize(800, 600);
 }
 

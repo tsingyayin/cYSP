@@ -3,6 +3,7 @@
 #include <VIWidgets>
 #include <SPDF>
 #include "YSPPlayerObjectAnimations.h"
+#include "YSPRenderThread.h"
 
 class YSPPlayerBackground :public VIWidget
 {
@@ -22,7 +23,10 @@ class YSPPlayerView :public QGraphicsView, VIBaseObject
 	Q_OBJECT;
 	VI_WIDGET;
 	_Public QGraphicsScene* Scene;
+	_Public YSPRenderThread* RenderThread = VI_NULL;
 	_Public YSPPlayerBackground* Background;
+	_Public QImage CurrentImage;
 	_Public def_init YSPPlayerView(QWidget* parent = VI_NULL);
 	_Public void resizeEvent(QResizeEvent* event)override;
+	_Slot void renderImage();
 };

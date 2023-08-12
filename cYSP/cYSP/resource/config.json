@@ -1,0 +1,39 @@
+{
+    "RecentProjects": [
+
+    ],
+    "PlayerSettings":{
+        "FullScreen": false,
+        "Width":1600,
+        "Height":900,
+        "MaxVolume": 100,
+        "LogicFrameRate": 32
+    },
+    "EditorSettings":{
+        "FullScreen": false,
+        "Width":1600,
+        "Height":900,
+        "MaxVolume": 100,
+        "ColorScheme": "Dark",
+        "UserColorScheme":{
+            "Theme": "",
+            "Background": "",
+            "KeyWord": "",
+            "Number": "",
+            "String": "",
+            "Comment": "",
+            "Normal": "",
+            "Function": "",
+            "Class": "",
+            "Operator": "",
+            "SPOL": ""
+        }
+    },
+    "HomePageSettings":{
+        "Width": 1600,
+        "Height": 900
+    },
+    "Language": "zh_SC",
+    "UpdateChannel": "stable",
+    "RemoteResourceMapUrl": "http://yxgeneral.cn/cYSP/RemoteResourceMap.json"
+}

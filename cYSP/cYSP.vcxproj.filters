@@ -47,6 +47,12 @@
     <ClCompile Include="cYSP\cpp\YSPResouceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cYSP\cpp\YSPProject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWidget\cpp\YSPRenderThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cYSP/private/cYSPCompileMacro.h">
@@ -103,6 +109,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SPDFYSP\YSPBackground.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="YSPWidgets\YSPHomeWidget\YSPHomeWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cYSP\cYSPOpenCVAPI.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerWidget\YSPRenderThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

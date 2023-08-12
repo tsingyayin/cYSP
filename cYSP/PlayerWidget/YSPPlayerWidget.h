@@ -24,6 +24,7 @@ class YSPPlayerTerminal :public SPDFAbstractTerminal
 	_Public YSPPlayerWidget* PlayerWidget;
 	_Public def_init YSPPlayerTerminal(YSPPlayerWidget* widget);
 	_Slot virtual void onSPOLDocumentChanged(const QStringList& spol, SPDF::SPOLExecutionMode mode) override;
+	_Slot virtual void onSceneFinished(SPDF::SPOLExecutionMode mode) override;
 	_Slot virtual void onControllers(SPDFBottomInterfaceList* list, SPDF::SPOLExecutionMode mode) override;
 	_Public void onSpeaking(SPDFBottomInterface* data, SPDF::SPOLExecutionMode mode);
 	_Public void onChara(SPDFBottomInterface* data, SPDF::SPOLExecutionMode mode);

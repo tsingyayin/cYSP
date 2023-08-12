@@ -1,13 +1,29 @@
-# cYSP & Visindigo
+# YSP (Visindigo Edition)
+## What is YSP?
+YSP致力于为《明日方舟》同人剧情的创作减轻负担。在过去的两年里，虽然YSP有一半以上的时间处于断更状态，但市面上存在的最后一个C++Qt版本0.9.3已经具有了很大的可用性。我们遇到的每一个用户都对YSP的功能和易用性给予了高度的评价，这也是我们坚持开发的动力所在。
 
-cYSP播放器，以及cYSP播放器的下一代套（重）壳（构）版本Visindigo。
+## What is Visindigo Edition?
+用户和我们也注意到了一些问题，虽然SPOL这种标记语言是高度简明且特化的，但在扩展性、逻辑性和标准性方面存在较多问题。在一开始，我们为了解决标准性的问题，在YSP开发组内部专门成立了IFL委员会（所谓的“解释器特征表委员会”）讨论SPOL语法的维护问题，并且YSP开发组内也有人尝试基于SPOL语法开发其他程序（例如YSP Previewer（Java Edition））。但是在实践中，我们发现SPOL语法的问题不仅仅是标准性，而是在逻辑性和扩展性上都存在问题。例如，开发了YSP Previewer的开发者在独立实现SPOL语法解析的过程中遇到了种种问题。
 
-鉴于cYSP仅将YSP从Python翻译到C++，而YSP又是我刚刚学会一点点面向对象的小玩意的时候就开始写的东西，因此十分的具有“基础不牢地动山摇”的特点。原计划是试着在cYSP基础上直接加GPOL支持，但是目前看来并不好实现。所以现在给cYSP开了一个分支，叫做Visindigo。Visindigo在完成之后应该仅保留cYSP播放页本身以及AASPCMD解释器这两个部分的源码，其他的部分会悉数重写，重新组织程序结构。并且由于已经将原来计划的第一版的GPOL通过Python实现为PyGP，因此现在说的GPOL指的是用于将Visindigo内部函数暴露出来的GPOL字节码，相当于一种简单的接口标准。
+推广到一般情况，即使是本人也无法保证在日后更新YSP源码的过程中不影响SPOL语法解析的结果。
 
-至于后来说的要“重头弄一种脚本语言”而设想的第二版的GPOL，这玩意算是遥遥无期了，如果有的话我们会将其称之为VIL。关于VIL的相关技术通路的问题，坦白交代，我没打通。所以我现在在学习Python的解释器的相关原理。有一些用于解释的早期零散函数与内容可能并不会在本项目内更新（无论是cYSP还是Visindigo）。它们倒是可能出现在本人的另外一个项目里，也就是CommonEdit。CommonEdit的CEOperation部分有一个文件是CEScript，里面基本上就算是VIL解释器的前期工作了。
+这种情况下，我们认为SPOL语法的问题已经超出了标准性的范畴，而是在语法本身的扩展性上存在问题。与此同时由于第一版、第二版SPOL解释器（AASPCMD0.4和YSPCMD0.9）存在较大设计缺陷，无法轻易在SPOL中实现流程控制语句，因此我们最终决定彻底在SPOL中放弃引入流程控制语句。比如原来的小分支控制器和大分支控制器已经全部被移除。
 
-实际上，Visindigo的提出并不比CommonEdit项目要早，所以Visindigo很大程度上会吃一些CommonEdit的红利，因为CommonEdit里面收集了一些我自己写的其他轮子，可以直接拿过来给Visindigo用。
+但考虑到SPOL的使用过程中确实有使用流程控制的需求，因此我们决定找一种方法能够帮SPOL解决流程控制的问题，这种方法无非是往SPOL中嵌入某种其他脚本语言，或者让某种其他脚本语言中能嵌入SPOL。最初，我们尝试用Python解决这个问题，但在实际编写前后端交互代码的时候极其不优雅，也不符合我们的设计理念。于是我们最终求助于Qt的ECMA解释器。现在，SPOL既可以作为独立的文件存在，也可以被写在ECMA脚本的注释中，称之为“SPOL嵌入文档”（被内嵌SPOL的ECMA Scripts称为SPS，即Story Performance Scripts）。通过这种方式，我们可以将一切流程控制的需求交给ECMA脚本，而SPOL只需要负责描述场景中的人物、物品、地点、事件等等，这样就可以保证SPOL的简洁性和易用性。
 
-cYSP在接下来一段时间可能并不会更新，但是如果Visindigo开发的实在是太慢了，我会弄一些新功能放到cYSP里面作为缓冲。
+为了能让内嵌在ECMA脚本注释中的SPOL代码能够被正常使用，我们开发了预处理ECMA脚本的解释器，能够将嵌入了SPOL的ECMA脚本转换为纯ECMA脚本。在执行ECMA脚本的过程中，再针对实际的SPOL代码内部调用全新的SPOL解释器。在这套思路下，我们开发了一个独立于程序的Visindigo库，称为SPDF（Story Performance Description Framework），任何人都可以独立使用SPDF来开发自己的故事演出程序。
 
-此外，原来下方的版本更新内容不会再更了，现在用release管理更新信息
+既然已经引入了ECMA脚本，只用它来做流程控制实在有些浪费，因此原来在SPOL中提供的各种控制器现在在ECMA脚本中也有对应的函数可用，如此一来，您可以尝试使用纯ECMA脚本来编写故事演出程序，而不需要使用SPOL。但是，我们仍然建议您使用SPOL来编写故事演出程序，因为SPOL的易用性和简洁性是纯ECMA脚本无法比拟的。
+
+## What is the difference between SPOL and SPS?
+SPOL现在是SPS的一部分，不过也可以独立存在——如果完全不需要流程控制语句的话。
+
+## What is new version of SPOL Interpreter?
+我们上文提到，SPDF内部含有一个全新的SPOL解释器。这个解释器相比于之前可谓是完全颠覆式的。新版SPOL解释器将SPOL行文本的“控制器”概念进行了具象化，从而允许用户自行在程序中扩展SPOL的按行解析器（被称为SPOL顶接口），用户只需要继承SPDFAbstractControllerParser并按自己想要的逻辑编写对于文本的解析即可。与此同时，新版SPOL解释器将承载SPOL解析结果的结构具象为一个标准结构体（被称为SPOL底接口），按一定流程被传递给SPDF抽象终端，即将SPDF执行结果用于实际故事演出的地方。
+
+如此一来，任何人都可以在SPOL的解析上插一脚。开发者可以自由的在标准SPOL外扩展自己的SPOL，而不需要从底层开始修改SPOL解释器的源码。这也是我们为什么将SPOL解释器独立出来——满足SPOL扩展性的必要。
+
+与此同时，既然SPS用到了 JavaScript，我们决定一步到位，将扩展解释器的功能同时也在JavaScript提供。如此一来，高级的SPOL用户甚至可以在不修改任何程序源码的情况下，通过编写JavaScript代码来扩展加载了此SPOL文档的程序的功能。
+
+## What is Visindigo?
+最初最初我们说下一代YSP叫做Visindigo（这大概已经是一年前的事了），但随着Visindigo开发的进行，我们意识到我们实际上在开发一个通用的Qt扩展框架，因此Visindigo现在只是作为一个Qt扩展库存在。而上文提到的SPDF是在Visindigo的基础上进一步开发的，因此SPDF是一个Visindigo库。本程序是基于Visindigo和SPDF开发的，不能直接在Qt环境中运行，因此本程序现在标记为“Visindigo Version”。

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <VICore>
-
+#include "YSPProject.h"
 /*
 YSPResourceManager
 No matter what path this class shows you, its end will definitely not be a backslash
@@ -12,8 +12,9 @@ class YSPResourceManager :public VIObject
 	VI_Singleton(YSPResourceManager);
 	_Signal void currentProjectChanged();
 	_Public QString CurrentProjectPath;
-	_Public def_init YSPResourceManager(VISuper* parent):VIObject(parent) {
+	_Public def_init YSPResourceManager(VISuper* parent = VI_NULL):VIObject(parent) {
 		VI_Singleton_Init;
+		CurrentProjectPath = "";
 	};
 	_Public void executeInRawPath() {
 		// ensure the program is running in the raw path
@@ -25,8 +26,7 @@ class YSPResourceManager :public VIObject
 		if (args.size() > 1) {
 			QString path = args[1];
 			if (path.endsWith(".ysp")) {
-				CurrentProjectPath = path.replace("\\", "/").section("/", 0, -2);
-				emit currentProjectChanged();
+				changeCurrentProjectPath(path.replace("\\", "/").section("/", 0, -2));
 				return true;
 			}
 		}
@@ -36,6 +36,10 @@ class YSPResourceManager :public VIObject
 		return CurrentProjectPath;
 	}
 	_Public void changeCurrentProjectPath(QString path) {
+		if (YSPProject::getInstance() != VI_NULL) {
+			YSPProject::getInstance()->deleteLater();
+		}
+		new YSPProject(path);
 		CurrentProjectPath = path;
 		emit currentProjectChanged();
 	}
@@ -49,6 +53,11 @@ class YSPResourceManager :public VIObject
 		return "./UsersData/Projects";
 	}
 	_Public QString getCachesPath() {
-		return "./UsersData/Caches";
+		if (CurrentProjectPath != "") {
+			return CurrentProjectPath + "/.ysp/Caches";
+		}
+		else {
+			return "./UsersData/Caches";
+		}
 	}
 };

@@ -8,16 +8,29 @@ class YSPImageFilter : public VIObject
 	Q_OBJECT;
 	VI_OBJECT;
 	_Public enum class FilterName {
-		unknown, grayScale, changeSaturation, changeLightness,
-		topFadeCover, gaussianBlur,
-		edgeExtension, reverse
+		unknown = 0,
+		topFadeCover = 1,
+		blackCover = 2,
+		changeSaturation = 3,
+		grayScale = 4,
+		reverse = 5,
+		changeLightness = 6,
+		mirror = 7,
+		gaussianBlur = 8,
+		edgeExtension = 9,
 	};
 	_Public static void filterOperation(FilterName name, QImage& rawImage, float p_a = 0, float p_b = 0, float p_c = 0, float p_d = 0) {
 		QImage* image = &rawImage;
 		switch (name)
 		{
+		case YSPImageFilter::FilterName::topFadeCover:
+			topFadeCover(image, p_a);
+			break;
 		case YSPImageFilter::FilterName::grayScale:
 			grayScale(image);
+			break;
+		case YSPImageFilter::FilterName::blackCover:
+			blackCover(image);
 			break;
 		case YSPImageFilter::FilterName::changeSaturation:
 			changeSaturation(image, p_a);
@@ -25,8 +38,8 @@ class YSPImageFilter : public VIObject
 		case YSPImageFilter::FilterName::changeLightness:
 			changeLightness(image, p_a);
 			break;
-		case YSPImageFilter::FilterName::topFadeCover:
-			topFadeCover(image, p_a);
+		case YSPImageFilter::FilterName::mirror:
+			mirror(image, p_a);
 			break;
 		case YSPImageFilter::FilterName::gaussianBlur:
 			gaussianBlur(image, p_a);
@@ -39,12 +52,38 @@ class YSPImageFilter : public VIObject
 			break;
 		}
 	}
+	_Public static void topFadeCover(QImage* image, float endP) {
+		if (endP < 0) { endP = 0; }
+		if (endP > 1) { endP = 1; }
+		int end = image->height() * endP;
+		for (int i = 0; i < end; i++) {
+			float delta = ((float)i + 1) / end;
+			for (int j = 0; j < image->width(); j++) {
+				QColor color = image->pixel(j, i);
+				float p = 1.0 - VICommonMapping::sin_0_1(1.0 - (float)i / end);
+				int r = color.red() * p;
+				int g = color.green() * p;
+				int b = color.blue() * p;
+				image->setPixelColor(j, i, QColor(r, g, b, color.alpha()));
+			}
+		}
+	}
 	_Public static void grayScale(QImage* image) {
 		for (int i = 0; i < image->width(); i++) {
 			for (int j = 0; j < image->height(); j++) {
 				QColor color = image->pixel(i, j);
 				int gray = (color.red() * 11 + color.green() * 16 + color.blue() * 5) / 32;
 				image->setPixel(i, j, qRgba(gray, gray, gray, color.alpha()));
+			}
+		}
+	}
+	_Public static void blackCover(QImage* image) {
+		QARGB32_32* pixel = (QARGB32_32*)image->bits();
+		for(int i = 0; i < image->width(); i++) {
+			for (int j = 0; j < image->height(); j++) {
+				if (*pixel >> 24 != 0xFF) {
+					*pixel = 0x00000000;
+				}
 			}
 		}
 	}
@@ -74,17 +113,11 @@ class YSPImageFilter : public VIObject
 			}
 		}
 	}
-	_Public static void topFadeCover(QImage* image, float endP) {
-		if (endP < 0) { endP = 0; }
-		if (endP > 1) { endP = 1; }
-		int end = image->height() * endP;
-		for (int i = 0; i < end; i++) {
-			float delta = ((float)i + 1) / end;
-			for (int j = 0; j < image->width(); j++) {
-				QColor color = image->pixel(j, i);
-				image->setPixel(j, i, QColor::fromHsv(color.hsvHue(), color.hsvSaturation(), color.hslSaturation() * delta, color.alpha()).rgba());
-			}
-		}
+	_Public static void mirror(QImage* image, float direction) {
+		int d = direction;
+		if (d != 0 && d != 1 && d != 2) { d = 0; }
+		QImage t = image->mirrored(d == 0 || d == 2, d == 1 || d == 2);
+		*image = t;
 	}
 	_Public static void gaussianBlur(QImage* image, int d, bool considerAlpha = false) {
 		if (d % 2 == 0) { d++; }

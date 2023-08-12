@@ -25,12 +25,16 @@ visindigo Program {
 	Frame.init(); // 初始化框架
 	// 此处放置您的项目的初始化代码
 	// VVVVVVVVVVVVVVVVVVVV
+	VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Foreground, QColor(102, 204, 255)); // #66CCFF
 	VIConsole::printLine(VIConsole::inSuccessStyle("Hello world!"));
+	YSPResourceManager* rm = new YSPResourceManager();
+	YSPResourceManager::getInstance()->executeInRawPath();
 	LOAD_PACKAGE(SPDF::Package);
 	LOAD_PACKAGE(cYSP::Package);
 	
 	YSPPlayerWidget* w = new YSPPlayerWidget;
 	w->show();
+	w->PlayerTerminal->Host->exec("./spoltest.js");
 	// AAAAAAAAAAAAAAAAAAA
 	Frame.start(); // 启动框架，此行之后的代码将不会被执行
 } ProgramEnd;

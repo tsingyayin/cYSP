@@ -27,6 +27,7 @@ namespace cYSP {
 			this->addTranslationFileName(Visindigo::Language::zh_SC, "zh_SC.vil", true);
 			this->addTranslationFileName(Visindigo::Language::en_US, "en_US.vil", true);
 			this->setDefaultLanguage(Visindigo::Language::zh_SC);
+			this->initConfig();
 		}
 	};
 }

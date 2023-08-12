@@ -2,13 +2,17 @@
 #include "../YSPPlayerView.h"
 
 def_init YSPPlayerBackground::YSPPlayerBackground(QWidget* parent):VIWidget(parent) {
-	this->Background_Top = new VILabel(this);
 	this->Background_Bottom = new VILabel(this);
+	this->Background_Top = new VILabel(this);
+	this->Background_Bottom->setScaledContents(true);
+	this->Background_Top->setScaledContents(true);
 	OPEffect = new QGraphicsOpacityEffect(this);
+	OPEffect->setOpacity(1.0);
 	Background_Top->setGraphicsEffect(OPEffect);
 	ChangeBackgroundAnimation = new YSPPlayerBackgroundChangeAnimation(this);
 	ChangeBackgroundAnimation->setBackground(this);
 	this->show();
+	this->setStyleSheet("QWidget{background-color:black;}");
 }
 void YSPPlayerBackground::changeBackground(QImage image, VIMilliSecond second) {
 	ChangeBackgroundAnimation->setBackgroundImage(image);
@@ -54,5 +58,6 @@ void YSPPlayerBackgroundChangeAnimation::onSubside() {
 		this->Background->OPEffect->setOpacity(0.0);
 	}
 	this->Background->BackgroundState = !this->Background->BackgroundState;
+	emit finished();
 }
 

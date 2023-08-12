@@ -2,5 +2,7 @@
     <qresource prefix="/package">
         <file>cYSP/resource/defaultProjectSettings.json</file>
         <file>cYSP/resource/defaultEmptyJson.json</file>
+        <file>cYSP/resource/defaultmain.js</file>
+        <file alias="cYSP/config.json">cYSP/resource/config.json</file>
     </qresource>
 </RCC>

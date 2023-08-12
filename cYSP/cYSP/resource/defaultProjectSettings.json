@@ -1,7 +1,19 @@
-{
+﻿{
     "ProjectName": "My Project",
     "ProjectAuthor": "My Name",
     "ProjectDescription": "My Project Description",
     "ProjectVersion": "0.10.0",
-    "ProjectEntry": "main.js"
+    "ProjectEntry": "main.js",
+    "ProjectCover": "cover.png",
+    "ProjectLastOpened": "2012-08-06 00:00:00",
+    "ProjectEditorInfo":{
+        "OpenedFiles": [
+            {
+                "Path":"main.js",
+                "CursorLine": 0, 
+                "CursorColumn": 0
+            }
+        ],
+        "ActiveFile": "main.js"
+    }
 }

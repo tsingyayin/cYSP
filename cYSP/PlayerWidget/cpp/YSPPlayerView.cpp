@@ -8,10 +8,15 @@ def_init YSPPlayerView::YSPPlayerView(QWidget* parent) :QGraphicsView(parent) {
 	// close scroll bar
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	this->show();
 }
 
 void YSPPlayerView::resizeEvent(QResizeEvent* event) {
 	this->Background->resize(this->size());
 	
+}
+
+void YSPPlayerView::renderImage() {
+	CurrentImage = QImage(this->size(), QImage::Format_RGB888);
+	QPainter painter(&CurrentImage);
+	this->render(&painter);
 }
