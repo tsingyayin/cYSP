@@ -141,11 +141,11 @@ public:
 		CurrentLayout->addWidget(Text_Window_Geometry, 1, 1, 1, 1);
 
 		QList<QStringList> GeometryList;
-		GeometryList.append({ "1366x768", "0" });
-		GeometryList.append({ "1600x900", "1" });
-		GeometryList.append({ "1920x1080", "2" });
-		GeometryList.append({ "2560x1440", "3" });
-		GeometryList.append({ "3840x2160", "4" });
+		GeometryList.append(QStringList({ "1366x768", "0" }));
+		GeometryList.append(QStringList({ "1600x900", "1" }));
+		GeometryList.append(QStringList({ "1920x1080", "2" }));
+		GeometryList.append(QStringList({ "2560x1440", "3" }));
+		GeometryList.append(QStringList({ "3840x2160", "4" }));
 
 		Edit_Window_Geometry = new QComboBox(this);
 		Edit_Window_Geometry->setStyleSheet("QComboBox{font-size:25px;font-family:'Microsoft YaHei'}");

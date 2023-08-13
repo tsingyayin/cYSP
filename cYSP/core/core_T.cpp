@@ -108,11 +108,11 @@ void Interpreter(QString storyFilename, InterpreterSignals* signalsName, mQThrea
 			QTest::qSleep(100);
 		}
 		//追加长时控制器列表
-		BGPList.append({ "51200","BGP(黑场)" });
-		BGMList.append({ "51200","BGM()" });
-		CVRList.append({ "51200","CVR()" });
-		ExtendList.append({ "51200",">>>:===" });
-		MoveList.append({ "51200","moveBack(L)","moveBack(M)","moveBack(R)" });
+		BGPList.append(QStringList({ "51200","BGP(黑场)" }));
+		BGMList.append(QStringList({ "51200","BGM()" }));
+		CVRList.append(QStringList({ "51200","CVR()" }));
+		ExtendList.append(QStringList({ "51200",">>>:===" }));
+		MoveList.append(QStringList({ "51200","moveBack(L)","moveBack(M)","moveBack(R)" }));
 		//qDebug().noquote() << "InterpreterInfo→成功预剔除注释行";
 		emit signalsName->send_kernal_info("InterpreterInfo→成功预剔除注释行");
 

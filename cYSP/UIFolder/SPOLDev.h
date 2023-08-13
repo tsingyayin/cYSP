@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #pragma execution_character_set("utf-8")
 #include <QtWidgets>
 #include <QtCore>
@@ -30,40 +30,40 @@ class SPOLController :public QGroupBox
 
 		SPOLController(QWidget *parent=Q_NULLPTR) {
 			this->setParent(parent);
-			this->setTitle("¿ØÖÆÆ÷ÁĞ±í");
+			this->setTitle("æ§åˆ¶å™¨åˆ—è¡¨");
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
 
 			Edition_C = new QPushButton(this);
-			Edition_C->setText("°æ±¾¿ØÖÆÆ÷");
+			Edition_C->setText("ç‰ˆæœ¬æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Edition_C, 0, 1, 1, 1);
 
 			Title_C = new QPushButton(this);
-			Title_C->setText("±êÌâ¿ØÖÆÆ÷");
+			Title_C->setText("æ ‡é¢˜æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Title_C, 0, 0, 1, 1);
 
 			BGP_C = new QPushButton(this);
-			BGP_C->setText("±³¾°¿ØÖÆÆ÷");
+			BGP_C->setText("èƒŒæ™¯æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(BGP_C, 1, 0, 1, 1);
 
 			Sound_C = new QPushButton(this);
-			Sound_C->setText("ÒôÀÖ\\ÒôĞ§¿ØÖÆÆ÷");
+			Sound_C->setText("éŸ³ä¹\\éŸ³æ•ˆæ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Sound_C, 1, 1, 1, 1);
 
 			Speak_C = new QPushButton(this);
-			Speak_C->setText("½²Êö¿ØÖÆÆ÷");
+			Speak_C->setText("è®²è¿°æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Speak_C, 2, 0, 1, 1);
 
 			Free_C = new QPushButton(this);
-			Free_C->setText("×ÔÓÉÎÄ±¾¿ØÖÆÆ÷");
+			Free_C->setText("è‡ªç”±æ–‡æœ¬æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Free_C, 2, 1, 1, 1);
 
 			Branch_C = new QPushButton(this);
-			Branch_C->setText("Ğ¡·ÖÖ§¿ØÖÆÆ÷");
+			Branch_C->setText("å°åˆ†æ”¯æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Branch_C, 3, 0, 1, 1);
 
 			Jump_C = new QPushButton(this);
-			Jump_C->setText("´ó·ÖÖ§¿ØÖÆÆ÷");
+			Jump_C->setText("å¤§åˆ†æ”¯æ§åˆ¶å™¨");
 			CurrentLayout->addWidget(Jump_C, 3, 1, 1, 1);
 		}
 };
@@ -81,8 +81,8 @@ class SoundSub :public QWidget
 			BGMSub = new QRadioButton(this);
 			AcousticsSub = new QRadioButton(this);
 
-			BGMSub->setText("ÒôÀÖ¿ØÖÆÆ÷");
-			AcousticsSub->setText("ÒôĞ§¿ØÖÆÆ÷");
+			BGMSub->setText("éŸ³ä¹æ§åˆ¶å™¨");
+			AcousticsSub->setText("éŸ³æ•ˆæ§åˆ¶å™¨");
 
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
@@ -143,34 +143,34 @@ class SpeakMain :public QWidget
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
 			Text_1_Name = new QLabel(this);
-			Text_1_Name->setText("µÚÒ»ÈËÃû³Æ");
+			Text_1_Name->setText("ç¬¬ä¸€äººåç§°");
 			
 			Text_2_Name = new QLabel(this);
-			Text_2_Name->setText("µÚ¶şÈËÃû³Æ");
+			Text_2_Name->setText("ç¬¬äºŒäººåç§°");
 
 			Text_Emotion = new QLabel(this);
-			Text_Emotion->setText("±íÇé");
+			Text_Emotion->setText("è¡¨æƒ…");
 			Text_Emotion->setAlignment(Qt::AlignCenter);
 
 			Text_Flip = new QLabel(this);
-			Text_Flip->setText("·­×ª");
+			Text_Flip->setText("ç¿»è½¬");
 			Text_Flip->setAlignment(Qt::AlignCenter);
 			Text_Filter = new QLabel(this);
-			Text_Filter->setText("ÂË¾µÑ¡Ïî");
+			Text_Filter->setText("æ»¤é•œé€‰é¡¹");
 			Text_Filter->setAlignment(Qt::AlignCenter);
 			Text_Call = new QLabel(this);
-			Text_Call->setText("±ğÃû");
+			Text_Call->setText("åˆ«å");
 			Text_Call->setAlignment(Qt::AlignCenter);
 
-			FilterList.append({ "ÎŞÌØĞ§","0" });
-			FilterList.append({ "ÉÏÒş²Ø","1" });
-			FilterList.append({ "ÍÊÉ«","2" });
-			FilterList.append({ "ÍÊÉ«ÉÏÒş²Ø","3" });
-			FilterList.append({ "ºÚ°×","4" });
-			FilterList.append({ "ºÚ°×ÉÏÒş²Ø","5" });
+			FilterList.append(QStringList({ "æ— ç‰¹æ•ˆ","0" }));
+			FilterList.append(QStringList({ "ä¸Šéšè—","1" }));
+			FilterList.append(QStringList({ "è¤ªè‰²","2" }));
+			FilterList.append(QStringList({ "è¤ªè‰²ä¸Šéšè—","3" }));
+			FilterList.append(QStringList({ "é»‘ç™½","4" }));
+			FilterList.append(QStringList({ "é»‘ç™½ä¸Šéšè—","5" }));
 
-			FlipList.append({ "²»·­×ª","0" });
-			FlipList.append({ "·­×ª","1" });
+			FlipList.append(QStringList({ "ä¸ç¿»è½¬","0" }));
+			FlipList.append(QStringList({ "ç¿»è½¬","1" }));
 
 			Edit_1_Name = new QLineEdit(this);
 			Edit_1_Emotion = new QLineEdit(this);
@@ -196,30 +196,30 @@ class SpeakMain :public QWidget
 			Edit_Said = new QTextEdit(this);
 
 			Follow1 = new QRadioButton(this);
-			Follow1->setText("µÚÒ»ÈË½²Êö");
+			Follow1->setText("ç¬¬ä¸€äººè®²è¿°");
 			Follow2 = new QRadioButton(this);
-			Follow2->setText("µÚ¶şÈË½²Êö");
+			Follow2->setText("ç¬¬äºŒäººè®²è¿°");
 			FollowWho = new QButtonGroup();
 			FollowWho->addButton(Follow1);
 			FollowWho->addButton(Follow2);
 
 			Text_Word_Interval = new QLabel(this);
-			Text_Word_Interval->setText("³ö×Ö¼ä¸ô");
+			Text_Word_Interval->setText("å‡ºå­—é—´éš”");
 			Text_Word_Interval->setAlignment(Qt::AlignCenter);
 
 			Text_Word_Wait = new QLabel(this);
-			Text_Word_Wait->setText("Ò³ÃæÍ£ÁôÊ±³¤");
+			Text_Word_Wait->setText("é¡µé¢åœç•™æ—¶é•¿");
 			Text_Word_Wait->setAlignment(Qt::AlignCenter);
 
 			Edit_Word_Interval = new QLineEdit(this);
 			Edit_Word_Wait = new QLineEdit(this);
 
 			ClearButton = new QPushButton(this);
-			ClearButton->setText("Çå³ıËùÓĞÄÚÈİ");
+			ClearButton->setText("æ¸…é™¤æ‰€æœ‰å†…å®¹");
 			FillButton = new QPushButton(this);
-			FillButton->setText("ÓÃÄ¬ÈÏÖµ³äÂú¿Õ¸ñ");
+			FillButton->setText("ç”¨é»˜è®¤å€¼å……æ»¡ç©ºæ ¼");
 			UpdateButton = new QPushButton(this);
-			UpdateButton->setText("ÏòÎÄ±¾ÇøÌá½»");
+			UpdateButton->setText("å‘æ–‡æœ¬åŒºæäº¤");
 
 			CurrentLayout->addWidget(Text_1_Name, 0, 0, 1, 1);
 			CurrentLayout->addWidget(Edit_1_Name, 0, 1, 1, 1);
@@ -272,9 +272,9 @@ public:
 		SingleSub = new QRadioButton(this);
 		DoubleSub = new QRadioButton(this);
 		
-		EmptySub->setText("¿Õ³¡¿ØÖÆÆ÷");
-		SingleSub->setText("µ¥ÈË½²Êö¿ØÖÆÆ÷");
-		DoubleSub->setText("Ë«ÈË½²Êö¿ØÖÆÆ÷");
+		EmptySub->setText("ç©ºåœºæ§åˆ¶å™¨");
+		SingleSub->setText("å•äººè®²è¿°æ§åˆ¶å™¨");
+		DoubleSub->setText("åŒäººè®²è¿°æ§åˆ¶å™¨");
 	
 		CurrentLayout = new QGridLayout();
 		this->setLayout(CurrentLayout);
@@ -299,7 +299,7 @@ class SubControllerDef :public QGroupBox
 		QGridLayout* CurrentLayout;
 		SubControllerDef(QWidget *parent = Q_NULLPTR) {
 			this->setParent(parent);
-			this->setTitle("¿ØÖÆÆ÷×ÓÀàĞÍ");
+			this->setTitle("æ§åˆ¶å™¨å­ç±»å‹");
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
 
@@ -309,7 +309,7 @@ class SubControllerDef :public QGroupBox
 			SpeakArea->move(-SpeakArea->geometry().width(), -SpeakArea->geometry().height());
 
 			NoneSub = new QLabel(this);
-			NoneSub->setText("ÎŞ¿ØÖÆÆ÷×ÓÀàĞÍ");
+			NoneSub->setText("æ— æ§åˆ¶å™¨å­ç±»å‹");
 			NoneSub->setAlignment(Qt::AlignCenter);
 			CurrentLayout->addWidget(NoneSub);
 
@@ -346,7 +346,7 @@ class ControllerDetails :public QGroupBox
 		QGridLayout* CurrentLayout;
 		ControllerDetails(QWidget* parent = Q_NULLPTR) {
 			this->setParent(parent);
-			this->setTitle("¿ØÖÆÆ÷ÏêÇé");
+			this->setTitle("æ§åˆ¶å™¨è¯¦æƒ…");
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
 			SpeakArea = new SpeakMain(this);
@@ -364,7 +364,7 @@ class ControllerDefinition :public QGroupBox
 		ControllerDetails* DetailsArea;
 		ControllerDefinition(QWidget *parent=Q_NULLPTR) {
 			this->setParent(parent);
-			this->setTitle("¿ØÖÆÆ÷Éè¶¨¡ª¡ªÔÚ×ó±ßĞÂ½¨Ò»¸ö¿ØÖÆÆ÷£¬Ö®ºóÕâÀï»áÏÔÊ¾ÏêÏ¸Éè¶¨");
+			this->setTitle("æ§åˆ¶å™¨è®¾å®šâ€”â€”åœ¨å·¦è¾¹æ–°å»ºä¸€ä¸ªæ§åˆ¶å™¨ï¼Œä¹‹åè¿™é‡Œä¼šæ˜¾ç¤ºè¯¦ç»†è®¾å®š");
 			CurrentLayout = new QGridLayout();
 			this->setLayout(CurrentLayout);
 			SubArea = new SubControllerDef(this);
@@ -382,7 +382,7 @@ class DebugInfo :public QGroupBox
 	public:
 		DebugInfo(QWidget* parent = Q_NULLPTR) {
 			this->setParent(parent);
-			this->setTitle("Ô¤½âÊÍÊä³ö");
+			this->setTitle("é¢„è§£é‡Šè¾“å‡º");
 		}
 };
 class SPOLDevWindow :public QWidget
@@ -421,7 +421,7 @@ public:
 		WhileInput = new QTimer(this);
 		connect(WhileInput, SIGNAL(timeout()), this, SLOT(repaintWhileFree()));
 		this->setGeometry(QRect(100, 100, 1024, 768));
-		this->setWindowTitle("SPOL×ÅÉ«¿ª·¢»·¾³");
+		this->setWindowTitle("SPOLç€è‰²å¼€å‘ç¯å¢ƒ");
 		this->setWindowIcon(QIcon("./Visual/source/WinICO/Videotape_Win11.ico"));
 		this->setAttribute(Qt::WA_DeleteOnClose);
 		WindowLayout = new QGridLayout();
@@ -475,33 +475,33 @@ public:
 		*/
 
 		OpenButton = new QPushButton(this);
-		OpenButton->setText("´ò¿ªSPOL");
+		OpenButton->setText("æ‰“å¼€SPOL");
 		WindowLayout->addWidget(OpenButton, 0, 0, 1, 1);
 
 		NewFileButton = new QPushButton(this);
-		NewFileButton->setText("ĞÂ½¨");
+		NewFileButton->setText("æ–°å»º");
 		WindowLayout->addWidget(NewFileButton, 0, 1, 1, 1);
 
 		SaveButton = new QPushButton(this);
-		SaveButton->setText("±£´æ");
+		SaveButton->setText("ä¿å­˜");
 		WindowLayout->addWidget(SaveButton, 0, 2, 1, 1);
 
 		SPOLFileNameLabel = new QLineEdit(this);
-		SPOLFileNameLabel->setText("/story/Î´ÃüÃûÎÄµµ.spol");
+		SPOLFileNameLabel->setText("/story/æœªå‘½åæ–‡æ¡£.spol");
 		SPOLFileNameLabel->setStyleSheet("QLineEdit{background-color:#2266CCFF;}");
 		WindowLayout->addWidget(SPOLFileNameLabel, 1, 0, 1, 10);
 
 		/*
 		FaRButton = new QPushButton(this);
-		FaRButton->setText("²éÕÒºÍÌæ»»");
+		FaRButton->setText("æŸ¥æ‰¾å’Œæ›¿æ¢");
 		WindowLayout->addWidget(FaRButton, 0, 6, 1, 1);
 		
 		EnableLinkModeButton = new QPushButton(this);
-		EnableLinkModeButton->setText("ÆôÓÃ°ë¿ÉÊÓ»¯±à¼­");
+		EnableLinkModeButton->setText("å¯ç”¨åŠå¯è§†åŒ–ç¼–è¾‘");
 		WindowLayout->addWidget(EnableLinkModeButton, 0, 7, 1, 1);
 		
 		PlayButton = new QPushButton(this);
-		PlayButton->setText("²¥·Å£¨¿ª·¢ÖĞ£©");
+		PlayButton->setText("æ’­æ”¾ï¼ˆå¼€å‘ä¸­ï¼‰");
 		WindowLayout->addWidget(PlayButton, 0, 8, 1, 1);
 		*/
 
@@ -542,7 +542,7 @@ public:
 		return 0;
 	}
 	void setDefaultText(void) {
-		SPOLEdit->setHtml(setColor("#YSP×Ô´ø×ÅÉ«¿ª·¢»·¾³SPOLDev(Beta²âÊÔ°æ)£¬°æ±¾0.1£¬¼æÈİ×ÅÉ«SPOL0.6+\n#Ê¹ÓÃSPOL´´½¨Äú×Ô¼ºµÄ¾çÇé¡£\n\n/SPOL0.6.5-FollowNew\n"));
+		SPOLEdit->setHtml(setColor("#YSPè‡ªå¸¦ç€è‰²å¼€å‘ç¯å¢ƒSPOLDev(Betaæµ‹è¯•ç‰ˆ)ï¼Œç‰ˆæœ¬0.1ï¼Œå…¼å®¹ç€è‰²SPOL0.6+\n#ä½¿ç”¨SPOLåˆ›å»ºæ‚¨è‡ªå·±çš„å‰§æƒ…ã€‚\n\n/SPOL0.6.5-FollowNew\n"));
 	}
 public slots:
 	void repaintWhileFree(void) {
@@ -560,14 +560,14 @@ public slots:
 	}
 	void openSPOLFile(void) {
 		QString CurrentPath = QDir::currentPath();
-		SPOLFileDialog = QFileDialog::getOpenFileName(this, "Ñ¡ÔñÒ»¸öSPOLÎÄ¼ş", "./story", "SPOL File(*.spol)");
+		SPOLFileDialog = QFileDialog::getOpenFileName(this, "é€‰æ‹©ä¸€ä¸ªSPOLæ–‡ä»¶", "./story", "SPOL File(*.spol)");
 		SPOLFileName = SPOLFileDialog.mid(SPOLFileDialog.indexOf(CurrentPath)+CurrentPath.length());
 		//SPOLFileName = SPOLFileDialog.section("/", -1, -1).section(".", 0, 0);
 		SPOLFile.setFileName(SPOLFileDialog);
 		SPOLFile.open(QIODevice::ReadOnly | QIODevice::Text);
 		RawLine = SPOLFile.readAll();
 		SPOLFile.close();
-		this->setWindowTitle("SPOL×ÅÉ«¿ª·¢»·¾³¡ª¡ªÏÖÔÚÕıÔÚ±à¼­£º" + SPOLFileName);
+		this->setWindowTitle("SPOLç€è‰²å¼€å‘ç¯å¢ƒâ€”â€”ç°åœ¨æ­£åœ¨ç¼–è¾‘ï¼š" + SPOLFileName);
 		SPOLFileNameLabel->setText(SPOLFileName);
 		RawLine = setColor(RawLine);
 		SPOLEdit->setHtml(RawLine);
@@ -584,8 +584,8 @@ public slots:
 	void createNewFile(void) {
 		saveSPOLFile();
 		SPOLEdit->setText("");
-		SPOLFileNameLabel->setText("/story/Î´ÃüÃûÎÄµµ.spol");
-		this->setWindowTitle("SPOL×ÅÉ«¿ª·¢»·¾³¡ª¡ªÏÖÔÚÕıÔÚ±à¼­£º/story/Î´ÃüÃûÎÄµµ.spol");
+		SPOLFileNameLabel->setText("/story/æœªå‘½åæ–‡æ¡£.spol");
+		this->setWindowTitle("SPOLç€è‰²å¼€å‘ç¯å¢ƒâ€”â€”ç°åœ¨æ­£åœ¨ç¼–è¾‘ï¼š/story/æœªå‘½åæ–‡æ¡£.spol");
 		repaintLineNum(0);
 	}
 	void repaintLineNum(bool isInput = 1) {
@@ -604,7 +604,7 @@ public slots:
 			LineNumString.append(QString::number(i) + "<br>");
 		}
 		clock_t t3 = clock();
-		qDebug() << "Í³¼ÆÊ±¼ä" << t2 - t1 << "ºÁÃë£¬Éú³ÉÊ±¼ä" << t3 - t2 << "ºÁÃë¡£";
+		qDebug() << "ç»Ÿè®¡æ—¶é—´" << t2 - t1 << "æ¯«ç§’ï¼Œç”Ÿæˆæ—¶é—´" << t3 - t2 << "æ¯«ç§’ã€‚";
 		LineNumLabel->setText("<div align='right'>" + LineNumString + "</div>");
 		LineNumScrollV->setValue(SPOLEditScroll->value());
 	}

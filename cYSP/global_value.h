@@ -12,7 +12,6 @@
 #define DEPLOY 2
 #endif
 #define tick int
-#define None
 #define DoNothing
 #ifndef FALSE
 #define FALSE false

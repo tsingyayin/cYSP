@@ -633,7 +633,7 @@ public slots:
 	}
 
 	void setScroll(void) {
-		if (SaveLineList.isEmpty()) { SaveLineList.append({ "0",">>>:" }); }
+		if (SaveLineList.isEmpty()) { SaveLineList.append(QStringList({ "0",">>>:" }) ); }
 		StoryScroll->setMinimum(0);
 		StoryScroll->setMaximum(SaveLineList.length() - 1);
 		StoryScroll->setSingleStep(1);

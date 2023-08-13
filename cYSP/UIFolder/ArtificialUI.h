@@ -301,7 +301,7 @@ public slots:
 	void playSound(QString filename, int volume) {
 		QString FilePath = PROPATH::Users + "/source/Sound/" + filename + ".mp3";
 		if (filename == "静音") {
-			None;
+			
 		}
 		else if (QFile(FilePath).exists()) {
 			musicThreadList.append(new uSoundService());
