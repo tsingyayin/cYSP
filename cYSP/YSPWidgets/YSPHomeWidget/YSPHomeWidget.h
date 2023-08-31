@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <VIWidgets>
 
+
 class YSPHomeWidget :public VIWidget
 {
 	Q_OBJECT;

@@ -1,0 +1,24 @@
+﻿{
+    "MetaInfo":{
+        "Type": "Player2D",
+        "Theme": "Arknights",
+        "Name": "My Project",
+        "Author": "My Name",
+        "Description": "My Project Description",
+        "SPOLVersion": "0.10.0",
+        "SPDFVersion": "0.10.0",
+        "ProgramVersion": "0.10.0",
+        "Entry": "main.js",
+        "LastOpened": "2021-04-10 16:00:00"
+    },
+    "EditorInfo":{
+        "OpenedFiles": [
+            {
+                "Path":"main.js",
+                "CursorLine": 0, 
+                "CursorColumn": 0
+            }
+        ],
+        "ActiveFile": "main.js"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "DefaultWhite":{
+        "TextEditor":{
+            "Scripts":{
+                "Background": ["",""],
+                "KeyWord": ["",""],
+                "Number": ["",""],
+                "String": ["",""],
+                "Comment": ["",""],
+                "Normal": ["",""],
+                "Function": ["",""],
+                "Class": ["",""],
+                "Operator": ["",""]
+            },
+            "SPOL":{
+                "Background":["",""],
+                "bg":["",""],
+                "cvr":["",""],
+                "speak":["",""],
+                "anytxt":["",""],
+                "move":["",""],
+                "sound":["",""],
+                "music":["",""],
+                "comment":["",""],
+                "tag":["",""]
+            }
+        },
+        "Global":{
+            "ThemeColor":"#66CCFF"
+        }
+    }
+}

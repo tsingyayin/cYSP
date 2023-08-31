@@ -70,6 +70,9 @@
     <ClInclude Include="SPDFYSP\SPDFYSP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="YSPWidgets\YSPHomeWidget\YSPHomeUnit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="cYSP/cYSPPackage.h">
@@ -82,9 +85,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="cYSP\YSPResourceManager.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="cYSP\YSPProject.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="PlayerWidget\YSPPlayerWidget.h">

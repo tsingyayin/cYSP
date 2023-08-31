@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/package">
+        <file>StoryStudio/resource/YayinStoryStudio.png</file>
+        <file>StoryStudio/resource/config.json</file>
+        <file>StoryStudio/resource/defaultColorTheme.json</file>
+        <file>StoryStudio/resource/ArknightsThemeIcon.png</file>
+        <file>StoryStudio/resource/Player2DIcon.png</file>
+        <file>StoryStudio/i18n/zh_SC.vil</file>
+    </qresource>
+</RCC>

@@ -1,11 +1,12 @@
 ﻿{
-    "ProjectName": "My Project",
-    "ProjectAuthor": "My Name",
-    "ProjectDescription": "My Project Description",
-    "ProjectVersion": "0.10.0",
-    "ProjectEntry": "main.js",
-    "ProjectCover": "cover.png",
-    "ProjectLastOpened": "2012-08-06 00:00:00",
+    "ProjectMetaInfo":{
+        "Name": "My Project",
+        "Author": "My Name",
+        "Description": "My Project Description",
+        "Version": "0.10.0",
+        "Entry": "main.js",
+        "LastOpened": "2012-08-06 00:00:00"
+    },
     "ProjectEditorInfo":{
         "OpenedFiles": [
             {

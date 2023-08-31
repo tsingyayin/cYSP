@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/package">
+        <file>YSPCore/resource/config.json</file>
+        <file>YSPCore/resource/defaultEmptyJson.json</file>
+        <file>YSPCore/resource/defaultProjectSettings.json</file>
+        <file>YSPCore/resource/defaultmain.js</file>
+    </qresource>
+</RCC>

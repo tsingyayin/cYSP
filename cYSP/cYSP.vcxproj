@@ -31,6 +31,7 @@
     <ClCompile Include="PlayerWidget\cpp\YSPRenderThread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="YSPWidgets\YSPHomeWidget\YSPHomeUnit.h" />
     <QtMoc Include="cYSP\cYSPOpenCVAPI.h" />
     <QtMoc Include="PlayerWidget\YSPRenderThread.h" />
     <ClInclude Include="PlayerWidget\YSPSideMessageWidget.h" />
@@ -51,7 +52,6 @@
     <QtMoc Include="cYSP\ImageFilter\YSPConvolutionBlur.h" />
     <QtMoc Include="cYSP\ImageFilter\YSPImageFilter.h" />
     <QtMoc Include="PlayerWidget\YSPPlayerWidget.h" />
-    <QtMoc Include="cYSP\YSPProject.h" />
     <QtMoc Include="cYSP\YSPResourceManager.h" />
     <QtMoc Include="SPDFYSP\YSPSpeaking.h">
       <SubType>
