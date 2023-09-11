@@ -1,19 +1,18 @@
 ﻿{
-    "RecentProjects": [
-
-    ],
-    "CurrentColorTheme": "DefaultWhite",
-    "EditorSettings":{
+    "Theme": "Light",
+    "EditorSettings": {
         "FullScreen": false,
-        "Width":1600,
-        "Height":900,
-        
-        "UserColorThemes":[
-        ]
+        "Height": 900,
+        "UserColorThemes": [
+        ],
+        "Width": 1600
     },
-    "ProjectPage":{
-        "Width": 1600,
-        "Height": 900
+    "Language": "zh_SC",
+    "ProjectPage": {
+        "Height": "900",
+        "Width": "1371",
+        "IsMaximized": "false"
     },
-    "Language": "zh_SC"
+    "RecentProjects": [
+    ]
 }

@@ -39,6 +39,7 @@ void YSPResourceManager::changeCurrentProjectPath(QString path) {
 QString YSPResourceManager::getUsersPath() { return "./UsersData"; }
 QString YSPResourceManager::getGlobalPath() { return getUsersPath() + "/Global"; }
 QString YSPResourceManager::getProjectPath() { return getUsersPath() + "/Projects"; }
+QString YSPResourceManager::getPlayerThemePath() { return getGlobalPath() + "/PlayerTheme"; }
 QString YSPResourceManager::getGlobalCachesPath() { return getGlobalPath() + "/Caches"; }
 QString YSPResourceManager::getGlobalResourcePath() { return getGlobalPath() + "/Resources";}
 QString YSPResourceManager::getProjectYSPPath() {

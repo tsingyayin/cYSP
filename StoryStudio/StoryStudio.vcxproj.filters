@@ -29,12 +29,18 @@
     <ClCompile Include="StoryStudio/cpp/StoryStudioPackage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StoryStudio\cpp\ThemeColorManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StoryStudio/private/StoryStudioCompileMacro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StoryStudio/StoryStudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StoryStudio\resource\ProjectThemeManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,6 +58,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ProjectPage\ProjectPageUnit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="StoryStudio\ThemeColorManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ProjectPage\ProjectActionUnit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

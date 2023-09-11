@@ -22,6 +22,8 @@ namespace YSPProjectConfig{
 		QString ProgramVersion;
 		QString Entry;
 		QString LastOpened;
+		QString SizeCount;
+		QString CacheSizeCount;
 		bool IsEffective = false; // Pay attention to this default value
 	};
 };
@@ -31,6 +33,10 @@ class YSPCorePublicAPI YSPProject :public VIObject
 	Q_OBJECT;
 	VI_OBJECT;
 	VI_Singleton(YSPProject);
+	_Public enum class PlayerType {
+		Unknown, Player2D, Player3D, PlayerChat
+	};
+	
 	_Public VIDocument::VIJSON* ProjectConfig;
 	_Public YSPProjectConfig::OpenedFiles OpenedFiles;
 	_Public def_init YSPProject(QString ProjectFolder);
@@ -46,6 +52,8 @@ class YSPCorePublicAPI YSPProject :public VIObject
 	_Public void setProjectEntry(QString Entry);
 	_Public QString getProjectName();
 	_Public void setProjectName(QString Name);
+	_Public static QString getPlayerTypeStr(PlayerType type);
+	_Public static PlayerType getPlayerType(QString typeStr);
 	_Public static YSPProjectConfig::MetaInfo getMetaInfoFromFile(const QString& filePath);
 	_Public static YSPProjectConfig::MetaInfo getMetaInfoInFolder(const QString& folderPath);
 };

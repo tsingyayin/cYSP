@@ -28,6 +28,7 @@ class YSPCorePublicAPI YSPResourceManager :public VIObject
 	_Public static QString getUsersPath();
 	_Public static QString getGlobalPath();
 	_Public static QString getProjectPath();
+	_Public static QString getPlayerThemePath();
 	_Public static QString getGlobalCachesPath();
 	_Public static QString getGlobalResourcePath();
 	_Public QString getProjectYSPPath();

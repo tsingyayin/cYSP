@@ -22,10 +22,22 @@ namespace StoryStudio {
 			getPackageMeta()->addTranslatableObject(this);
 			getPackageMeta()->initTranslation();
 
-			QString theme = getPackageMeta()->getConfig("CurrentColorTheme").toString();
-			QString clrStr = StoryStudio::PackageMeta::getInstance()->DefaultColorTheme->getValueOf(theme+".Global.ThemeColor").toString();
-			QColor clr(clrStr);
-			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Foreground, clr);
+			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Foreground, QColor(
+				StoryStudio::PackageMeta::getInstance()->ThemeManager->getValueOf("Global.Foreground")
+			));
+			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Background, QColor(
+				StoryStudio::PackageMeta::getInstance()->ThemeManager->getValueOf("Global.Background")
+			));
+			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Hover, QColor(
+				StoryStudio::PackageMeta::getInstance()->ThemeManager->getValueOf("Global.Hover")
+			));
+			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Selected, QColor(
+				StoryStudio::PackageMeta::getInstance()->ThemeManager->getValueOf("Global.Selected")
+			));
+			VIFrame->getPaletteGroup()->setColor(VIPalette::DefaultColorName::Text, QColor(
+				StoryStudio::PackageMeta::getInstance()->ThemeManager->getValueOf("Global.Text")
+			));
+			
 
 			welcomePage = new WelcomePage();
 			connect(welcomePage, &WelcomePage::closed, this, &Package::onWelcomePageClosed);

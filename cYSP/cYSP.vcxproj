@@ -140,22 +140,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigo;D:\SPDF\0.10.0\x64\Debug\SPDF;D:\OpenCV\build\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug;D:\SPDF\0.10.0\x64\Debug;D:\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;D:\SPDF\0.10.3\x64\Debug\SPDF;D:\OpenCV\build\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;D:\SPDF\0.10.3\x64\Debug;D:\OpenCV\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigo;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
@@ -167,8 +167,8 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Debug\Visindigod.dll" "$(OutDir)"
-xcopy /y /d "D:\SPDF\0.10.0\x64\Debug\SPDFd.dll" "$(OutDir)"
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigod.dll" "$(OutDir)"
+xcopy /y /d "D:\SPDF\0.10.3\x64\Debug\SPDFd.dll" "$(OutDir)"
 xcopy /y /d "D:\OpenCV\build\x64\vc15\bin\opencv_world440d.dll" "$(OutDir)"
 xcopy /y /d "D:\OpenCV\build\x64\vc15\bin\opencv_videoio_ffmpeg440_64.dll" "$(OutDir)"
 </Command>
@@ -203,7 +203,7 @@ xcopy /y /d "D:\OpenCV\build\x64\vc15\bin\opencv_videoio_ffmpeg440_64.dll" "$(Ou
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.0)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">

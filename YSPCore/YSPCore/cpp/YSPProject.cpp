@@ -101,6 +101,28 @@ void YSPProject::setProjectName(QString Name) {
 	ProjectConfig->setValueOf("ProjectMetaInfo.Name", Name);
 }
 
+QString YSPProject::getPlayerTypeStr(PlayerType type) {
+	switch (type) {
+		VI_ENUMSTR(PlayerType, Player2D);
+		VI_ENUMSTR(PlayerType, Player3D);
+		VI_ENUMSTR(PlayerType, PlayerChat);
+	}
+}
+
+YSPProject::PlayerType YSPProject::getPlayerType(QString typeName) {
+	if (typeName == "Player2D") {
+		return PlayerType::Player2D;
+	}
+	else if (typeName == "Player3D") {
+		return PlayerType::Player3D;
+	}
+	else if (typeName == "PlayerChat") {
+		return PlayerType::PlayerChat;
+	}
+	else {
+		return PlayerType::Unknown;
+	}
+}
 YSPProjectConfig::MetaInfo YSPProject::getMetaInfoFromFile(const QString& filePath) {
 	VIDocument::VIJSON* FileConfig = new VIDocument::VIJSON();
 	bool filecfg = FileConfig->loadSettings(filePath);
@@ -116,6 +138,8 @@ YSPProjectConfig::MetaInfo YSPProject::getMetaInfoFromFile(const QString& filePa
 	Info.ProgramVersion = FileConfig->getValueOf("MetaInfo.ProgramVersion").toString();
 	Info.Entry = FileConfig->getValueOf("MetaInfo.Entry").toString();
 	Info.LastOpened = FileConfig->getValueOf("MetaInfo.LastOpened").toString();
+	Info.SizeCount = VIPathInfo::getReadableSize(VIPathInfo::getSizeOf(filePath.section('/', 0, -2)));
+	Info.CacheSizeCount = VIPathInfo::getReadableSize(VIPathInfo::getSizeOf(filePath.section('/', 0, -2) + "/.ysp/Caches"));
 	Info.IsEffective = filecfg;
 	delete FileConfig;
 	return Info;

@@ -1,0 +1,8 @@
+{
+    "Name": "Arknights",
+    "ProgramVersion": "0.10.0",
+    "PlayerThemeVersion": "1.0.0",
+    "Author": "Weave Studio",
+    "Description": "适用于《明日方舟》风格的播放器预设套件",
+    "PlayerSupport": ["Player2D", "Player3D", "PlayerChat"]
+}

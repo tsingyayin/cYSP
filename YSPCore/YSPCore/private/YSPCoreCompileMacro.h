@@ -4,8 +4,8 @@
 */
 #pragma once
 #include <VICore>
-#if VI_VERSION_MAJOR != 0 || VI_VERSION_MINOR != 11 || VI_VERSION_PATCH != 1
- #error "This template is only for Visindigo 0.11.1, please use the correct version of Visindigo!"
+#if VI_VERSION_MAJOR != 1 || VI_VERSION_MINOR != 2 || VI_VERSION_PATCH != 0
+ #error "This template is only for Visindigo 1.2.0, please use the correct version of Visindigo!"
 #endif
 
 // 请在此处定义您的项目的版本号，这样定义的版本号符合Visindigo项目规范，可以快速和Visindigo开发工具对接

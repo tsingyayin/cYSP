@@ -103,22 +103,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigo;$(SolutionDir)$(Platform)\Dll$(Configuration)\YSPCore;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug;$(LibraryPath);$(SolutionDir)$(Platform)\Dll$(Configuration)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;$(SolutionDir)$(Platform)\Dll$(Configuration)\YSPCore;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;$(LibraryPath);$(SolutionDir)$(Platform)\Dll$(Configuration)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigo;$(SolutionDir)$(Platform)\$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\$(Configuration)\ResourceManager;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug;$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;$(SolutionDir)$(Platform)\$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\$(Configuration)\ResourceManager;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release;$(LibraryPath);$(SolutionDir)$(Platform)\Dll$(Configuration)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo;$(SolutionDir)$(Platform)\Dll$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\Dll$(Configuration)\ResourceManager;$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;$(LibraryPath);$(SolutionDir)$(Platform)\Dll$(Configuration)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(SolutionDir)$(Platform)\Dll$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\Dll$(Configuration)\ResourceManager;$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release;$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo;$(SolutionDir)$(Platform)\$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\$(Configuration)\ResourceManager;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(SolutionDir)$(Platform)\$(Configuration)\YSPCore;$(SolutionDir)$(Platform)\$(Configuration)\ResourceManager;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
@@ -130,7 +130,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigod.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigod.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
@@ -162,7 +162,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">

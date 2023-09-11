@@ -21,15 +21,15 @@ class StoryStudioPublicAPI WidgetFadeAnimation :public VIAnimationBehavior
 		this->setDuration(duration);
 		this->Effect->setOpacity(0);
 		this->isFadeIn = true;
-		this->active();
+		this->start();
 	}
 	_Public void activeFadeOutAnimation(VIMilliSecond duration) {
 		this->setDuration(duration);
 		this->Effect->setOpacity(1);
 		this->isFadeIn = false;
-		this->active();
+		this->start();
 	}
-	_Public virtual void onActive() HalfVirtual;
+	_Public virtual void onStart() HalfVirtual;
 	_Public virtual void onTick() {
 		if (this->isFadeIn) {
 			this->Effect->setOpacity(VICommonMapping::sin_0_1(this->Duration->getPercent()));
@@ -38,7 +38,7 @@ class StoryStudioPublicAPI WidgetFadeAnimation :public VIAnimationBehavior
 			this->Effect->setOpacity(1 - VICommonMapping::sin_0_1(this->Duration->getPercent()));
 		}
 	}
-	_Public virtual void onSubside() {
+	_Public virtual void onStop() {
 		if (this->isFadeIn) {
 			this->Effect->setOpacity(1);
 		}
@@ -87,7 +87,7 @@ class StoryStudioPublicAPI WelcomePage :public VIWidget
 		Text->setStyleSheet("QLabel{color:#FFFFFF;font-size:20px;font-family:Microsoft YaHei;background-color:#00FFFFFF}");
 	}
 	_Public void onAnimationEnd() {
-		QTimer::singleShot(3000, this, &WelcomePage::close);
+		QTimer::singleShot(1500, this, &WelcomePage::close);
 	}
 	_Public virtual void showEvent(QShowEvent* event) override {
 		FadeAnimation->activeFadeInAnimation(500);

@@ -2,9 +2,17 @@
     <qresource prefix="/package">
         <file>StoryStudio/resource/YayinStoryStudio.png</file>
         <file>StoryStudio/resource/config.json</file>
-        <file>StoryStudio/resource/defaultColorTheme.json</file>
         <file>StoryStudio/resource/ArknightsThemeIcon.png</file>
         <file>StoryStudio/resource/Player2DIcon.png</file>
         <file>StoryStudio/i18n/zh_SC.vil</file>
+        <file>StoryStudio/resource/defaultThemeLight.json</file>
+        <file>StoryStudio/resource/CloneGitProjectIcon.png</file>
+        <file>StoryStudio/resource/NewEgProjectIcon.png</file>
+        <file>StoryStudio/resource/NewProjectIcon.png</file>
+        <file>StoryStudio/resource/OpenProjectIcon.png</file>
+        <file>StoryStudio/resource/Player3DIcon.png</file>
+        <file>StoryStudio/resource/UnknownThemeIcon.png</file>
+        <file>StoryStudio/resource/UserThemeIcon.png</file>
+        <file>StoryStudio/resource/StudioSettingsIcon.png</file>
     </qresource>
 </RCC>

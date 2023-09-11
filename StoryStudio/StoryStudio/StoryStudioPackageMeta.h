@@ -4,6 +4,7 @@
 #pragma once
 #include <VICore>
 #include "private/StoryStudioCompileMacro.h"
+#include "ThemeColorManager.h"
 
 namespace StoryStudio {
 	class StoryStudioPublicAPI PackageMeta :public VIPackageMeta
@@ -12,7 +13,7 @@ namespace StoryStudio {
 		VI_OBJECT;
 		VI_HAS_INHERIT(VIPackageMeta);
 		VI_Singleton(PackageMeta);
-		_Public VIDocument::VIJSON* DefaultColorTheme;
+		_Public ThemeColorManager* ThemeManager;
 		_Public def_init PackageMeta() :VIPackageMeta() {
 			VI_Singleton_Init;
 			this->setPackageName("StoryStudio");
@@ -29,10 +30,8 @@ namespace StoryStudio {
 			this->addTranslationFileName(Visindigo::Language::en_US, "en_US.vil", true);
 			this->setDefaultLanguage(Visindigo::Language::zh_SC);
 			this->initConfig();
-
-			DefaultColorTheme = new VIDocument::VIJSON(this);
-			DefaultColorTheme->loadDefault(getPackageInternalPath() + "/resource/defaultColorTheme.json");
-			DefaultColorTheme->loadSettings(getPackageRootPath() + "/defaultColorTheme.json", true);
+			ThemeManager = new ThemeColorManager(this);
+			ThemeManager->loadConfig(getConfig("Theme").toString());
 		}
 	};
 }

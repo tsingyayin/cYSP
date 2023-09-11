@@ -46,6 +46,12 @@
     <ClCompile Include="YSPCore\cpp\YSPResouceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="YSPCore\YSPPlayerThemeManager.h" />
+    <QtMoc Include="YSPSPDF\YSPSpeaking.h" />
+    <QtMoc Include="YSPSPDF\YSPBackground.h" />
+    <ClInclude Include="YSPSPDF\YSPSPDFMacro.h" />
+    <ClInclude Include="YSPSPDF\YSPSPDF.h" />
+    <QtMoc Include="YSPCore\YSPPlayerTypeManeger.h" />
     <QtMoc Include="YSPCore\YSPImageResource.h" />
     <QtMoc Include="YSPCore\ImageFilter\YSPImageFilter.h" />
     <QtMoc Include="YSPCore\ImageFilter\YSPConvolutionBlur.h" />
@@ -135,41 +141,41 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigo;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;D:\SPDF\0.10.3\x64\Debug\SPDF;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;D:\SPDF\0.10.3\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigo;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigo;D:\SPDF\0.10.3\x64\Debug\SPDF;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug;D:\SPDF\0.10.3\x64\Debug;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;D:\SPDF\0.10.3\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);D:\SPDF\0.10.3\x64\Release\SPDF;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release;D:\SPDF\0.10.3\x64\Release;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo;$(VC_IncludePath);$(WindowsSDK_IncludePath);D:\SPDF\0.10.3\x64\Release\SPDF</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>Visindigod.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Visindigod.lib;SPDFd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>$(ProjectName)_EVERYWHERE;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Debug\Visindigod.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Debug\Visindigod.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllDebug|x64'">
     <Link>
       <EntryPointSymbol>_DllMainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>Visindigod.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Visindigod.lib;SPDFd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>python "$(SolutionDir)PyTools\WindowsDllExport\WindowsDllExport.py" "$(ProjectName)"</Command>
@@ -188,20 +194,20 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>Visindigo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Visindigo.lib;SPDF.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>$(ProjectName)_EVERYWHERE;_Public=public:;_Private=private:;_Protected=protected:;_Slot=public Q_SLOTS:;_Signal=Q_SIGNALS:</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@0.11.1)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Visindigo@1.2.0)\x64\Release\Visindigo.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRelease|x64'">
     <Link>
       <EntryPointSymbol>_DllMainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>Visindigo.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Visindigo.lib;SPDF.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>python "$(SolutionDir)PyTools\WindowsDllExport\WindowsDllExport.py" "$(ProjectName)"</Command>
